@@ -2,7 +2,7 @@ import type { Location, RouteObject } from 'react-router-dom';
 import { RouterProvider, createBrowserRouter, createHashRouter, createMemoryRouter } from 'react-router-dom';
 import type { BlockerFunction, Router as RemixRouter, RouterState } from '@remix-run/router';
 import type { ElegantConstRoute } from '@ohh-889/react-auto-route';
-import { createContext } from 'react';
+import React, { createContext } from 'react';
 import type { RouteLocationNamedRaw, RouteLocationNormalizedLoaded, Router, RouterOptions } from './types';
 import CreateRouterMatcher from './matcher';
 import type { RouteRecordNormalized } from './matcher/types';
@@ -191,7 +191,7 @@ class CreateRouter {
     };
   }
 
-  CustomRouterProvider: () => JSX.Element = () => {
+  CustomRouterProvider: (loading:React.ReactNode) => JSX.Element = (loading) => {
     const reactiveRoute = {} as RouteLocationNormalizedLoaded;
     // eslint-disable-next-line guard-for-in
     for (const key in START_LOCATION_NORMALIZED) {
@@ -206,7 +206,7 @@ class CreateRouter {
       <RouterContext.Provider value={this}>
         <RouteContext.Provider value={reactiveRoute}>
           <RouterProvider
-            fallbackElement={'加载中'}
+            fallbackElement={loading}
             router={this.reactRouter}
           />
         </RouteContext.Provider>

@@ -7,6 +7,7 @@ import MenuProvider from '@/components/common/MenuProvider.tsx';
 import { router } from '@/router';
 import { antdLocales } from './locales/antd';
 import AppProvider from './components/common/AppProvider.tsx';
+import GlobalLoading from './components/common/GlobalLoading.tsx';
 
 const App = () => {
   const locale = useAppSelector(getLocale);
@@ -28,9 +29,7 @@ const App = () => {
       button={{ classNames: { icon: 'align-1px  text-icon' } }}
     >
       <MenuProvider>
-        <AppProvider>
-          <router.CustomRouterProvider />
-        </AppProvider>
+        <AppProvider>{router.CustomRouterProvider(<GlobalLoading />)}</AppProvider>
       </MenuProvider>
     </ConfigProvider>
   );

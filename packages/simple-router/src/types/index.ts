@@ -85,7 +85,7 @@ export interface Router {
   readonly reactRouter: RemixRouter;
   readonly reactRoutes: RouteObject[];
   addReactRoutes: (routes: ElegantConstRoute[]) => void;
-  CustomRouterProvider: () => JSX.Element;
+  CustomRouterProvider: (loading: React.ReactNode) => JSX.Element;
   getRoutes: () => RouteRecordNormalized[];
   getRouteByName: (name: string) => RouteRecordNormalized | undefined;
   resetRoute: () => void;
