@@ -1,95 +1,92 @@
 {
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
   "headers": [
-      {
-          "source": "/sw.js",
-          "headers": [
-              {
-                  "key": "Cache-Control",
-                  "value": "public, max-age=0, must-revalidate"
-              }
-          ]
-      },
-      {
-          "source": "(.*)",
-          "headers": [
-              {
-                  "key": "Cache-Control",
-                  "value": "public, s-maxage=86400, max-age=86400"
-              }
-          ]
-      },
-      {
-          "source": "/medias/(.*)",
-          "headers": [
-              {
-                  "key": "Cache-Control",
-                  "value": "public, s-maxage=2592000, max-age=2592000"
-              }
-          ]
-      },
-      {
-          "source": "/medias_webp/(.*)",
-          "headers": [
-              {
-                  "key": "Cache-Control",
-                  "value": "public, s-maxage=2592000, max-age=2592000"
-              }
-          ]
-      },
-      {
-          "source": "(.*).html",
-          "headers": [
-              {
-                  "key": "Cache-Control",
-                  "value": "public, s-maxage=1800, max-age=1800"
-              }
-          ]
-      },
-      {
-          "source": "(.*).js",
-          "headers": [
-              {
-                  "key": "Cache-Control",
-                  "value": "public, s-maxage=2592000, max-age=2592000"
-              }
-          ]
-      },
-      {
-          "source": "(.*).css",
-          "headers": [
-              {
-                  "key": "Cache-Control",
-                  "value": "public, s-maxage=2592000, max-age=2592000"
-              }
-          ]
-      },
-      {
-          "source": "(.*).json",
-          "headers": [
-              {
-                  "key": "Cache-Control",
-                  "value": "public, s-maxage=2592000, max-age=2592000"
-              }
-          ]
-      }
+    {
+      "source": "/sw.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=86400, max-age=86400"
+        }
+      ]
+    },
+    {
+      "source": "/medias/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=2592000, max-age=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/medias_webp/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=2592000, max-age=2592000"
+        }
+      ]
+    },
+    {
+      "source": "(.*).html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=1800, max-age=1800"
+        }
+      ]
+    },
+    {
+      "source": "(.*).js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=2592000, max-age=2592000"
+        }
+      ]
+    },
+    {
+      "source": "(.*).css",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=2592000, max-age=2592000"
+        }
+      ]
+    },
+    {
+      "source": "(.*).json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=2592000, max-age=2592000"
+        }
+      ]
+    }
   ],
-  "regions": [
-      "hkg1"
-  ],
+  "regions": ["hkg1"],
   "redirects": [
-      {
-          "source": "/gtag/js",
-          "destination": "https://www.googletagmanager.com/gtag/js"
-      },
-      {
-          "source": "/atom.xml",
-          "destination": "https://cfblog.17lai.site/atom.xml"
-      },
-      {
-          "source": "/rss.xml",
-          "destination": "https://cfblog.17lai.site/rss.xml"
-      }
+    {
+      "source": "/gtag/js",
+      "destination": "https://www.googletagmanager.com/gtag/js"
+    },
+    {
+      "source": "/atom.xml",
+      "destination": "https://cfblog.17lai.site/atom.xml"
+    },
+    {
+      "source": "/rss.xml",
+      "destination": "https://cfblog.17lai.site/rss.xml"
+    }
   ]
 }
-

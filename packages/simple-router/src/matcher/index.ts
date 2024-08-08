@@ -1,9 +1,10 @@
 import type { ElegantConstRoute } from '@ohh-889/react-auto-route';
 import type { Location } from 'react-router-dom';
 import type { RouteLocationNamedRaw } from '../types';
+import { stringifyQuery } from '../query';
 import type { RouteRecordRaw } from './types';
 import { createRouteRecordMatcher } from './pathMatcher';
-import { generatePath, getQueryParams, mergeMetaFields, normalizeRouteRecord, objectToQueryParams } from './shared';
+import { generatePath, getQueryParams, mergeMetaFields, normalizeRouteRecord } from './shared';
 
 class CreateRouterMatcher {
   // Internal routes maintained for react-router
@@ -155,7 +156,8 @@ class CreateRouterMatcher {
       if ('query' in location) {
         query = location.query || {};
 
-        const queryParams = objectToQueryParams(query);
+        const queryParams = stringifyQuery(query);
+        console.log(queryParams);
 
         fullPath += queryParams ? `?${queryParams}` : '';
       }
