@@ -52,7 +52,7 @@
   "devDependencies": {
     "@iconify/json": "2.2.234",
     "@iconify/types": "2.0.0",
-    "@ohh-889/react-auto-route": "0.2.8",
+    "@ohh-889/react-auto-route": "0.2.9",
     "@sa/scripts": "workspace:*",
     "@sa/uno-preset": "workspace:*",
     "@soybeanjs/eslint-config": "1.4.0",
