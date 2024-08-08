@@ -7,7 +7,9 @@ import form from './form';
 
 const local: App.I18n.Schema['translation'] = {
   system: {
-    title: 'SoybeanAdmin'
+    title: 'SoybeanAdmin',
+    reload: 'Reload Page',
+    errorReason: 'Cause Error'
   },
   common,
   route,

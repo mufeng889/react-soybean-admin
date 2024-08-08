@@ -265,6 +265,8 @@ declare namespace App {
       translation: {
         system: {
           title: string;
+          reload: string;
+          errorReason: string;
         };
         common: {
           action: string;

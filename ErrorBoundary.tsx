@@ -24,13 +24,13 @@ const ErrorPage = () => {
         onClick={handleRetry}
         type="primary"
       >
-        重新渲染
+        {t('system.reload')}
       </Button>
       <Title
         className="m-0"
         level={5}
       >
-        你的错误是
+        {t('system.errorReason')}
       </Title>
       <Text code>{error.message}</Text>
     </div>
