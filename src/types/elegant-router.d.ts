@@ -229,7 +229,7 @@ declare module "@elegant-router/types" {
     ? Omit<ElegantConstRoute, 'children'> & {
         name: K;
         path: RouteMap[K];
-        component: `layout.${RouteLayout}$view.${K}`| `view.${LastLevelRouteKey}`;
+        component: `layout.${RouteLayout}$view.${K}`| `view.${LastLevelRouteKey}`|`layout.${RouteLayout}`;
         children?:ElegantConstRoute[] ;
         layout?:"base" | "blank"
       }
@@ -289,7 +289,7 @@ declare module "@elegant-router/types" {
     ? Omit<ElegantConstRoute, 'children'> & {
         name: K;
         path: RouteMap[K];
-        component?: `view.${LastLevelRouteKey}`| `view.${LastLevelRouteKey}`;
+        component?: `view.${LastLevelRouteKey}`;
         layout?:"base" | "blank"
       }
     : never;

@@ -1,6 +1,7 @@
 import ClassNames from 'classnames';
 import type BScroll from '@better-scroll/core';
 import { PageTab } from '@sa/materials';
+import {useUpdateEffect} from 'ahooks'
 import { startTransition } from 'react';
 import DarkModeContainer from '@/components/common/DarkModeContainer';
 import {useRoute} from '@sa/simple-router'
@@ -38,7 +39,7 @@ const GlobalTab = memo(() => {
   const darkMode = useAppSelector(getDarkMode);
   const activeTabId = useAppSelector(getActiveTabId);
 
-  console.log(activeTabId,2);
+
 
 
   const setBsScroll = (bscroll: BScroll) => {
@@ -119,6 +120,7 @@ const GlobalTab = memo(() => {
   useUpdateEffect(() => {
     scrollToActiveTab();
   }, [activeTabId]);
+
 
   useEffect(() => {
     dispatch(addTabByRoute(route))

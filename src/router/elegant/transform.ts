@@ -152,7 +152,7 @@ export function transformElegantRouteToReactRoute(
            const data= (await views[viewName]()).Component as FunctionComponent
             return {
             element: data(props) ,
-             ErrorBoundary
+            ErrorBoundary: null
             }
           }
         } else {
@@ -167,7 +167,7 @@ export function transformElegantRouteToReactRoute(
   }
 
 
-
+  
 
 
  if (children?.length) {
@@ -182,7 +182,7 @@ export function transformElegantRouteToReactRoute(
   }else if (redirectTo) {
     reactRoute.loader=()=>redirect(redirectTo)
   }
-
+  
   if (loader) {
     reactRoute.loader = () => loader
   }
