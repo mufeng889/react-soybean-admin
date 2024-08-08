@@ -1,9 +1,10 @@
 {
   "name": "react-soy",
   "type": "module",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.0",
+  "private": false,
   "homepage": "https://github.com/soybeanjs/soybean-admin-antd",
+  "packageManager": "pnpm@9.1.1",
   "scripts": {
     "build": "vite build --mode prod",
     "build:test": "vite build --mode test",
