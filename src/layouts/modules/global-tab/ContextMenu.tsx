@@ -12,7 +12,9 @@ interface ContextMenuProps {
   locale: App.I18n.LangType;
   mode: UnionKey.ThemeTabMode;
   i18nKey: App.Global.Tab['i18nKey'];
+  darkMode: boolean;
 }
+
 interface DropdownOption {
   key: App.Global.DropdownKey;
   label: string;
@@ -37,6 +39,7 @@ function getMenu(options: DropdownOption[]) {
 
 function arePropsEqual(oldProps: Readonly<ContextMenuProps>, newProps: Readonly<ContextMenuProps>) {
   if (oldProps.active !== newProps.active) return false;
+  if (oldProps.darkMode !== newProps.darkMode) return false;
   if (oldProps.i18nKey !== newProps.i18nKey) return false;
   if (oldProps.mode !== newProps.mode) return false;
   if (oldProps.locale !== newProps.locale) return false;

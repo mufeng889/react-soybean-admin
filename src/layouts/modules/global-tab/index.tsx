@@ -162,6 +162,7 @@ const GlobalTab = memo(() => {
                 i18nKey={item.i18nKey}
                 active={item.id === activeTabId}
                 mode={themeSettings.tab.mode}
+                darkMode={darkMode}
               >
                 <div id={item.id}>
                   <PageTab
