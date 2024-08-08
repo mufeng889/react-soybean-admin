@@ -13,7 +13,6 @@ const App = () => {
   const locale = useAppSelector(getLocale);
   const colors = useAppSelector(themeColors);
   const darkMode = useAppSelector(getDarkMode);
-
   const antdTheme = getAntdTheme(colors, darkMode);
 
   useEffect(() => {

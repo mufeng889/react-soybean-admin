@@ -84,6 +84,7 @@
     "unplugin-icons": "0.19.1",
     "vite": "5.3.5",
     "vite-plugin-inspect": "0.8.5",
+    "vite-plugin-remove-console": "2.2.0",
     "vite-plugin-svg-icons": "2.0.1"
   },
   "website": "https://antd.soybeanjs.cn"

@@ -191,7 +191,7 @@ class CreateRouter {
     };
   }
 
-  CustomRouterProvider: (loading:React.ReactNode) => JSX.Element = (loading) => {
+  CustomRouterProvider: (loading: React.ReactNode) => JSX.Element = loading => {
     const reactiveRoute = {} as RouteLocationNormalizedLoaded;
     // eslint-disable-next-line guard-for-in
     for (const key in START_LOCATION_NORMALIZED) {
