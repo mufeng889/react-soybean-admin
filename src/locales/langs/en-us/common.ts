@@ -1,0 +1,43 @@
+const common: App.I18n.Schema['translation']['common'] = {
+  action: 'Action',
+  add: 'Add',
+  addSuccess: 'Add Success',
+  backToHome: 'Back to home',
+  batchDelete: 'Batch Delete',
+  cancel: 'Cancel',
+  close: 'Close',
+  check: 'Check',
+  expandColumn: 'Expand Column',
+  columnSetting: 'Column Setting',
+  config: 'Config',
+  confirm: 'Confirm',
+  delete: 'Delete',
+  deleteSuccess: 'Delete Success',
+  confirmDelete: 'Are you sure you want to delete?',
+  edit: 'Edit',
+  index: 'Index',
+  keywordSearch: 'Please enter keyword',
+  logout: 'Logout',
+  logoutConfirm: 'Are you sure you want to log out?',
+  lookForward: 'Coming soon',
+  modify: 'Modify',
+  modifySuccess: 'Modify Success',
+  noData: 'No Data',
+  operate: 'Operate',
+  pleaseCheckValue: 'Please check whether the value is valid',
+  refresh: 'Refresh',
+  reset: 'Reset',
+  search: 'Search',
+  switch: 'Switch',
+  tip: 'Tip',
+  trigger: 'Trigger',
+  update: 'Update',
+  updateSuccess: 'Update Success',
+  userCenter: 'User Center',
+  yesOrNo: {
+    yes: 'Yes',
+    no: 'No'
+  }
+};
+
+export default common;

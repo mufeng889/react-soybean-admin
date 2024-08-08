@@ -1,0 +1,19 @@
+.layout-header {
+  --uno: h-16px bg-primary rd-4px;
+}
+
+.layout-sider {
+  --uno: bg-primary-300 rd-4px;
+}
+
+.layout-main {
+  --uno: flex-1 bg-primary-200 rd-4px;
+}
+
+.vertical-wrapper {
+  --uno: flex-1 flex-col gap-6px;
+}
+
+.horizontal-wrapper {
+  --uno: flex-1 flex gap-6px;
+}

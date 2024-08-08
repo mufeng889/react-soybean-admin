@@ -1,0 +1,14 @@
+.sider-inverted-enter {
+  --uno: translate-x-20px opacity-0 h-0;
+}
+
+.sider-inverted-enter-active {
+  --uno: h-22px transition-all-300 translate-x-0 opacity-100;
+}
+.sider-inverted-exit-active {
+  --uno: h-22px translate-x-0 opacity-100;
+}
+
+.sider-inverted-exit-done {
+  --uno: translate-x-20px opacity-0 h-0 transition-all-300;
+}

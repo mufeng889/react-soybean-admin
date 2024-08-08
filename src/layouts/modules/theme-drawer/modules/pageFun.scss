@@ -1,0 +1,22 @@
+.setting-list-appear-done,
+.setting-list-appear-enter,
+.setting-list-appear-enter-active,
+.setting-list-exit-done {
+  display: none;
+}
+
+.setting-list-enter {
+  --uno: opacity-0 -translate-x-30px;
+}
+
+.setting-list-enter-active {
+  --uno: transition-all-300 opacity-100 translate-x-0;
+}
+
+.setting-list-exit {
+  --uno: opacity-100 translate-x-0;
+}
+
+.setting-list-exit-active {
+  --uno: opacity-0 translate-x-30px transition-all-300;
+}

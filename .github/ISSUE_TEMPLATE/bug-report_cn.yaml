@@ -1,0 +1,90 @@
+name: 🐞 Bug提交
+description: 在使用软件或功能的过程中遇到了错误
+title: '[Bug]: '
+labels: [ "bug?" ]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 请按照以下要求进行提交
+        ### 1. 提交后需要指定标签和截止时间。
+        ---
+
+  - type: markdown
+    attributes:
+      value: |
+        ## 环境信息
+        请根据实际使用环境修改以下信息。
+
+  - type: input
+    id: env-program-ver
+    attributes:
+      label: 软件版本
+    validations:
+      required: true
+
+  - type: dropdown
+    id: env-vm-ver
+    attributes:
+      label: 运行环境
+      description: 选择运行软件的系统版本
+      options:
+        - Windows (64)
+        - Windows (32/x84)
+        - MacOS
+        - Linux
+        - Ubuntu
+        - CentOS
+        - ArchLinux
+        - UNIX (Android)
+        - 其它（请在下方说明）
+    validations:
+      required: true
+
+  - type: dropdown
+    id: env-vm-arch
+    attributes:
+      label: 运行架构
+      description: (可选) 选择运行软件的系统架构
+      options:
+        - AMD64
+        - x86
+        - ARM [32] (别名：AArch32 / ARMv7）
+        - ARM [64] (别名：AArch64 / ARMv8）
+        - 其它
+
+  - type: textarea
+    id: reproduce-steps
+    attributes:
+      label: 重现步骤
+      description: |
+        我们需要执行哪些操作才能让 bug 出现？
+        简洁清晰的重现步骤能够帮助我们更迅速地定位问题所在。
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望的结果是什么？
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际的结果是什么？
+    validations:
+      required: true
+
+  - type: textarea
+    id: logging
+    attributes:
+      label: 日志记录（可选）
+      render: golang
+
+  - type: textarea
+    id: extra-desc
+    attributes:
+      label: 补充说明（可选）
