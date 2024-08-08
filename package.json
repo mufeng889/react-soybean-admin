@@ -3,7 +3,6 @@
   "type": "module",
   "version": "0.1.0",
   "private": false,
-  "homepage": "https://github.com/soybeanjs/soybean-admin-antd",
   "packageManager": "pnpm@9.1.1",
   "scripts": {
     "build": "vite build --mode prod",
@@ -74,7 +73,6 @@
     "@unocss/transformer-variant-group": "0.61.9",
     "@unocss/vite": "0.61.9",
     "@vitejs/plugin-react": "4.3.1",
-    "@vitejs/plugin-react-swc": "3.7.0",
     "eslint": "9.8.0",
     "eslint-plugin-react": "7.35.0",
     "eslint-plugin-react-hooks": "4.6.2",

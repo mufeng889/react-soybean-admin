@@ -138,8 +138,18 @@ export function Component() {
       { showQuickJumper: true }
     );
 
-  const { checkedRowKeys, rowSelection, onBatchDeleted, onDeleted, handleEdit, handleAdd, drawerVisible, closeDrawer } =
-    useTableOperate(data, run);
+  const {
+    checkedRowKeys,
+    rowSelection,
+    onBatchDeleted,
+    onDeleted,
+    handleEdit,
+    handleAdd,
+    drawerVisible,
+    closeDrawer,
+    operateType,
+    editingData
+  } = useTableOperate(data, run);
   useWhyDidYouUpdate('Component', {
     columns,
     columnChecks,
@@ -202,6 +212,9 @@ export function Component() {
         ></Table>
         <UserOperateDrawer
           open={drawerVisible}
+          rowData={editingData}
+          submitted={run}
+          operateType={operateType}
           closeDrawer={closeDrawer}
         />
       </Card>

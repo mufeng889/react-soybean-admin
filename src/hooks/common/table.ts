@@ -1,5 +1,4 @@
 import type { TablePaginationConfig, TableProps } from 'antd';
-import { cloneDeep } from 'lodash-es';
 import { useBoolean, useHookTable } from '@sa/hooks';
 import { Form } from 'antd';
 import { getIsMobile } from '@/store/slice/app';
@@ -148,12 +147,12 @@ export function useTableOperate<T extends TableData = TableData>(
   }
 
   /** the editing row data */
-  const [editingData, setEditingData] = useState<T | null>(null);
+  const [editingData, setEditingData] = useState<T | undefined>(undefined);
 
   function handleEdit(id: T['id']) {
     setOperateType('edit');
-    const findItem = data.find(item => item.id === id) || null;
-    setEditingData(cloneDeep(findItem));
+    const findItem = data.find(item => item.id === id);
+    setEditingData(findItem);
     openDrawer();
   }
 
