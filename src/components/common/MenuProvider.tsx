@@ -16,7 +16,6 @@ export const MenuContext = createContext<SubMenuType[]>([]);
 
 const MenuProvider: FC<Props> = ({ children }) => {
   const sortRoutes = useAppSelector(getSortRoutes);
-  console.log(sortRoutes);
 
   const menus = getGlobalMenusByAuthRoutes(sortRoutes);
 

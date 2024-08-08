@@ -51,16 +51,6 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
-    name: 'error',
-    path: '/error',
-    component: 'layout.base$view.error',
-    meta: {
-      title: 'error',
-      i18nKey: 'route.error',
-      hideInMenu: true
-    }
-  },
-  {
     name: 'function',
     path: '/function',
     component: 'layout.base',

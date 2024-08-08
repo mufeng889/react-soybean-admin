@@ -20,7 +20,6 @@ export const pages: Record<LastLevelRouteKey, LazyRouteFunction<CustomRouteObjec
   403: () => import("@/pages/_builtin/403/index.tsx"),
   404: () => import("@/pages/_builtin/404/index.tsx"),
   500: () => import("@/pages/_builtin/500/index.tsx"),
-  error: () => import("@/pages/_builtin/error/index.tsx"),
   "iframe-page": () => import("@/pages/_builtin/iframe-page/[url].tsx"),
   about: () => import("@/pages/about/index.tsx"),
   "function_hide-child_one": () => import("@/pages/function/hide-child/one/index.tsx"),

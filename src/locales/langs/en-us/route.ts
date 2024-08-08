@@ -40,22 +40,10 @@ const route: App.I18n.Schema['translation']['route'] = {
   exception_403: '403',
   exception_404: '404',
   exception_500: '500',
-  plugin: 'Plugin',
-  plugin_copy: 'Copy',
-  plugin_charts: 'Charts',
-  plugin_charts_echarts: 'ECharts',
-  plugin_editor: 'Editor',
-  plugin_editor_quill: 'Quill',
-  plugin_editor_markdown: 'Markdown',
-  plugin_icon: 'Icon',
-  plugin_map: 'Map',
-  plugin_print: 'Print',
-  plugin_swiper: 'Swiper',
-  plugin_video: 'Video',
-  plugin_barcode: 'Barcode',
-  'plugin_vxe-table': 'vxe-tabel',
-  'plugin_vxe-table_base-tsx': 'base-form-tsx',
-  'plugin_large-visual-screen': 'Large Visual Screen'
+  login_register: 'Register Account',
+  'login_code-login': 'Code Login',
+  'login_pwd-login': 'Password Login',
+  'login_reset-pwd': 'Reset Password'
 };
 
 export default route;

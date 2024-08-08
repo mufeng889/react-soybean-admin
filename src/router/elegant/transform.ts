@@ -10,7 +10,7 @@ import type { FunctionComponent } from "react";
 import type { ElegantConstRoute } from '@ohh-889/react-auto-route';
 import type { RouteMap, RouteKey, RoutePath } from '@elegant-router/types';
 import { redirect } from 'react-router-dom'
-import ErrorBoundary  from '@/pages/_builtin/error' 
+import ErrorBoundary  from '../../../ErrorBoundary.tsx'
 
 
 type CustomRouteObject = Omit<RouteObject, 'Component'|'index'> & {
@@ -167,7 +167,7 @@ export function transformElegantRouteToReactRoute(
   }
 
 
-  
+
 
 
  if (children?.length) {
@@ -182,7 +182,7 @@ export function transformElegantRouteToReactRoute(
   }else if (redirectTo) {
     reactRoute.loader=()=>redirect(redirectTo)
   }
-  
+
   if (loader) {
     reactRoute.loader = () => loader
   }
@@ -221,7 +221,6 @@ const routeMap: RouteMap = {
   "404": "/404",
   "500": "/500",
   "about": "/about",
-  "error": "/error",
   "function": "/function",
   "function_hide-child": "hide-child",
   "function_hide-child_one": "one",

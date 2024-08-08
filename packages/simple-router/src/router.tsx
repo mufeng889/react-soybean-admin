@@ -99,6 +99,8 @@ class CreateRouter {
       return true;
     }
 
+    if (nextLocation.state === 'reload') return false;
+
     if (!this.initRoute) {
       Promise.resolve().then(() => {
         firstInit(this.matcher.getAllRouteNames());

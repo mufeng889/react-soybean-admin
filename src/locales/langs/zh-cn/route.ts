@@ -40,22 +40,10 @@ const route: App.I18n.Schema['translation']['route'] = {
   exception_403: '403',
   exception_404: '404',
   exception_500: '500',
-  plugin: '插件示例',
-  plugin_copy: '剪贴板',
-  plugin_charts: '图表',
-  plugin_charts_echarts: 'ECharts',
-  plugin_editor: '编辑器',
-  plugin_editor_quill: '富文本编辑器',
-  plugin_editor_markdown: 'MD 编辑器',
-  plugin_icon: '图标',
-  plugin_map: '地图',
-  plugin_print: '打印',
-  plugin_swiper: 'Swiper',
-  plugin_video: '视频',
-  plugin_barcode: '条形码',
-  'plugin_vxe-table': 'vxe-tabel',
-  'plugin_vxe-table_base-tsx': '基础表格-tsx',
-  'plugin_large-visual-screen': '可视化大屏'
+  login_register: ' 注册账号',
+  'login_code-login': '验证码登录',
+  'login_pwd-login': '密码登录',
+  'login_reset-pwd': '重置密码'
 };
 
 export default route;
