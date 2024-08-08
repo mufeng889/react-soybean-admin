@@ -1,7 +1,7 @@
 {
   "name": "react-soy",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": false,
   "packageManager": "pnpm@9.1.1",
   "scripts": {
