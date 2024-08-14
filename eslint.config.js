@@ -17,7 +17,8 @@ export default defineConfig(
           allowAllCaps: false,
           ignore: ['/^icon-/']
         }
-      ]
+      ],
+      'no-underscore-dangle': 'off'
     }
   }
 );

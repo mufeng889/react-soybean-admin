@@ -69,8 +69,7 @@ class CreateRouterMatcher {
       if (mainNormalizedRecord.children) {
         const children = mainNormalizedRecord.children;
 
-        // eslint-disable-next-line no-plusplus
-        for (let i = 0; i < children.length; i++) {
+        for (let i = 0; i < children.length; i += 1) {
           const childOriginalRecord = originalRecord && originalRecord.children[i];
           this.addRoute(children[i], matcher, childOriginalRecord);
         }
@@ -130,7 +129,7 @@ class CreateRouterMatcher {
       matcher = this.matcherMap.get(location.name);
 
       if (!matcher) {
-        throw new Error('没有此路由');
+        throw new Error('there is no such route');
       }
 
       name = matcher.record.name;
@@ -138,16 +137,14 @@ class CreateRouterMatcher {
         const params = location.params || {};
         const cleanedParams: { [key: string]: string | number } = {};
 
-        // eslint-disable-next-line guard-for-in
-        for (const key in params) {
+        Object.keys(params).forEach(key => {
           const value = params[key];
           if (typeof value === 'string' || typeof value === 'number') {
             cleanedParams[key] = value;
           } else if (Array.isArray(value)) {
-            // 如果需要支持数组，可以将其转换为字符串
             cleanedParams[key] = value.join(',');
           }
-        }
+        });
 
         fullPath = generatePath(matcher.record.path, cleanedParams);
       } else {
@@ -157,7 +154,6 @@ class CreateRouterMatcher {
         query = location.query || {};
 
         const queryParams = stringifyQuery(query);
-        console.log(queryParams);
 
         fullPath += queryParams ? `?${queryParams}` : '';
       }
@@ -186,7 +182,7 @@ class CreateRouterMatcher {
         ? this.matcherMap.get(currentLocation.name)
         : this.matchers.find(m => m.record === (currentLocation.path as unknown));
       if (!matcher) {
-        throw new Error('没有此理由');
+        throw new Error('there is no such route');
       }
 
       name = matcher.record.name;

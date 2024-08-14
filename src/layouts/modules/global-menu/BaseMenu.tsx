@@ -52,7 +52,6 @@ const BaseMenu: FC<Props> = memo(({ mode = 'inline', menus, darkTheme, className
   const collapse = useAppSelector(getSiderCollapse);
   const router = useRouterPush();
   const route = useRoute();
-  console.log(route);
 
   const matches = route.matched;
   const levelKeys = getLevelKeys(menus as LevelKeysProps[]);
@@ -63,7 +62,6 @@ const BaseMenu: FC<Props> = memo(({ mode = 'inline', menus, darkTheme, className
 
   const selectedKeys = () => {
     const lastElement = matches[matches.length - 1];
-    console.log(lastElement);
 
     const { hideInMenu, activeMenu } = lastElement.meta;
     const name = lastElement.name as string;

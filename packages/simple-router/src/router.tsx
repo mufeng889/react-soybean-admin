@@ -2,11 +2,13 @@ import type { Location, RouteObject } from 'react-router-dom';
 import { RouterProvider, createBrowserRouter, createHashRouter, createMemoryRouter } from 'react-router-dom';
 import type { BlockerFunction, Router as RemixRouter, RouterState } from '@remix-run/router';
 import type { ElegantConstRoute } from '@ohh-889/react-auto-route';
-import React, { createContext } from 'react';
-import type { RouteLocationNamedRaw, RouteLocationNormalizedLoaded, Router, RouterOptions } from './types';
+import React from 'react';
+import type { RouteLocationNamedRaw, RouteLocationNormalizedLoaded, RouterOptions } from './types';
 import CreateRouterMatcher from './matcher';
 import type { RouteRecordNormalized } from './matcher/types';
 import { START_LOCATION_NORMALIZED } from './types';
+import { RouterContext } from './hooks/useRouter';
+import { RouteContext } from './hooks/useRoute';
 
 const historyCreatorMap: Record<
   'hash' | 'history' | 'memory',
@@ -21,9 +23,6 @@ const historyCreatorMap: Record<
   history: createBrowserRouter,
   memory: createMemoryRouter
 };
-
-export const RouterContext = createContext<Router>({} as Router);
-export const RouteContext = createContext<RouteLocationNormalizedLoaded>(START_LOCATION_NORMALIZED);
 
 class CreateRouter {
   // Internal routes maintained for react-router
@@ -86,7 +85,6 @@ class CreateRouter {
     });
 
     // Update react-router's routes
-    // eslint-disable-next-line no-underscore-dangle
     this.reactRouter._internalSetRoutes([...this.initReactRoutes, ...this.reactRoutes]);
   }
 
@@ -195,13 +193,14 @@ class CreateRouter {
 
   CustomRouterProvider: (loading: React.ReactNode) => JSX.Element = loading => {
     const reactiveRoute = {} as RouteLocationNormalizedLoaded;
-    // eslint-disable-next-line guard-for-in
+
     for (const key in START_LOCATION_NORMALIZED) {
-      Object.defineProperty(reactiveRoute, key, {
-        // eslint-disable-next-line no-loop-func
-        get: () => this.currentRoute[key as keyof RouteLocationNormalizedLoaded],
-        enumerable: true
-      });
+      if (Object.hasOwn(START_LOCATION_NORMALIZED, key)) {
+        Object.defineProperty(reactiveRoute, key, {
+          get: () => this.currentRoute[key as keyof RouteLocationNormalizedLoaded],
+          enumerable: true
+        });
+      }
     }
 
     return (

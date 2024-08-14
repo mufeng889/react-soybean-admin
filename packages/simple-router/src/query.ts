@@ -40,8 +40,8 @@ export function parseQuery(search: string): LocationQuery {
   if (search === '' || search === '?') return query;
   const hasLeadingIM = search[0] === '?';
   const searchParams = (hasLeadingIM ? search.slice(1) : search).split('&');
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < searchParams.length; ++i) {
+
+  for (let i = 0; i < searchParams.length; i += 1) {
     // pre decode the + into space
     const searchParam = searchParams[i].replace(PLUS_RE, ' ');
     // allow the = character
@@ -53,8 +53,8 @@ export function parseQuery(search: string): LocationQuery {
       // an extra variable for ts types
       let currentValue = query[key];
       if (!Array.isArray(currentValue)) {
-        // eslint-disable-next-line no-multi-assign
-        currentValue = query[key] = [currentValue];
+        currentValue = [currentValue];
+        query[key] = currentValue;
       }
       // we force the modification
       (currentValue as LocationQueryValue[]).push(value);
@@ -67,10 +67,9 @@ export function parseQuery(search: string): LocationQuery {
 
 export function stringifyQuery(query: LocationQueryRaw): string {
   let search = '';
-  // eslint-disable-next-line guard-for-in
-  for (let key in query) {
-    const value = query[key];
-    key = encodeQueryKey(key);
+
+  for (const [originalKey, value] of Object.entries(query)) {
+    const key = encodeQueryKey(originalKey);
     if (value === null) {
       // only null adds the value
       if (value !== undefined) {
@@ -84,16 +83,14 @@ export function stringifyQuery(query: LocationQueryRaw): string {
       ? value.map(v => v && encodeQueryValue(v))
       : [value && encodeQueryValue(value)];
 
-    // eslint-disable-next-line no-loop-func
-    values.forEach(v => {
+    for (const v of values) {
       // skip undefined values in arrays as if they were not present
-      // smaller code than using filter
       if (v !== undefined) {
         // only append & with non-empty search
         search += (search.length ? '&' : '') + key;
         if (v !== null) search += `=${v}`;
       }
-    });
+    }
   }
 
   return search;
