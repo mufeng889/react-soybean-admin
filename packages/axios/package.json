@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@sa/utils": "workspace:*",
-    "axios": "1.7.3",
+    "axios": "1.7.4",
     "axios-retry": "4.5.0",
     "qs": "6.13.0"
   },
