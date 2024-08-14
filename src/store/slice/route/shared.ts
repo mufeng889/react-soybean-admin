@@ -42,11 +42,9 @@ function filterAuthRouteByRoles(route: ElegantConstRoute, roles: string[]) {
 function sortRouteByOrder(route: ElegantConstRoute) {
   const sortedRoute = { ...route };
   if (sortedRoute.children?.length) {
-    sortedRoute.children = sortedRoute.children.toSorted(
-      (next, prev) => (Number(next.meta?.order) || 0) - (Number(prev.meta?.order) || 0)
-    );
-
-    sortedRoute.children = sortedRoute.children.map(sortRouteByOrder);
+    sortedRoute.children = sortedRoute.children
+      .map(sortRouteByOrder)
+      .sort((a, b) => (Number(a.meta?.order) || 0) - (Number(b.meta?.order) || 0));
   }
 
   return sortedRoute;
@@ -58,9 +56,5 @@ function sortRouteByOrder(route: ElegantConstRoute) {
  * @param routes routes
  */
 export function sortRoutesByOrder(routes: ElegantConstRoute[]) {
-  let sortedRoutes = routes.toSorted((next, prev) => (Number(next.meta?.order) || 0) - (Number(prev.meta?.order) || 0));
-
-  sortedRoutes = sortedRoutes.map(sortRouteByOrder);
-
-  return sortedRoutes;
+  return routes.map(sortRouteByOrder).sort((a, b) => (Number(a.meta?.order) || 0) - (Number(b.meta?.order) || 0));
 }
