@@ -1,6 +1,22 @@
 # Changelog
 
 
+## [v0.2.1](https://github.com/mufeng889/react-soybean-admin/compare/v0.2.0...v0.2.1) (2024-08-14)
+
+### &nbsp;&nbsp;&nbsp;🐞 Bug Fixes
+
+- **proejects**: use other methods to replace toSorted for better compatibility with more browsers &nbsp;-&nbsp; by **wang** [<samp>(5bc13)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/5bc13d6)
+- **projects**: fixed tab not switching colors when switching color themes &nbsp;-&nbsp; by **wang** [<samp>(5afba)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/5afba5e)
+
+### &nbsp;&nbsp;&nbsp;🏡 Chore
+
+- **deps**: update deps &nbsp;-&nbsp; by **wang** [<samp>(95d38)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/95d38fe)
+
+### &nbsp;&nbsp;&nbsp;❤️ Contributors
+
+
+[wang](mailto:1509326266@qq.com)
+
 ## [v0.2.0](https://github.com/mufeng889/react-soybean-admin/compare/undefined...v0.2.0) (2024-08-08)
 
 ### &nbsp;&nbsp;&nbsp;🚀 Features
