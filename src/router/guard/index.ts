@@ -20,6 +20,6 @@ export const afterEach: AfterEach = to => {
   const { i18nKey, title } = to.meta;
 
   const documentTitle = i18nKey ? $t(i18nKey) : title;
-  document.title = documentTitle;
+  document.title = documentTitle ?? 'React-Soybean';
   window.NProgress?.done?.();
 };

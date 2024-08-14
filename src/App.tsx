@@ -1,4 +1,5 @@
 import { ConfigProvider } from 'antd';
+import { useUpdateEffect } from 'ahooks';
 import { localStg } from '@/utils/storage';
 import { getLocale } from '@/store/slice/app';
 import { getAntdTheme, setupThemeVarsToHtml, toggleCssDarkMode } from '@/store/slice/theme/shared.ts';
@@ -18,8 +19,11 @@ const App = () => {
   useEffect(() => {
     setupThemeVarsToHtml(colors);
     localStg.set('themeColor', colors.primary);
+  }, [colors]);
+
+  useUpdateEffect(() => {
     toggleCssDarkMode(darkMode);
-  }, [colors, darkMode]);
+  }, [darkMode]);
 
   return (
     <ConfigProvider
