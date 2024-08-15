@@ -147,7 +147,7 @@ export function useTableOperate<T extends TableData = TableData>(
   }
 
   /** the editing row data */
-  const [editingData, setEditingData] = useState<T | undefined>(undefined);
+  const [editingData, setEditingData] = useState<T>();
 
   function handleEdit(id: T['id']) {
     setOperateType('edit');
@@ -204,7 +204,7 @@ export function useTableOperate<T extends TableData = TableData>(
 
 export function useTableScroll(scrollX: number = 702) {
   const tableWrapperRef = useRef<HTMLDivElement>(null);
-  // const height = tableWrapperRef.current?.nativeElement.clientHeight;
+
   const height = tableWrapperRef.current?.clientHeight;
 
   const scrollConfig = {

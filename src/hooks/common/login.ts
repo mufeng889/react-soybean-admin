@@ -16,6 +16,7 @@ export function useLogin() {
     startLoading();
     await dispatch(login(params));
     const userName = dispatch(getUerName());
+
     if (userName) {
       dispatch(initAuthRoute());
       if (redirect) {

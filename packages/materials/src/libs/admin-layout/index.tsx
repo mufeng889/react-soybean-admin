@@ -109,7 +109,7 @@ const AdminLayout: FC<AdminLayoutProps> = ({
       style={cssVar}
     >
       <div
-        id={isWrapperScroll ? scrollElId : undefined}
+        id={isWrapperScroll ? scrollElId : ''}
         className={classNames('h-full flex flex-col', scrollWrapperClass, commonClass, {
           'overflow-y-auto': isWrapperScroll
         })}
@@ -203,7 +203,7 @@ const AdminLayout: FC<AdminLayoutProps> = ({
 
         {/*  Main Content  */}
         <main
-          id={isContentScroll ? scrollElId : undefined}
+          id={isContentScroll ? scrollElId : ''}
           className={classNames('flex flex-col  flex-grow bg-layout', commonClass, contentClass, leftGapClass, {
             'overflow-y-auto': isContentScroll
           })}

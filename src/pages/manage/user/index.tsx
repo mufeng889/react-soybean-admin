@@ -200,7 +200,7 @@ export function Component() {
           loading={loading}
           dataSource={data}
           columns={columns}
-        ></Table>
+        />
         <UserOperateDrawer
           open={drawerVisible}
           rowData={editingData}

@@ -59,14 +59,10 @@ export const { selectToken, selectUserInfo } = authSlice.selectors;
 export const { login, resetAuth } = authSlice.actions;
 // We can also write thunks by hand, which may contain both sync and async logic.
 // Here's an example of conditionally dispatching actions based on current state.
-export const getUerName = (): AppThunk<string | undefined> => (_, getState) => {
+export const getUerName = (): AppThunk<string> => (_, getState) => {
   const pass = selectToken(getState());
 
-  if (pass) {
-    const { userName } = selectUserInfo(getState());
-    return userName;
-  }
-  return undefined;
+  return pass ? selectUserInfo(getState()).userName : '';
 };
 
 /** is super role in static route */

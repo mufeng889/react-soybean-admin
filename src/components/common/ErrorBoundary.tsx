@@ -12,7 +12,7 @@ const FallbackRender: FC<Props> = ({ error }) => {
   return (
     <div className="size-full min-h-520px flex-col-center gap-24px overflow-hidden">
       <div className="flex text-400px text-primary">
-        <SvgIcon localIcon="service-error"></SvgIcon>
+        <SvgIcon localIcon="service-error" />
       </div>
       <pre>{error.message}</pre>
     </div>

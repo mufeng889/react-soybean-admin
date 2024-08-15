@@ -45,7 +45,7 @@ export default function useSvgIconRender(SvgIcon: ({ icon, localIcon, style, cla
     }
 
     if (!icon && !localIcon) {
-      return undefined;
+      return null;
     }
 
     return createElement(SvgIcon, { icon, localIcon, style });
