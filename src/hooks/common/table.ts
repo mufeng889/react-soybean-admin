@@ -163,9 +163,10 @@ export function useTableOperate<T extends TableData = TableData>(
     setCheckedRowKeys(keys);
   }
 
-  const rowSelection: TableProps['rowSelection'] = {
+  const rowSelection: TableProps<T>['rowSelection'] = {
     columnWidth: 48,
     type: 'checkbox',
+    fixed: true,
     selectedRowKeys: checkedRowKeys,
     onChange: onSelectChange
   };
