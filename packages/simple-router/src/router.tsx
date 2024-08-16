@@ -76,6 +76,9 @@ class CreateRouter {
     const flattenRoutes = routes.flat();
 
     flattenRoutes.forEach(route => {
+      const matcher = this.matcher.getRecordMatcher(route.name);
+      if (matcher) return;
+
       // Add route
       this.#addRoute(route);
       // Transform to react-router route
