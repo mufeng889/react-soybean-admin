@@ -3,7 +3,36 @@
   "type": "module",
   "version": "0.2.1",
   "private": false,
-  "packageManager": "pnpm@9.7.0",
+  "packageManager": "pnpm@9.1.0",
+  "description": "A fresh and elegant admin template, based on React18、Vite5、TypeScript、Ant Design and UnoCSS. 一个基于React18、Vite5、TypeScript、Ant Design and UnoCSS的清新优雅的中后台模版。",
+  "author": {
+    "name": "Ohh",
+    "email": "1509326266@qq.com",
+    "url": "https://github.com/mufeng889"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/mufeng889/react-soybean-admin",
+  "repository": {
+    "url": "https://github.com/mufeng889/react-soybean-admin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mufeng889/react-soybean-admin/issues"
+  },
+  "keywords": [
+    "React admin ",
+    "react-admin-template",
+    "Vite5",
+    "TypeScript",
+    "Ant Design",
+    "antd-admin",
+    "Redux",
+    "React-Router V6",
+    "UnoCSS"
+  ],
+  "engines": {
+    "node": ">=18.12.0",
+    "pnpm": ">=8.7.0"
+  },
   "scripts": {
     "build": "vite build --mode prod",
     "build:test": "vite build --mode test",
@@ -86,5 +115,5 @@
     "vite-plugin-remove-console": "2.2.0",
     "vite-plugin-svg-icons": "2.0.1"
   },
-  "website": "https://antd.soybeanjs.cn"
+  "website": "https://react-soybean.ohh-889.com/"
 }
