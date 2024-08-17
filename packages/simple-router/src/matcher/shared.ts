@@ -78,3 +78,22 @@ export function getQueryParams(search: string): LocationQuery {
 export function mergeMetaFields(matched: RouteRecordNormalized[]) {
   return matched.reduce((meta, record) => Object.assign(meta, record.meta), {});
 }
+
+/**
+ * Cleans and filters out null/undefined parameters.
+ *
+ * @param params - The raw parameters.
+ * @returns The cleaned parameters.
+ */
+export function cleanParams(params: Record<string, any>): Record<string, string | number> {
+  return Object.keys(params).reduce(
+    (acc, key) => {
+      const value = params[key];
+      if (value !== null && value !== undefined) {
+        acc[key] = Array.isArray(value) ? value.join(',') : value;
+      }
+      return acc;
+    },
+    {} as Record<string, string | number>
+  );
+}

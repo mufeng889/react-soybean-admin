@@ -165,24 +165,11 @@ class CreateRouter {
     if ('pathname' in rawLocation) {
       matcherLocation = rawLocation;
     } else {
-      // remove any nullish param
-      const targetParams: Record<string, any> = {};
-      for (const key in rawLocation.params) {
-        if (rawLocation.params[key] !== null || rawLocation.params[key] !== undefined) {
-          targetParams[key] = rawLocation.params[key];
-        }
-      }
-      const targetQuery: Record<string, any> = {};
-      for (const key in rawLocation.query) {
-        if (rawLocation.query[key] !== null || rawLocation.query[key] !== undefined) {
-          targetQuery[key] = rawLocation.query[key];
-        }
-      }
       // pass encoded values to the matcher, so it can produce encoded path and fullPath
 
       matcherLocation = Object.assign(rawLocation, {
-        params: targetParams,
-        query: targetQuery
+        params: cleanParams(rawLocation.params),
+        query: cleanParams(rawLocation.query)
       });
     }
 
@@ -195,16 +182,9 @@ class CreateRouter {
   }
 
   CustomRouterProvider: (loading: React.ReactNode) => JSX.Element = loading => {
-    const reactiveRoute = {} as RouteLocationNormalizedLoaded;
-
-    for (const key in START_LOCATION_NORMALIZED) {
-      if (Object.hasOwn(START_LOCATION_NORMALIZED, key)) {
-        Object.defineProperty(reactiveRoute, key, {
-          get: () => this.currentRoute[key as keyof RouteLocationNormalizedLoaded],
-          enumerable: true
-        });
-      }
-    }
+    const reactiveRoute = new Proxy(this.currentRoute, {
+      get: (_, key) => this.currentRoute[key as keyof RouteLocationNormalizedLoaded]
+    });
 
     return (
       <RouterContext.Provider value={this}>
@@ -228,9 +208,7 @@ class CreateRouter {
    * @param key Route key
    */
   getRouteMetaByKey(key: string) {
-    const allRoutes = this.getRoutes();
-
-    return allRoutes.find(route => route.name === key)?.meta || null;
+    return this.getRoutes().find(route => route.name === key)?.meta || null;
   }
 
   afterRouteChange = (state: RouterState, afterEach: RouterOptions['afterEach']) => {
@@ -260,35 +238,21 @@ class CreateRouter {
    * @returns The route record or false if not found.
    */
   getRouteByName(name: string): RouteRecordNormalized | undefined {
-    const route = this?.matcher.getRecordMatcher(name);
-    return route?.record;
+    return this.matcher.getRecordMatcher(name)?.record;
   }
 
   push(to: RouteLocationNamedRaw | string) {
-    if (typeof to === 'string') {
-      this.reactRouter.navigate(to);
-      return;
+    const target = typeof to === 'string' ? to : this.resolve(to).fullPath;
+
+    if (target !== this.currentRoute.fullPath) {
+      this.reactRouter.navigate(target);
     }
-
-    const toLocation = this.resolve(to);
-
-    const finalRedirectName = getChildrenName(toLocation.matched[toLocation.matched.length - 1]);
-    if (finalRedirectName === this.currentRoute.name) {
-      return;
-    }
-
-    this.reactRouter.navigate(toLocation.fullPath);
   }
 }
 
 export default CreateRouter;
 
-function getChildrenName(route: RouteRecordNormalized | ElegantConstRoute): string | undefined {
-  // If the route has children, recursively call this function for the first child route
-  if (route?.children) {
-    return getChildrenName(route.children[0]);
-  }
-
-  // If the route has no children, return the name of the route itself
-  return route?.name;
+function cleanParams(params: Record<string, any> | undefined): Record<string, any> {
+  if (!params) return {};
+  return Object.fromEntries(Object.entries(params).filter(([_, value]) => value !== null));
 }

@@ -4,7 +4,7 @@ import type { RouteLocationNamedRaw } from '../types';
 import { stringifyQuery } from '../query';
 import type { RouteRecordRaw } from './types';
 import { createRouteRecordMatcher } from './pathMatcher';
-import { generatePath, getQueryParams, mergeMetaFields, normalizeRouteRecord } from './shared';
+import { cleanParams, generatePath, getQueryParams, mergeMetaFields, normalizeRouteRecord } from './shared';
 
 class CreateRouterMatcher {
   // Internal routes maintained for react-router
@@ -90,21 +90,20 @@ class CreateRouterMatcher {
    * @param matcherRef - The route reference, which can be a name or a matcher object.
    */
   removeRoute(matcherRef: string | RouteRecordRaw) {
-    if (typeof matcherRef === 'string') {
-      const matcher = this.matcherMap.get(matcherRef);
-      if (matcher) {
-        this.removeMatcherMapByName(matcherRef);
-        this.matchers.splice(this.matchers.indexOf(matcher), 1);
+    const matcher = typeof matcherRef === 'string' ? this.matcherMap.get(matcherRef) : matcherRef;
 
-        matcher.children.forEach(this.removeRoute);
-      }
-    } else {
-      const index = this.matchers.indexOf(matcherRef);
-      if (index > -1) {
-        this.matchers.splice(index, 1);
-        if (matcherRef.record.name) this.removeMatcherMapByName(matcherRef.record.name);
-        matcherRef.children.forEach(this.removeRoute);
-      }
+    if (!matcher) return;
+
+    // Recursively remove children
+    matcher.children.forEach(child => this.removeRoute(child));
+
+    const index = this.matchers.indexOf(matcher);
+    if (index !== -1) {
+      this.matchers.splice(index, 1);
+    }
+
+    if (matcher.record.name) {
+      this.removeMatcherMapByName(matcher.record.name);
     }
   }
 
@@ -132,35 +131,18 @@ class CreateRouterMatcher {
         throw new Error('there is no such route');
       }
 
+      matcher = this.matcherMap.get(location.name);
+      if (!matcher) throw new Error('No such route');
+
       name = matcher.record.name;
-      if ('params' in location) {
-        const params = location.params || {};
-        const cleanedParams: { [key: string]: string | number } = {};
-
-        Object.keys(params).forEach(key => {
-          const value = params[key];
-          if (typeof value === 'string' || typeof value === 'number') {
-            cleanedParams[key] = value;
-          } else if (Array.isArray(value)) {
-            cleanedParams[key] = value.join(',');
-          }
-        });
-
-        fullPath = generatePath(matcher.record.path, cleanedParams);
-      } else {
-        fullPath = matcher.record.path;
-      }
-      if ('query' in location) {
-        query = location.query || {};
-
-        const queryParams = stringifyQuery(query);
-
-        fullPath += queryParams ? `?${queryParams}` : '';
-      }
-      // throws if cannot be stringified
+      const params = cleanParams(location.params || {});
+      fullPath = generatePath(matcher.record.path, params);
+      query = location.query || {};
+      const queryParams = stringifyQuery(query);
+      fullPath += queryParams ? `?${queryParams}` : '';
       path = matcher.record.path;
       component = matcher.record.component;
-    } else if (location.pathname !== null) {
+    } else if (location.pathname) {
       // no need to resolve the path with the matcher as it was provided
       // this also allows the user to control the encoding
       path = location.pathname;
@@ -169,8 +151,6 @@ class CreateRouterMatcher {
       // matcher should have a value after the loop
       query = getQueryParams(location.search);
       if (matcher) {
-        // we know the matcher works because we tested the regexp
-
         name = matcher.record.name;
         fullPath = location.pathname + location.search;
         component = matcher.record.component;

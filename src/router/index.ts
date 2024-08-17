@@ -4,16 +4,16 @@ import type { Router as RemixRouter } from '@remix-run/router';
 import { localStg } from '@/utils/storage';
 import { store } from '@/store';
 import { initAuthRoute, initConstantRoute } from '@/store/slice/route';
+import { initTabStore } from '@/store/slice/tab';
 import { layouts, pages } from './elegant/imports';
-import {initTabStore} from '@/store/slice/tab'
 import { transformElegantRouteToReactRoute } from './elegant/transform';
-import { createRouteGuard,afterEach } from './guard';
+import { afterEach, createRouteGuard } from './guard';
 import { builtinRoutes } from './routes/builtin';
 
 const { VITE_ROUTER_HISTORY_MODE = 'history', VITE_BASE_URL } = import.meta.env;
 
 /**
- * Get auth vue routes
+ * Get auth react routes
  *
  * @param routes Elegant routes
  */
@@ -32,7 +32,7 @@ async function init(reactRouter: RemixRouter) {
 }
 
 function initBeforeRoute(allNames: string[]) {
-  store.dispatch(initTabStore(allNames))
+  store.dispatch(initTabStore(allNames));
 }
 
 export const router = new CreateRouter({
@@ -43,7 +43,5 @@ export const router = new CreateRouter({
   init,
   beforeEach: createRouteGuard,
   afterEach,
-  firstInit:initBeforeRoute
+  firstInit: initBeforeRoute
 });
-
-// createRouterGuard(routers.beforeEach, routers.afterEach);
