@@ -54,10 +54,10 @@ class CreateRouter {
     });
 
     this.reactRouter.getBlocker('beforeGuard', (arg: Parameters<BlockerFunction>[0]) =>
-      this.onBeforeRouteChange(arg, beforeEach, firstInit)
+      this.#onBeforeRouteChange(arg, beforeEach, firstInit)
     );
 
-    this.reactRouter.subscribe((state: RouterState) => this.afterRouteChange(state, afterEach));
+    this.reactRouter.subscribe((state: RouterState) => this.#afterRouteChange(state, afterEach));
     this.initReactRoutes = initReactRoutes;
     this.getReactRoutes = getReactRoutes;
     Promise.resolve().then(async () => {
@@ -91,7 +91,7 @@ class CreateRouter {
     this.reactRouter._internalSetRoutes([...this.initReactRoutes, ...this.reactRoutes]);
   }
 
-  onBeforeRouteChange = (
+  #onBeforeRouteChange = (
     { currentLocation, nextLocation }: Parameters<BlockerFunction>[0],
     beforeEach: RouterOptions['beforeEach'],
     firstInit: (allNames: string[]) => void
@@ -111,7 +111,14 @@ class CreateRouter {
 
     const to = this.resolve(nextLocation);
 
-    if (to.matched[0]?.redirect === this.currentRoute.path) return true;
+    const matchedRoutes = to.matched;
+    const nextRoute = matchedRoutes[matchedRoutes.length - 1];
+
+    const finalPath = getFullPath(nextRoute);
+
+    if (finalPath === this.currentRoute.path || matchedRoutes[0]?.redirect === this.currentRoute.path) {
+      return true;
+    }
 
     const next = (param?: boolean | string) => {
       if (!param) return false;
@@ -211,7 +218,7 @@ class CreateRouter {
     return this.getRoutes().find(route => route.name === key)?.meta || null;
   }
 
-  afterRouteChange = (state: RouterState, afterEach: RouterOptions['afterEach']) => {
+  #afterRouteChange = (state: RouterState, afterEach: RouterOptions['afterEach']) => {
     if (state.navigation.state === 'idle') {
       const from = this.currentRoute;
       this.currentRoute = this.resolve(state.location);
@@ -241,12 +248,24 @@ class CreateRouter {
     return this.matcher.getRecordMatcher(name)?.record;
   }
 
-  push(to: RouteLocationNamedRaw | string) {
+  push(to: RouteLocationNamedRaw | string | Location, replace?: true) {
     const target = typeof to === 'string' ? to : this.resolve(to).fullPath;
 
     if (target !== this.currentRoute.fullPath) {
-      this.reactRouter.navigate(target);
+      this.reactRouter.navigate(target, { replace });
     }
+  }
+
+  back() {
+    this.go(-1);
+  }
+
+  forwardRef() {
+    this.go(1);
+  }
+
+  go(delta: number) {
+    this.reactRouter.navigate(delta);
   }
 }
 
@@ -255,4 +274,16 @@ export default CreateRouter;
 function cleanParams(params: Record<string, any> | undefined): Record<string, any> {
   if (!params) return {};
   return Object.fromEntries(Object.entries(params).filter(([_, value]) => value !== null));
+}
+
+function getFullPath(route: RouteRecordNormalized | ElegantConstRoute): string {
+  // 如果当前 route 存在并且有 children
+  if (route && route.children && route.children.length > 0) {
+    // 获取第一个子路由
+    const firstChild = route.children[0];
+    // 递归调用，继续拼接子路由的 path
+    return `${route.path}/${getFullPath(firstChild)}`;
+  }
+  // 如果没有 children，返回当前 route 的 path
+  return route.path;
 }
