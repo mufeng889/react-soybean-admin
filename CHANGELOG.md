@@ -1,6 +1,38 @@
 # Changelog
 
 
+## [v0.3.0](https://github.com/mufeng889/react-soybean-admin/compare/v0.2.1...v0.3.0) (2024-08-20)
+
+### &nbsp;&nbsp;&nbsp;🚀 Features
+
+- **packages**: perfect routing method &nbsp;-&nbsp; by **wang** [<samp>(7a15b)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/7a15b1b)
+
+### &nbsp;&nbsp;&nbsp;🐞 Bug Fixes
+
+- **packages**:
+  - fix repeat routing &nbsp;-&nbsp; by **wang** [<samp>(98a71)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/98a7117)
+- **projects**:
+  - prevent local storage conflicts &nbsp;-&nbsp; by @Azir-11 [<samp>(cc2d4)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/cc2d470)
+  - fix Fix type error type error  . close #3 &nbsp;-&nbsp; by **wang** in https://github.com/mufeng889/react-soybean-admin/issues/3 [<samp>(d9237)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/d923752)
+
+### &nbsp;&nbsp;&nbsp;🛠 Optimizations
+
+- optimized code &nbsp;-&nbsp; by **wang** [<samp>(f94b5)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/f94b58b)
+- **code**:
+  - optimize the experience &nbsp;-&nbsp; by **wang** [<samp>(6a135)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/6a1354a)
+- **packages**:
+  - optimize simple-router code &nbsp;-&nbsp; by **wang** [<samp>(c6ea8)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/c6ea8b0)
+  - optimized  simple-router code &nbsp;-&nbsp; by **wang** [<samp>(edfb1)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/edfb1f6)
+
+### &nbsp;&nbsp;&nbsp;🏡 Chore
+
+- **package**: improve package content . close #4 &nbsp;-&nbsp; by **wang** in https://github.com/mufeng889/react-soybean-admin/issues/4 [<samp>(a2dde)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/a2dde59)
+
+### &nbsp;&nbsp;&nbsp;❤️ Contributors
+
+[![Azir-11](https://github.com/Azir-11.png?size=48)](https://github.com/Azir-11)&nbsp;&nbsp;
+[wang](mailto:1509326266@qq.com),&nbsp;
+
 ## [v0.2.1](https://github.com/mufeng889/react-soybean-admin/compare/v0.2.0...v0.2.1) (2024-08-14)
 
 ### &nbsp;&nbsp;&nbsp;🐞 Bug Fixes
