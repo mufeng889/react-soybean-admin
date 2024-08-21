@@ -205,10 +205,10 @@ export function useTableOperate<T extends TableData = TableData>(
 export function useTableScroll(scrollX: number = 702) {
   const tableWrapperRef = useRef<HTMLDivElement>(null);
 
-  const height = tableWrapperRef.current?.clientHeight;
+  const size = useSize(tableWrapperRef);
 
   const scrollConfig = {
-    y: height ? height - 176 : 240,
+    y: size?.height ? size.height - 184 : 240,
     x: scrollX
   };
 
