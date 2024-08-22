@@ -63,9 +63,21 @@
 - **Command-line Tools**: Built-in efficient command-line tools for git commits, file deletion, publishing, etc.
 - **Mobile-friendly**: Fully supports mobile devices with responsive layouts.
 
+## Error Boundaries
+
+- **Good UI**: Automatically captures errors when they occur and displays a friendly interface to help users quickly identify and resolve issues. It can also report errors via monitoring points embedded within the component.
+![Error Example](https://ohh-1321526050.cos.ap-nanjing.myqcloud.com/mobile-error-example.jpg)
+
+## Beginner-Friendly Documentation in Ant Design Style
+
+- [Link](https://react-soybean-docs.ohh-889.com/index-cn?theme=dark)
+![Docs Home](https://ohh-1321526050.cos.ap-nanjing.myqcloud.com/docs-home.jpg)
+
 ## Sample Images
 
 ![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-01.png)
+![](https://ohh-1321526050.cos.ap-nanjing.myqcloud.com/moblie-home-example.jpg)
+![](https://ohh-1321526050.cos.ap-nanjing.myqcloud.com/mobile-manage-example.jpg)
 ![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-02.png)
 ![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-03.png)
 ![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-04.png)

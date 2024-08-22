@@ -23,6 +23,7 @@
   - [预览地址](https://github.com/mufeng889/react-soybean-admin/)
   - [国内加速访问]( https://react-soybean-admin.pages.dev/)
   - [Github 仓库](https://github.com/mufeng889/react-soybean-admin)
+  - [Gitee 仓库](https://gitee.com/sjgk_dl/react-admin)
 
 #### 文档
 
@@ -63,9 +64,21 @@
 - **命令行工具**：内置高效的命令行工具，git提交、删除文件、发布等。
 - **移动端适配**：完美支持移动端，实现自适应布局。
 
+## 错误边界
+
+- **良好UI**：在发生错误的时候自动捕获错误，并显示友好界面，帮助用户快速定位和解决问题，还可以再组件内监控埋点上报。
+![](https://ohh-1321526050.cos.ap-nanjing.myqcloud.com/mobile-error-example.jpg)
+
+## 符合Ant Design风格的保姆级文档
+
+- [地址](https://react-soybean-docs.ohh-889.com/index-cn?theme=dark)
+![](https://ohh-1321526050.cos.ap-nanjing.myqcloud.com/docs-home.jpg)
+
 ## 示例图片
 
 ![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-01.png)
+![](https://ohh-1321526050.cos.ap-nanjing.myqcloud.com/moblie-home-example.jpg)
+![](https://ohh-1321526050.cos.ap-nanjing.myqcloud.com/mobile-manage-example.jpg)
 ![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-02.png)
 ![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-03.png)
 ![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-04.png)
@@ -157,7 +170,7 @@ pnpm build
   <img src="https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/wechat-soybeanjs.jpg" style="width:200px" />
  </div>
 
- div>
+ <div>
   <p>添加下面微信邀请进微信群</p>
   <img src="
   https://ohh-1321526050.cos.ap-nanjing.myqcloud.com/ohh-889.jpg" style="width:200px" />
