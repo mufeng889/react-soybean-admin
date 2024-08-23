@@ -15,6 +15,8 @@ const common: App.I18n.Schema['translation']['common'] = {
   deleteSuccess: '删除成功',
   confirmDelete: '确认删除吗？',
   edit: '编辑',
+  warning: '警告',
+  error: '错误',
   index: '序号',
   keywordSearch: '请输入关键词搜索',
   logout: '退出登录',

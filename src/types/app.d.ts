@@ -285,6 +285,8 @@ declare namespace App {
           deleteSuccess: string;
           confirmDelete: string;
           edit: string;
+          warning: string;
+          error: string;
           index: string;
           keywordSearch: string;
           logout: string;
