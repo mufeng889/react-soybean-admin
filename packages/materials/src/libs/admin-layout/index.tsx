@@ -1,4 +1,4 @@
-import { type FC, useMemo } from 'react';
+import { type FC } from 'react';
 import classNames from 'classnames';
 import type { AdminLayoutProps } from '../../types';
 import { LAYOUT_MAX_Z_INDEX, LAYOUT_SCROLL_EL_ID, createLayoutCssVars } from './shared';
@@ -66,13 +66,13 @@ const AdminLayout: FC<AdminLayoutProps> = ({
   const fixedHeaderAndTab = fixedTop || (isHorizontal && isWrapperScroll);
 
   // css
-  const leftGapClass = useMemo(() => {
+  const leftGapClass = () => {
     if (!fullContent && showSider) {
       return siderCollapse ? style['left-gap_collapsed'] : style['left-gap'];
     }
     return '';
-  }, [siderCollapse, showSider, fullContent]);
-  const headerLeftGapClass = isVertical ? leftGapClass : '';
+  };
+  const headerLeftGapClass = isVertical ? leftGapClass() : '';
 
   const footerLeftGapClass = () => {
     const condition1 = isVertical;
@@ -80,7 +80,7 @@ const AdminLayout: FC<AdminLayoutProps> = ({
     const condition3 = Boolean(isHorizontal && rightFooter);
 
     if (condition1 || condition2 || condition3) {
-      return leftGapClass;
+      return leftGapClass();
     }
 
     return '';
@@ -147,7 +147,7 @@ const AdminLayout: FC<AdminLayoutProps> = ({
                 commonClass,
                 tabClass,
                 { 'top-0!': fullContent || !showHeader },
-                leftGapClass,
+                leftGapClass(),
                 { 'absolute left-0 w-full': fixedHeaderAndTab }
               )}
             >
@@ -204,7 +204,7 @@ const AdminLayout: FC<AdminLayoutProps> = ({
         {/*  Main Content  */}
         <main
           id={isContentScroll ? scrollElId : ''}
-          className={classNames('flex flex-col  flex-grow bg-layout', commonClass, contentClass, leftGapClass, {
+          className={classNames('flex flex-col  flex-grow bg-layout', commonClass, contentClass, leftGapClass(), {
             'overflow-y-auto': isContentScroll
           })}
         >
