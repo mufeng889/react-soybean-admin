@@ -57,6 +57,7 @@ export const tabSlice = createSlice({
     },
     changeTabLabel(state, { payload }: PayloadAction<{ label?: string; index: number }>) {
       const { label, index } = payload;
+
       if (label) {
         state.tabs[index].i18nKey = label;
       } else {
@@ -303,9 +304,9 @@ export const setTabLabel =
     const activeTabId = getActiveTabId(getState());
     const tabs = getTabs(getState());
     const id = tabId || activeTabId;
-
     const tab = tabs.findIndex(item => item.id === id);
-    if (!tab) return;
+
+    if (tab < 0) return;
 
     dispatch(changeTabLabel({ label, index: tab }));
   };
@@ -323,7 +324,7 @@ export const resetTabLabel =
     const id = tabId || activeTabId;
 
     const tab = tabs.findIndex(item => item.id === id);
-    if (!tab) return;
+    if (tab < 0) return;
 
     dispatch(changeTabLabel({ index: tab }));
   };
