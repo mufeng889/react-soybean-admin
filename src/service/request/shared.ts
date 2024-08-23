@@ -1,7 +1,9 @@
 import type { AxiosRequestConfig } from 'axios';
-
+import { resetStore } from '@/store/slice/auth';
+import { store } from '@/store';
 import { localStg } from '@/utils/storage';
 import { fetchRefreshToken } from '../api';
+import type { RequestInstanceState } from './type';
 
 /**
  * refresh token
@@ -23,5 +25,30 @@ export async function handleRefreshToken(axiosConfig: AxiosRequestConfig) {
     return config;
   }
 
+  store.dispatch(resetStore());
+
   return null;
+}
+
+export function showErrorMsg(state: RequestInstanceState, message: string) {
+  if (!state.errMsgStack?.length) {
+    state.errMsgStack = [];
+  }
+
+  const isExist = state.errMsgStack.includes(message);
+
+  if (!isExist) {
+    state.errMsgStack.push(message);
+
+    window.$message?.error({
+      content: message,
+      onClose: () => {
+        state.errMsgStack = state.errMsgStack.filter(msg => msg !== message);
+
+        setTimeout(() => {
+          state.errMsgStack = [];
+        }, 5000);
+      }
+    });
+  }
 }
