@@ -99,7 +99,7 @@ const customRoutes: CustomRoute[] = [
         path: 'project',
         component: 'view.iframe-page',
         props: {
-          url: 'https://docs.soybeanjs.cn/zh'
+          url: 'https://react-soybean-docs.pages.dev/index-cn?theme=dark'
         },
         meta: {
           title: 'document_project',
@@ -117,7 +117,7 @@ const customRoutes: CustomRoute[] = [
           i18nKey: 'route.document_project-link',
           order: 2,
           localIcon: 'logo',
-          href: 'https://docs.soybeanjs.cn/zh'
+          href: 'https://react-soybean-docs.pages.dev/index-cn?theme=dark'
         }
       },
       {
