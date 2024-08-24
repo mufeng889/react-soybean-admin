@@ -4,6 +4,7 @@
     "source.organizeImports": "never"
   },
   "eslint.useFlatConfig": true,
+  "editor.guides.bracketPairs": "active",
   "editor.formatOnSave": false,
   "eslint.validate": ["html", "css", "scss", "json", "jsonc"],
   "i18n-ally.displayLanguage": "zh-cn",
