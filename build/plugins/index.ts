@@ -2,6 +2,7 @@ import type { PluginOption } from 'vite';
 import react from '@vitejs/plugin-react';
 import Inspect from 'vite-plugin-inspect';
 import removeConsole from 'vite-plugin-remove-console';
+import checker from 'vite-plugin-checker';
 import { setupAutoImport } from './auto-import';
 import { setupUnocss } from './unocss';
 import { setupUnPluginIcon } from './unplugin-icon';
@@ -15,7 +16,10 @@ export function setupVitePlugins(viteEnv: Env.ImportMeta) {
     ...setupUnPluginIcon(viteEnv),
     setupElegantRouter(),
     Inspect(),
-    removeConsole()
+    removeConsole(),
+    checker({
+      typescript: true
+    })
   ];
 
   return plugins;
