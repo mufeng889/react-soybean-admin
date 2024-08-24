@@ -1,5 +1,5 @@
 import type { LastLevelRouteKey, RouteKey, RouteMap } from '@elegant-router/types';
-import type { RouteRecordNormalized } from '@/router/matcher/types';
+import type { RouteRecordNormalized } from '@sa/simple-router';
 import { $t } from '@/locales';
 import { getRoutePath } from '@/router/elegant/transform';
 

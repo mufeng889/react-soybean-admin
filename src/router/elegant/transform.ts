@@ -167,7 +167,7 @@ export function transformElegantRouteToReactRoute(
   }
 
 
-
+  
 
 
  if (children?.length) {
@@ -182,12 +182,10 @@ export function transformElegantRouteToReactRoute(
   }else if (redirectTo) {
     reactRoute.loader=()=>redirect(redirectTo)
   }
-
+  
   if (loader) {
     reactRoute.loader = () => loader
   }
-
-
 
   if (layout) {
 

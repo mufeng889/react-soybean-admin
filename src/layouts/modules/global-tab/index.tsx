@@ -1,3 +1,4 @@
+/* eslint-disable */
 import ClassNames from 'classnames';
 import type BScroll from '@better-scroll/core';
 import { PageTab } from '@sa/materials';

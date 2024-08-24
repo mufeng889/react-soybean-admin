@@ -7,7 +7,8 @@ export default defineConfig(
     prettierRules: {
       singleAttributePerLine: true,
       trailingCommas: 'none'
-    }
+    },
+    ignores: ['/src/layouts/modules/global-tab/index.tsx']
   },
   {
     rules: {

@@ -1,4 +1,5 @@
 import { Button, Form, Input, Space } from 'antd';
+
 interface FormModel {
   phone: string;
   code: string;

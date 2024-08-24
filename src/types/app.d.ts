@@ -133,7 +133,7 @@ declare namespace App {
   /** Global namespace */
   namespace Global {
     type VNode = import('vue').VNode;
-    type RouteLocationNormalizedLoaded = import('vue-router').RouteLocationNormalizedLoaded;
+    type RouteLocationNormalizedLoaded = import('@sa/simple-router').RouteLocationNormalizedLoaded;
     type RouteKey = import('@elegant-router/types').RouteKey;
     type RouteMap = import('@elegant-router/types').RouteMap;
     type RoutePath = import('@elegant-router/types').RoutePath;

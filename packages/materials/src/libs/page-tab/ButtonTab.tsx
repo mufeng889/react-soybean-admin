@@ -1,7 +1,5 @@
-import React from 'react';
 import classNames from 'classnames';
 import type { ButtonTabProps } from '../../types';
-
 import styles from './index.module.css';
 
 const ButtonTab = ({ darkMode, active, prefix, suffix, children, className, style, ...rest }: ButtonTabProps) => {

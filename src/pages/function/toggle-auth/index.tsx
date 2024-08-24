@@ -22,13 +22,11 @@ export function Component() {
 
   const userInfo = useAppSelector(selectUserInfo);
 
-
   const { hasAuth } = useAuth();
   const { toLogin } = useLogin();
   const { loading, startLoading, endLoading } = useLoading();
 
   const dispatch = useAppDispatch();
-
 
   const [loginAccount, setLoginAccount] = useState<AccountKey>('super');
 
@@ -90,9 +88,7 @@ export function Component() {
 
     startLoading();
 
-
-
-    router.resetRoute()
+    router.resetRoute();
 
     await toLogin({ userName: account.userName, password: account.password }, false);
 

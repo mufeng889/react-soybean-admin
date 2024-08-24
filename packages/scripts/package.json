@@ -9,9 +9,7 @@
   },
   "typesVersions": {
     "*": {
-      "*": [
-        "./src/*"
-      ]
+      "*": ["./src/*"]
     }
   },
   "devDependencies": {

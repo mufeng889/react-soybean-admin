@@ -49,7 +49,7 @@ export function useFormRules() {
   }
 
   /** create a rule for confirming the password */
-  function createConfirmPwdRule(from: FormInstance<{ password: string }>) {
+  function createConfirmPwdRule(from: FormInstance) {
     const confirmPwdRule: App.Global.FormRule[] = [
       { required: true, message: $t('form.confirmPwd.required') },
       {
