@@ -7,7 +7,7 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "types": ["node"],
+    "types": ["node", "vite/client"],
     "strict": true,
     "strictNullChecks": true,
     "noUnusedLocals": true,

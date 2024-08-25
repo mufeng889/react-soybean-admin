@@ -1,10 +1,18 @@
 import type { ElegantConstRoute } from '@ohh-889/react-auto-route';
 import type { Location } from 'react-router-dom';
+import { matchPath } from 'react-router-dom';
 import type { RouteLocationNamedRaw } from '../types';
 import { stringifyQuery } from '../query';
 import type { RouteRecordRaw } from './types';
 import { createRouteRecordMatcher } from './pathMatcher';
-import { cleanParams, generatePath, getQueryParams, mergeMetaFields, normalizeRouteRecord } from './shared';
+import {
+  checkChildMissingNameWithEmptyPath,
+  cleanParams,
+  generatePath,
+  getQueryParams,
+  mergeMetaFields,
+  normalizeRouteRecord
+} from './shared';
 
 class CreateRouterMatcher {
   // Internal routes maintained for react-router
@@ -36,10 +44,11 @@ class CreateRouterMatcher {
   addRoute(record: ElegantConstRoute, parent?: RouteRecordRaw, originalRecord?: RouteRecordRaw) {
     // used later on to remove by name
     const isRootAdd = !originalRecord;
+
     const mainNormalizedRecord = normalizeRouteRecord(record);
-    // if (process.env.NODE_ENV === 'development') {
-    //   checkChildMissingNameWithEmptyPath(mainNormalizedRecord, parent);
-    // }
+    if (import.meta.env.NODE_ENV === 'development') {
+      checkChildMissingNameWithEmptyPath(mainNormalizedRecord, parent);
+    }
 
     // generate an array of records to correctly handle aliases
     const normalizedRecords: (typeof mainNormalizedRecord)[] = [mainNormalizedRecord];
@@ -128,11 +137,8 @@ class CreateRouterMatcher {
       matcher = this.matcherMap.get(location.name);
 
       if (!matcher) {
-        throw new Error('there is no such route');
+        matcher = this.matchers[0];
       }
-
-      matcher = this.matcherMap.get(location.name);
-      if (!matcher) throw new Error('No such route');
 
       name = matcher.record.name;
       const params = cleanParams(location.params || {});
@@ -147,7 +153,11 @@ class CreateRouterMatcher {
       // this also allows the user to control the encoding
       path = location.pathname;
 
-      matcher = this.matchers.find(m => m.record.path === path);
+      matcher = this.matchers.slice(1).find(m => {
+        return Boolean(matchPath(m.record.path, location.pathname));
+      });
+      if (!matcher) matcher = this.matchers[0];
+
       // matcher should have a value after the loop
       query = getQueryParams(location.search);
       if (matcher) {
@@ -168,7 +178,7 @@ class CreateRouterMatcher {
       name = matcher.record.name;
     }
     const matched = [];
-    let parentMatcher = matcher;
+    let parentMatcher: RouteRecordRaw | undefined = matcher;
     while (parentMatcher) {
       // reversed order so parents are at the beginning
       matched.unshift(parentMatcher.record);
@@ -202,7 +212,12 @@ class CreateRouterMatcher {
    * @param matcher - The matcher object to insert.
    */
   insertMatcher(matcher: RouteRecordRaw) {
-    this.matchers.push(matcher);
+    if (matcher.record.path === '*') {
+      this.matchers.unshift(matcher);
+    } else {
+      this.matchers.push(matcher);
+    }
+
     // only add the original record to the name map
     if (matcher.record.name) this.matcherMap.set(matcher.record.name, matcher);
   }

@@ -9,6 +9,7 @@ import type { RouteRecordNormalized } from './matcher/types';
 import { START_LOCATION_NORMALIZED } from './types';
 import { RouterContext } from './hooks/useRouter';
 import { RouteContext } from './hooks/useRoute';
+import { warn } from './warning';
 
 const historyCreatorMap: Record<
   'hash' | 'history' | 'memory',
@@ -120,15 +121,22 @@ class CreateRouter {
       return true;
     }
 
-    const next = (param?: boolean | string) => {
-      if (!param) return false;
-      if (typeof param === 'string') {
-        this.reactRouter.navigate(param);
-      }
-      return true;
-    };
-    return beforeEach(to, this.currentRoute, next);
+    return beforeEach(to, this.currentRoute, this.#next);
   };
+
+  #next(param?: boolean | string | Location | RouteLocationNamedRaw) {
+    if (!param) return false;
+    if (typeof param === 'string') {
+      this.reactRouter.navigate(param);
+    }
+
+    if (typeof param === 'object') {
+      const finalRedirectPath = this.resolve(param);
+      this.reactRouter.navigate(finalRedirectPath.fullPath);
+    }
+
+    return true;
+  }
 
   /**
    * Adds a route or updates an existing one.
@@ -142,9 +150,9 @@ class CreateRouter {
 
     if (typeof parentOrRoute === 'string') {
       parent = this.matcher.getRecordMatcher(parentOrRoute);
-      // if (import.meta.env.MODE === 'development' && !parent) {
-      //   warn(`Parent route "${String(parentOrRoute)}" not found when adding child route`);
-      // }
+      if (import.meta.env.MODE === 'development' && !parent) {
+        warn(`Parent route "${String(parentOrRoute)}" not found when adding child route`);
+      }
       record = route!;
     } else {
       record = parentOrRoute;
@@ -169,6 +177,7 @@ class CreateRouter {
     let matcherLocation: Location | RouteLocationNamedRaw;
 
     // path could be relative in object as well
+
     if ('pathname' in rawLocation) {
       matcherLocation = rawLocation;
     } else {
