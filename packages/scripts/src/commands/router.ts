@@ -4,12 +4,26 @@ import { writeFile } from 'node:fs/promises';
 import { existsSync, mkdirSync } from 'node:fs';
 import { prompt } from 'enquirer';
 import { green, red } from 'kolorist';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 
 interface PromptObject {
   routeName: string;
   addRouteParams: boolean;
   routeParams: string;
+  addRouteConfig: boolean;
 }
+
+const argv = yargs(hideBin(process.argv))
+  .option('routeConfigFile', {
+    alias: 'r',
+    type: 'string',
+    description: '配置文件夹名称',
+    demandOption: false, // 该参数为可选
+    default: 'config' // 默认值
+  })
+  .help()
+  .parseSync();
 
 /** generate route */
 export async function generateRoute() {
@@ -24,6 +38,12 @@ export async function generateRoute() {
       name: 'addRouteParams',
       type: 'confirm',
       message: 'add route params?',
+      initial: false
+    },
+    {
+      name: 'addRouteConfig',
+      type: 'confirm',
+      message: 'add route config?',
       initial: false
     }
   ]);
@@ -76,13 +96,22 @@ For example:
   const fileName = result.routeParams ? `[${result.routeParams}].tsx` : 'index.tsx';
 
   const reactTemplate = `export function Component() {
-  return <div>manage_menu</div>;
+  return <div>${result.routeName}</div>
 }
-
 
 `;
 
   const filePath = path.join(routeDir, fileName);
 
   await writeFile(filePath, reactTemplate);
+
+  if (result.addRouteConfig) {
+    let configFolderName = argv.routeConfigFile || 'config';
+    configFolderName += '.ts';
+    const routeConfigFilePath = path.join(routeDir, configFolderName);
+    const routeConfigTemplate = `export const meta = {
+  title: 'test'
+};`;
+    await writeFile(routeConfigFilePath, routeConfigTemplate);
+  }
 }

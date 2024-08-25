@@ -8,7 +8,7 @@ export default defineConfig(
       singleAttributePerLine: true,
       trailingCommas: 'none'
     },
-    ignores: ['/src/layouts/modules/global-tab/index.tsx']
+    ignores: ['src/layouts/modules/global-tab/index.tsx']
   },
   {
     rules: {
