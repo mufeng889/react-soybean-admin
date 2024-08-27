@@ -1,6 +1,7 @@
 import { Button, Checkbox, Divider, Form, Input, Space } from 'antd';
 import { loginModuleRecord } from '@/constants/app';
 import { useLogin } from '@/hooks/common/login';
+
 type AccountKey = 'super' | 'admin' | 'user';
 interface Account {
   key: AccountKey;
@@ -73,6 +74,7 @@ export function Component() {
         >
           <Input.Password autoComplete="password"></Input.Password>
         </Form.Item>
+        </Form>
         <Space
           direction="vertical"
           className="w-full"
@@ -129,7 +131,7 @@ export function Component() {
             })}
           </div>
         </Space>
-      </Form>
+
     </>
   );
 }
