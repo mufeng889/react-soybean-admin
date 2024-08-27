@@ -10,8 +10,11 @@ interface Account {
   password: string;
 }
 
+type LoginParams = Pick<Account, 'userName' | 'password'>;
+
+
 export function Component() {
-  const [form] = Form.useForm<Pick<Account, 'userName' | 'password'>>();
+  const [form] = Form.useForm<LoginParams>();
   const { toggleLoginModule } = useRouterPush();
   const { t } = useTranslation();
   const { loading, toLogin } = useLogin();
