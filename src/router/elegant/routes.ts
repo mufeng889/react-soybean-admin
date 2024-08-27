@@ -192,7 +192,7 @@ export const generatedRoutes: GeneratedRoute[] = [
   {
     name: 'login',
     path: '/login',
-    component: 'layout.undefined',
+    component: 'layout.blank',
     redirect: 'pwd-login',
     layout: 'blank',
     meta: {

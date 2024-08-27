@@ -151,7 +151,7 @@ export function transformElegantRouteToReactRoute(
           reactRoute.lazy = async () => {
            const data= (await views[viewName]()).Component as FunctionComponent
             return {
-            element: data(props) ,
+            Component: ()=>data(props) ,
             ErrorBoundary: null
             }
           }
