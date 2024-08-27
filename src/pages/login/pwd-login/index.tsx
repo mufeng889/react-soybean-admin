@@ -65,16 +65,15 @@ export function Component() {
           rules={userNameRules}
           name="userName"
         >
-          <Input></Input>
+          <Input />
         </Form.Item>
 
         <Form.Item
           rules={pwd}
           name="password"
         >
-          <Input.Password autoComplete="password"></Input.Password>
+          <Input.Password autoComplete="password" />
         </Form.Item>
-        </Form>
         <Space
           direction="vertical"
           className="w-full"
@@ -131,7 +130,7 @@ export function Component() {
             })}
           </div>
         </Space>
-
+      </Form>
     </>
   );
 }
