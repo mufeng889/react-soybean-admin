@@ -7,6 +7,8 @@ const common: App.I18n.Schema['translation']['common'] = {
   cancel: 'Cancel',
   close: 'Close',
   check: 'Check',
+  errorHint:'Please try again later',
+  tryAlign:'Try Align',
   expandColumn: 'Expand Column',
   columnSetting: 'Column Setting',
   config: 'Config',

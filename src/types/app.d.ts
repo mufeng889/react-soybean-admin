@@ -270,6 +270,8 @@ declare namespace App {
         };
         common: {
           action: string;
+          errorHint: string;
+          tryAlign: string;
           add: string;
           addSuccess: string;
           backToHome: string;

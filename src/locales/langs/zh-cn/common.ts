@@ -31,6 +31,8 @@ const common: App.I18n.Schema['translation']['common'] = {
   reset: '重置',
   search: '搜索',
   switch: '切换',
+  errorHint:'出错了，请稍后再试',
+  tryAlign:'刷新重试',
   tip: '提示',
   trigger: '触发',
   update: '更新',
