@@ -1,4 +1,3 @@
-import { ConfigProvider } from 'antd';
 import { useUpdateEffect } from 'ahooks';
 import { localStg } from '@/utils/storage';
 import { getLocale } from '@/store/slice/app';
@@ -8,7 +7,7 @@ import MenuProvider from '@/components/common/MenuProvider.tsx';
 import { router } from '@/router';
 import { antdLocales } from './locales/antd';
 import AppProvider from './components/common/AppProvider.tsx';
-
+import {info} from '@/constants/app.ts'
 
 const App = () => {
   const locale = useAppSelector(getLocale);
@@ -25,8 +24,10 @@ const App = () => {
     toggleCssDarkMode(darkMode);
   }, [darkMode]);
 
+  console.info(`%c${info}`, `color: ${colors.primary}`);
+
   return (
-    <ConfigProvider
+    <AConfigProvider
       theme={antdTheme}
       locale={antdLocales[locale]}
       button={{ classNames: { icon: 'align-1px  text-icon' } }}
@@ -34,7 +35,7 @@ const App = () => {
       <MenuProvider>
         <AppProvider>{router.CustomRouterProvider(<GlobalLoading />)}</AppProvider>
       </MenuProvider>
-    </ConfigProvider>
+    </AConfigProvider>
   );
 };
 

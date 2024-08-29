@@ -15,11 +15,16 @@ export function setupAutoImport(viteEnv: Env.ImportMeta) {
         customCollections: [collectionName],
         componentPrefix: VITE_ICON_PREFIX
       }),
-      // (componentName) => {
-      //   // where `componentName` is always CapitalCase
-      //   if (componentName.startsWith('A'))
-      //     return { name: componentName.slice(1), from: 'antd' }
-      // },
+      autoImportAntd
     ]
   });
+}
+
+
+function autoImportAntd(componentName:string)
+{
+  const pattern = /^A[A-Z]/;
+  if (pattern.test(componentName)) {
+    return { name: componentName.slice(1), from: 'antd' }
+  }
 }
