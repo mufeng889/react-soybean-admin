@@ -12,14 +12,8 @@ export default defineConfig(
   },
   {
     rules: {
-      'react/jsx-pascal-case': [
-        'warn',
-        {
-          allowAllCaps: false,
-          ignore: ['/^icon-/']
-        }
-      ],
-      'no-underscore-dangle': 'off'
+      'no-underscore-dangle': 'off',
+      'react/jsx-no-undef': [true, { allowGlobals: true }]
     }
   }
 );

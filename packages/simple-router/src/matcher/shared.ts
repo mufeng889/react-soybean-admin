@@ -42,7 +42,7 @@ export function generatePath(pathTemplate: string, params: { [key: string]: stri
  */
 export function normalizeRouteRecord(record: ElegantConstRoute): RouteRecordNormalized {
   return {
-    redirect: record.redirectTo,
+    redirect: record.redirect,
     path: record.path || '',
     name: record.name,
     meta: record.meta || {},

@@ -6,15 +6,20 @@ export function setupAutoImport(viteEnv: Env.ImportMeta) {
   return AutoImport({
     imports: ['react', 'react-router-dom', 'react-i18next', 'ahooks', { from: 'react', imports: ['FC'], type: true }],
     include: [/\.[tj]sx?$/],
-    dirs: ['src/hooks/**'],
+    dirs: ['src/hooks/**','src/components/**'],
     dts: 'src/types/auto-imports.d.ts',
     resolvers: [
       IconsResolver({
         prefix: VITE_ICON_PREFIX,
-        extension: 'jsx',
+        extension: 'tsx',
         customCollections: [collectionName],
         componentPrefix: VITE_ICON_PREFIX
-      })
+      }),
+      // (componentName) => {
+      //   // where `componentName` is always CapitalCase
+      //   if (componentName.startsWith('A'))
+      //     return { name: componentName.slice(1), from: 'antd' }
+      // },
     ]
   });
 }
