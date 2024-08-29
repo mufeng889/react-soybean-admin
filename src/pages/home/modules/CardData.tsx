@@ -1,4 +1,3 @@
-import { Card, Col, Row } from 'antd';
 import CountUp from 'react-countup';
 import SvgIcon from '@/components/custom/svg-icon';
 
@@ -18,7 +17,7 @@ function getGradientColor(color: CardDataProps['color']) {
   return `linear-gradient(to bottom right, ${color.start}, ${color.end})`;
 }
 
-const CardData = memo(() => {
+function useGetCardData() {
   const { t } = useTranslation();
 
   const cardData: CardDataProps[] = [
@@ -68,43 +67,53 @@ const CardData = memo(() => {
     }
   ];
 
+  return cardData
+}
+
+const CardItem = (data: CardDataProps) => {
+
+  return <ACol
+    key={data.key}
+    span={24}
+    md={12}
+    lg={6}
+  >
+    <div
+      className="flex-1 rd-8px px-16px pb-4px pt-8px text-white"
+      style={{ backgroundImage: getGradientColor(data.color) }}
+    >
+      <h3 className="text-16px">{data.title}</h3>
+      <div className="flex justify-between pt-12px">
+        <SvgIcon
+          icon={data.icon}
+          className="text-32px"
+        />
+        <CountUp
+          prefix={data.unit}
+          start={1}
+          end={data.value}
+          duration={1.5}
+          className="text-30px text-white dark:text-dark"
+        />
+      </div>
+    </div>
+  </ACol>
+}
+
+const CardData = memo(() => {
+
+  const data = useGetCardData();
+
   return (
-    <Card
+    <ACard
       bordered={false}
       size="small"
       className="card-wrapper"
     >
-      <Row gutter={[16, 16]}>
-        {cardData.map(item => (
-          <Col
-            key={item.key}
-            span={24}
-            md={12}
-            lg={6}
-          >
-            <div
-              className="flex-1 rd-8px px-16px pb-4px pt-8px text-white"
-              style={{ backgroundImage: getGradientColor(item.color) }}
-            >
-              <h3 className="text-16px">{item.title}</h3>
-              <div className="flex justify-between pt-12px">
-                <SvgIcon
-                  icon={item.icon}
-                  className="text-32px"
-                />
-                <CountUp
-                  prefix={item.unit}
-                  start={1}
-                  end={item.value}
-                  duration={1.5}
-                  className="text-30px text-white dark:text-dark"
-                />
-              </div>
-            </div>
-          </Col>
-        ))}
-      </Row>
-    </Card>
+      <ARow gutter={[16, 16]}>
+        {data.map(CardItem)}
+      </ARow>
+    </ACard>
   );
 });
 
