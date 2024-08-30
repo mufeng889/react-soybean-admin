@@ -1,5 +1,5 @@
 import CountUp from 'react-countup';
-import SvgIcon from '@/components/custom/svg-icon';
+
 
 interface CardDataProps {
   key: string;

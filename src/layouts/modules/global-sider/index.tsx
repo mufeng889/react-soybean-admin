@@ -1,5 +1,5 @@
 import type { MenuProps } from 'antd';
-import DarkModeContainer from '@/components/common/DarkModeContainer';
+import DarkModeContainer from '@/components/stateless/common/DarkModeContainer.tsx';
 import { getDarkMode } from '@/store/slice/theme';
 import GlobalLogo from '../global-logo';
 import VerticalMenu from '../global-menu/BaseMenu.tsx';

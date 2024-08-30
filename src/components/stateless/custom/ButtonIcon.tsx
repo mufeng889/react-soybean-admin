@@ -1,7 +1,7 @@
 import { Button, Tooltip } from 'antd';
 import type { ButtonProps, TooltipProps } from 'antd';
 import { type CSSProperties } from 'react';
-import SvgIcon from './svg-icon';
+import SvgIcon from './SvgIcon';
 
 interface Props extends Omit<ButtonProps, 'icon' | 'iconPosition'> {
   /** Button class */

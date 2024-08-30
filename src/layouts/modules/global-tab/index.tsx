@@ -4,9 +4,9 @@ import type BScroll from '@better-scroll/core';
 import { PageTab } from '@sa/materials';
 import {useUpdateEffect} from 'ahooks'
 import { startTransition } from 'react';
-import DarkModeContainer from '@/components/common/DarkModeContainer';
+import DarkModeContainer from '@/components/stateless/common/DarkModeContainer';
 import {useRoute} from '@sa/simple-router'
-import BetterScroll from '@/components/custom/BetterScroll';
+import BetterScroll from '@/components/stateless/custom/BetterScroll';
 import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
 import { getActiveTabId, isTabRetain, removeTab, selectAllTabs,addTabByRoute } from '@/store/slice/tab';
 import {
@@ -17,9 +17,8 @@ import {
   reloadPage,
   toggleFullContent
 } from '@/store/slice/app';
-import ReloadButton from '@/components/common/ReloadButton';
-import SvgIcon from '@/components/custom/svg-icon';
-import FullScreen from '@/components/common/FullScreen';
+import ReloadButton from '@/components/stateless/common/ReloadButton';
+import FullScreen from '@/components/stateless/common/FullScreen';
 import ContextMenu from './ContextMenu';
 
 const GlobalTab = memo(() => {

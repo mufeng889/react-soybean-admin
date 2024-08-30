@@ -2,7 +2,6 @@ import { Divider, Segmented, Switch } from 'antd';
 import type { SegmentedOptions } from 'antd/es/segmented';
 import { CSSTransition } from 'react-transition-group';
 import { themeSchemaRecord } from '@/constants/app';
-import SvgIcon from '@/components/custom/svg-icon';
 import {
   getDarkMode,
   getThemeSettings,

@@ -1,7 +1,8 @@
 import { Button } from 'antd';
+import SvgIcon from '../custom/SvgIcon';
 
-import SvgIcon from '../custom/svg-icon';
 type ExceptionType = '403' | '404' | '500';
+
 interface Props {
   /**
    * Exception type
@@ -18,6 +19,7 @@ const iconMap: Record<ExceptionType, string> = {
   '500': 'service-error'
 };
 const ExceptionBase: FC<Props> = memo(({ type }) => {
+
   const { t } = useTranslation();
 
   return (

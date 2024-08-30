@@ -1,6 +1,7 @@
 import { getSiderCollapse, toggleSiderCollapse } from '@/store/slice/app';
-import ButtonIcon from '../custom/button-icon';
-import SvgIcon from '../custom/svg-icon';
+import ButtonIcon from '../stateless/custom/ButtonIcon';
+import SvgIcon from '../stateless/custom/SvgIcon';
+
 interface Props {
   /** Arrow style icon */
   arrowIcon?: boolean;
@@ -19,6 +20,7 @@ const icons: Record<NumberBool, Record<NumberBool, string>> = {
 type NumberBool = 0 | 1;
 const MenuToggler: FC<Props> = memo(({ arrowIcon, className }) => {
   const { t } = useTranslation();
+
   const siderCollapse = useAppSelector(getSiderCollapse);
   const dispatch = useAppDispatch();
 

@@ -1,4 +1,4 @@
-import { MenuContext } from '@/components/common/MenuProvider';
+import { MenuContext } from '@/components/stateful/MenuProvider';
 
 export function useMenu() {
   const object = useContext(MenuContext);

@@ -1,4 +1,4 @@
-import ButtonIcon from '../custom/button-icon';
+import ButtonIcon from '../custom/ButtonIcon';
 
 interface Props {
   full?: boolean;
@@ -14,7 +14,7 @@ const FullScreen: FC<Props> = memo(({ full, toggleFullscreen }) => {
       tooltipContent={full ? t('icon.fullscreenExit') : t('icon.fullscreen')}
       onClick={toggleFullscreen}
     >
-      {full ? IconGridiconsFullscreenExit({}) : IconGridiconsFullscreen({})}
+      {full ? <IconGridiconsFullscreenExit /> : <IconGridiconsFullscreen/>}
     </ButtonIcon>
   );
 });

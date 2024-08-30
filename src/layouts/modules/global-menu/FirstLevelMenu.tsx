@@ -4,7 +4,6 @@ import { transformColorWithOpacity } from '@sa/color';
 import type { SubMenuType } from 'antd/es/menu/interface';
 import { cloneElement } from 'react';
 import { getSiderCollapse } from '@/store/slice/app';
-import MenuToggler from '@/components/common/MenuToggler';
 import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
 import { selectActiveFirstLevelMenuKey } from '@/store/slice/tab';
 interface Props {

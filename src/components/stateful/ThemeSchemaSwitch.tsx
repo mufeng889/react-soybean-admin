@@ -1,7 +1,7 @@
 import type { ButtonProps, TooltipProps } from 'antd';
 import type { CSSProperties } from 'react';
 import { getDarkMode, getThemeSettings, toggleThemeScheme } from '@/store/slice/theme';
-import ButtonIcon from '../custom/button-icon';
+import ButtonIcon from '../stateless/custom/ButtonIcon';
 
 interface Props {
   /** Show tooltip */
@@ -68,7 +68,7 @@ const ThemeSchemaSwitch: FC<Props> = memo(({ tooltipPlacement = 'bottom', showTo
       {...props}
       tooltipPlacement={tooltipPlacement}
       onClick={toggleDark}
-    ></ButtonIcon>
+    />
   );
 });
 

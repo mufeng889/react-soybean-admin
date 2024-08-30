@@ -1,7 +1,6 @@
 import { Drawer } from 'antd';
 import { SimpleScrollbar } from '@sa/materials';
 import { closeThemeDrawer, getThemeDrawerVisible } from '@/store/slice/app';
-import ButtonIcon from '@/components/custom/button-icon';
 import DarkMode from './modules/DarkMode';
 import ThemeColor from './modules/ThemeColor';
 import LayoutMode from './modules/LayoutMode';

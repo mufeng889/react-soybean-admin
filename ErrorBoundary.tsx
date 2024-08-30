@@ -1,7 +1,6 @@
 import { useRouteError, useNavigate } from 'react-router-dom';
 import { Button, Typography } from 'antd';
 import { $t } from './src/locales'
-import SvgIcon from '@/components/custom/svg-icon';
 import type { FallbackProps } from 'react-error-boundary'
 import { localStg } from '@/utils/storage';
 

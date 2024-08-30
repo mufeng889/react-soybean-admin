@@ -8,6 +8,7 @@ import './plugins/assets';
 import { setupI18n } from './locales';
 import { setupDayjs, setupIconifyOffline, setupLoading, setupNProgress } from './plugins';
 
+
 function setupApp() {
 
 

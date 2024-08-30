@@ -1,4 +1,3 @@
-import { Card, Col, Row, Space, Statistic } from 'antd';
 import { selectUserInfo } from '@/store/slice/auth';
 import avatar from '@/assets/imgs/soybean.jpg';
 
@@ -7,6 +6,8 @@ interface StatisticData {
   title: string;
   value: string;
 }
+
+
 const HeaderBanner = () => {
   const { t } = useTranslation();
 
@@ -30,12 +31,12 @@ const HeaderBanner = () => {
     }
   ];
   return (
-    <Card
+    <ACard
       bordered={false}
       className="card-wrapper"
     >
-      <Row gutter={[16, 16]}>
-        <Col
+      <ARow gutter={[16, 16]}>
+        <ACol
           span={24}
           md={18}
         >
@@ -51,27 +52,27 @@ const HeaderBanner = () => {
               <p className="text-#999 leading-30px">{t('page.home.weatherDesc')}</p>
             </div>
           </div>
-        </Col>
+        </ACol>
 
-        <Col
+        <ACol
           span={24}
           md={6}
         >
-          <Space
+          <ASpace
             className="w-full justify-end"
             size={24}
           >
             {statisticData.map(item => (
-              <Statistic
+              <AStatistic
                 key={item.id}
                 className="whitespace-nowrap"
                 {...item}
               />
             ))}
-          </Space>
-        </Col>
-      </Row>
-    </Card>
+          </ASpace>
+        </ACol>
+      </ARow>
+    </ACard>
   );
 };
 

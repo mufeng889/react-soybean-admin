@@ -2,8 +2,7 @@ import { Button, Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { resetStore, selectToken, selectUserInfo } from '@/store/slice/auth';
-import ButtonIcon from '@/components/custom/button-icon';
-import SvgIcon from '@/components/custom/svg-icon';
+
 
 const UserAvatar = memo(() => {
   const token = useAppSelector(selectToken);

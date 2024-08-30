@@ -1,6 +1,5 @@
 import { Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
-import SvgIcon from '@/components/custom/svg-icon';
 import { clearLeftTabs, clearRightTabs, clearTabs, removeTab } from '@/store/slice/tab';
 
 interface ContextMenuProps {

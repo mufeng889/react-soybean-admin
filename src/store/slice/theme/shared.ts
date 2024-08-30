@@ -6,7 +6,9 @@ import { localStg } from '@/utils/storage';
 import { themeVars } from '@/theme/vars';
 import { toggleHtmlClass } from '@/utils/common';
 import { DARK_MODE_MEDIA_QUERY } from '@/constants/common';
+
 const DARK_CLASS = 'dark';
+
 /** Init theme settings */
 export function initThemeSettings() {
   const isProd = import.meta.env.PROD;
@@ -28,6 +30,7 @@ export function initThemeSettings() {
 
   return settings;
 }
+
 /**
  * Get css var by tokens
  *
@@ -63,6 +66,7 @@ function getCssVarByTokens(tokens: App.Theme.BaseToken) {
 
   return styleStr;
 }
+
 /**
  * Add theme vars to html
  *

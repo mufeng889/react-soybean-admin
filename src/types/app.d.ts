@@ -99,6 +99,13 @@ declare namespace App {
         /** Whether float the footer to the right when the layout is 'horizontal-mix' */
         right: boolean;
       };
+         /** Watermark */
+         watermark?: {
+          /** Whether to show the watermark */
+          visible: boolean;
+          /** Watermark text */
+          text: string;
+        };
     }
 
     interface OtherColor {

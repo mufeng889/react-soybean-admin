@@ -1,11 +1,12 @@
 import { Card, List } from 'antd';
-import SoybeanAvatar from '@/components/custom/SoybeanAvatar';
+import SoybeanAvatar from '@/components/stateful/SoybeanAvatar';
 
 interface NewsItem {
   id: number;
   content: string;
   time: string;
 }
+
 const ProjectNews = () => {
   const { t } = useTranslation();
   const newses: NewsItem[] = [

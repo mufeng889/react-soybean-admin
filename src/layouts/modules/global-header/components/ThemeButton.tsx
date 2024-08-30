@@ -1,5 +1,4 @@
 import { useDispatch } from 'react-redux';
-import ButtonIcon from '@/components/custom/button-icon';
 import { openThemeDrawer } from '@/store/slice/app';
 
 const ThemeButton = memo(() => {
@@ -11,7 +10,7 @@ const ThemeButton = memo(() => {
       tooltipContent={t('icon.themeConfig')}
       triggerParent
       onClick={() => dispatch(openThemeDrawer())}
-    ></ButtonIcon>
+    />
   );
 });
 

@@ -1,6 +1,7 @@
 import { Dropdown } from 'antd';
 import { changeLocale, getLocale, getLocaleOptions } from '@/store/slice/app';
-import ButtonIcon from '../custom/button-icon';
+import ButtonIcon from '../stateless/custom/ButtonIcon';
+
 interface Props {
   /** Show tooltip */
   showTooltip?: boolean;
@@ -25,7 +26,7 @@ const LangSwitch: FC<Props> = memo(({ showTooltip = true }) => {
           tooltipContent={tooltipContent}
           tooltipPlacement="left"
           icon="heroicons:language"
-        ></ButtonIcon>
+        />
       </div>
     </Dropdown>
   );

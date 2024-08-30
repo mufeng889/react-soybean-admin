@@ -1,12 +1,11 @@
 import type { FC, ReactNode } from 'react';
 import { createContext } from 'react';
 import type { ElegantConstRoute } from '@elegant-router/types';
-import type { RouteMeta } from '@ohh-889/react-auto-route';
 import type { MenuItemType, SubMenuType } from 'antd/es/menu/interface';
 import { getSortRoutes } from '@/store/slice/route';
 import { $t } from '@/locales';
-import SvgIcon from '../custom/svg-icon';
-import BeyondHiding from '../custom/BeyondHiding';
+import SvgIcon from '../stateless/custom/SvgIcon';
+import BeyondHiding from '../stateless/custom/BeyondHiding';
 
 interface Props {
   children: ReactNode;
@@ -36,7 +35,7 @@ function getGlobalMenuByBaseRoute(route: ElegantConstRoute): MenuItemType {
     i18nKey,
     icon = import.meta.env.VITE_MENU_ICON,
     localIcon
-  } = (route.meta as unknown as RouteMeta) ?? {};
+  } = route.meta ?? {};
 
   const label = i18nKey ? $t(i18nKey) : title!;
   const menu: MenuItemType = {

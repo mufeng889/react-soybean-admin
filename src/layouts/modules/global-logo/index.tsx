@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import type { LinkProps } from 'react-router-dom';
 import ClassNames from 'classnames';
-import SystemLogo from '@/components/common/system-logo';
+import SystemLogo from '@/components/stateless/common/SystemLogo';
 interface Props extends Omit<LinkProps, 'to'> {
   /** Whether to show the title */
   showTitle?: boolean;

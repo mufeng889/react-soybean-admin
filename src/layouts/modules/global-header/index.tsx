@@ -1,9 +1,8 @@
 import type { MenuProps } from 'antd';
-import DarkModeContainer from '@/components/common/DarkModeContainer';
-import ThemeSchemaSwitch from '@/components/common/ThemeSchemaSwitch';
-import LangSwitch from '@/components/common/LangSwitch';
-import FullScreen from '@/components/common/FullScreen';
-import MenuToggler from '@/components/common/MenuToggler';
+import DarkModeContainer from '@/components/stateless/common/DarkModeContainer';
+import ThemeSchemaSwitch from '@/components/stateful/ThemeSchemaSwitch';
+import LangSwitch from '@/components/stateful/LangSwitch';
+import FullScreen from '@/components/stateless/common/FullScreen';
 import GlobalLogo from '../global-logo';
 import GlobalSearch from '../global-search';
 import HorizontalMenu from '../global-menu/BaseMenu';

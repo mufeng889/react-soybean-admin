@@ -23,6 +23,7 @@ const initialState: InitialStateType = {
   settings: initThemeSettings(),
   darkMode: false
 };
+
 export const themeSlice = createSlice({
   name: 'theme',
   initialState,

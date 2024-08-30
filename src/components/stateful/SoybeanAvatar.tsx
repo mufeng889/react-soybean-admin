@@ -1,6 +1,7 @@
 import ClassNames from 'classnames';
 import soybeanAvatar from '@/assets/imgs/soybean.jpg';
-// eslint-disable-next-line react/prop-types
+
+
 const SoybeanAvatar: FC<React.ComponentProps<'div'>> = ({ className, ...props }) => {
   return (
     <div

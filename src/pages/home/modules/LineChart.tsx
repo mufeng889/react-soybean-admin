@@ -93,6 +93,7 @@ const LineChart = memo(() => {
       }
     ]
   }));
+
   async function mockData() {
     await new Promise(resolve => {
       setTimeout(resolve, 1000);
@@ -106,6 +107,7 @@ const LineChart = memo(() => {
       return opts;
     });
   }
+
 
   function init() {
     mockData();

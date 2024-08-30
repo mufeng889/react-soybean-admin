@@ -1,4 +1,4 @@
-import SvgIcon from './svg-icon';
+import SvgIcon from './SvgIcon';
 interface Props {
   children?: React.ReactNode;
 }

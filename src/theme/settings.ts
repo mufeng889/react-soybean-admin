@@ -47,7 +47,11 @@ export const themeSettings: App.Theme.ThemeSetting = {
     fixed: false,
     height: 48,
     right: true
-  }
+  },
+  watermark: {
+    visible: false,
+    text: 'SoybeanAdmin'
+  },
 };
 
 /**
@@ -55,4 +59,9 @@ export const themeSettings: App.Theme.ThemeSetting = {
  *
  * If publish new version, use `overrideThemeSettings` to override certain theme settings
  */
-export const overrideThemeSettings: Partial<App.Theme.ThemeSetting> = {};
+export const overrideThemeSettings: Partial<App.Theme.ThemeSetting> = {
+  watermark: {
+    visible: false,
+    text: 'SoybeanAdmin'
+  }
+};

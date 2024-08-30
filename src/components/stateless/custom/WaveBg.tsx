@@ -6,8 +6,10 @@ interface Props {
 }
 
 const WaveBg = memo(({ themeColor }: Props) => {
+
   const lightColor = getPaletteColorByNumber(themeColor, 200);
   const darkColor = getPaletteColorByNumber(themeColor, 500);
+
   return (
     <div className="absolute-lt z-1 size-full overflow-hidden">
       <div className="absolute -right-300px -top-900px lt-sm:(-right-100px -top-1170px)">

@@ -1,5 +1,5 @@
 import { useSvgIconRender } from '@sa/hooks';
-import SvgIcon from '@/components/custom/svg-icon';
+import SvgIcon from '@/components/stateless/custom/svg-icon';
 
 export function useSvgIcon() {
   const { SvgIconVNode } = useSvgIconRender(SvgIcon);

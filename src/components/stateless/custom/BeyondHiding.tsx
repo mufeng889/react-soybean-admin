@@ -10,6 +10,7 @@ type BeyondHidingProps = Omit<TooltipProps, 'open' | 'trigger'> & {
 
 const BeyondHiding: FC<BeyondHidingProps> = memo(({ className, style, title, ...props }) => {
   const [isShow, setIsShow] = useState(false);
+
   const contentRef = useRef<HTMLSpanElement>(null);
 
   const isShowTooltip = (): void => {

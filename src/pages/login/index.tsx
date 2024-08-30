@@ -1,7 +1,7 @@
 import { getPaletteColorByNumber, mixColor } from '@sa/color';
 import { Card } from 'antd';
 import { Outlet } from 'react-router-dom';
-import WaveBg from '@/components/custom/wave-bg';
+import WaveBg from '@/components/stateless/custom/WaveBg';
 import Header from './modules/Header';
 
 import { getDarkMode, getThemeSettings } from '@/store/slice/theme';

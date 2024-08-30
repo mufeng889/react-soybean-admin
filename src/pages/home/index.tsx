@@ -1,4 +1,3 @@
-import { Col, Row, Space } from 'antd';
 import HeaderBanner from './modules/HeaderBanner';
 import CardData from './modules/CardData';
 import LineChart from './modules/LineChart';
@@ -8,7 +7,7 @@ import CreativityBanner from './modules/CreativityBanner';
 
 export function Component() {
   return (
-    <Space
+    <ASpace
       direction="vertical"
       size={[16, 16]}
       className="w-full"
@@ -16,35 +15,35 @@ export function Component() {
       <HeaderBanner />
       <CardData />
 
-      <Row gutter={[16, 16]}>
-        <Col
+      <ARow gutter={[16, 16]}>
+        <ACol
           span={24}
           lg={14}
         >
           <LineChart />
-        </Col>
-        <Col
+        </ACol>
+        <ACol
           span={24}
           lg={10}
         >
           <PieChart />
-        </Col>
-      </Row>
+        </ACol>
+      </ARow>
 
-      <Row gutter={[16, 16]}>
-        <Col
+      <ARow gutter={[16, 16]}>
+        <ACol
           span={24}
           lg={14}
         >
           <ProjectNews />
-        </Col>
-        <Col
+        </ACol>
+        <ACol
           span={24}
           lg={10}
         >
           <CreativityBanner />
-        </Col>
-      </Row>
-    </Space>
+        </ACol>
+      </ARow>
+    </ASpace>
   );
 }

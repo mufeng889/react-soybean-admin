@@ -1,12 +1,13 @@
 import React from 'react';
-import ButtonIcon from '../custom/button-icon';
-import SvgIcon from '../custom/svg-icon';
+import ButtonIcon from '../custom/ButtonIcon';
+import SvgIcon from '../custom/SvgIcon';
 interface Props {
   pin?: boolean;
   onClick?: React.ComponentProps<'button'>['onClick'];
   className: string;
 }
 const PinToggler: FC<Props> = memo(({ pin, onClick, className }) => {
+
   const { t } = useTranslation();
 
   const icon = pin ? 'mdi-pin-off' : 'mdi-pin';
