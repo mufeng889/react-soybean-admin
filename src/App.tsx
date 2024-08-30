@@ -2,7 +2,7 @@ import { useUpdateEffect } from 'ahooks';
 import { localStg } from '@/utils/storage';
 import { getLocale } from '@/store/slice/app';
 import { getAntdTheme, setupThemeVarsToHtml, toggleCssDarkMode } from '@/store/slice/theme/shared.ts';
-import { getDarkMode, themeColors } from '@/store/slice/theme/index.ts';
+import { getDarkMode, themeColors, getThemeSettings } from '@/store/slice/theme';
 import MenuProvider from '@/components/stateful/MenuProvider.tsx';
 import { router } from '@/router';
 import { antdLocales } from './locales/antd';
@@ -15,7 +15,7 @@ const watermarkProps: WatermarkProps = {
     fontSize: 16,
   },
   width: 240,
-  height:128,
+  height: 128,
   offset: [12, 60],
   rotate: -15,
   zIndex: 9999
@@ -26,6 +26,7 @@ const App = () => {
   const colors = useAppSelector(themeColors);
   const darkMode = useAppSelector(getDarkMode);
   const antdTheme = getAntdTheme(colors, darkMode);
+  const themeSettings = useAppSelector(getThemeSettings);
 
   useEffect(() => {
     setupThemeVarsToHtml(colors);
@@ -45,7 +46,7 @@ const App = () => {
       button={{ classNames: { icon: 'align-1px  text-icon' } }}
     >
       <AppProvider>
-        <AWatermark  className='h-full'  {...watermarkProps} >
+        <AWatermark content={themeSettings.watermark.visible ? themeSettings.watermark?.text || 'Soybean' : ''} className='h-full'  {...watermarkProps} >
           <MenuProvider>
             {router.CustomRouterProvider(<GlobalLoading />)}
           </MenuProvider>

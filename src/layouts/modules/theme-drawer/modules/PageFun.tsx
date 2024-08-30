@@ -8,6 +8,7 @@ import {
   setFooter,
   setHeader,
   setLayoutScrollMode,
+  setWatermark,
   setPage,
   setSider,
   setTab
@@ -285,6 +286,29 @@ const PageFun = memo(() => {
             onChange={value => dispatch(setFooter({ right: value }))}
           />
         </SettingTransitionItem>
+
+        <SettingItem
+          label={t('theme.watermark.visible')}
+        >
+          <Switch
+            defaultValue={themeSetting.watermark?.visible}
+            onChange={value => dispatch(setWatermark({ visible: value }))}
+          />
+        </SettingItem>
+
+        <SettingTransitionItem
+          show={Boolean(themeSetting.watermark.visible)}
+          label={t('theme.watermark.text')}
+          transitionKey="8-1"
+        >
+          <AInput
+            allowClear
+            className="w-120px"
+            defaultValue={themeSetting.watermark.text}
+            onChange={value => dispatch(setWatermark({ text: value.target.value || '' }))}
+          />
+        </SettingTransitionItem>
+
       </div>
     </>
   );

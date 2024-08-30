@@ -96,15 +96,6 @@ export const themeSlice = createSlice({
       state.settings.fixedHeaderAndTab = payload;
     },
     setHeader(state, { payload }: PayloadAction<DeepPartial<App.Theme.ThemeSetting['header']>>) {
-      // const key = getKeys(payload);
-      // console.log(key);
-      // state.settings.header[key[0]][key[1]] = payload[key[0]][key[1]];
-      // console.log(state);
-
-      // console.log(Object.assign(state.settings.header, payload));
-      // console.log(state.settings.header);
-      // console.log(payload);
-
       Object.assign(state.settings.header, payload);
     },
     setTab(state, { payload }: PayloadAction<Partial<App.Theme.ThemeSetting['tab']>>) {
@@ -115,6 +106,9 @@ export const themeSlice = createSlice({
     },
     setFooter(state, { payload }: PayloadAction<Partial<App.Theme.ThemeSetting['footer']>>) {
       Object.assign(state.settings.footer, payload);
+    },
+    setWatermark(state, { payload }: PayloadAction<Partial<App.Theme.ThemeSetting['watermark']>>){
+      Object.assign(state.settings.watermark, payload);
     },
     setIsOnlyExpandCurrentParentMenu(state, { payload }: PayloadAction<boolean>) {
       state.settings.isOnlyExpandCurrentParentMenu = payload;
@@ -140,6 +134,7 @@ export const {
   setFixedHeaderAndTab,
   setHeader,
   setTab,
+  setWatermark,
   setSider,
   setFooter,
   setIsOnlyExpandCurrentParentMenu

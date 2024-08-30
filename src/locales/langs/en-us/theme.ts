@@ -82,7 +82,11 @@ const theme: App.I18n.Schema['translation']['theme'] = {
     copySuccessMsg: 'Copy Success, Please replace the variable "themeSettings" in "src/theme/settings.ts"',
     resetConfig: 'Reset Config',
     resetSuccessMsg: 'Reset Success'
-  }
+  },
+  watermark: {
+    visible: 'Watermark Full Screen Visible',
+    text: 'Watermark Text'
+  },
 };
 
 export default theme;

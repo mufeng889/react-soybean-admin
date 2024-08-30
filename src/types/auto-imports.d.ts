@@ -9,6 +9,7 @@ declare global {
   const ACard: typeof import('antd')['Card']
   const ACol: typeof import('antd')['Col']
   const AConfigProvider: typeof import('antd')['ConfigProvider']
+  const AInput: typeof import('antd')['Input']
   const ARow: typeof import('antd')['Row']
   const ASpace: typeof import('antd')['Space']
   const AStatistic: typeof import('antd')['Statistic']

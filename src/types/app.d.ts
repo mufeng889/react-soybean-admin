@@ -99,13 +99,13 @@ declare namespace App {
         /** Whether float the footer to the right when the layout is 'horizontal-mix' */
         right: boolean;
       };
-         /** Watermark */
-         watermark?: {
-          /** Whether to show the watermark */
-          visible: boolean;
-          /** Watermark text */
-          text: string;
-        };
+      /** Watermark */
+      watermark: {
+        /** Whether to show the watermark */
+        visible: boolean;
+        /** Watermark text */
+        text: string;
+      };
     }
 
     interface OtherColor {
@@ -379,6 +379,10 @@ declare namespace App {
             copySuccessMsg: string;
             resetConfig: string;
             resetSuccessMsg: string;
+          };
+          watermark: {
+            visible: string;
+            text: string;
           };
         };
         route: Record<I18nRouteKey, string>;
@@ -657,8 +661,8 @@ declare namespace App {
 
     type GetI18nKey<T extends Record<string, unknown>, K extends keyof T = keyof T> = K extends string
       ? T[K] extends Record<string, unknown>
-        ? `${K}.${GetI18nKey<T[K]>}`
-        : K
+      ? `${K}.${GetI18nKey<T[K]>}`
+      : K
       : never;
 
     type I18nKey = GetI18nKey<Schema['translation']>;

@@ -3,7 +3,6 @@ import { getRgb } from '@sa/color';
 import { $t } from '@/locales';
 import { localStg } from '@/utils/storage';
 import systemLogo from '@/assets/svg-icon/logo.svg?raw';
-import { setupThemeVarsToHtml } from '@/store/slice/theme/shared.ts';
 
 export function setupLoading() {
   const themeColor = localStg.get('themeColor') || '#646cff';

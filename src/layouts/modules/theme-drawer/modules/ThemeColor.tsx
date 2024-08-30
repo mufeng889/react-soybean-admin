@@ -98,17 +98,16 @@ const ThemeColor = memo(() => {
           }
           placement="topLeft"
         >
-          <>
-            <SettingItem
-              key="recommend-color"
-              label={t('theme.recommendColor')}
-            >
-              <Switch
-                defaultChecked={themeSettings.recommendColor}
-                onChange={handleRecommendColorChange}
-              />
-            </SettingItem>
-          </>
+
+          <SettingItem
+            key="recommend-color"
+            label={t('theme.recommendColor')}
+          >
+            <Switch
+              defaultChecked={themeSettings.recommendColor}
+              onChange={handleRecommendColorChange}
+            />
+          </SettingItem>
         </Tooltip>
         {Object.entries(colors).map(([key, value]) => (
           <SettingItem

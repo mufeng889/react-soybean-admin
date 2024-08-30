@@ -77,6 +77,10 @@ const theme: App.I18n.Schema['translation']['theme'] = {
   },
   themeDrawerTitle: '主题配置',
   pageFunTitle: '页面功能',
+  watermark: {
+    visible: '显示全屏水印',
+    text: '水印文本'
+  },
   configOperation: {
     copyConfig: '复制配置',
     copySuccessMsg: '复制成功，请替换 src/theme/settings.ts 中的变量 themeSettings',
