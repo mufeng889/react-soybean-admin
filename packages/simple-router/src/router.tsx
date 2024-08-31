@@ -10,6 +10,7 @@ import { START_LOCATION_NORMALIZED } from './types';
 import { RouterContext } from './hooks/useRouter';
 import { RouteContext } from './hooks/useRoute';
 import { warn } from './warning';
+import type { RouteRecordRaw } from './matcher/types'
 
 const historyCreatorMap: Record<
   'hash' | 'history' | 'memory',
@@ -89,7 +90,33 @@ class CreateRouter {
     });
 
     // Update react-router's routes
+    this.#changeRoutes()
+  }
+
+  #changeRoutes() {
     this.reactRouter._internalSetRoutes([...this.initReactRoutes, ...this.reactRoutes]);
+  }
+
+  removeRoute(name: string) {
+    const matched = this.matcher.getRecordMatcher(name)
+    if (!matched) return
+    if (matched.parent) {
+
+      const parentNames = findParentNames(matched.parent)
+      let routes = this.reactRoutes
+
+      parentNames.forEach(name => {
+        const finalRoute = routes.find(route => route.id === name)
+        if (finalRoute && finalRoute.children) routes = finalRoute.children
+      })
+      removeElement(routes, matched.name)
+
+    } else {
+      this.reactRoutes = this.reactRoutes.filter(route => route.id !== matched.record.name)
+    }
+    this.#changeRoutes()
+    this.matcher.removeRoute(name);
+
   }
 
   #onBeforeRouteChange = (
@@ -112,17 +139,24 @@ class CreateRouter {
 
     const to = this.resolve(nextLocation);
 
-    const matchedRoutes = to.matched;
-    const nextRoute = matchedRoutes[matchedRoutes.length - 1];
+    if (to.redirect) {
+      if (to.redirect.startsWith('/')) {
+        if (to.redirect === this.currentRoute.fullPath) {
+          return true
+        }
+      } else {
+        const finalRoute = to.matched[to.matched.length - 1]
 
-    const finalPath = getFullPath(nextRoute);
 
-    if (finalPath === this.currentRoute.path || matchedRoutes[0]?.redirect === this.currentRoute.path) {
-      return true;
+        const finalPath = getFullPath(finalRoute)
+
+        if (finalPath === this.currentRoute.fullPath) return true
+      }
     }
 
     return beforeEach(to, this.currentRoute, this.#next);
   };
+
 
   #next(param?: boolean | string | Location | RouteLocationNamedRaw) {
     if (!param) return false;
@@ -224,7 +258,7 @@ class CreateRouter {
    * @param key Route key
    */
   getRouteMetaByKey(key: string) {
-    return this.getRoutes().find(route => route.name === key)?.meta || null;
+    return this.getRoutes().find(route => route.name === key)?.meta;
   }
 
   #afterRouteChange = (state: RouterState, afterEach: RouterOptions['afterEach']) => {
@@ -253,7 +287,7 @@ class CreateRouter {
    * @param name - The name of the route.
    * @returns The route record or false if not found.
    */
-  getRouteByName(name: string): RouteRecordNormalized | undefined {
+  getRouteByName(name: string) {
     return this.matcher.getRecordMatcher(name)?.record;
   }
 
@@ -285,13 +319,43 @@ function cleanParams(params: Record<string, any> | undefined): Record<string, an
   return Object.fromEntries(Object.entries(params).filter(([_, value]) => value !== null));
 }
 
-function getFullPath(route: RouteRecordNormalized | ElegantConstRoute): string {
+
+
+
+
+function findParentNames(matched: RouteRecordRaw | undefined): (string | undefined)[] {
+  const parentNames: (string | undefined)[] = []
+
+  function helper(current: RouteRecordRaw | undefined) {
+    if (current?.parent) {
+      helper(current.parent)
+    }
+    parentNames.push(current?.name)
+  }
+
+  helper(matched)
+
+  return parentNames
+}
+
+
+function removeElement(arr: RouteObject[], name: string | undefined) {
+  const index = arr.findIndex(route => route.id === name);
+  if (index !== -1) {
+    arr.splice(index, 1);
+  }
+  return arr;
+}
+
+
+function getFullPath(route: RouteRecordNormalized | ElegantConstRoute ): string {
   // 如果当前 route 存在并且有 children
-  if (route && route.children && route.children.length > 0) {
+  if (route && route.redirect && route.children && route.children.length > 0) {
     // 获取第一个子路由
-    const firstChild = route.children[0];
+    const firstChild = route.children.find(child => child.path === route.redirect)
     // 递归调用，继续拼接子路由的 path
-    return `${route.path}/${getFullPath(firstChild)}`;
+    if (firstChild)
+      return `${route.path}/${getFullPath(firstChild)}`;
   }
   // 如果没有 children，返回当前 route 的 path
   return route.path;

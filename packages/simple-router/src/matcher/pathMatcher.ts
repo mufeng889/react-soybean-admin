@@ -4,7 +4,8 @@ export function createRouteRecordMatcher(record: RouteRecordNormalized, parent?:
     record,
     parent,
     // these needs to be populated by the parent
-    children: []
+    children: [],
+    name:record.name
   };
 
   if (parent) {

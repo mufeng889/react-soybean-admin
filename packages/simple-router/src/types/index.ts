@@ -90,9 +90,15 @@ export interface Router {
   getRouteByName: (name: string) => RouteRecordNormalized | undefined;
   resetRoute: () => void;
   getAllRouteNames: () => string[];
+  back: () => void;
+  forwardRef: () => void;
+  go: (delta: number) => void;
+  removeRoute:(name:string)=>void;
 }
-export interface HistoryStateArray extends Array<HistoryStateValue> {}
+export interface HistoryStateArray extends Array<HistoryStateValue> { }
+
 export type HistoryStateValue = string | number | boolean | null | undefined | HistoryState | HistoryStateArray;
+
 export interface HistoryState {
   [x: number]: HistoryStateValue;
   [x: string]: HistoryStateValue;

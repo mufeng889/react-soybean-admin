@@ -64,6 +64,7 @@ class CreateRouterMatcher {
         const parentPath = parent.record.path as string;
         const connectingSlash = parentPath[parentPath.length - 1] === '/' ? '' : '/';
         normalizedRecord.path = parent.record.path + (path && connectingSlash + path);
+
       }
 
       // create the object beforehand, so it can be passed to children
@@ -190,6 +191,7 @@ class CreateRouterMatcher {
       path,
       hash: location.hash,
       component,
+      redirect: matcher.record.redirect,
       matched,
       query,
       meta: mergeMetaFields(matched)
@@ -202,8 +204,7 @@ class CreateRouterMatcher {
    * @returns An array of route names.
    */
   getAllRouteNames() {
-    const names = Array.from(this.matcherMap.keys());
-    return names;
+    return Array.from(this.matcherMap.keys())
   }
 
   /**
@@ -212,6 +213,7 @@ class CreateRouterMatcher {
    * @param matcher - The matcher object to insert.
    */
   insertMatcher(matcher: RouteRecordRaw) {
+
     if (matcher.record.path === '*') {
       this.matchers.unshift(matcher);
     } else {
