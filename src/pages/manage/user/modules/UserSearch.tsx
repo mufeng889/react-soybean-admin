@@ -132,13 +132,13 @@ const UserSearch: FC<Props> = memo(({ reset, search, form }) => {
                 justify="end"
               >
                 <Button
-                  icon={IconIcRoundRefresh({})}
+                  icon={<IconIcRoundRefresh />}
                   onClick={reset}
                 >
                   {t('common.reset')}
                 </Button>
                 <Button
-                  icon={IconIcRoundSearch({})}
+                  icon={<IconIcRoundSearch />}
                   type="primary"
                   ghost
                   onClick={search}

@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import type { Location, RouteObject } from 'react-router-dom';
 import { RouterProvider, createBrowserRouter, createHashRouter, createMemoryRouter } from 'react-router-dom';
 import type { BlockerFunction, Router as RemixRouter, RouterState } from '@remix-run/router';

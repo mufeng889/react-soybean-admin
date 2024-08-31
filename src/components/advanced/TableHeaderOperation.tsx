@@ -56,7 +56,7 @@ const TableHeaderOperation: FC<Props> = ({
       {children || (
         <>
           <Button
-            icon={IconIcRoundPlus({ className: 'text-icon' })}
+            icon={<IconIcRoundPlus className="text-icon" />}
             size="small"
             ghost
             type="primary"
@@ -69,7 +69,7 @@ const TableHeaderOperation: FC<Props> = ({
             onConfirm={batchDelete}
           >
             <Button
-              icon={IconIcRoundDelete({ className: 'text-icon' })}
+              icon={<IconIcRoundDelete className="text-icon" />}
               size="small"
               ghost
               disabled={disabledDelete}
@@ -81,7 +81,7 @@ const TableHeaderOperation: FC<Props> = ({
         </>
       )}
       <Button
-        icon={IconMdiRefresh({ className: classNames('text-icon', { 'animate-spin': loading }) })}
+        icon={<IconMdiRefresh className={classNames('text-icon', { 'animate-spin': loading })} />}
         size="small"
         onClick={handleRefresh}
       >

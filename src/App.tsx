@@ -2,13 +2,13 @@ import { useUpdateEffect } from 'ahooks';
 import type { WatermarkProps } from 'antd';
 import { localStg } from '@/utils/storage';
 import { getLocale } from '@/store/slice/app';
-import { getAntdTheme, setupThemeVarsToHtml, toggleCssDarkMode } from '@/store/slice/theme/shared.ts';
+import { getAntdTheme, setupThemeVarsToHtml, toggleCssDarkMode } from '@/store/slice/theme/shared';
 import { getDarkMode, getThemeSettings, themeColors } from '@/store/slice/theme';
-import MenuProvider from '@/components/stateful/MenuProvider.tsx';
+import MenuProvider from '@/components/stateful/MenuProvider';
 import { router } from '@/router';
-import { info } from '@/constants/app.ts';
+import { info } from '@/constants/app';
 import { antdLocales } from './locales/antd';
-import AppProvider from './components/stateful/AppProvider.tsx';
+import AppProvider from './components/stateful/AppProvider';
 
 const watermarkProps: WatermarkProps = {
   font: {

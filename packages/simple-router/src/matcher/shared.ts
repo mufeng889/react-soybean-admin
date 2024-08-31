@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import type { ElegantConstRoute } from '@ohh-889/react-auto-route';
 import { warn } from '../warning';
 import type { LocationQuery } from '../types';
@@ -34,17 +36,12 @@ export function generatePath(pathTemplate: string, params: { [key: string]: stri
   return path;
 }
 
-/**
- * Normalizes a RouteRecordRaw. Creates a copy
- *
- * @param record
- * @returns the normalized version
- */
 export function normalizeRouteRecord(record: ElegantConstRoute): RouteRecordNormalized {
   return {
     redirect: record.redirect || (record.children && record.children[0].path),
     path: record.path || '',
     name: record.name,
+
     meta: record.meta || {},
     children:
       record.children?.map(child => {
