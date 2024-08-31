@@ -41,16 +41,16 @@ export function generatePath(pathTemplate: string, params: { [key: string]: stri
  * @returns the normalized version
  */
 export function normalizeRouteRecord(record: ElegantConstRoute): RouteRecordNormalized {
-
   return {
-    redirect: record.redirect||record.children&&record.children[0].path,
+    redirect: record.redirect || (record.children && record.children[0].path),
     path: record.path || '',
     name: record.name,
     meta: record.meta || {},
-    children: record.children?.map(child => {
-child.redirect=child.redirect||child.children&&child.children[0].path
-      return child
-    }) || [],
+    children:
+      record.children?.map(child => {
+        child.redirect ||= child.children && child.children[0].path;
+        return child;
+      }) || [],
     component: record.component
   };
 }

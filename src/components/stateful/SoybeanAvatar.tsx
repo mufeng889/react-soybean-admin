@@ -1,8 +1,7 @@
 import ClassNames from 'classnames';
 import soybeanAvatar from '@/assets/imgs/soybean.jpg';
 
-
-const SoybeanAvatar: FC<React.ComponentProps<'div'>> = ({ className, ...props }) => {
+const SoybeanAvatar: FC<React.ComponentProps<'div'>> = memo(({ className, ...props }) => {
   return (
     <div
       {...props}
@@ -14,6 +13,6 @@ const SoybeanAvatar: FC<React.ComponentProps<'div'>> = ({ className, ...props })
       />
     </div>
   );
-};
+});
 
 export default SoybeanAvatar;

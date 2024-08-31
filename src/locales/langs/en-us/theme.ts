@@ -86,7 +86,7 @@ const theme: App.I18n.Schema['translation']['theme'] = {
   watermark: {
     visible: 'Watermark Full Screen Visible',
     text: 'Watermark Text'
-  },
+  }
 };
 
 export default theme;

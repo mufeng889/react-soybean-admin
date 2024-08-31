@@ -19,5 +19,5 @@ export interface RouteRecordRaw {
   record: RouteRecordNormalized;
   children: RouteRecordRaw[];
   parent: RouteRecordRaw | undefined;
-  name?:string
+  name?: string;
 }

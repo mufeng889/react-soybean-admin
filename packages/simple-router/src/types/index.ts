@@ -93,9 +93,9 @@ export interface Router {
   back: () => void;
   forwardRef: () => void;
   go: (delta: number) => void;
-  removeRoute:(name:string)=>void;
+  removeRoute: (name: string) => void;
 }
-export interface HistoryStateArray extends Array<HistoryStateValue> { }
+export interface HistoryStateArray extends Array<HistoryStateValue> {}
 
 export type HistoryStateValue = string | number | boolean | null | undefined | HistoryState | HistoryStateArray;
 

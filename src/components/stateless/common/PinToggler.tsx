@@ -7,7 +7,6 @@ interface Props {
   className: string;
 }
 const PinToggler: FC<Props> = memo(({ pin, onClick, className }) => {
-
   const { t } = useTranslation();
 
   const icon = pin ? 'mdi-pin-off' : 'mdi-pin';

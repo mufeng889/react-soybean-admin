@@ -37,9 +37,11 @@ const ThemeColor = memo(() => {
   function handleRecommendColorChange(value: boolean) {
     dispatch(setRecommendColor(value));
   }
+
   function handleUpdateColor(color: string, key: App.Theme.ThemeColorKey) {
     dispatch(updateThemeColors({ key, color }));
   }
+
   const onChange: CheckboxProps['onChange'] = e => {
     dispatch(setIsInfoFollowPrimary(e.target.checked));
   };
@@ -49,30 +51,32 @@ const ThemeColor = memo(() => {
       direction="vertical"
       className="w-250px"
     >
-      <Picker />
-      <Flex
-        wrap
-        gap="small"
-      >
-        {swatches.map(item => (
-          <Tooltip
-            key={item.name}
-            title={item.name}
-          >
-            <span
-              onClick={() => {
-                handleUpdateColor(item.color, selectTheme as App.Theme.ThemeColorKey);
-              }}
+      <>
+        <Picker />
+        <Flex
+          wrap
+          gap="small"
+        >
+          {swatches.map(item => (
+            <Tooltip
+              key={item.name}
+              title={item.name}
             >
-              <ColorPicker
-                size="small"
-                defaultValue={item.color}
-                open={false}
-              />
-            </span>
-          </Tooltip>
-        ))}
-      </Flex>
+              <span
+                onClick={() => {
+                  handleUpdateColor(item.color, selectTheme as App.Theme.ThemeColorKey);
+                }}
+              >
+                <ColorPicker
+                  size="small"
+                  defaultValue={item.color}
+                  open={false}
+                />
+              </span>
+            </Tooltip>
+          ))}
+        </Flex>
+      </>
     </Space>
   );
 
@@ -98,7 +102,6 @@ const ThemeColor = memo(() => {
           }
           placement="topLeft"
         >
-
           <SettingItem
             key="recommend-color"
             label={t('theme.recommendColor')}

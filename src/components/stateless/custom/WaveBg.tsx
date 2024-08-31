@@ -6,7 +6,6 @@ interface Props {
 }
 
 const WaveBg = memo(({ themeColor }: Props) => {
-
   const lightColor = getPaletteColorByNumber(themeColor, 200);
   const darkColor = getPaletteColorByNumber(themeColor, 500);
 

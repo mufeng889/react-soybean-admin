@@ -108,7 +108,6 @@ const LineChart = memo(() => {
     });
   }
 
-
   function init() {
     mockData();
   }

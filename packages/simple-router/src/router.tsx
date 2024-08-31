@@ -5,12 +5,11 @@ import type { ElegantConstRoute } from '@ohh-889/react-auto-route';
 import React from 'react';
 import type { RouteLocationNamedRaw, RouteLocationNormalizedLoaded, RouterOptions } from './types';
 import CreateRouterMatcher from './matcher';
-import type { RouteRecordNormalized } from './matcher/types';
+import type { RouteRecordNormalized, RouteRecordRaw } from './matcher/types';
 import { START_LOCATION_NORMALIZED } from './types';
 import { RouterContext } from './hooks/useRouter';
 import { RouteContext } from './hooks/useRoute';
 import { warn } from './warning';
-import type { RouteRecordRaw } from './matcher/types'
 
 const historyCreatorMap: Record<
   'hash' | 'history' | 'memory',
@@ -90,7 +89,7 @@ class CreateRouter {
     });
 
     // Update react-router's routes
-    this.#changeRoutes()
+    this.#changeRoutes();
   }
 
   #changeRoutes() {
@@ -98,25 +97,22 @@ class CreateRouter {
   }
 
   removeRoute(name: string) {
-    const matched = this.matcher.getRecordMatcher(name)
-    if (!matched) return
+    const matched = this.matcher.getRecordMatcher(name);
+    if (!matched) return;
     if (matched.parent) {
+      const parentNames = findParentNames(matched.parent);
+      let routes = this.reactRoutes;
 
-      const parentNames = findParentNames(matched.parent)
-      let routes = this.reactRoutes
-
-      parentNames.forEach(name => {
-        const finalRoute = routes.find(route => route.id === name)
-        if (finalRoute && finalRoute.children) routes = finalRoute.children
-      })
-      removeElement(routes, matched.name)
-
+      parentNames.forEach(parentName => {
+        const finalRoute = routes.find(route => route.id === parentName);
+        if (finalRoute && finalRoute.children) routes = finalRoute.children;
+      });
+      removeElement(routes, matched.name);
     } else {
-      this.reactRoutes = this.reactRoutes.filter(route => route.id !== matched.record.name)
+      this.reactRoutes = this.reactRoutes.filter(route => route.id !== matched.record.name);
     }
-    this.#changeRoutes()
+    this.#changeRoutes();
     this.matcher.removeRoute(name);
-
   }
 
   #onBeforeRouteChange = (
@@ -142,21 +138,19 @@ class CreateRouter {
     if (to.redirect) {
       if (to.redirect.startsWith('/')) {
         if (to.redirect === this.currentRoute.fullPath) {
-          return true
+          return true;
         }
       } else {
-        const finalRoute = to.matched[to.matched.length - 1]
+        const finalRoute = to.matched[to.matched.length - 1];
 
+        const finalPath = getFullPath(finalRoute);
 
-        const finalPath = getFullPath(finalRoute)
-
-        if (finalPath === this.currentRoute.fullPath) return true
+        if (finalPath === this.currentRoute.fullPath) return true;
       }
     }
 
     return beforeEach(to, this.currentRoute, this.#next);
   };
-
 
   #next(param?: boolean | string | Location | RouteLocationNamedRaw) {
     if (!param) return false;
@@ -319,25 +313,20 @@ function cleanParams(params: Record<string, any> | undefined): Record<string, an
   return Object.fromEntries(Object.entries(params).filter(([_, value]) => value !== null));
 }
 
-
-
-
-
 function findParentNames(matched: RouteRecordRaw | undefined): (string | undefined)[] {
-  const parentNames: (string | undefined)[] = []
+  const parentNames: (string | undefined)[] = [];
 
   function helper(current: RouteRecordRaw | undefined) {
     if (current?.parent) {
-      helper(current.parent)
+      helper(current.parent);
     }
-    parentNames.push(current?.name)
+    parentNames.push(current?.name);
   }
 
-  helper(matched)
+  helper(matched);
 
-  return parentNames
+  return parentNames;
 }
-
 
 function removeElement(arr: RouteObject[], name: string | undefined) {
   const index = arr.findIndex(route => route.id === name);
@@ -347,15 +336,13 @@ function removeElement(arr: RouteObject[], name: string | undefined) {
   return arr;
 }
 
-
-function getFullPath(route: RouteRecordNormalized | ElegantConstRoute ): string {
+function getFullPath(route: RouteRecordNormalized | ElegantConstRoute): string {
   // 如果当前 route 存在并且有 children
   if (route && route.redirect && route.children && route.children.length > 0) {
     // 获取第一个子路由
-    const firstChild = route.children.find(child => child.path === route.redirect)
+    const firstChild = route.children.find(child => child.path === route.redirect);
     // 递归调用，继续拼接子路由的 path
-    if (firstChild)
-      return `${route.path}/${getFullPath(firstChild)}`;
+    if (firstChild) return `${route.path}/${getFullPath(firstChild)}`;
   }
   // 如果没有 children，返回当前 route 的 path
   return route.path;

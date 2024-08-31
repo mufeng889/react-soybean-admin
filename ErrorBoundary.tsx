@@ -34,7 +34,7 @@ const ErrorPage: FC<Props> = ({ error, resetErrorBoundary }) => {
   // 可以在这里根据不同的业务逻辑处理错误或者上报给日志服务
   const hook = HookSupportChecker()
 
-  console.error(error, 999);
+  console.error(error);
 
   return (
     <div className="size-full min-h-520px flex-col-center gap-16px overflow-hidden">

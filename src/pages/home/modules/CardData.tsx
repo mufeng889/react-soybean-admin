@@ -1,6 +1,5 @@
 import CountUp from 'react-countup';
 
-
 interface CardDataProps {
   key: string;
   title: string;
@@ -67,41 +66,41 @@ function useGetCardData() {
     }
   ];
 
-  return cardData
+  return cardData;
 }
 
 const CardItem = (data: CardDataProps) => {
-
-  return <ACol
-    key={data.key}
-    span={24}
-    md={12}
-    lg={6}
-  >
-    <div
-      className="flex-1 rd-8px px-16px pb-4px pt-8px text-white"
-      style={{ backgroundImage: getGradientColor(data.color) }}
+  return (
+    <ACol
+      key={data.key}
+      span={24}
+      md={12}
+      lg={6}
     >
-      <h3 className="text-16px">{data.title}</h3>
-      <div className="flex justify-between pt-12px">
-        <SvgIcon
-          icon={data.icon}
-          className="text-32px"
-        />
-        <CountUp
-          prefix={data.unit}
-          start={1}
-          end={data.value}
-          duration={1.5}
-          className="text-30px text-white dark:text-dark"
-        />
+      <div
+        className="flex-1 rd-8px px-16px pb-4px pt-8px text-white"
+        style={{ backgroundImage: getGradientColor(data.color) }}
+      >
+        <h3 className="text-16px">{data.title}</h3>
+        <div className="flex justify-between pt-12px">
+          <SvgIcon
+            icon={data.icon}
+            className="text-32px"
+          />
+          <CountUp
+            prefix={data.unit}
+            start={1}
+            end={data.value}
+            duration={1.5}
+            className="text-30px text-white dark:text-dark"
+          />
+        </div>
       </div>
-    </div>
-  </ACol>
-}
+    </ACol>
+  );
+};
 
 const CardData = memo(() => {
-
   const data = useGetCardData();
 
   return (
@@ -110,9 +109,7 @@ const CardData = memo(() => {
       size="small"
       className="card-wrapper"
     >
-      <ARow gutter={[16, 16]}>
-        {data.map(CardItem)}
-      </ARow>
+      <ARow gutter={[16, 16]}>{data.map(CardItem)}</ARow>
     </ACard>
   );
 });

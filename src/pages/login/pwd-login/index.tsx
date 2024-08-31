@@ -12,7 +12,6 @@ interface Account {
 
 type LoginParams = Pick<Account, 'userName' | 'password'>;
 
-
 export function Component() {
   const [form] = Form.useForm<LoginParams>();
   const { toggleLoginModule } = useRouterPush();

@@ -5,7 +5,6 @@ interface Props {
   handClick?: () => void;
 }
 const ReloadButton: FC<Props> = memo(({ loading, handClick }) => {
-
   const { t } = useTranslation();
 
   return (
@@ -13,7 +12,7 @@ const ReloadButton: FC<Props> = memo(({ loading, handClick }) => {
       onClick={handClick}
       tooltipContent={t('icon.reload')}
     >
-      <IconAntDesignReloadOutlined className={loading ? 'animate-spin animate-duration-750' : '' } />
+      <IconAntDesignReloadOutlined className={loading ? 'animate-spin animate-duration-750' : ''} />
     </ButtonIcon>
   );
 });

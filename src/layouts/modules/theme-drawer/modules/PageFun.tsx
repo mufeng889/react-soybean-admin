@@ -8,10 +8,10 @@ import {
   setFooter,
   setHeader,
   setLayoutScrollMode,
-  setWatermark,
   setPage,
   setSider,
-  setTab
+  setTab,
+  setWatermark
 } from '@/store/slice/theme';
 import SettingItem from '../components/SettingItem';
 import './pageFun.scss';
@@ -287,9 +287,7 @@ const PageFun = memo(() => {
           />
         </SettingTransitionItem>
 
-        <SettingItem
-          label={t('theme.watermark.visible')}
-        >
+        <SettingItem label={t('theme.watermark.visible')}>
           <Switch
             defaultValue={themeSetting.watermark?.visible}
             onChange={value => dispatch(setWatermark({ visible: value }))}
@@ -308,7 +306,6 @@ const PageFun = memo(() => {
             onChange={value => dispatch(setWatermark({ text: value.target.value || '' }))}
           />
         </SettingTransitionItem>
-
       </div>
     </>
   );

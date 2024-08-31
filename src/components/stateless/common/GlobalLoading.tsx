@@ -8,12 +8,11 @@ const loadingClasses = [
   'right-0 bottom-0 animate-delay-1500'
 ];
 
-
 const GlobalLoading = memo(() => {
   const { t } = useTranslation();
 
   return (
-    <div className="fixed-center flex-col" >
+    <div className="fixed-center flex-col">
       <SystemLogo className="size-128px text-primary" />
       <div className="my-36px h-56px w-56px">
         <div className="relative h-full animate-spin">

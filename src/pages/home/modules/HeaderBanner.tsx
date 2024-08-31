@@ -7,7 +7,6 @@ interface StatisticData {
   value: string;
 }
 
-
 const HeaderBanner = () => {
   const { t } = useTranslation();
 

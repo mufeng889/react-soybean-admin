@@ -51,7 +51,7 @@ export const themeSettings: App.Theme.ThemeSetting = {
   watermark: {
     visible: false,
     text: 'SoybeanAdmin'
-  },
+  }
 };
 
 /**

@@ -28,6 +28,6 @@
     "isolatedModules": true,
     "skipLibCheck": true
   },
-  "include": ["./**/*.ts", "./**/*.tsx", "./build/plugins/*.ts", "./vite.config.ts", "src/hooks/business/useStore.ts"],
+  "include": ["./**/*.ts", "./**/*.tsx"],
   "exclude": ["node_modules", "dist"]
 }

@@ -2,12 +2,10 @@ import { getPaletteColorByNumber, mixColor } from '@sa/color';
 import { Card } from 'antd';
 import { Outlet } from 'react-router-dom';
 import WaveBg from '@/components/stateless/custom/WaveBg';
+import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
 import Header from './modules/Header';
 
-import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
-
 const COLOR_WHITE = '#ffffff';
-
 
 function useBgColor() {
   const darkMode = useAppSelector(getDarkMode);
@@ -20,13 +18,11 @@ function useBgColor() {
   return {
     bgThemeColor,
     bgColor
-  }
+  };
 }
 
 export function Component() {
-
   const { bgThemeColor, bgColor } = useBgColor();
-
 
   return (
     <div

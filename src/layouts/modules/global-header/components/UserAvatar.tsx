@@ -3,7 +3,6 @@ import type { MenuProps } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { resetStore, selectToken, selectUserInfo } from '@/store/slice/auth';
 
-
 const UserAvatar = memo(() => {
   const token = useAppSelector(selectToken);
   const dispatch = useAppDispatch();

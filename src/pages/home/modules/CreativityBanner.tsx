@@ -1,4 +1,3 @@
-
 const CreativityBanner = memo(() => {
   const { t } = useTranslation();
 
@@ -11,7 +10,7 @@ const CreativityBanner = memo(() => {
       styles={{ body: { flex: 1, overflow: 'hidden' } }}
     >
       <div className="h-full flex-center">
-        <IconLocalBanner className='text-400px text-primary sm:text-320px' />
+        <IconLocalBanner className="text-400px text-primary sm:text-320px" />
       </div>
     </ACard>
   );

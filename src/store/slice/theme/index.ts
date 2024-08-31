@@ -107,7 +107,7 @@ export const themeSlice = createSlice({
     setFooter(state, { payload }: PayloadAction<Partial<App.Theme.ThemeSetting['footer']>>) {
       Object.assign(state.settings.footer, payload);
     },
-    setWatermark(state, { payload }: PayloadAction<Partial<App.Theme.ThemeSetting['watermark']>>){
+    setWatermark(state, { payload }: PayloadAction<Partial<App.Theme.ThemeSetting['watermark']>>) {
       Object.assign(state.settings.watermark, payload);
     },
     setIsOnlyExpandCurrentParentMenu(state, { payload }: PayloadAction<boolean>) {

@@ -6,7 +6,7 @@ export function setupAutoImport(viteEnv: Env.ImportMeta) {
   return AutoImport({
     imports: ['react', 'react-router-dom', 'react-i18next', 'ahooks', { from: 'react', imports: ['FC'], type: true }],
     include: [/\.[tj]sx?$/],
-    dirs: ['src/hooks/**','src/components/**'],
+    dirs: ['src/hooks/**', 'src/components/**'],
     dts: 'src/types/auto-imports.d.ts',
     resolvers: [
       IconsResolver({
@@ -20,11 +20,10 @@ export function setupAutoImport(viteEnv: Env.ImportMeta) {
   });
 }
 
-
-function autoImportAntd(componentName:string)
-{
+function autoImportAntd(componentName: string) {
   const pattern = /^A[A-Z]/;
-  if (pattern.test(componentName)) {
-    return { name: componentName.slice(1), from: 'antd' }
+  if (!pattern.test(componentName)) {
+    return { name: componentName.slice(1), from: 'antd' };
   }
+  return null;
 }

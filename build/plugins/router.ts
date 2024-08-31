@@ -9,7 +9,7 @@ export function setupElegantRouter() {
       base: 'src/layouts/base-layout/index.tsx',
       blank: 'src/layouts/blank-layout/index.tsx'
     },
-    log:false,
+    log: false,
     customRoutes: {
       names: [
         'exception_403',

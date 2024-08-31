@@ -30,12 +30,7 @@ export default MenuProvider;
  */
 function getGlobalMenuByBaseRoute(route: ElegantConstRoute): MenuItemType {
   const { name } = route;
-  const {
-    title,
-    i18nKey,
-    icon = import.meta.env.VITE_MENU_ICON,
-    localIcon
-  } = route.meta ?? {};
+  const { title, i18nKey, icon = import.meta.env.VITE_MENU_ICON, localIcon } = route.meta ?? {};
 
   const label = i18nKey ? $t(i18nKey) : title!;
   const menu: MenuItemType = {

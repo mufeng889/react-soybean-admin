@@ -19,20 +19,24 @@ const iconMap: Record<ExceptionType, string> = {
   '500': 'service-error'
 };
 const ExceptionBase: FC<Props> = memo(({ type }) => {
-
   const { t } = useTranslation();
-  const nav = useNavigate()
+  const nav = useNavigate();
 
   const onClick = () => {
-    nav('/')
-  }
+    nav('/');
+  };
 
   return (
     <div className="size-full min-h-520px flex-col-center gap-24px overflow-hidden">
       <div className="flex text-400px text-primary">
         <SvgIcon localIcon={iconMap[type]} />
       </div>
-      <Button onClick={onClick} type="primary">{t('common.backToHome')}</Button>
+      <Button
+        onClick={onClick}
+        type="primary"
+      >
+        {t('common.backToHome')}
+      </Button>
     </div>
   );
 });

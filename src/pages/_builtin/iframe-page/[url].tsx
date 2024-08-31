@@ -1,6 +1,5 @@
 import { Skeleton } from 'antd';
-import { useBoolean } from 'ahooks'
-
+import { useBoolean } from 'ahooks';
 
 export function Component({ url }: { url: string }) {
   const [loading, { setFalse: endLoading }] = useBoolean(true);
