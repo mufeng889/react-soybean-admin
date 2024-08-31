@@ -56,9 +56,6 @@ importers:
       immer:
         specifier: 10.1.1
         version: 10.1.1
-      lodash-es:
-        specifier: 4.17.21
-        version: 4.17.21
       nprogress:
         specifier: 0.2.0
         version: 0.2.0
@@ -114,9 +111,6 @@ importers:
       '@svgr/plugin-jsx':
         specifier: 8.1.0
         version: 8.1.0(@svgr/core@8.1.0(typescript@5.5.4))
-      '@types/lodash-es':
-        specifier: 4.17.12
-        version: 4.17.12
       '@types/node':
         specifier: 22.5.0
         version: 22.5.0
