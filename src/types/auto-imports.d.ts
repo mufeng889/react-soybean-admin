@@ -10,6 +10,7 @@ declare global {
   const ACol: typeof import('antd')['Col']
   const AColorPicker: typeof import('antd')['ColorPicker']
   const AConfigProvider: typeof import('antd')['ConfigProvider']
+  const ADivider: typeof import('antd')['Divider']
   const AFlex: typeof import('antd')['Flex']
   const AInput: typeof import('antd')['Input']
   const ARow: typeof import('antd')['Row']

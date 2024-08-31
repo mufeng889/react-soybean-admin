@@ -1,4 +1,3 @@
-import { Divider } from 'antd';
 import ClassNames from 'classnames';
 import LayoutModeCard from '../components/LayoutModeCard';
 import style from './layoutMode.module.scss';
@@ -43,14 +42,7 @@ const LAYOUTS_COMPONENTS: Record<UnionKey.ThemeLayoutMode, React.ReactNode> = {
 };
 
 const LayoutMode = memo(() => {
-  const { t } = useTranslation();
-
-  return (
-    <>
-      <Divider>{t('theme.layoutMode.title')}</Divider>
-      <LayoutModeCard {...LAYOUTS_COMPONENTS} />
-    </>
-  );
+  return <LayoutModeCard {...LAYOUTS_COMPONENTS} />;
 });
 
 export default LayoutMode;

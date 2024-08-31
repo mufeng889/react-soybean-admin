@@ -1,7 +1,9 @@
 import type { FC } from 'react';
 import React from 'react';
 import classNames from 'classnames';
+
 interface SvgCloseProps extends React.ComponentProps<'div'> {}
+
 const SvgClose: FC<SvgCloseProps> = ({ className, ...props }) => {
   return (
     <div

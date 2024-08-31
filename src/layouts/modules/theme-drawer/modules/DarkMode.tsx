@@ -1,4 +1,4 @@
-import { Divider, Segmented, Switch } from 'antd';
+import { Segmented, Switch } from 'antd';
 import type { SegmentedOptions } from 'antd/es/segmented';
 import { CSSTransition } from 'react-transition-group';
 import { themeSchemaRecord } from '@/constants/app';
@@ -61,55 +61,52 @@ const DarkMode = () => {
     dispatch(setIsOnlyExpandCurrentParentMenu(value));
   }
   return (
-    <>
-      <Divider>{t('theme.themeSchema.title')}</Divider>
-      <div className="flex-col-stretch gap-16px">
-        <div className="i-flex-center">
-          <Segmented
-            value={themeSettings.themeScheme}
-            options={OPTIONS}
-            className="bg-layout"
-            onChange={handleSegmentChange}
-          ></Segmented>
-        </div>
-        <CSSTransition
-          timeout={300}
-          in={showSiderInverted}
-          classNames="sider-inverted"
-          nodeRef={nodeRef}
-        >
-          <div ref={nodeRef}>
-            <SettingItem label={t('theme.sider.inverted')}>
-              <Switch
-                defaultChecked={themeSettings.sider.inverted}
-                onChange={toggleSiderInverted}
-              />
-            </SettingItem>
-          </div>
-        </CSSTransition>
-        <SettingItem label={t('theme.grayscale')}>
-          <Switch
-            defaultChecked={themeSettings.grayscale}
-            onChange={handleGrayscaleChange}
-          />
-        </SettingItem>
-        <CSSTransition
-          timeout={300}
-          in={isVertical}
-          classNames="sider-inverted"
-          nodeRef={twoNodeRef}
-        >
-          <div ref={twoNodeRef}>
-            <SettingItem label={t('theme.isOnlyExpandCurrentParentMenu')}>
-              <Switch
-                defaultChecked={themeSettings.isOnlyExpandCurrentParentMenu}
-                onChange={handleIsOnlyExpandCurrentParentMenuChange}
-              />
-            </SettingItem>
-          </div>
-        </CSSTransition>
+    <div className="flex-col-stretch gap-16px">
+      <div className="i-flex-center">
+        <Segmented
+          value={themeSettings.themeScheme}
+          options={OPTIONS}
+          className="bg-layout"
+          onChange={handleSegmentChange}
+        ></Segmented>
       </div>
-    </>
+      <CSSTransition
+        timeout={300}
+        in={showSiderInverted}
+        classNames="sider-inverted"
+        nodeRef={nodeRef}
+      >
+        <div ref={nodeRef}>
+          <SettingItem label={t('theme.sider.inverted')}>
+            <Switch
+              defaultChecked={themeSettings.sider.inverted}
+              onChange={toggleSiderInverted}
+            />
+          </SettingItem>
+        </div>
+      </CSSTransition>
+      <SettingItem label={t('theme.grayscale')}>
+        <Switch
+          defaultChecked={themeSettings.grayscale}
+          onChange={handleGrayscaleChange}
+        />
+      </SettingItem>
+      <CSSTransition
+        timeout={300}
+        in={isVertical}
+        classNames="sider-inverted"
+        nodeRef={twoNodeRef}
+      >
+        <div ref={twoNodeRef}>
+          <SettingItem label={t('theme.isOnlyExpandCurrentParentMenu')}>
+            <Switch
+              defaultChecked={themeSettings.isOnlyExpandCurrentParentMenu}
+              onChange={handleIsOnlyExpandCurrentParentMenuChange}
+            />
+          </SettingItem>
+        </div>
+      </CSSTransition>
+    </div>
   );
 };
 

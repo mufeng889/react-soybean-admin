@@ -32,9 +32,13 @@ const ThemeDrawer = memo(() => {
     >
       <SimpleScrollbar>
         <div className="px-24px pb-24px pt-8px">
+          <ADivider>{t('theme.themeSchema.title')}</ADivider>
           <DarkMode />
+          <ADivider>{t('theme.layoutMode.title')}</ADivider>
           <LayoutMode />
+          <ADivider>{t('theme.themeColor.title')}</ADivider>
           <ThemeColor />
+          <ADivider>{t('theme.pageFunTitle')}</ADivider>
           <PageFun />
         </div>
       </SimpleScrollbar>
