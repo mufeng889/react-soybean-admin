@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react';
-import type { Router } from '../../types';
+
+import Router from '../../router'
 
 export const RouterContext = createContext<Router>({} as Router);
 export function useRouter() {
@@ -7,5 +8,6 @@ export function useRouter() {
   if (!router) {
     throw new Error('useRouter must be used within a Provider');
   }
+
   return router;
 }
