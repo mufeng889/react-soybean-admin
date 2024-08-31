@@ -21,12 +21,11 @@ const watermarkProps: WatermarkProps = {
   zIndex: 9999
 };
 
-const App = () => {
-  const locale = useAppSelector(getLocale);
+function useTheme() {
   const colors = useAppSelector(themeColors);
   const darkMode = useAppSelector(getDarkMode);
   const antdTheme = getAntdTheme(colors, darkMode);
-  const themeSettings = useAppSelector(getThemeSettings);
+
 
   useEffect(() => {
     setupThemeVarsToHtml(colors);
@@ -38,6 +37,17 @@ const App = () => {
   }, [darkMode]);
 
   console.info(`%c${info}`, `color: ${colors.primary}`);
+
+  return antdTheme
+}
+
+const App = () => {
+  const locale = useAppSelector(getLocale);
+
+  const themeSettings = useAppSelector(getThemeSettings);
+
+  const antdTheme=useTheme()
+
 
   return (
     <AConfigProvider
