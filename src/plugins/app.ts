@@ -6,7 +6,7 @@ export function setupAppVersionNotification() {
   let isShow = false;
 
   document.addEventListener('visibilitychange', async () => {
-    const preConditions = [!isShow, document.visibilityState === 'visible'];
+    const preConditions = [!isShow, document.visibilityState === 'visible', !import.meta.env.DEV];
 
     if (!preConditions.every(Boolean)) return;
 

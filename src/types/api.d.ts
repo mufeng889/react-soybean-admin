@@ -20,6 +20,8 @@ declare namespace Api {
       records: T[];
     }
 
+    type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'current' | 'size'>;
+
     /**
      * enable status
      *
@@ -172,7 +174,7 @@ declare namespace Api {
     type IconType = '1' | '2';
 
     type MenuPropsOfRoute = Pick<
-      import('vue-router').RouteMeta,
+      import('@ohh-889/react-auto-route').RouteMeta,
       | 'i18nKey'
       | 'keepAlive'
       | 'constant'

@@ -19,7 +19,7 @@ declare namespace AntDesign {
 
   type TableColumn<T> = SetTableColumnKey<TableColumnType<T>, T> | SetTableColumnKey<TableColumnGroupType<T>, T>;
 
-  type TableApiFn<T = any, R = Api.SystemManage.CommonSearchParams> = (
+  type TableApiFn<T = any, R = Api.Common.CommonSearchParams> = (
     params: R
   ) => Promise<FlatResponseData<Api.Common.PaginatingQueryRecord<T>>>;
 
