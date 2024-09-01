@@ -1,9 +1,11 @@
 import { Button, Card, Popconfirm, Table, Tag } from 'antd';
+import { Suspense, lazy } from 'react';
 import { fetchGetUserList } from '@/service/api';
 import { enableStatusRecord, userGenderRecord } from '@/constants/business';
 import TableHeaderOperation from '@/components/advanced/TableHeaderOperation';
 import UserSearch from './modules/UserSearch';
-import UserOperateDrawer from './modules/UserOperateDrawer';
+
+const UserOperateDrawer = lazy(() => import('./modules/UserOperateDrawer'));
 
 const tagMap: Record<Api.Common.EnableStatus, string> = {
   1: 'success',
@@ -201,13 +203,15 @@ export function Component() {
           dataSource={data}
           columns={columns}
         />
-        <UserOperateDrawer
-          open={drawerVisible}
-          rowData={editingData}
-          submitted={run}
-          operateType={operateType}
-          closeDrawer={closeDrawer}
-        />
+        <Suspense>
+          <UserOperateDrawer
+            open={drawerVisible}
+            rowData={editingData}
+            submitted={run}
+            operateType={operateType}
+            closeDrawer={closeDrawer}
+          />
+        </Suspense>
       </Card>
     </div>
   );
