@@ -50,7 +50,7 @@ const DragContent: FC<Props> = ({ columns, setColumnChecks }) => {
                     {...provider.dragHandleProps}
                     className="h-36px flex-y-center rd-4px hover:(bg-primary bg-opacity-20)"
                   >
-                    {IconMdiDrag({ className: 'mr-8px h-full cursor-move text-icon' })}
+                    <IconMdiDrag className="mr-8px h-full cursor-move text-icon" />
                     <Checkbox
                       checked={item.checked}
                       onClick={() => handleChange(item.checked, index)}

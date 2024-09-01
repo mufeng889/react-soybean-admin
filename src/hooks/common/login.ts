@@ -19,9 +19,7 @@ export function useLogin() {
 
     if (userName) {
       dispatch(initAuthRoute());
-      if (redirect) {
-        redirectFromLogin();
-      }
+      await redirectFromLogin(redirect);
       window.$notification?.success({
         message: t('page.login.common.loginSuccess'),
         description: t('page.login.common.welcomeBack', { userName })

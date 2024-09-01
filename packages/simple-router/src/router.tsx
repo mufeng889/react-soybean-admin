@@ -33,7 +33,7 @@ class CreateRouter {
   initRoute = false;
   reactRouter: RemixRouter;
   initReactRoutes: RouteObject[] = [];
-  matcher: CreateRouterMatcher;
+  private matcher: CreateRouterMatcher;
   currentRoute = START_LOCATION_NORMALIZED;
   getReactRoutes: (route: ElegantConstRoute) => RouteObject;
 
@@ -67,6 +67,8 @@ class CreateRouter {
       await init(this.reactRouter);
       this.reactRouter.navigate(this.reactRouter.state.location, { replace: true });
     });
+
+    this.push = this.push.bind(this);
   }
 
   /**

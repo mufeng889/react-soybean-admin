@@ -1,6 +1,12 @@
-import { useSearchParams } from 'react-router-dom';
 import { startTransition } from 'react';
-import { router } from '@/router';
+import { useRouter } from '@sa/simple-router';
+import type { RouteKey } from '@elegant-router/types';
+import type { RouteLocationNamedRaw } from '@sa/simple-router';
+
+interface RouterPushOptions {
+  query?: Record<string, string>;
+  params?: Record<string, string>;
+}
 
 /**
  * Router push
@@ -8,46 +14,30 @@ import { router } from '@/router';
  * Jump to the specified route, it can replace function router.push
  */
 export function useRouterPush() {
+  const router = useRouter();
+
   const [searchParams] = useSearchParams();
-  const { pathname } = useLocation();
 
-  const routerBack = () => {
-    router.reactRouter.navigate(-1);
-  };
+  const routerPush = router.push;
 
-  async function toHome() {
-    return router.push('/');
-  }
+  const routerBack = router.back;
 
-  function getQuery() {
-    const query: Record<string, string> = {};
-    for (const pairs of searchParams.entries()) {
-      query[pairs[0]] = pairs[1];
+  async function routerPushByKey(key: RouteKey, options?: RouterPushOptions) {
+    const { query, params } = options || {};
+
+    const routeLocation: RouteLocationNamedRaw = {
+      name: key
+    };
+
+    if (Object.keys(query || {}).length) {
+      routeLocation.query = query;
     }
-    return query;
-  }
 
-  /**
-   * Navigate to login page
-   *
-   * @param loginModule The login module
-   * @param redirectUrl The redirect url, if not specified, it will be the current route fullPath
-   */
-  async function toLogin(loginModule?: UnionKey.LoginModule, redirectUrl?: string) {
-    const module = loginModule || 'pwd-login';
-
-    const redirect = redirectUrl || pathname;
-
-    return router.reactRouter.navigate({ pathname: `/login/${module}`, search: `redirect=${redirect}` });
-  }
-  function objectToQueryParams(obj: Record<string, string | number>) {
-    const params = new URLSearchParams();
-    for (const key in obj) {
-      if (Object.hasOwn(obj, key)) {
-        params.append(key, obj[key] as string);
-      }
+    if (Object.keys(params || {}).length) {
+      routeLocation.params = params;
     }
-    return params.toString();
+
+    return routerPush(routeLocation);
   }
 
   /**
@@ -67,41 +57,77 @@ export function useRouterPush() {
     return query;
   };
 
-  const menuPush = (key: string) => {
-    startTransition(() => {
-      const query = getRouteQueryOfMetaByKey(key);
-      router.push({ name: key, query });
-    });
-  };
+  function routerPushByKeyWithMetaQuery(key: RouteKey) {
+    const query = getRouteQueryOfMetaByKey(key);
+
+    return routerPushByKey(key, { query });
+  }
+
+  async function toHome() {
+    return routerPush('/');
+  }
+
+  /**
+   * Navigate to login page
+   *
+   * @param loginModule The login module
+   * @param redirectUrl The redirect url, if not specified, it will be the current route fullPath
+   */
+  async function toLogin(loginModule?: UnionKey.LoginModule, redirectUrl?: string) {
+    const module = loginModule || 'pwd-login';
+
+    const options: RouterPushOptions = {
+      params: {
+        module
+      }
+    };
+
+    const redirect = redirectUrl || router.currentRoute.fullPath;
+
+    options.query = {
+      redirect
+    };
+
+    return routerPushByKey('login', options);
+  }
 
   /**
    * Toggle login module
    *
    * @param module
    */
-  function toggleLoginModule(module: UnionKey.LoginModule) {
-    const query = getQuery();
+  async function toggleLoginModule(module: UnionKey.LoginModule) {
+    const query = router.currentRoute.query as Record<string, string>;
 
-    router.reactRouter.navigate({
-      pathname: `/login/${module}`,
-      search: objectToQueryParams(query)
+    return routerPushByKey(`login_${module}`, { query });
+  }
+
+  function menuPush(key: string) {
+    startTransition(() => {
+      routerPushByKeyWithMetaQuery(key as RouteKey);
     });
   }
 
-  /** Redirect from login */
-  function redirectFromLogin() {
+  /**
+   * Redirect from login
+   *
+   * @param [needRedirect=true] Whether to redirect after login. Default is `true`
+   */
+  async function redirectFromLogin(needRedirect = true) {
     const redirect = searchParams.get('redirect');
 
-    if (redirect) {
-      router.reactRouter.navigate(redirect);
+    if (needRedirect && redirect) {
+      routerPush(redirect);
     } else {
       toHome();
     }
   }
+
   return {
-    routerPush: router,
+    routerPush,
     routerBack,
     toLogin,
+    routerPushByKeyWithMetaQuery,
     menuPush,
     redirectFromLogin,
     toggleLoginModule

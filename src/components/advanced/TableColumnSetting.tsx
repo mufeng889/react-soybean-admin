@@ -16,7 +16,7 @@ const TableColumnSetting: FC<Props> = memo(({ content }) => {
       content={content}
     >
       <Button
-        icon={IconAntDesignSettingOutlined({})}
+        icon={<IconAntDesignSettingOutlined />}
         size="small"
       >
         {t('common.columnSetting')}
