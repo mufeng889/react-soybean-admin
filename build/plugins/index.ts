@@ -6,8 +6,9 @@ import { setupAutoImport } from './auto-import';
 import { setupUnocss } from './unocss';
 import { setupUnPluginIcon } from './unplugin-icon';
 import { setupElegantRouter } from './router';
+import { setupHtmlPlugin } from './html';
 
-export function setupVitePlugins(viteEnv: Env.ImportMeta) {
+export function setupVitePlugins(viteEnv: Env.ImportMeta, buildTime: string) {
   const plugins: PluginOption = [
     react(),
     setupAutoImport(viteEnv),
@@ -15,7 +16,8 @@ export function setupVitePlugins(viteEnv: Env.ImportMeta) {
     ...setupUnPluginIcon(viteEnv),
     setupElegantRouter(),
     Inspect(),
-    removeConsole()
+    removeConsole(),
+    setupHtmlPlugin(buildTime)
   ];
   return plugins;
 }
