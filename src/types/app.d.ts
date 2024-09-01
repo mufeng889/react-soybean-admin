@@ -139,7 +139,6 @@ declare namespace App {
 
   /** Global namespace */
   namespace Global {
-    type VNode = import('vue').VNode;
     type RouteLocationNormalizedLoaded = import('@sa/simple-router').RouteLocationNormalizedLoaded;
     type RouteKey = import('@elegant-router/types').RouteKey;
     type RouteMap = import('@elegant-router/types').RouteMap;
@@ -161,7 +160,7 @@ declare namespace App {
       icon?: string;
       /** Local svg icon name */
       localIcon?: string;
-      style?: CSSProperties;
+      style?: React.CSSProperties;
       className?: string;
     }
 
@@ -274,6 +273,10 @@ declare namespace App {
           title: string;
           reload: string;
           errorReason: string;
+          updateTitle: string;
+          updateContent: string;
+          updateConfirm: string;
+          updateCancel: string;
         };
         common: {
           action: string;
@@ -667,7 +670,7 @@ declare namespace App {
 
     type I18nKey = GetI18nKey<Schema['translation']>;
 
-    type TranslateOptions<Locales extends string> = import('vue-i18n').TranslateOptions<Locales>;
+    type TranslateOptions<Locales extends string> = import('react-i18next').TranslationProps<Locales>;
 
     interface $T {
       (key: I18nKey): string;

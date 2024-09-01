@@ -6,7 +6,7 @@ export function setupAppVersionNotification() {
   let isShow = false;
 
   document.addEventListener('visibilitychange', async () => {
-    const preConditions = [!isShow, document.visibilityState === 'visible', !import.meta.env.DEV];
+    const preConditions = [!isShow, document.visibilityState === 'visible'];
 
     if (!preConditions.every(Boolean)) return;
 
@@ -28,10 +28,12 @@ export function setupAppVersionNotification() {
           [
             createElement(
               Button,
+
               {
                 onClick() {
                   window.$notification?.destroy();
-                }
+                },
+                key: 'cancel'
               },
               $t('system.updateCancel')
             ),
@@ -41,7 +43,8 @@ export function setupAppVersionNotification() {
                 type: 'primary',
                 onClick() {
                   location.reload();
-                }
+                },
+                key: 'ok'
               },
               $t('system.updateConfirm')
             )

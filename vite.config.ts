@@ -8,7 +8,10 @@ import { include } from './build/optimize';
 // https://vitejs.dev/config/
 export default defineConfig(configEnv => {
   const viteEnv = loadEnv(configEnv.mode, process.cwd()) as unknown as Env.ImportMeta;
+
   const buildTime = getBuildTime();
+
+  const enableProxy = configEnv.command === 'serve' && !configEnv.isPreview;
   return {
     base: viteEnv.VITE_BASE_URL,
     resolve: {
@@ -36,7 +39,7 @@ export default defineConfig(configEnv => {
       warmup: {
         clientFiles: ['./index.html', './src/{pages,components}/*']
       },
-      proxy: createViteProxy(viteEnv, configEnv.command === 'serve'),
+      proxy: createViteProxy(viteEnv, enableProxy),
       fs: {
         cachedChecks: false
       }
