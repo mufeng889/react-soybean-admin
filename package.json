@@ -38,6 +38,7 @@
     "build:test": "vite build --mode test",
     "cleanup": "sa cleanup",
     "commit": "sa git-commit",
+    "commit:zh": "sa git-commit -l=zh-cn",
     "czh": "sa git-commit -l=zh-cn",
     "dev": "vite --mode test",
     "dev:prod": "vite --mode prod",
