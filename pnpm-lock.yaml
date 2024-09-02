@@ -115,7 +115,7 @@ importers:
         specifier: 8.1.0
         version: 8.1.0(@svgr/core@8.1.0(typescript@5.5.4))
       '@types/gradient-string':
-        specifier: ^1.1.6
+        specifier: 1.1.6
         version: 1.1.6
       '@types/node':
         specifier: 22.5.0
@@ -160,7 +160,7 @@ importers:
         specifier: 4.3.1
         version: 4.3.1(vite@5.4.2(@types/node@22.5.0)(sass@1.77.8))
       boxen:
-        specifier: ^8.0.1
+        specifier: 8.0.1
         version: 8.0.1
       eslint:
         specifier: 9.9.1
@@ -175,10 +175,10 @@ importers:
         specifier: 0.4.11
         version: 0.4.11(eslint@9.9.1(jiti@1.21.6))
       gradient-string:
-        specifier: ^2.0.2
+        specifier: 2.0.2
         version: 2.0.2
       json5:
-        specifier: ^2.2.3
+        specifier: 2.2.3
         version: 2.2.3
       lint-staged:
         specifier: 15.2.9

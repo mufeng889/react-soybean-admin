@@ -118,7 +118,7 @@ export function Component() {
           size="small"
           column={1}
           items={roles}
-        ></Descriptions>
+        />
         <Card
           title={t('page.function.toggleAuth.authHook')}
           bordered={false}
