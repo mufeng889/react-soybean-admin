@@ -1,4 +1,7 @@
 import { Card, Descriptions, Space, Tag } from 'antd';
+import TypeIt from 'typeit';
+import type { Options } from 'typeit';
+import type { El } from 'typeit/dist/types';
 import pkg from '~/package.json';
 
 interface PkgVersionInfo {
@@ -34,9 +37,31 @@ const pkgJson: PkgJson = {
 
 export function Component() {
   const { t } = useTranslation();
+
+  const textRef = useRef<El>(null);
+
+  function init() {
+    if (!textRef.current) return;
+
+    const options: Options = {
+      strings: t('page.about.introduction'),
+      lifeLike: true,
+      speed: 10
+    };
+
+    const initTypeIt = new TypeIt(textRef.current, options);
+
+    initTypeIt.go();
+  }
+
+  useMount(() => {
+    init();
+  });
+
   return (
     <Space
       direction="vertical"
+      className="w-full"
       size={16}
     >
       <Card
@@ -45,7 +70,7 @@ export function Component() {
         size="small"
         className="card-wrapper"
       >
-        <p>{t('page.about.introduction')}</p>
+        <span ref={textRef} />
       </Card>
 
       <Card

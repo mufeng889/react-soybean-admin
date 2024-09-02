@@ -4,6 +4,7 @@ export const themeSettings: App.Theme.ThemeSetting = {
   grayscale: false,
   recommendColor: false,
   isOnlyExpandCurrentParentMenu: true,
+  colourWeakness: false,
   themeColor: '#646cff',
   otherColor: {
     info: '#2080f0',
