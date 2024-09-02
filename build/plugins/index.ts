@@ -7,6 +7,7 @@ import { setupUnocss } from './unocss';
 import { setupUnPluginIcon } from './unplugin-icon';
 import { setupElegantRouter } from './router';
 import { setupHtmlPlugin } from './html';
+import { setupProjectInfo } from './info';
 
 export function setupVitePlugins(viteEnv: Env.ImportMeta, buildTime: string) {
   const plugins: PluginOption = [
@@ -17,7 +18,8 @@ export function setupVitePlugins(viteEnv: Env.ImportMeta, buildTime: string) {
     setupElegantRouter(),
     Inspect(),
     removeConsole(),
-    setupHtmlPlugin(buildTime)
+    setupHtmlPlugin(buildTime),
+    setupProjectInfo()
   ];
   return plugins;
 }
