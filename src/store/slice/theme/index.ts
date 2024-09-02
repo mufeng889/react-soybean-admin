@@ -2,7 +2,7 @@ import { createSelector, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { getPaletteColorByNumber } from '@sa/color';
 import type { AppThunk } from '../../index';
-import { initThemeSettings, toggleGrayscaleMode, updateDarkMode } from './shared';
+import { initThemeSettings, toggleAuxiliaryColorModes, toggleGrayscaleMode, updateDarkMode } from './shared';
 
 interface InitialStateType {
   settings: App.Theme.ThemeSetting;
@@ -55,6 +55,15 @@ export const themeSlice = createSlice({
     },
     setRecommendColor(state, { payload }: PayloadAction<boolean>) {
       state.settings.recommendColor = payload;
+    },
+    /**
+     * Set colourWeakness value
+     *
+     * @param isColourWeakness
+     */
+    setColourWeakness(state, { payload }: PayloadAction<boolean>) {
+      toggleAuxiliaryColorModes(payload);
+      state.settings.colourWeakness = payload;
     },
     /**
      * Update theme colors
@@ -137,8 +146,10 @@ export const {
   setWatermark,
   setSider,
   setFooter,
-  setIsOnlyExpandCurrentParentMenu
+  setIsOnlyExpandCurrentParentMenu,
+  setColourWeakness
 } = themeSlice.actions;
+
 // 计算属性选择器
 export const themeColors = createSelector([getThemeSettings], ({ themeColor, otherColor, isInfoFollowPrimary }) => {
   const colors: App.Theme.ThemeColor = {

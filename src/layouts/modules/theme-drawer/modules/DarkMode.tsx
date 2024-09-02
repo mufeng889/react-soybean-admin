@@ -5,6 +5,7 @@ import { themeSchemaRecord } from '@/constants/app';
 import {
   getDarkMode,
   getThemeSettings,
+  setColourWeakness,
   setGrayscale,
   setIsOnlyExpandCurrentParentMenu,
   setSiderInverted,
@@ -57,6 +58,10 @@ const DarkMode = () => {
     dispatch(setGrayscale(value));
   }
 
+  function handleAuxiliaryColorChange(value: boolean) {
+    dispatch(setColourWeakness(value));
+  }
+
   function handleIsOnlyExpandCurrentParentMenuChange(value: boolean) {
     dispatch(setIsOnlyExpandCurrentParentMenu(value));
   }
@@ -89,6 +94,12 @@ const DarkMode = () => {
         <Switch
           defaultChecked={themeSettings.grayscale}
           onChange={handleGrayscaleChange}
+        />
+      </SettingItem>
+      <SettingItem label={t('theme.colourWeakness')}>
+        <Switch
+          defaultChecked={themeSettings.colourWeakness}
+          onChange={handleAuxiliaryColorChange}
         />
       </SettingItem>
       <CSSTransition

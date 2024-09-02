@@ -223,6 +223,17 @@ export function toggleCssDarkMode(darkMode = false) {
   }
 }
 
+/**
+ * Toggle auxiliary color modes
+ *
+ * @param grayscaleMode
+ * @param colourWeakness
+ */
+export function toggleAuxiliaryColorModes(colourWeakness = false) {
+  const htmlElement = document.documentElement;
+  htmlElement.style.filter = colourWeakness ? 'invert(80%)' : '';
+}
+
 /** Setup theme vars to html */
 export function setupThemeVarsToHtml(themeColors: App.Theme.ThemeColor) {
   const { themeTokens, darkThemeTokens } = createThemeToken(themeColors);

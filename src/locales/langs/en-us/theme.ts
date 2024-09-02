@@ -6,6 +6,7 @@ const theme: App.I18n.Schema['translation']['theme'] = {
     auto: 'Follow System'
   },
   grayscale: 'Grayscale',
+  colourWeakness: 'Colour Weakness',
   isOnlyExpandCurrentParentMenu: 'Only Expand Current Parent Menu',
   layoutMode: {
     title: 'Layout Mode',

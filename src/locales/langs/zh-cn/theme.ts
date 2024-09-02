@@ -6,6 +6,7 @@ const theme: App.I18n.Schema['translation']['theme'] = {
     auto: '跟随系统'
   },
   grayscale: '灰度模式',
+  colourWeakness: '色弱模式',
   isOnlyExpandCurrentParentMenu: '仅展开当前父级菜单',
   layoutMode: {
     title: '布局模式',
