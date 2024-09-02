@@ -2,7 +2,10 @@ const GlobalSearch = memo(() => {
   const { t } = useTranslation();
 
   return (
-    <ButtonIcon tooltipContent={t('common.search')}>
+    <ButtonIcon
+      className="px-12px"
+      tooltipContent={t('common.search')}
+    >
       <IconUilSearch />
     </ButtonIcon>
   );

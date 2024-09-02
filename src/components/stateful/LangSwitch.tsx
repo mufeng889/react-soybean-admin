@@ -5,9 +5,10 @@ import ButtonIcon from '../stateless/custom/ButtonIcon';
 interface Props {
   /** Show tooltip */
   showTooltip?: boolean;
+  className?: string;
 }
 
-const LangSwitch: FC<Props> = memo(({ showTooltip = true }) => {
+const LangSwitch: FC<Props> = memo(({ showTooltip = true, className }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const locale = useAppSelector(getLocale);
@@ -25,6 +26,7 @@ const LangSwitch: FC<Props> = memo(({ showTooltip = true }) => {
         <ButtonIcon
           tooltipContent={tooltipContent}
           tooltipPlacement="left"
+          className={className}
           icon="heroicons:language"
         />
       </div>

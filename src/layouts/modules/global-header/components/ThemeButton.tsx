@@ -9,6 +9,7 @@ const ThemeButton = memo(() => {
       icon="majesticons:color-swatch-line"
       tooltipContent={t('icon.themeConfig')}
       triggerParent
+      className="px-12px"
       onClick={() => dispatch(openThemeDrawer())}
     />
   );

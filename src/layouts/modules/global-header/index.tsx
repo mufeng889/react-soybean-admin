@@ -63,12 +63,13 @@ const GlobalHeader: FC<Props> = memo(
           <GlobalSearch />
           {!isMobile && (
             <FullScreen
+              className="px-12px"
               full={isFullscreen}
               toggleFullscreen={toggleFullscreen}
             />
           )}
-          <LangSwitch />
-          <ThemeSchemaSwitch />
+          <LangSwitch className="px-12px" />
+          <ThemeSchemaSwitch className="px-12px" />
           <ThemeButton />
           <UserAvatar />
         </div>

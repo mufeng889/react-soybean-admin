@@ -68,7 +68,7 @@ const UserAvatar = memo(() => {
       menu={{ items, onClick }}
     >
       <div>
-        <ButtonIcon>
+        <ButtonIcon className="px-12px">
           <SvgIcon
             icon="ph:user-circle"
             className="text-icon-large"
