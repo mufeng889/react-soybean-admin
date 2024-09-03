@@ -338,7 +338,7 @@ declare namespace App {
           grayscale: string;
           colourWeakness: string;
           isOnlyExpandCurrentParentMenu: string;
-          layoutMode: { title: string } & Record<UnionKey.ThemeLayoutMode, string>;
+          layoutMode: { title: string; reverseHorizontalMix: string } & Record<UnionKey.ThemeLayoutMode, string>;
           recommendColor: string;
           recommendColorDesc: string;
           themeColor: {

@@ -24,6 +24,6 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true
   },
-  "exclude": ["node_modules", "dist", "./packages/simple-router/**/*.ts"],
-  "include": ["./**/*.ts", "./**/*.tsx"]
+  "include": ["./**/*.ts", "./**/*.tsx"],
+  "exclude": ["node_modules", "dist"]
 }

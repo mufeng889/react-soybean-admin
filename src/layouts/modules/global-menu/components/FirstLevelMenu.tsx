@@ -6,11 +6,13 @@ import { cloneElement } from 'react';
 import { getSiderCollapse } from '@/store/slice/app';
 import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
 import { selectActiveFirstLevelMenuKey } from '@/store/slice/tab';
+
 interface Props {
   inverted?: boolean;
   children?: React.ReactNode;
   onSelect: (menu: SubMenuType) => void;
 }
+
 interface MixMenuItemProps {
   /** Menu item label */
   label: React.ReactNode;
@@ -26,6 +28,7 @@ interface MixMenuItemProps {
 function MixMenuItem({ label, Icon, active, isMini, inverted, onClick }: MixMenuItemProps) {
   const themeSettings = useAppSelector(getThemeSettings);
   const darkMode = useAppSelector(getDarkMode);
+
   const selectedBgColor = useMemo(() => {
     const light = transformColorWithOpacity(themeSettings.themeColor, 0.1, '#ffffff');
     const dark = transformColorWithOpacity(themeSettings.themeColor, 0.3, '#000000');
@@ -63,6 +66,7 @@ const FirstLevelMenu: FC<Props> = memo(({ children, inverted, onSelect }) => {
 
   const siderCollapse = useAppSelector(getSiderCollapse);
   const activeMenuKey = useAppSelector(selectActiveFirstLevelMenuKey);
+
   return (
     <div className="h-full flex-col-stretch flex-1-hidden">
       {children}
@@ -75,7 +79,7 @@ const FirstLevelMenu: FC<Props> = memo(({ children, inverted, onSelect }) => {
             Icon={item.icon}
             label={item.label}
             key={item?.key}
-          ></MixMenuItem>
+          />
         ))}
       </SimpleScrollbar>
       <MenuToggler

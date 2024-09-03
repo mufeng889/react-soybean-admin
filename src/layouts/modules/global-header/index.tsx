@@ -1,11 +1,10 @@
-import type { MenuProps } from 'antd';
 import DarkModeContainer from '@/components/stateless/common/DarkModeContainer';
 import ThemeSchemaSwitch from '@/components/stateful/ThemeSchemaSwitch';
 import LangSwitch from '@/components/stateful/LangSwitch';
 import FullScreen from '@/components/stateless/common/FullScreen';
+import { GLOBAL_HEADER_MENU_ID } from '@/constants/app';
 import GlobalLogo from '../global-logo';
 import GlobalSearch from '../global-search';
-import HorizontalMenu from '../global-menu/BaseMenu';
 import GlobalBreadcrumb from '../global-breadcrumb';
 import ThemeButton from './components/ThemeButton';
 import UserAvatar from './components/UserAvatar';
@@ -17,65 +16,46 @@ interface Props {
   showMenuToggler?: App.Global.HeaderProps['showMenuToggler'];
   /** Whether to show the menu */
   showMenu?: App.Global.HeaderProps['showMenu'];
-  childrenMenu: MenuProps['items'];
-  menus: MenuProps['items'];
   isMobile: boolean;
   settings: App.Theme.ThemeSetting;
 }
-const GlobalHeader: FC<Props> = memo(
-  ({ showLogo, showMenuToggler, showMenu, childrenMenu, menus, isMobile, settings }) => {
-    const headerMenus = () => {
-      if (settings.layout.mode === 'horizontal') {
-        return menus;
-      }
 
-      if (settings.layout.mode === 'horizontal-mix') {
-        return childrenMenu;
-      }
+const GlobalHeader: FC<Props> = memo(({ showLogo, showMenuToggler, showMenu, isMobile, settings }) => {
+  const [isFullscreen, { toggleFullscreen }] = useFullscreen(document.body);
 
-      return [];
-    };
+  return (
+    <DarkModeContainer className="h-full flex-y-center px-12px shadow-header">
+      {showLogo && (
+        <GlobalLogo
+          className="h-full"
+          style={{ width: `${settings.sider.width}px` }}
+        />
+      )}
+      {showMenuToggler && <MenuToggler />}
 
-    const [isFullscreen, { toggleFullscreen }] = useFullscreen(document.body);
+      <div
+        id={GLOBAL_HEADER_MENU_ID}
+        className="h-full flex-y-center flex-1-hidden"
+      >
+        {!isMobile && !showMenu && <GlobalBreadcrumb className="ml-12px" />}
+      </div>
 
-    return (
-      <DarkModeContainer className="h-full flex-y-center px-12px shadow-header">
-        {showLogo && (
-          <GlobalLogo
-            className="h-full"
-            style={{ width: `${settings.sider.width}px` }}
-          />
-        )}
-
-        {showMenu ? (
-          <HorizontalMenu
-            menus={headerMenus()}
-            mode="horizontal"
+      <div className="h-full flex-y-center justify-end">
+        <GlobalSearch />
+        {!isMobile && (
+          <FullScreen
             className="px-12px"
+            full={isFullscreen}
+            toggleFullscreen={toggleFullscreen}
           />
-        ) : (
-          <div className="h-full flex-y-center flex-1-hidden">
-            {showMenuToggler && <MenuToggler />}
-            {!isMobile && <GlobalBreadcrumb className="ml-12px" />}
-          </div>
         )}
-        <div className="h-full flex-y-center justify-end">
-          <GlobalSearch />
-          {!isMobile && (
-            <FullScreen
-              className="px-12px"
-              full={isFullscreen}
-              toggleFullscreen={toggleFullscreen}
-            />
-          )}
-          <LangSwitch className="px-12px" />
-          <ThemeSchemaSwitch className="px-12px" />
-          <ThemeButton />
-          <UserAvatar />
-        </div>
-      </DarkModeContainer>
-    );
-  }
-);
+        <LangSwitch className="px-12px" />
+        <ThemeSchemaSwitch className="px-12px" />
+        <ThemeButton />
+        <UserAvatar />
+      </div>
+    </DarkModeContainer>
+  );
+});
 
 export default GlobalHeader;

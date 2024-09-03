@@ -1,5 +1,4 @@
 import type { MenuProps } from 'antd';
-import { Menu } from 'antd';
 import { SimpleScrollbar } from '@sa/materials';
 import { useRoute } from '@sa/simple-router';
 import type { MenuInfo } from 'rc-menu/lib/interface';
@@ -110,7 +109,7 @@ const BaseMenu: FC<Props> = memo(({ mode = 'inline', menus, darkTheme, className
 
   return (
     <SimpleScrollbar className={className}>
-      <Menu
+      <AMenu
         mode={mode}
         items={menus}
         theme={darkTheme ? 'dark' : 'light'}
@@ -123,8 +122,8 @@ const BaseMenu: FC<Props> = memo(({ mode = 'inline', menus, darkTheme, className
           'bg-container ': !darkTheme,
           'horizontal-menu': isHorizontal
         })}
-        onClick={handleClickMenu}
-      ></Menu>
+        onSelect={handleClickMenu}
+      />
     </SimpleScrollbar>
   );
 });

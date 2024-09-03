@@ -128,7 +128,9 @@ export const themeSlice = createSlice({
     getDarkMode: theme => theme.darkMode
   }
 });
+
 export const { getThemeSettings, getDarkMode } = themeSlice.selectors;
+
 export const {
   setDarkMode,
   setThemeScheme,

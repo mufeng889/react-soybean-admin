@@ -1,6 +1,7 @@
 import { AdminLayout, LAYOUT_SCROLL_EL_ID } from '@sa/materials';
 import type { LayoutMode } from '@sa/materials';
 import { configResponsive } from 'ahooks';
+import { Suspense } from 'react';
 import './index.scss';
 import {
   getContentXScrollable,
@@ -18,6 +19,8 @@ import GlobalHeader from '../modules/global-header';
 import GlobalSider from '../modules/global-sider';
 import ThemeDrawer from '../modules/theme-drawer';
 import GlobalTab from '../modules/global-tab';
+
+const GlobalMenu = lazy(() => import('../modules/global-menu'));
 
 const LAYOUT_MODE_VERTICAL: LayoutMode = 'vertical';
 const LAYOUT_MODE_HORIZONTAL: LayoutMode = 'horizontal';
@@ -127,11 +130,9 @@ export function Component() {
       rightFooter={themeSettings.footer.right}
       Header={
         <GlobalHeader
-          childrenMenu={childrenMenu}
           {...headerProps}
           settings={themeSettings}
           isMobile={isMobile}
-          menus={menus}
         />
       }
       Tab={<GlobalTab />}
@@ -139,17 +140,20 @@ export function Component() {
         <GlobalSider
           isVerticalMix={isVerticalMix}
           siderCollapse={siderCollapse}
-          themeSetting={themeSettings}
+          inverted={themeSettings.sider.inverted}
           isHorizontalMix={isHorizontalMix}
-          childrenMenus={childrenMenu}
-          menus={menus}
-          isVertical={layoutMode === LAYOUT_MODE_VERTICAL}
           headerHeight={themeSettings.header.height}
         />
       }
       Footer={<GlobalFooter />}
     >
       <GlobalContent />
+      <Suspense fallback={null}>
+        <GlobalMenu
+          mode={themeSettings.layout.mode}
+          menus={menus}
+        />
+      </Suspense>
       <ThemeDrawer />
     </AdminLayout>
   );

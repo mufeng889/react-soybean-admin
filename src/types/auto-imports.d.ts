@@ -13,6 +13,7 @@ declare global {
   const ADivider: typeof import('antd')['Divider']
   const AFlex: typeof import('antd')['Flex']
   const AInput: typeof import('antd')['Input']
+  const AMenu: typeof import('antd')['Menu']
   const ARow: typeof import('antd')['Row']
   const ASpace: typeof import('antd')['Space']
   const AStatistic: typeof import('antd')['Statistic']

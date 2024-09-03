@@ -13,7 +13,8 @@ const theme: App.I18n.Schema['translation']['theme'] = {
     vertical: 'Vertical Menu Mode',
     horizontal: 'Horizontal Menu Mode',
     'vertical-mix': 'Vertical Mix Menu Mode',
-    'horizontal-mix': 'Horizontal Mix menu Mode'
+    'horizontal-mix': 'Horizontal Mix menu Mode',
+    reverseHorizontalMix: 'Reverse first level menus and child level menus position'
   },
   recommendColor: 'Apply Recommended Color Algorithm',
   recommendColorDesc: 'The recommended color algorithm refers to',

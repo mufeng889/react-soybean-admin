@@ -1,7 +1,7 @@
 import type { SubMenuType } from 'antd/es/menu/interface';
 import { useRouter } from '@sa/simple-router';
 import { setActiveFirstLevelMenuKey } from '@/store/slice/tab';
-import FirstLevelMenu from './FirstLevelMenu';
+import FirstLevelMenu from './components/FirstLevelMenu';
 
 const HorizontalMixMenu = memo(() => {
   const dispatch = useAppDispatch();
