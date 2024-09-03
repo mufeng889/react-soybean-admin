@@ -3,8 +3,7 @@ import { createElement } from 'react';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import type { ItemType, MenuItemType, SubMenuType } from 'antd/es/menu/interface';
 import type { BreadcrumbProps } from 'antd';
-import { useRoute } from '@sa/simple-router';
-import type { RouteLocationNormalizedLoaded } from '@sa/simple-router';
+import type { Route } from '@sa/simple-router';
 import { useRouterPush } from '@/hooks/common/routerPush';
 
 const GlobalBreadcrumb: FC<Omit<BreadcrumbProps, 'items'>> = memo(props => {
@@ -65,7 +64,7 @@ function removeChildren(menu: SubMenuType): Omit<ItemType, 'children'> {
 }
 // eslint-disable-next-line max-params
 function getBreadcrumbsByRoute(
-  route: RouteLocationNormalizedLoaded,
+  route: Route,
   menus: ItemType[],
   index: number = 0,
   breadcrumbs: Extract<ItemType, MenuItemType | SubMenuType>[] = []

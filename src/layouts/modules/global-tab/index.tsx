@@ -5,7 +5,6 @@ import { PageTab } from '@sa/materials';
 import {useUpdateEffect} from 'ahooks'
 import { startTransition } from 'react';
 import DarkModeContainer from '@/components/stateless/common/DarkModeContainer';
-import {useRoute} from '@sa/simple-router'
 import BetterScroll from '@/components/stateless/custom/BetterScroll';
 import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
 import { getActiveTabId, isTabRetain, removeTab, selectAllTabs,addTabByRoute } from '@/store/slice/tab';
@@ -38,9 +37,6 @@ const GlobalTab = memo(() => {
   const themeSettings = useAppSelector(getThemeSettings);
   const darkMode = useAppSelector(getDarkMode);
   const activeTabId = useAppSelector(getActiveTabId);
-
-
-
 
   const setBsScroll = (bscroll: BScroll) => {
     bsScrollRef.current = bscroll;
@@ -124,7 +120,7 @@ const GlobalTab = memo(() => {
 
   useEffect(() => {
     dispatch(addTabByRoute(route))
-  },[route.fullPath])
+  },[route,dispatch])
 
   useMount(() => {
     if (bsWrapper.current) {

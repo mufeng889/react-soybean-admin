@@ -1,11 +1,11 @@
 import type { SubMenuType } from 'antd/es/menu/interface';
 import type { MenuProps } from 'antd';
 import classNames from 'classnames';
-import { useRoute, useRouter } from '@sa/simple-router';
+import { useRouter } from '@sa/simple-router';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { SimpleScrollbar } from '@sa/materials';
 import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
-import { getMixSiderFixed, getSiderCollapse, toggleMixSiderFixed } from '@/store/slice/app';
+import { getMixSiderFixed, toggleMixSiderFixed } from '@/store/slice/app';
 import DarkModeContainer from '@/components/stateless/common/DarkModeContainer';
 import { setActiveFirstLevelMenuKey } from '@/store/slice/tab';
 import PinToggler from '@/components/stateless/common/PinToggler';
@@ -33,9 +33,7 @@ const VerticalMixMenu: FC<Props> = memo(({ menus, children }) => {
   const route = useRoute();
 
   const matches = route.matched;
-  const collapse = useAppSelector(getSiderCollapse);
 
-  const siderCollapse = themeSettings.layout.mode === 'vertical' && collapse;
   const selectedKeys = () => {
     const lastElement = matches[matches.length - 1];
 
@@ -102,7 +100,6 @@ const VerticalMixMenu: FC<Props> = memo(({ menus, children }) => {
               mode="vertical"
               selectedKeys={selectedKeys()}
               items={menus}
-              inlineCollapsed={siderCollapse}
               inlineIndent={18}
               onSelect={handleClickMenu}
             />

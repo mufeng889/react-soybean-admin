@@ -10,7 +10,7 @@ import CreateRouterMatcher from './matcher';
 import type { RouteRecordNormalized, RouteRecordRaw } from './matcher/types';
 import { START_LOCATION_NORMALIZED } from './types';
 import { RouterContext } from './hooks/useRouter';
-import { RouteContext } from './hooks/useRoute';
+
 import { warn } from './warning';
 
 const historyCreatorMap: Record<
@@ -32,6 +32,7 @@ class CreateRouter {
   reactRoutes: RouteObject[] = [];
   initRoute = false;
   reactRouter: RemixRouter;
+  listeners: (() => void)[] = [];
   initReactRoutes: RouteObject[] = [];
   private matcher: CreateRouterMatcher;
   currentRoute = START_LOCATION_NORMALIZED;
@@ -69,6 +70,8 @@ class CreateRouter {
     });
 
     this.push = this.push.bind(this);
+    this.getSnapshot = this.getSnapshot.bind(this);
+    this.subscribe = this.subscribe.bind(this);
   }
 
   /**
@@ -98,6 +101,13 @@ class CreateRouter {
 
   #changeRoutes() {
     this.reactRouter._internalSetRoutes([...this.initReactRoutes, ...this.reactRoutes]);
+  }
+
+  subscribe(listener: () => void) {
+    this.listeners = [listener];
+    return () => {
+      this.listeners = [];
+    };
   }
 
   removeRoute(name: string) {
@@ -230,18 +240,12 @@ class CreateRouter {
   }
 
   CustomRouterProvider: (loading: React.ReactNode) => JSX.Element = loading => {
-    const reactiveRoute = new Proxy(this.currentRoute, {
-      get: (_, key) => this.currentRoute[key as keyof RouteLocationNormalizedLoaded]
-    });
-
     return (
       <RouterContext.Provider value={this}>
-        <RouteContext.Provider value={reactiveRoute}>
-          <RouterProvider
-            fallbackElement={loading}
-            router={this.reactRouter}
-          />
-        </RouteContext.Provider>
+        <RouterProvider
+          fallbackElement={loading}
+          router={this.reactRouter}
+        />
       </RouterContext.Provider>
     );
   };
@@ -267,6 +271,10 @@ class CreateRouter {
       afterEach(this.currentRoute, from);
     }
   };
+
+  getSnapshot() {
+    return this.currentRoute;
+  }
 
   getAllRouteNames() {
     return this.matcher.getAllRouteNames();

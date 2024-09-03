@@ -171,6 +171,7 @@ export const addTabByRoute =
 
     if (active) {
       dispatch(setActiveTabId(tab.id));
+
       const firstLevelRouteName = getActiveFirstLevelMenuKey(route);
       dispatch(setActiveFirstLevelMenuKey(firstLevelRouteName));
     }

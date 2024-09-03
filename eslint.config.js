@@ -8,11 +8,7 @@ export default defineConfig(
       singleAttributePerLine: true,
       trailingCommas: 'none'
     },
-    ignores: [
-      'src/layouts/modules/global-menu/**/*.tsx',
-      'src/layouts/modules/global-tab/index.tsx',
-      'ErrorBoundary.tsx'
-    ]
+    ignores: ['ErrorBoundary.tsx']
   },
   {
     rules: {

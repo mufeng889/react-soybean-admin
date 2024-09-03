@@ -1,6 +1,5 @@
 import type { MenuProps } from 'antd';
 import { SimpleScrollbar } from '@sa/materials';
-import { useRoute } from '@sa/simple-router';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import ClassNames from 'classnames';
 import type { RouteRecordNormalized } from '@sa/simple-router';
