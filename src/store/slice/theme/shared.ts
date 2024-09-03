@@ -68,16 +68,16 @@ function getCssVarByTokens(tokens: App.Theme.BaseToken) {
 }
 
 /**
- * Add theme vars to html
+ * Add theme vars to global
  *
  * @param tokens
  */
-export function addThemeVarsToHtml(tokens: App.Theme.BaseToken, darkTokens: App.Theme.BaseToken) {
+export function addThemeVarsToGlobal(tokens: App.Theme.BaseToken, darkTokens: App.Theme.BaseToken) {
   const cssVarStr = getCssVarByTokens(tokens);
   const darkCssVarStr = getCssVarByTokens(darkTokens);
 
   const css = `
-    html {
+   :root {
       ${cssVarStr}
     }
   `;
@@ -237,7 +237,7 @@ export function toggleAuxiliaryColorModes(colourWeakness = false) {
 /** Setup theme vars to html */
 export function setupThemeVarsToHtml(themeColors: App.Theme.ThemeColor) {
   const { themeTokens, darkThemeTokens } = createThemeToken(themeColors);
-  addThemeVarsToHtml(themeTokens, darkThemeTokens);
+  addThemeVarsToGlobal(themeTokens, darkThemeTokens);
 }
 
 export function updateDarkMode(themeScheme: UnionKey.ThemeScheme) {
