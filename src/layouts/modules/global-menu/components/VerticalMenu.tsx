@@ -2,8 +2,10 @@ import { SimpleScrollbar } from '@sa/materials';
 import type { Route, RouteRecordNormalized } from '@sa/simple-router';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import type { MenuProps } from 'antd';
+import type { FC } from 'react';
 import { getSiderCollapse } from '@/store/slice/app';
 import { getThemeSettings } from '@/store/slice/theme';
+import type { Props } from './HorizontalMenu';
 
 interface LevelKeysProps {
   key?: string;
@@ -47,9 +49,7 @@ const getSelectedMenuKeyPath = (matches: RouteRecordNormalized[]) => {
   return result;
 };
 
-const VerticalMenu = memo(() => {
-  const menus = useMenu();
-
+const VerticalMenu: FC<Props> = memo(({ menus }) => {
   const route = useRoute();
   const levelKeys = getLevelKeys(menus as LevelKeysProps[]);
 

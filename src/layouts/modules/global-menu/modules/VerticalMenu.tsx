@@ -1,126 +1,15 @@
-import { SimpleScrollbar } from '@sa/materials';
-import type { Route, RouteRecordNormalized } from '@sa/simple-router';
-import type { MenuInfo } from 'rc-menu/lib/interface';
-import type { MenuProps } from 'antd';
-import { getSiderCollapse } from '@/store/slice/app';
-import { getThemeSettings } from '@/store/slice/theme';
+import { createPortal } from 'react-dom';
+import { GLOBAL_SIDER_MENU_ID } from '@/constants/app';
+import VerticalMenu from '../components/VerticalMenu';
+import type { Props } from '../components/HorizontalMenu';
+import { useGetElementById } from './hook';
 
-interface LevelKeysProps {
-  key?: string;
-  children?: LevelKeysProps[];
-}
+const Vertical = ({ menus }: Props) => {
+  const container = useGetElementById(GLOBAL_SIDER_MENU_ID);
 
-interface Props {
-  menus: MenuProps['items'];
-}
+  if (!container) return null;
 
-const getLevelKeys = (items1: LevelKeysProps[]) => {
-  const key: Record<string, number> = {};
-
-  if (!items1) return key;
-  const func = (items2: LevelKeysProps[], level = 1) => {
-    items2.forEach(item => {
-      if (item.key) {
-        key[item.key] = level;
-      }
-      if (item.children) {
-        func(item.children, level + 1);
-      }
-    });
-  };
-  func(items1);
-  return key;
+  return createPortal(<VerticalMenu menus={menus} />, container);
 };
 
-function getSelectKey(route: Route) {
-  const { hideInMenu, activeMenu } = route.meta;
-
-  const name = route.name as string;
-
-  const routeName = (hideInMenu ? activeMenu : name) || name;
-
-  return [routeName];
-}
-
-const getSelectedMenuKeyPath = (matches: RouteRecordNormalized[]) => {
-  const result = matches.reduce((acc: string[], match, index) => {
-    if (index < matches.length - 1 && match.name) {
-      acc.push(match.name);
-    }
-    return acc;
-  }, []);
-
-  return result;
-};
-
-const VerticalMenu: FC<Props> = memo(({ menus }) => {
-  console.log(menus);
-
-  const route = useRoute();
-  const levelKeys = getLevelKeys(menus as LevelKeysProps[]);
-
-  const themeSettings = useAppSelector(getThemeSettings);
-
-  const selectedKeys = getSelectKey(route);
-
-  const router = useRouterPush();
-  const matches = route.matched;
-  const openKeys = () => {
-    return getSelectedMenuKeyPath(matches);
-  };
-
-  const inlineCollapsed = useAppSelector(getSiderCollapse);
-
-  const siderCollapse = themeSettings.layout.mode === 'vertical-mix' ? false : inlineCollapsed;
-
-  const [stateOpenKeys, setStateOpenKeys] = useState<string[]>(openKeys());
-
-  function handleClickMenu(menuInfo: MenuInfo) {
-    router.menuPush(menuInfo.key);
-  }
-
-  const onOpenChange: MenuProps['onOpenChange'] = keys => {
-    if (keys.includes('rc-menu-more')) {
-      setStateOpenKeys(keys);
-      return;
-    }
-
-    const currentOpenKey = keys.find(key => !stateOpenKeys.includes(key));
-
-    // open
-    if (currentOpenKey && themeSettings.isOnlyExpandCurrentParentMenu) {
-      const repeatIndex = keys
-        .filter(key => key !== currentOpenKey)
-        .findIndex(key => levelKeys[key] === levelKeys[currentOpenKey]);
-
-      setStateOpenKeys(
-        keys
-          // remove repeat key
-          .filter((_, index) => index !== repeatIndex)
-          // remove current level all child
-          .filter(key => levelKeys[key] <= levelKeys[currentOpenKey])
-      );
-    } else {
-      // close
-      setStateOpenKeys(keys);
-    }
-  };
-
-  return (
-    <SimpleScrollbar>
-      <AMenu
-        mode="inline"
-        items={menus}
-        inlineCollapsed={siderCollapse}
-        openKeys={stateOpenKeys}
-        onOpenChange={onOpenChange}
-        selectedKeys={selectedKeys}
-        onSelect={handleClickMenu}
-        className="size-full bg-container transition-300 border-0!"
-        inlineIndent={18}
-      />
-    </SimpleScrollbar>
-  );
-});
-
-export default VerticalMenu;
+export default Vertical;

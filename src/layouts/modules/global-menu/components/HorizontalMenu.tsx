@@ -1,6 +1,11 @@
 import type { Route } from '@sa/simple-router';
 import type { MenuInfo } from 'rc-menu/lib/interface';
+import type { MenuProps } from 'antd';
 import { useRouterPush } from '@/hooks/common/routerPush';
+
+export interface Props {
+  menus: MenuProps['items'];
+}
 
 function getSelectKey(route: Route) {
   const { hideInMenu, activeMenu } = route.meta;
@@ -12,10 +17,8 @@ function getSelectKey(route: Route) {
   return [routeName];
 }
 
-const HorizontalMenu = () => {
+const HorizontalMenu: FC<Props> = memo(({ menus }) => {
   const route = useRoute();
-
-  const menus = useMenu();
 
   const router = useRouterPush();
 
@@ -31,9 +34,10 @@ const HorizontalMenu = () => {
       items={menus}
       inlineIndent={18}
       onSelect={handleClickMenu}
+      className="size-full bg-container transition-300 border-0!"
       selectedKeys={selectKey}
     />
   );
-};
+});
 
 export default HorizontalMenu;

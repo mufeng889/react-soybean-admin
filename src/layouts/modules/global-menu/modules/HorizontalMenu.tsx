@@ -1,42 +1,15 @@
-import type { Route } from '@sa/simple-router';
-import type { MenuInfo } from 'rc-menu/lib/interface';
-import { useRouterPush } from '@/hooks/common/routerPush';
-import { headerContainer } from './shared';
+import { createPortal } from 'react-dom';
+import { GLOBAL_HEADER_MENU_ID } from '@/constants/app';
+import HorizontalMenu from '../components/HorizontalMenu';
+import type { Props } from '../components/HorizontalMenu';
+import { useGetElementById } from './hook';
 
-function getSelectKey(route: Route) {
-  const { hideInMenu, activeMenu } = route.meta;
+const Horizontal = ({ menus }: Props) => {
+  const container = useGetElementById(GLOBAL_HEADER_MENU_ID);
 
-  const name = route.name as string;
+  if (!container) return null;
 
-  const routeName = (hideInMenu ? activeMenu : name) || name;
-
-  return [routeName];
-}
-
-const HorizontalMenu = () => {
-  const route = useRoute();
-
-  const menus = useMenu();
-
-  const router = useRouterPush();
-
-  const selectKey = getSelectKey(route);
-
-  function handleClickMenu(menuInfo: MenuInfo) {
-    router.menuPush(menuInfo.key);
-  }
-
-  if (!headerContainer) return null;
-
-  return (
-    <AMenu
-      mode="horizontal"
-      items={menus}
-      inlineIndent={18}
-      onSelect={handleClickMenu}
-      selectedKeys={selectKey}
-    />
-  );
+  return createPortal(<HorizontalMenu menus={menus} />, container);
 };
 
-export default HorizontalMenu;
+export default Horizontal;

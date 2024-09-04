@@ -61,7 +61,7 @@ function MixMenuItem({ label, Icon, active, isMini, inverted, onClick }: MixMenu
   );
 }
 
-const FirstLevelMenu: FC<Props> = memo(({ children, inverted, onSelect }) => {
+const FirstLevelMenu = ({ children, inverted, onSelect }: Props) => {
   const menus = useMenu();
 
   const siderCollapse = useAppSelector(getSiderCollapse);
@@ -88,6 +88,6 @@ const FirstLevelMenu: FC<Props> = memo(({ children, inverted, onSelect }) => {
       />
     </div>
   );
-});
+};
 
 export default FirstLevelMenu;

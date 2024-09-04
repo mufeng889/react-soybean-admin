@@ -1,7 +1,6 @@
 import { AdminLayout, LAYOUT_SCROLL_EL_ID } from '@sa/materials';
 import type { LayoutMode } from '@sa/materials';
 import { configResponsive } from 'ahooks';
-import { Suspense } from 'react';
 import './index.scss';
 import {
   getContentXScrollable,
@@ -19,8 +18,7 @@ import GlobalHeader from '../modules/global-header';
 import GlobalSider from '../modules/global-sider';
 import ThemeDrawer from '../modules/theme-drawer';
 import GlobalTab from '../modules/global-tab';
-
-const GlobalMenu = lazy(() => import('../modules/global-menu'));
+import GlobalMenu from '../modules/global-menu';
 
 const LAYOUT_MODE_VERTICAL: LayoutMode = 'vertical';
 const LAYOUT_MODE_HORIZONTAL: LayoutMode = 'horizontal';
@@ -76,8 +74,6 @@ export function Component() {
     () => menus.find(menu => menu.key === activeFirstLevelMenuKey)?.children || [],
     [activeFirstLevelMenuKey, menus]
   );
-
-  console.log(childrenMenu);
 
   function getSiderWidth() {
     const { width, mixWidth, mixChildMenuWidth } = themeSettings.sider;
@@ -150,13 +146,13 @@ export function Component() {
       Footer={<GlobalFooter />}
     >
       <GlobalContent />
-      <Suspense fallback={null}>
-        <GlobalMenu
-          childrenMenu={childrenMenu}
-          mode={themeSettings.layout.mode}
-          menus={menus}
-        />
-      </Suspense>
+
+      <GlobalMenu
+        childrenMenu={childrenMenu}
+        mode={themeSettings.layout.mode}
+        menus={menus}
+      />
+
       <ThemeDrawer />
     </AdminLayout>
   );

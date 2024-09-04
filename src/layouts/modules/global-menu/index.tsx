@@ -1,10 +1,10 @@
 import type { MenuProps } from 'antd';
-import { createPortal } from 'react-dom';
-import { GLOBAL_HEADER_MENU_ID, GLOBAL_SIDER_MENU_ID } from '@/constants/app';
+import type { SubMenuType } from 'antd/es/menu/interface';
+import { setActiveFirstLevelMenuKey } from '@/store/slice/tab';
 import VerticalMixMenu from './modules/VerticalMixMenu';
 import HorizontalMenu from './modules/HorizontalMenu';
-import HorizontalMixMenu from './modules/HorizontalMixMenu';
 import VerticalMenu from './modules/VerticalMenu';
+import FirstLevelMenu from './components/FirstLevelMenu';
 
 interface Props {
   mode: UnionKey.ThemeLayoutMode;
@@ -12,18 +12,32 @@ interface Props {
   childrenMenu: MenuProps['items'];
 }
 
-const headerContainer = document.getElementById(GLOBAL_HEADER_MENU_ID);
-
-const siderContainer = document.getElementById(GLOBAL_SIDER_MENU_ID);
-
 const GlobalMenu: FC<Props> = memo(({ mode, menus, childrenMenu }) => {
-  if (!headerContainer || !siderContainer) return null;
+  const dispatch = useAppDispatch();
+
+  const router = useRouterPush();
+  function handleSelectMixMenu(menu: SubMenuType) {
+    dispatch(setActiveFirstLevelMenuKey(menu.key));
+
+    if (!menu.children?.length) {
+      router.routerPush({ name: menu.key });
+    }
+  }
 
   const componentsMap = {
-    vertical: createPortal(<VerticalMenu menus={menus} />, siderContainer),
-    'vertical-mix': createPortal(<VerticalMixMenu menus={childrenMenu} />, siderContainer),
-    horizontal: createPortal(<HorizontalMenu />, headerContainer),
-    'horizontal-mix': <HorizontalMixMenu />
+    vertical: <VerticalMenu menus={menus} />,
+    'vertical-mix': <VerticalMixMenu menus={childrenMenu} />,
+    horizontal: <HorizontalMenu menus={menus} />,
+    'horizontal-mix': [
+      <HorizontalMenu
+        key={1}
+        menus={childrenMenu}
+      />,
+      <FirstLevelMenu
+        key={2}
+        onSelect={handleSelectMixMenu}
+      />
+    ]
   };
 
   return componentsMap[mode];

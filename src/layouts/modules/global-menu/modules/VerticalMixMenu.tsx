@@ -2,6 +2,8 @@ import type { SubMenuType } from 'antd/es/menu/interface';
 import type { MenuProps } from 'antd';
 import classNames from 'classnames';
 import { useRouter } from '@sa/simple-router';
+import { createPortal } from 'react-dom';
+import { GLOBAL_SIDER_MENU_ID } from '@/constants/app';
 import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
 import { getMixSiderFixed, toggleMixSiderFixed } from '@/store/slice/app';
 import DarkModeContainer from '@/components/stateless/common/DarkModeContainer';
@@ -10,7 +12,8 @@ import PinToggler from '@/components/stateless/common/PinToggler';
 import { getActiveFirstLevelMenuKey } from '@/store/slice/tab/shared';
 import FirstLevelMenu from '../components/FirstLevelMenu';
 import GlobalLogo from '../../global-logo';
-import VerticalMenu from './VerticalMenu';
+import VerticalMenu from '../components/VerticalMenu';
+import { useGetElementById } from './hook';
 
 interface Props {
   menus: MenuProps['items'];
@@ -30,6 +33,7 @@ const VerticalMixMenu: FC<Props> = memo(({ menus }) => {
   const siderInverted = !darkMode && themeSettings.sider.inverted;
   const hasMenus = menus && menus.length > 0;
   const showDrawer = hasMenus && (drawerVisible || mixSiderFixed);
+  const container = useGetElementById(GLOBAL_SIDER_MENU_ID);
 
   function handleSelectMixMenu(menu: SubMenuType) {
     dispatch(setActiveFirstLevelMenuKey(menu.key));
@@ -45,7 +49,9 @@ const VerticalMixMenu: FC<Props> = memo(({ menus }) => {
     dispatch(setActiveFirstLevelMenuKey(firstLevelRouteName));
     setDrawerVisible(false);
   }
-  return (
+
+  if (!container) return null;
+  return createPortal(
     <div
       className="h-full flex"
       onMouseLeave={handleResetActiveMenu}
@@ -82,7 +88,8 @@ const VerticalMixMenu: FC<Props> = memo(({ menus }) => {
           <VerticalMenu menus={menus} />
         </DarkModeContainer>
       </div>
-    </div>
+    </div>,
+    container
   );
 });
 
