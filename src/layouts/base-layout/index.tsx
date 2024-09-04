@@ -77,6 +77,8 @@ export function Component() {
     [activeFirstLevelMenuKey, menus]
   );
 
+  console.log(childrenMenu);
+
   function getSiderWidth() {
     const { width, mixWidth, mixChildMenuWidth } = themeSettings.sider;
 
@@ -150,6 +152,7 @@ export function Component() {
       <GlobalContent />
       <Suspense fallback={null}>
         <GlobalMenu
+          childrenMenu={childrenMenu}
           mode={themeSettings.layout.mode}
           menus={menus}
         />

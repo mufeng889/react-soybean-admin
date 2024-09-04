@@ -2,8 +2,6 @@ import type { SubMenuType } from 'antd/es/menu/interface';
 import type { MenuProps } from 'antd';
 import classNames from 'classnames';
 import { useRouter } from '@sa/simple-router';
-import type { MenuInfo } from 'rc-menu/lib/interface';
-import { SimpleScrollbar } from '@sa/materials';
 import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
 import { getMixSiderFixed, toggleMixSiderFixed } from '@/store/slice/app';
 import DarkModeContainer from '@/components/stateless/common/DarkModeContainer';
@@ -11,16 +9,18 @@ import { setActiveFirstLevelMenuKey } from '@/store/slice/tab';
 import PinToggler from '@/components/stateless/common/PinToggler';
 import { getActiveFirstLevelMenuKey } from '@/store/slice/tab/shared';
 import FirstLevelMenu from '../components/FirstLevelMenu';
+import GlobalLogo from '../../global-logo';
+import VerticalMenu from './VerticalMenu';
 
 interface Props {
   menus: MenuProps['items'];
   children?: React.ReactNode;
 }
 
-const VerticalMixMenu: FC<Props> = memo(({ menus, children }) => {
+const VerticalMixMenu: FC<Props> = memo(({ menus }) => {
   const { t } = useTranslation();
   const router = useRouter();
-  const routerPush = useRouterPush();
+
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector(getDarkMode);
   const themeSettings = useAppSelector(getThemeSettings);
@@ -30,24 +30,6 @@ const VerticalMixMenu: FC<Props> = memo(({ menus, children }) => {
   const siderInverted = !darkMode && themeSettings.sider.inverted;
   const hasMenus = menus && menus.length > 0;
   const showDrawer = hasMenus && (drawerVisible || mixSiderFixed);
-  const route = useRoute();
-
-  const matches = route.matched;
-
-  const selectedKeys = () => {
-    const lastElement = matches[matches.length - 1];
-
-    const { hideInMenu, activeMenu } = lastElement.meta;
-    const name = lastElement.name as string;
-
-    const routeName = (hideInMenu ? activeMenu : name) || name;
-
-    return [routeName];
-  };
-
-  function handleClickMenu(menuInfo: MenuInfo) {
-    routerPush.menuPush(menuInfo.key);
-  }
 
   function handleSelectMixMenu(menu: SubMenuType) {
     dispatch(setActiveFirstLevelMenuKey(menu.key));
@@ -72,7 +54,10 @@ const VerticalMixMenu: FC<Props> = memo(({ menus, children }) => {
         inverted={siderInverted}
         onSelect={handleSelectMixMenu}
       >
-        {children}
+        <GlobalLogo
+          showTitle={false}
+          style={{ height: `${themeSettings.header.height}px` }}
+        />
       </FirstLevelMenu>
       <div
         className="relative h-full transition-width-300"
@@ -94,16 +79,7 @@ const VerticalMixMenu: FC<Props> = memo(({ menus, children }) => {
               pin={mixSiderFixed}
             />
           </header>
-          <SimpleScrollbar>
-            <AMenu
-              v-model:expanded-keys="expandedKeys"
-              mode="vertical"
-              selectedKeys={selectedKeys()}
-              items={menus}
-              inlineIndent={18}
-              onSelect={handleClickMenu}
-            />
-          </SimpleScrollbar>
+          <VerticalMenu menus={menus} />
         </DarkModeContainer>
       </div>
     </div>

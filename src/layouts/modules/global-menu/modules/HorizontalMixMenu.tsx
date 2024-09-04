@@ -38,6 +38,8 @@ const HorizontalMixMenu = memo(() => {
     }
   }
   if (!headerContainer || !siderContainer) return null;
+  console.log(siderContainer);
+
   return (
     <>
       {createPortal(

@@ -1,7 +1,6 @@
 import type { Route } from '@sa/simple-router';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import { useRouterPush } from '@/hooks/common/routerPush';
-import { headerContainer } from './shared';
 
 function getSelectKey(route: Route) {
   const { hideInMenu, activeMenu } = route.meta;
@@ -25,8 +24,6 @@ const HorizontalMenu = () => {
   function handleClickMenu(menuInfo: MenuInfo) {
     router.menuPush(menuInfo.key);
   }
-
-  if (!headerContainer) return null;
 
   return (
     <AMenu
