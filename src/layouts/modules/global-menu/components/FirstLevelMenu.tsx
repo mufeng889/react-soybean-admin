@@ -1,8 +1,8 @@
 import { SimpleScrollbar } from '@sa/materials';
 import ClassNames from 'classnames';
 import { transformColorWithOpacity } from '@sa/color';
-import type { SubMenuType } from 'antd/es/menu/interface';
 import { cloneElement } from 'react';
+import type { SubMenuType } from 'antd/es/menu/interface';
 import { getSiderCollapse } from '@/store/slice/app';
 import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
 import { selectActiveFirstLevelMenuKey } from '@/store/slice/tab';
@@ -25,7 +25,9 @@ interface MixMenuItemProps {
   inverted?: boolean;
   onClick: () => void;
 }
-function MixMenuItem({ label, Icon, active, isMini, inverted, onClick }: MixMenuItemProps) {
+function MixMenuItem(menu: MixMenuItemProps) {
+  const { label, Icon, active, isMini, inverted, onClick } = menu;
+
   const themeSettings = useAppSelector(getThemeSettings);
   const darkMode = useAppSelector(getDarkMode);
 
@@ -62,7 +64,7 @@ function MixMenuItem({ label, Icon, active, isMini, inverted, onClick }: MixMenu
 }
 
 const FirstLevelMenu = ({ children, inverted, onSelect }: Props) => {
-  const menus = useMenu();
+  const { firstLevelMenu } = useMixMenuContext();
 
   const siderCollapse = useAppSelector(getSiderCollapse);
   const activeMenuKey = useAppSelector(selectActiveFirstLevelMenuKey);
@@ -71,9 +73,9 @@ const FirstLevelMenu = ({ children, inverted, onSelect }: Props) => {
     <div className="h-full flex-col-stretch flex-1-hidden">
       {children}
       <SimpleScrollbar>
-        {menus.map(item => (
+        {firstLevelMenu.map(item => (
           <MixMenuItem
-            onClick={() => onSelect(item)}
+            onClick={() => onSelect(item as any)}
             isMini={siderCollapse}
             active={item.key === activeMenuKey}
             Icon={item.icon}

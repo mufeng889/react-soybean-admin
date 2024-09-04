@@ -1,9 +1,5 @@
-import { MenuContext } from '@/components/stateful/MenuProvider';
+import { MixMenuContext } from '../../layouts/context';
 
-export function useMenu() {
-  const object = useContext(MenuContext);
-  if (!object) {
-    throw new Error('useMenu must be used within a Provider');
-  }
-  return object;
+export function useMixMenuContext() {
+  return useContext(MixMenuContext);
 }

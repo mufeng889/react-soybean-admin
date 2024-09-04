@@ -1,11 +1,6 @@
 import type { Route } from '@sa/simple-router';
 import type { MenuInfo } from 'rc-menu/lib/interface';
-import type { MenuProps } from 'antd';
 import { useRouterPush } from '@/hooks/common/routerPush';
-
-export interface Props {
-  menus: MenuProps['items'];
-}
 
 function getSelectKey(route: Route) {
   const { hideInMenu, activeMenu } = route.meta;
@@ -17,8 +12,10 @@ function getSelectKey(route: Route) {
   return [routeName];
 }
 
-const HorizontalMenu: FC<Props> = memo(({ menus }) => {
+const HorizontalMenu = memo(() => {
   const route = useRoute();
+
+  const { allMenus } = useMixMenuContext();
 
   const router = useRouterPush();
 
@@ -31,7 +28,7 @@ const HorizontalMenu: FC<Props> = memo(({ menus }) => {
   return (
     <AMenu
       mode="horizontal"
-      items={menus}
+      items={allMenus}
       inlineIndent={18}
       onSelect={handleClickMenu}
       className="size-full bg-container transition-300 border-0!"

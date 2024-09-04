@@ -1,5 +1,4 @@
 import type { SubMenuType } from 'antd/es/menu/interface';
-import type { MenuProps } from 'antd';
 import classNames from 'classnames';
 import { useRouter } from '@sa/simple-router';
 import { createPortal } from 'react-dom';
@@ -15,15 +14,10 @@ import GlobalLogo from '../../global-logo';
 import VerticalMenu from '../components/VerticalMenu';
 import { useGetElementById } from './hook';
 
-interface Props {
-  menus: MenuProps['items'];
-  children?: React.ReactNode;
-}
-
-const VerticalMixMenu: FC<Props> = memo(({ menus }) => {
+const VerticalMix = memo(() => {
   const { t } = useTranslation();
   const router = useRouter();
-
+  const { allMenus: menus } = useMixMenuContext();
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector(getDarkMode);
   const themeSettings = useAppSelector(getThemeSettings);
@@ -33,7 +27,6 @@ const VerticalMixMenu: FC<Props> = memo(({ menus }) => {
   const siderInverted = !darkMode && themeSettings.sider.inverted;
   const hasMenus = menus && menus.length > 0;
   const showDrawer = hasMenus && (drawerVisible || mixSiderFixed);
-  const container = useGetElementById(GLOBAL_SIDER_MENU_ID);
 
   function handleSelectMixMenu(menu: SubMenuType) {
     dispatch(setActiveFirstLevelMenuKey(menu.key));
@@ -50,15 +43,14 @@ const VerticalMixMenu: FC<Props> = memo(({ menus }) => {
     setDrawerVisible(false);
   }
 
-  if (!container) return null;
-  return createPortal(
+  return (
     <div
       className="h-full flex"
       onMouseLeave={handleResetActiveMenu}
     >
       <FirstLevelMenu
         inverted={siderInverted}
-        onSelect={handleSelectMixMenu}
+        onSelect={handleSelectMixMenu as any}
       >
         <GlobalLogo
           showTitle={false}
@@ -85,12 +77,17 @@ const VerticalMixMenu: FC<Props> = memo(({ menus }) => {
               pin={mixSiderFixed}
             />
           </header>
-          <VerticalMenu menus={menus} />
+          <VerticalMenu />
         </DarkModeContainer>
       </div>
-    </div>,
-    container
+    </div>
   );
 });
+
+const VerticalMixMenu = () => {
+  const container = useGetElementById(GLOBAL_SIDER_MENU_ID);
+  if (!container) return null;
+  return createPortal(<VerticalMix />, container);
+};
 
 export default VerticalMixMenu;

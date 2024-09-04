@@ -7,7 +7,7 @@ import type { Route } from '@sa/simple-router';
 import { useRouterPush } from '@/hooks/common/routerPush';
 
 const GlobalBreadcrumb: FC<Omit<BreadcrumbProps, 'items'>> = memo(props => {
-  const menus = useMenu();
+  const { allMenus: menus } = useMixMenuContext();
   const route = useRoute();
   const routerPush = useRouterPush();
   const breadcrumb = getBreadcrumbsByRoute(route, menus);

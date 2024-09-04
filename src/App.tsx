@@ -4,7 +4,6 @@ import { localStg } from '@/utils/storage';
 import { getLocale } from '@/store/slice/app';
 import { getAntdTheme, setupThemeVarsToHtml, toggleCssDarkMode } from '@/store/slice/theme/shared';
 import { getDarkMode, getThemeSettings, themeColors } from '@/store/slice/theme';
-import MenuProvider from '@/components/stateful/MenuProvider';
 import { router } from '@/router';
 import { info } from '@/constants/app';
 import { antdLocales } from './locales/antd';
@@ -59,7 +58,7 @@ const App = () => {
           className="h-full"
           {...watermarkProps}
         >
-          <MenuProvider>{router.CustomRouterProvider(<GlobalLoading />)}</MenuProvider>
+          {router.CustomRouterProvider(<GlobalLoading />)}
         </AWatermark>
       </AppProvider>
     </AConfigProvider>

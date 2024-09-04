@@ -9,6 +9,7 @@ interface Props {
   /** Show padding for content */
   showPadding?: boolean;
 }
+
 function resetScroll() {
   const el = document.querySelector(`#${LAYOUT_SCROLL_EL_ID}`);
 
