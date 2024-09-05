@@ -1,5 +1,4 @@
 import type { ElegantConstRoute } from '@elegant-router/types';
-import type { MenuItemType, SubMenuType } from 'antd/es/menu/interface';
 
 import { $t } from '@/locales';
 
@@ -9,11 +8,11 @@ import { $t } from '@/locales';
  * @param routes Auth routes
  */
 export function getGlobalMenusByAuthRoutes(routes: ElegantConstRoute[]) {
-  const menus: SubMenuType[] = [];
+  const menus: App.Global.Menu[] = [];
 
   routes.forEach(route => {
     if (!route.meta?.hideInMenu) {
-      const menu = getGlobalMenuByBaseRoute(route) as SubMenuType;
+      const menu = getGlobalMenuByBaseRoute(route);
 
       if (route.children?.some(child => !child.meta?.hideInMenu)) {
         menu.children = getGlobalMenusByAuthRoutes(route.children) || [];
@@ -31,12 +30,12 @@ export function getGlobalMenusByAuthRoutes(routes: ElegantConstRoute[]) {
  *
  * @param route
  */
-export function getGlobalMenuByBaseRoute(route: ElegantConstRoute): MenuItemType {
+export function getGlobalMenuByBaseRoute(route: ElegantConstRoute): App.Global.Menu {
   const { name } = route;
   const { title, i18nKey, icon = import.meta.env.VITE_MENU_ICON, localIcon } = route.meta ?? {};
 
   const label = i18nKey ? $t(i18nKey) : title;
-  const menu: MenuItemType = {
+  const menu: App.Global.Menu = {
     key: name,
     label: <BeyondHiding title={label} />,
     icon: (
@@ -54,9 +53,11 @@ export function getGlobalMenuByBaseRoute(route: ElegantConstRoute): MenuItemType
 
 export function getActiveFirstLevelMenuKey(route: App.Global.TabRoute) {
   const { hideInMenu, activeMenu } = route.meta;
-  const name = route.name as string;
+  const name = route.name;
 
   const routeName = (hideInMenu ? activeMenu : name) || name;
+
+  if (!routeName) return '';
 
   const [firstLevelRouteName] = routeName.split('_');
 

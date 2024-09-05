@@ -1,4 +1,3 @@
-import type { SubMenuType } from 'antd/es/menu/interface';
 import classNames from 'classnames';
 import { useRouter } from '@sa/simple-router';
 import { createPortal } from 'react-dom';
@@ -6,7 +5,6 @@ import { GLOBAL_SIDER_MENU_ID } from '@/constants/app';
 import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
 import { getMixSiderFixed, toggleMixSiderFixed } from '@/store/slice/app';
 import DarkModeContainer from '@/components/stateless/common/DarkModeContainer';
-import { setActiveFirstLevelMenuKey } from '@/store/slice/tab';
 import PinToggler from '@/components/stateless/common/PinToggler';
 import { getActiveFirstLevelMenuKey } from '@/store/slice/tab/shared';
 import FirstLevelMenu from '../components/FirstLevelMenu';
@@ -17,7 +15,7 @@ import { useGetElementById } from './hook';
 const VerticalMix = memo(() => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { allMenus: menus } = useMixMenuContext();
+  const { childLevelMenus, setActiveFirstLevelMenuKey } = useMixMenuContext();
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector(getDarkMode);
   const themeSettings = useAppSelector(getThemeSettings);
@@ -25,22 +23,17 @@ const VerticalMix = memo(() => {
   const [drawerVisible, setDrawerVisible] = useState(false);
 
   const siderInverted = !darkMode && themeSettings.sider.inverted;
-  const hasMenus = menus && menus.length > 0;
+  const hasMenus = childLevelMenus && childLevelMenus.length > 0;
   const showDrawer = hasMenus && (drawerVisible || mixSiderFixed);
 
-  function handleSelectMixMenu(menu: SubMenuType) {
-    dispatch(setActiveFirstLevelMenuKey(menu.key));
-
-    if (menu.children?.length) {
-      setDrawerVisible(true);
-    } else {
-      router.push({ name: menu.key });
-    }
+  function handleSelectMixMenu() {
+    setDrawerVisible(true);
   }
+
   function handleResetActiveMenu() {
     setDrawerVisible(false);
     const firstLevelRouteName = getActiveFirstLevelMenuKey(router.currentRoute);
-    dispatch(setActiveFirstLevelMenuKey(firstLevelRouteName));
+    setActiveFirstLevelMenuKey(firstLevelRouteName);
   }
 
   return (
@@ -50,7 +43,7 @@ const VerticalMix = memo(() => {
     >
       <FirstLevelMenu
         inverted={siderInverted}
-        onSelect={handleSelectMixMenu as any}
+        onSelect={handleSelectMixMenu}
       >
         <GlobalLogo
           showTitle={false}

@@ -181,13 +181,9 @@ declare namespace App {
        */
       key: string;
       /** The menu label */
-      label: string;
+      label: React.ReactNode;
       /** The menu i18n key */
       i18nKey?: I18n.I18nKey | null;
-      /** The route key */
-      routeKey: RouteKey;
-      /** The route path */
-      routePath: RoutePath;
       /** The menu icon */
       icon?: React.FunctionComponentElement<IconProps>;
       /** The tooltip title */

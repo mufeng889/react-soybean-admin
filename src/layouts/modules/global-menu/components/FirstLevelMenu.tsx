@@ -2,34 +2,51 @@ import { SimpleScrollbar } from '@sa/materials';
 import ClassNames from 'classnames';
 import { transformColorWithOpacity } from '@sa/color';
 import { cloneElement } from 'react';
-import type { SubMenuType } from 'antd/es/menu/interface';
+import type { RouteKey } from '@elegant-router/types';
 import { getSiderCollapse } from '@/store/slice/app';
 import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
-import { selectActiveFirstLevelMenuKey } from '@/store/slice/tab';
 
 interface Props {
   inverted?: boolean;
   children?: React.ReactNode;
-  onSelect: (menu: SubMenuType) => void;
+  onSelect?: () => void;
 }
 
 interface MixMenuItemProps {
   /** Menu item label */
-  label: React.ReactNode;
-  /** Menu item icon */
-  Icon: React.ReactNode;
+  menu: App.Global.Menu;
+  onClick?: () => void;
   /** Active menu item */
   active: boolean;
-  /** Mini size */
-  isMini: boolean;
   inverted?: boolean;
-  onClick: () => void;
+  setActiveFirstLevelMenuKey: (key: string) => void;
 }
-function MixMenuItem(menu: MixMenuItemProps) {
-  const { label, Icon, active, isMini, inverted, onClick } = menu;
+
+function MixMenuItem(Props: MixMenuItemProps) {
+  const {
+    menu: { icon, label, key, children },
+    active,
+    inverted,
+    onClick,
+    setActiveFirstLevelMenuKey
+  } = Props;
 
   const themeSettings = useAppSelector(getThemeSettings);
+
+  const router = useRouterPush();
+
+  function handleSelectMixMenu() {
+    setActiveFirstLevelMenuKey(key);
+    if (children?.length) {
+      onClick && onClick();
+    } else {
+      router.routerPushByKeyWithMetaQuery(key as RouteKey);
+    }
+  }
+
   const darkMode = useAppSelector(getDarkMode);
+
+  const siderCollapse = useAppSelector(getSiderCollapse);
 
   const selectedBgColor = useMemo(() => {
     const light = transformColorWithOpacity(themeSettings.themeColor, 0.1, '#ffffff');
@@ -46,15 +63,15 @@ function MixMenuItem(menu: MixMenuItemProps) {
         { 'text-white:65 hover:text-white': inverted },
         { '!text-white !bg-primary': active && inverted }
       )}
-      onClick={onClick}
+      onClick={handleSelectMixMenu}
       style={{ backgroundColor: active ? selectedBgColor : '' }}
     >
-      {Icon && cloneElement(Icon as React.ReactElement, { className: isMini ? 'text-icon-small' : 'text-icon-large' })}
+      {icon && cloneElement(icon, { className: siderCollapse ? 'text-icon-small' : 'text-icon-large' })}
 
       <p
         className={ClassNames(
           'w-full ellipsis-text text-12px text-center  transition-height-300',
-          isMini ? 'h-0 pt-0' : 'h-24px pt-4px'
+          siderCollapse ? 'h-0 pt-0' : 'h-24px pt-4px'
         )}
       >
         {label}
@@ -63,11 +80,8 @@ function MixMenuItem(menu: MixMenuItemProps) {
   );
 }
 
-const FirstLevelMenu = ({ children, inverted, onSelect }: Props) => {
-  const { allMenus } = useMixMenuContext();
-
-  const siderCollapse = useAppSelector(getSiderCollapse);
-  const activeMenuKey = useAppSelector(selectActiveFirstLevelMenuKey);
+const FirstLevelMenu: FC<Props> = memo(({ children, inverted, onSelect }) => {
+  const { allMenus, activeFirstLevelMenuKey, setActiveFirstLevelMenuKey } = useMixMenuContext();
 
   return (
     <div className="h-full flex-col-stretch flex-1-hidden">
@@ -75,12 +89,12 @@ const FirstLevelMenu = ({ children, inverted, onSelect }: Props) => {
       <SimpleScrollbar>
         {allMenus.map(item => (
           <MixMenuItem
-            onClick={() => onSelect(item as any)}
-            isMini={siderCollapse}
-            active={item.key === activeMenuKey}
-            Icon={item.icon}
-            label={item.label}
-            key={item?.key}
+            key={item.key}
+            onClick={onSelect}
+            setActiveFirstLevelMenuKey={setActiveFirstLevelMenuKey}
+            inverted={inverted}
+            active={item.key === activeFirstLevelMenuKey}
+            menu={item}
           />
         ))}
       </SimpleScrollbar>
@@ -90,6 +104,6 @@ const FirstLevelMenu = ({ children, inverted, onSelect }: Props) => {
       />
     </div>
   );
-};
+});
 
 export default FirstLevelMenu;
