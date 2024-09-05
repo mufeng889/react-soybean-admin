@@ -2,9 +2,9 @@ import type { TooltipProps } from 'antd';
 import ClassNames from 'classnames';
 import { Tooltip } from 'antd';
 import { themeLayoutModeRecord } from '@/constants/app';
-import { getThemeSettings, setLayoutMode } from '@/store/slice/theme';
-
+import { setLayoutMode } from '@/store/slice/theme';
 import { getIsMobile } from '@/store/slice/app';
+
 type LayoutConfig = Record<
   UnionKey.ThemeLayoutMode,
   {
@@ -42,12 +42,15 @@ const LAYOUT_CONFIG: LayoutConfig = {
   }
 };
 
-interface Props extends Record<UnionKey.ThemeLayoutMode, React.ReactNode> {}
+interface Props extends Record<UnionKey.ThemeLayoutMode, React.ReactNode> {
+  mode: UnionKey.ThemeLayoutMode;
+}
 
-const LayoutModeCard: FC<Props> = memo(props => {
-  const themeSettings = useAppSelector(getThemeSettings);
+const LayoutModeCard: FC<Props> = memo(({ mode, ...rest }) => {
   const isMobile = useAppSelector(getIsMobile);
+
   const dispatch = useAppDispatch();
+
   const { t } = useTranslation();
   function handleChangeMode(modeType: UnionKey.ThemeLayoutMode) {
     if (isMobile) return;
@@ -61,7 +64,7 @@ const LayoutModeCard: FC<Props> = memo(props => {
         <div
           key={key}
           className={ClassNames('flex cursor-pointer border-2px rounded-6px hover:border-primary', [
-            themeSettings.layout.mode === key ? 'border-primary' : 'border-transparent'
+            mode === key ? 'border-primary' : 'border-transparent'
           ])}
           onClick={() => handleChangeMode(key as UnionKey.ThemeLayoutMode)}
         >
@@ -74,7 +77,7 @@ const LayoutModeCard: FC<Props> = memo(props => {
                 key.includes('vertical') ? 'flex' : 'flex-col'
               ])}
             >
-              {props[key as UnionKey.ThemeLayoutMode]}
+              {rest[key as UnionKey.ThemeLayoutMode]}
             </div>
           </Tooltip>
         </div>

@@ -17,6 +17,7 @@ declare global {
   const ARow: typeof import('antd')['Row']
   const ASpace: typeof import('antd')['Space']
   const AStatistic: typeof import('antd')['Statistic']
+  const ASwitch: typeof import('antd')['Switch']
   const ATooltip: typeof import('antd')['Tooltip']
   const AWatermark: typeof import('antd')['Watermark']
   const AppProvider: typeof import('../components/stateful/AppProvider')['default']

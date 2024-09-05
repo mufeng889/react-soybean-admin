@@ -1,6 +1,11 @@
 import type { Route } from '@sa/simple-router';
 import type { MenuInfo } from 'rc-menu/lib/interface';
+import type { FC } from 'react';
 import { useRouterPush } from '@/hooks/common/routerPush';
+
+interface Props {
+  mode: '1' | '2' | '3';
+}
 
 function getSelectKey(route: Route) {
   const { hideInMenu, activeMenu } = route.meta;
@@ -12,10 +17,16 @@ function getSelectKey(route: Route) {
   return [routeName];
 }
 
-const HorizontalMenu = memo(() => {
+const HorizontalMenu: FC<Props> = memo(({ mode }) => {
   const route = useRoute();
 
-  const { allMenus } = useMixMenuContext();
+  const { allMenus, childLevelMenus, firstLevelMenu } = useMixMenuContext();
+
+  const menus = new Map([
+    ['1', allMenus as any],
+    ['2', childLevelMenus],
+    ['3', firstLevelMenu]
+  ]);
 
   const router = useRouterPush();
 
@@ -28,7 +39,7 @@ const HorizontalMenu = memo(() => {
   return (
     <AMenu
       mode="horizontal"
-      items={allMenus}
+      items={menus.get(mode)}
       inlineIndent={18}
       onSelect={handleClickMenu}
       className="size-full bg-container transition-300 border-0!"

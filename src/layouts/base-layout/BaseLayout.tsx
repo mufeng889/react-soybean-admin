@@ -23,8 +23,9 @@ const LAYOUT_MODE_VERTICAL: LayoutMode = 'vertical';
 const LAYOUT_MODE_HORIZONTAL: LayoutMode = 'horizontal';
 const LAYOUT_MODE_VERTICAL_MIX = 'vertical-mix';
 const LAYOUT_MODE_HORIZONTAL_MIX = 'horizontal-mix';
-// const breakpointsTailwind = { sm: 640, md: 768, lg: 1024, xl: 1280, '2xl': 1536 };
+
 configResponsive({ sm: 640 });
+
 const HEADER_PROPS_CONFIG: Record<UnionKey.ThemeLayoutMode, App.Global.HeaderProps> = {
   vertical: {
     showLogo: false,
@@ -54,7 +55,7 @@ const BaseLayout = () => {
   const fullContent = useAppSelector(getFullContent);
   const dispatch = useAppDispatch();
   const responsive = useResponsive();
-  const { childLevelMenus } = useMixMenuContext();
+  const { childLevelMenus, isActiveFirstLevelMenuHasChildren } = useMixMenuContext();
 
   const contentXScrollable = useAppSelector(getContentXScrollable);
   const mixSiderFixed = useAppSelector(getMixSiderFixed);
@@ -70,7 +71,13 @@ const BaseLayout = () => {
   const isHorizontalMix = themeSettings.layout.mode === LAYOUT_MODE_HORIZONTAL_MIX;
 
   function getSiderWidth() {
+    const { reverseHorizontalMix } = themeSettings.layout;
+
     const { width, mixWidth, mixChildMenuWidth } = themeSettings.sider;
+
+    if (isHorizontalMix && reverseHorizontalMix) {
+      return isActiveFirstLevelMenuHasChildren ? width : 0;
+    }
 
     let w = isVerticalMix || isHorizontalMix ? mixWidth : width;
 
@@ -82,7 +89,12 @@ const BaseLayout = () => {
   }
 
   function getSiderCollapsedWidth() {
+    const { reverseHorizontalMix } = themeSettings.layout;
     const { collapsedWidth, mixCollapsedWidth, mixChildMenuWidth } = themeSettings.sider;
+
+    if (isHorizontalMix && reverseHorizontalMix) {
+      return isActiveFirstLevelMenuHasChildren ? collapsedWidth : 0;
+    }
 
     let w = isVerticalMix || isHorizontalMix ? mixCollapsedWidth : collapsedWidth;
 
@@ -141,7 +153,10 @@ const BaseLayout = () => {
     >
       <GlobalContent />
 
-      <GlobalMenu mode={themeSettings.layout.mode} />
+      <GlobalMenu
+        reverse={themeSettings.layout.reverseHorizontalMix}
+        mode={themeSettings.layout.mode}
+      />
 
       <ThemeDrawer />
     </AdminLayout>

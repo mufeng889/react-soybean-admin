@@ -121,6 +121,9 @@ export const themeSlice = createSlice({
     },
     setIsOnlyExpandCurrentParentMenu(state, { payload }: PayloadAction<boolean>) {
       state.settings.isOnlyExpandCurrentParentMenu = payload;
+    },
+    changeReverseHorizontalMix(state, { payload }: PayloadAction<boolean>) {
+      state.settings.layout.reverseHorizontalMix = payload;
     }
   },
   selectors: {
@@ -149,7 +152,8 @@ export const {
   setSider,
   setFooter,
   setIsOnlyExpandCurrentParentMenu,
-  setColourWeakness
+  setColourWeakness,
+  changeReverseHorizontalMix
 } = themeSlice.actions;
 
 // 计算属性选择器

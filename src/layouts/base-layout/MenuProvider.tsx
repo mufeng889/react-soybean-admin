@@ -37,7 +37,7 @@ const MenuProvider: FC<Props> = ({ children }) => {
     activeFirstLevelMenuKey,
     setActiveFirstLevelMenuKey: changeActiveFirstLevelMenuKey,
     firstLevelMenu,
-    isActiveFirstLevelMenuHasChildren: activeFirstLevelMenuKey ? Boolean(activeFirstLevelMenuKey) : false,
+    isActiveFirstLevelMenuHasChildren: activeFirstLevelMenuKey ? Boolean(childLevelMenus) : false,
     childLevelMenus: childLevelMenus || []
   };
 

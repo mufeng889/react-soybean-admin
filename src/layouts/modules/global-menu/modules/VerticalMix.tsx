@@ -38,9 +38,9 @@ const VerticalMix = memo(() => {
     }
   }
   function handleResetActiveMenu() {
+    setDrawerVisible(false);
     const firstLevelRouteName = getActiveFirstLevelMenuKey(router.currentRoute);
     dispatch(setActiveFirstLevelMenuKey(firstLevelRouteName));
-    setDrawerVisible(false);
   }
 
   return (

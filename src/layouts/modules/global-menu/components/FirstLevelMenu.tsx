@@ -64,7 +64,7 @@ function MixMenuItem(menu: MixMenuItemProps) {
 }
 
 const FirstLevelMenu = ({ children, inverted, onSelect }: Props) => {
-  const { firstLevelMenu } = useMixMenuContext();
+  const { allMenus } = useMixMenuContext();
 
   const siderCollapse = useAppSelector(getSiderCollapse);
   const activeMenuKey = useAppSelector(selectActiveFirstLevelMenuKey);
@@ -73,7 +73,7 @@ const FirstLevelMenu = ({ children, inverted, onSelect }: Props) => {
     <div className="h-full flex-col-stretch flex-1-hidden">
       {children}
       <SimpleScrollbar>
-        {firstLevelMenu.map(item => (
+        {allMenus.map(item => (
           <MixMenuItem
             onClick={() => onSelect(item as any)}
             isMini={siderCollapse}

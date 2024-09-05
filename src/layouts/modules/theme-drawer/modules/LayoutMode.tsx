@@ -1,5 +1,7 @@
 import ClassNames from 'classnames';
+import { changeReverseHorizontalMix, getThemeSettings } from '@/store/slice/theme';
 import LayoutModeCard from '../components/LayoutModeCard';
+import SettingItem from '../components/SettingItem';
 import style from './layoutMode.module.scss';
 
 const LAYOUTS_COMPONENTS: Record<UnionKey.ThemeLayoutMode, React.ReactNode> = {
@@ -42,7 +44,34 @@ const LAYOUTS_COMPONENTS: Record<UnionKey.ThemeLayoutMode, React.ReactNode> = {
 };
 
 const LayoutMode = memo(() => {
-  return <LayoutModeCard {...LAYOUTS_COMPONENTS} />;
+  const themeSettings = useAppSelector(getThemeSettings);
+
+  const { t } = useTranslation();
+
+  const dispatch = useAppDispatch();
+
+  function toggleReverseHorizontalMix(checked: boolean) {
+    dispatch(changeReverseHorizontalMix(checked));
+  }
+
+  return (
+    <>
+      <LayoutModeCard
+        mode={themeSettings.layout.mode}
+        {...LAYOUTS_COMPONENTS}
+      />
+      {themeSettings.layout.mode === 'horizontal-mix' && (
+        <div className="mt-16px">
+          <SettingItem label={t('theme.layoutMode.reverseHorizontalMix')}>
+            <ASwitch
+              defaultChecked={themeSettings.layout.reverseHorizontalMix}
+              onChange={toggleReverseHorizontalMix}
+            />
+          </SettingItem>
+        </div>
+      )}
+    </>
+  );
 });
 
 export default LayoutMode;

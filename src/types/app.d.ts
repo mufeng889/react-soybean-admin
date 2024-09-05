@@ -38,6 +38,12 @@ declare namespace App {
         mode: UnionKey.ThemeLayoutMode;
         /** Scroll mode */
         scrollMode: UnionKey.ThemeScrollMode;
+        /**
+         * Whether to reverse the horizontal mix
+         *
+         * if true, the vertical child level menus in left and horizontal first level menus in top
+         */
+        reverseHorizontalMix: boolean;
       };
       /** Page */
       page: {

@@ -50,7 +50,7 @@ const getSelectedMenuKeyPath = (matches: RouteRecordNormalized[]) => {
 const VerticalMenu = memo(() => {
   const route = useRoute();
 
-  const { allMenus } = useMixMenuContext();
+  const { allMenus, childLevelMenus } = useMixMenuContext();
 
   const levelKeys = getLevelKeys(allMenus as LevelKeysProps[]);
 
@@ -103,7 +103,7 @@ const VerticalMenu = memo(() => {
     <SimpleScrollbar>
       <AMenu
         mode="inline"
-        items={allMenus}
+        items={themeSettings.layout.mode.includes('mix') ? childLevelMenus : allMenus}
         inlineCollapsed={inlineCollapsed}
         openKeys={stateOpenKeys}
         onOpenChange={onOpenChange}
