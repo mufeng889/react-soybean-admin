@@ -1,6 +1,108 @@
 # Changelog
 
 
+## [v0.3.2](https://github.com/mufeng889/react-soybean-admin/compare/v0.3.0...v0.3.2) (2024-09-07)
+
+### &nbsp;&nbsp;&nbsp;🚀 Features
+
+- **deps**:
+  - add typewriter &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(0651b)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/0651b64)
+- **packages**:
+  - add remove route & If the route to be jumped is the current route, no jump occurs &nbsp;-&nbsp; by **wang** [<samp>(a75c2)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/a75c25e)
+  - Synchronize the useRouterPush of soybean &nbsp;-&nbsp; by **wang** [<samp>(04577)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/04577cd)
+- **proejects**:
+  - routing and layout error boundaries combine &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(7de3c)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/7de3c59)
+- **projects**:
+  - change document address &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(7ced8)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/7ced849)
+  - synchronize updates to soybean's axios &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(6401f)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/6401f0b)
+  - add common internationalization configuration &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(a702d)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/a702d5c)
+  - the routing information file can be created on the command line &nbsp;-&nbsp; by **wang** [<samp>(6e77e)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/6e77edc)
+  - update elegant-route &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(d4a65)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/d4a655f)
+  - iframe add skeleton &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(e21af)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/e21afb8)
+  - add components auto-import &nbsp;-&nbsp; by **wang** [<samp>(b60f2)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/b60f2ea)
+  - add antd auto-import & close route log info &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(5879f)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/5879fd1)
+  - add full screen watermarke &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(103b6)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/103b643)
+  - optimize code style &  exception page add button click  event &nbsp;-&nbsp; by **wang** [<samp>(f1dcd)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/f1dcd68)
+  - Synchronize the useRouterPush of soybean &nbsp;-&nbsp; by **wang** [<samp>(308df)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/308dfdd)
+  - add version update notifications &nbsp;-&nbsp; by **wang** [<samp>(3f25b)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/3f25b19)
+  - use json5 resolve env VITE_OTHER_SERVICE_BASE_URL & fix proxy enable & updated international language &nbsp;-&nbsp; by **wang** [<samp>(15769)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/1576922)
+  - add color fading mode &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(10b2a)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/10b2a65)
+- **prxojects**:
+  - change useRouter declaration type &nbsp;-&nbsp; by **wang** [<samp>(f27d4)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/f27d4c3)
+
+### &nbsp;&nbsp;&nbsp;🐞 Bug Fixes
+
+- **packages**:
+  - can jump to params & not-found &nbsp;-&nbsp; by **wang** [<samp>(6241a)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/6241a81)
+- **projects**:
+  - fixed tables not showing scrollbars when screen width changes . close #5 &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** in https://github.com/mufeng889/react-soybean-admin/issues/5 [<samp>(bc673)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/bc67301)
+  - repair tabcannot be modified &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(0d3ca)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/0d3cae0)
+  - update redirect &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(dc18c)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/dc18c38)
+  - fixed  left menu mixed mode shrinks  menu &nbsp;-&nbsp; by **wang** [<samp>(77dac)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/77dacbd)
+- **types**:
+  - fix the type of TableApiFn &nbsp;-&nbsp; by **wang** [<samp>(b8daf)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/b8daf7c)
+
+### &nbsp;&nbsp;&nbsp;🛠 Optimizations
+
+- optimized code &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(00bdc)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/00bdccb)
+- **packages**:
+  - optimized code &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(4f6a2)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/4f6a2e1)
+- **projects**:
+  - optimized code &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(a9854)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/a98549a)
+  - optimized code &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(aa3bc)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/aa3bc09)
+  - optimize code &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(b407e)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/b407ec4)
+  - optimize code &nbsp;-&nbsp; by **wang** [<samp>(6ce4f)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/6ce4f26)
+  - optimize code &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(8f9a8)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/8f9a86c)
+  - optimize code &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(0402b)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/0402b46)
+
+### &nbsp;&nbsp;&nbsp;💅 Refactors
+
+- **packages**:
+  - Refactoring useRoute &nbsp;-&nbsp; by **wang** [<samp>(b9b55)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/b9b55d3)
+- **projects**:
+  - change css vars mount to root &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(c59ed)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/c59edf6)
+  - refactor part of the menu code &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(d19aa)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/d19aa0b)
+  - the vercal-mix reconstruction is complete &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(dab53)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/dab5333)
+  - refactor the menu section code &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(1f1ef)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/1f1efbb)
+  - Refactoring useMenu &nbsp;-&nbsp; by **wang** [<samp>(185ff)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/185ff72)
+  - refactor global menu & support reversed-horizontal-mix-menu &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(132fa)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/132fa6f)
+
+### &nbsp;&nbsp;&nbsp;📦 Build
+
+- **deps**: add deps vite-plugin-checker &nbsp;-&nbsp; by **wang** [<samp>(24454)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/2445424)
+
+### &nbsp;&nbsp;&nbsp;🏡 Chore
+
+- **README**:
+  - update README &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(e9ebe)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/e9ebeb2)
+  - update README &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(a084d)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/a084d21)
+- **deps**:
+  - update deps &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(f63e7)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/f63e71e)
+  - update deps &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(ce564)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/ce564ce)
+  - remove lodash-es &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(d487c)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/d487c9b)
+  - add simple-git-hooks lint-staged &nbsp;-&nbsp; by **wang** [<samp>(9c977)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/9c977fd)
+- **other**:
+  - print project information in console &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(d9cf8)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/d9cf87a)
+- **projects**:
+  - add vscode configuration & add vite preload &nbsp;-&nbsp; by **wang** [<samp>(48cd0)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/48cd07e)
+
+### &nbsp;&nbsp;&nbsp;🎨 Styles
+
+- **proejcts**:
+  - optimized code format &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(e2c03)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/e2c0391)
+- **projects**:
+  - optimized code style &nbsp;-&nbsp; by **wang** [<samp>(f5fed)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/f5fed34)
+  - change component classification &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(e41a9)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/e41a925)
+  - optimize code style &nbsp;-&nbsp; by **wang** [<samp>(0eded)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/0eded8d)
+  - optimize code style &nbsp;-&nbsp; by **wang** [<samp>(95243)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/95243a0)
+  - optimized code &nbsp;-&nbsp; by **wang** [<samp>(28d68)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/28d68fc)
+  - reduce the padding of header buttoon &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(1a343)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/1a34371)
+
+### &nbsp;&nbsp;&nbsp;❤️ Contributors
+
+
+[wang](mailto:1509326266@qq.com)
+
 ## [v0.3.1](https://github.com/mufeng889/react-soybean-admin/compare/v0.3.0...v0.3.1) (2024-08-31)
 
 ### &nbsp;&nbsp;&nbsp;🚀 Features
