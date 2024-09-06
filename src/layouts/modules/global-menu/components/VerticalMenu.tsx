@@ -48,6 +48,8 @@ const VerticalMenu = memo(() => {
 
   const openKeys = getSelectedMenuKeyPath(route.matched);
 
+  const isMix = themeSettings.layout.mode === 'vertical-mix';
+
   const inlineCollapsed = useAppSelector(getSiderCollapse);
 
   const [stateOpenKeys, setStateOpenKeys] = useState<string[]>(openKeys);
@@ -87,8 +89,8 @@ const VerticalMenu = memo(() => {
     <SimpleScrollbar>
       <AMenu
         mode="inline"
-        items={themeSettings.layout.mode.includes('mix') ? childLevelMenus : allMenus}
-        inlineCollapsed={inlineCollapsed}
+        items={isMix ? childLevelMenus : allMenus}
+        inlineCollapsed={isMix ? false : inlineCollapsed}
         openKeys={stateOpenKeys}
         onOpenChange={onOpenChange}
         selectedKeys={selectKey}
