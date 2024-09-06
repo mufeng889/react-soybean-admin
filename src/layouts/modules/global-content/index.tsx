@@ -7,7 +7,7 @@ import { getReloadFlag, setContentXScrollable } from '@/store/slice/app';
 
 interface Props {
   /** Show padding for content */
-  showPadding?: boolean;
+  closePadding?: boolean;
 }
 
 function resetScroll() {
@@ -16,7 +16,7 @@ function resetScroll() {
   el?.scrollTo({ left: 0, top: 0 });
 }
 
-const GlobalContent: FC<Props> = memo(({ showPadding }) => {
+const GlobalContent: FC<Props> = memo(({ closePadding }) => {
   const currentOutlet = useOutlet();
   const location = useLocation();
   const reloadFlag = useAppSelector(getReloadFlag);
@@ -26,7 +26,7 @@ const GlobalContent: FC<Props> = memo(({ showPadding }) => {
   return (
     <SwitchTransition mode="out-in">
       <CSSTransition
-        key={reloadFlag ? location.pathname : 'reload-page'}
+        key={reloadFlag ? location.key : 'reload-page'}
         nodeRef={nodeRef}
         timeout={300}
         onExit={() => dispatch(setContentXScrollable(true))}
@@ -36,7 +36,7 @@ const GlobalContent: FC<Props> = memo(({ showPadding }) => {
         unmountOnExit
       >
         <div
-          className={ClassNames('h-full flex-grow bg-layout ', { 'p-16px': !showPadding })}
+          className={ClassNames('h-full flex-grow bg-layout ', { 'p-16px': !closePadding })}
           ref={nodeRef}
         >
           {reloadFlag && currentOutlet}

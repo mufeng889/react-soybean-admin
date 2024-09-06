@@ -14,6 +14,7 @@ const reorder = (list: AntDesign.TableColumnCheck[], startIndex: number, endInde
   result[endIndex] = list[startIndex];
   return result;
 };
+
 const DragContent: FC<Props> = ({ columns, setColumnChecks }) => {
   const dragEnd: OnDragEndResponder = result => {
     if (!result.destination) {

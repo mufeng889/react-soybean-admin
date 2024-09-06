@@ -31,6 +31,7 @@ const GlobalHeader: FC<Props> = memo(({ showLogo, showMenuToggler, showMenu, isM
           style={{ width: `${settings.sider.width}px` }}
         />
       )}
+
       {showMenuToggler && <MenuToggler />}
 
       <div
