@@ -37,6 +37,7 @@ function MixMenuItem(Props: MixMenuItemProps) {
 
   function handleSelectMixMenu() {
     setActiveFirstLevelMenuKey(key);
+
     if (children?.length) {
       onClick && onClick();
     } else {

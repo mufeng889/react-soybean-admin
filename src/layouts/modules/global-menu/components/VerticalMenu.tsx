@@ -1,5 +1,5 @@
 import { SimpleScrollbar } from '@sa/materials';
-import type { Route, RouteRecordNormalized } from '@sa/simple-router';
+import type { RouteRecordNormalized } from '@sa/simple-router';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import type { MenuProps } from 'antd';
 import { getSiderCollapse } from '@/store/slice/app';
@@ -26,16 +26,6 @@ const getLevelKeys = (items1: LevelKeysProps[]) => {
   return key;
 };
 
-function getSelectKey(route: Route) {
-  const { hideInMenu, activeMenu } = route.meta;
-
-  const name = route.name as string;
-
-  const routeName = (hideInMenu ? activeMenu : name) || name;
-
-  return [routeName];
-}
-
 const getSelectedMenuKeyPath = (matches: RouteRecordNormalized[]) => {
   const result = matches.reduce((acc: string[], match, index) => {
     if (index < matches.length - 1 && match.name) {
@@ -48,25 +38,19 @@ const getSelectedMenuKeyPath = (matches: RouteRecordNormalized[]) => {
 };
 
 const VerticalMenu = memo(() => {
-  const route = useRoute();
+  const { allMenus, childLevelMenus, selectKey, route } = useMixMenuContext();
 
-  const { allMenus, childLevelMenus } = useMixMenuContext();
-
-  const levelKeys = getLevelKeys(allMenus as LevelKeysProps[]);
+  const levelKeys = useMemo(() => getLevelKeys(allMenus), [allMenus]);
 
   const themeSettings = useAppSelector(getThemeSettings);
 
-  const selectedKeys = getSelectKey(route);
-
   const router = useRouterPush();
-  const matches = route.matched;
-  const openKeys = () => {
-    return getSelectedMenuKeyPath(matches);
-  };
+
+  const openKeys = getSelectedMenuKeyPath(route.matched);
 
   const inlineCollapsed = useAppSelector(getSiderCollapse);
 
-  const [stateOpenKeys, setStateOpenKeys] = useState<string[]>(openKeys());
+  const [stateOpenKeys, setStateOpenKeys] = useState<string[]>(openKeys);
 
   function handleClickMenu(menuInfo: MenuInfo) {
     router.menuPush(menuInfo.key);
@@ -107,7 +91,7 @@ const VerticalMenu = memo(() => {
         inlineCollapsed={inlineCollapsed}
         openKeys={stateOpenKeys}
         onOpenChange={onOpenChange}
-        selectedKeys={selectedKeys}
+        selectedKeys={selectKey}
         onSelect={handleClickMenu}
         className="size-full bg-container transition-300 border-0!"
         inlineIndent={18}

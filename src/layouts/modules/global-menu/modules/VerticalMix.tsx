@@ -1,12 +1,10 @@
 import classNames from 'classnames';
-import { useRouter } from '@sa/simple-router';
 import { createPortal } from 'react-dom';
 import { GLOBAL_SIDER_MENU_ID } from '@/constants/app';
 import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
 import { getMixSiderFixed, toggleMixSiderFixed } from '@/store/slice/app';
 import DarkModeContainer from '@/components/stateless/common/DarkModeContainer';
 import PinToggler from '@/components/stateless/common/PinToggler';
-import { getActiveFirstLevelMenuKey } from '@/store/slice/tab/shared';
 import FirstLevelMenu from '../components/FirstLevelMenu';
 import GlobalLogo from '../../global-logo';
 import VerticalMenu from '../components/VerticalMenu';
@@ -14,12 +12,13 @@ import { useGetElementById } from './hook';
 
 const VerticalMix = memo(() => {
   const { t } = useTranslation();
-  const router = useRouter();
+
   const { childLevelMenus, setActiveFirstLevelMenuKey } = useMixMenuContext();
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector(getDarkMode);
   const themeSettings = useAppSelector(getThemeSettings);
   const mixSiderFixed = useAppSelector(getMixSiderFixed);
+
   const [drawerVisible, setDrawerVisible] = useState(false);
 
   const siderInverted = !darkMode && themeSettings.sider.inverted;
@@ -32,8 +31,8 @@ const VerticalMix = memo(() => {
 
   function handleResetActiveMenu() {
     setDrawerVisible(false);
-    const firstLevelRouteName = getActiveFirstLevelMenuKey(router.currentRoute);
-    setActiveFirstLevelMenuKey(firstLevelRouteName);
+
+    setActiveFirstLevelMenuKey();
   }
 
   return (

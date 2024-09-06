@@ -50,16 +50,3 @@ export function getGlobalMenuByBaseRoute(route: ElegantConstRoute): App.Global.M
 
   return menu;
 }
-
-export function getActiveFirstLevelMenuKey(route: App.Global.TabRoute) {
-  const { hideInMenu, activeMenu } = route.meta;
-  const name = route.name;
-
-  const routeName = (hideInMenu ? activeMenu : name) || name;
-
-  if (!routeName) return '';
-
-  const [firstLevelRouteName] = routeName.split('_');
-
-  return firstLevelRouteName;
-}
