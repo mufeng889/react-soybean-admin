@@ -104,11 +104,11 @@ const AdminLayout: FC<AdminLayoutProps> = ({
   const footerDisplay = !fullContent && fixedFooter ? 'block' : 'none';
 
   return (
-    <div
+    <section
       className={classNames('relative h-full', commonClass)}
       style={cssVar}
     >
-      <div
+      <section
         id={isWrapperScroll ? scrollElId : ''}
         className={classNames('h-full flex flex-col', scrollWrapperClass, commonClass, {
           'overflow-y-auto': isWrapperScroll
@@ -233,8 +233,8 @@ const AdminLayout: FC<AdminLayoutProps> = ({
             ></div>
           </>
         )}
-      </div>
-    </div>
+      </section>
+    </section>
   );
 };
 export default AdminLayout;

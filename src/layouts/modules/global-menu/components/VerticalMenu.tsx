@@ -48,7 +48,7 @@ const VerticalMenu = memo(() => {
 
   const openKeys = getSelectedMenuKeyPath(route.matched);
 
-  const isMix = themeSettings.layout.mode === 'vertical-mix';
+  const isMix = themeSettings.layout.mode.includes('mix');
 
   const inlineCollapsed = useAppSelector(getSiderCollapse);
 
