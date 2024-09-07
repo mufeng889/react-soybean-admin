@@ -2,6 +2,7 @@ import { AdminLayout, LAYOUT_SCROLL_EL_ID } from '@sa/materials';
 import type { LayoutMode } from '@sa/materials';
 import { configResponsive } from 'ahooks';
 import './index.scss';
+import { Suspense } from 'react';
 import {
   getContentXScrollable,
   getFullContent,
@@ -10,14 +11,15 @@ import {
   setIsMobile,
   setSiderCollapse
 } from '@/store/slice/app';
-import { getThemeSettings } from '@/store/slice/theme';
+import { getThemeSettings, setLayoutMode } from '@/store/slice/theme';
 import GlobalContent from '../modules/global-content';
 import GlobalFooter from '../modules/global-footer';
 import GlobalHeader from '../modules/global-header';
 import GlobalSider from '../modules/global-sider';
-import ThemeDrawer from '../modules/theme-drawer';
 import GlobalTab from '../modules/global-tab';
 import GlobalMenu from '../modules/global-menu';
+
+const ThemeDrawer = lazy(() => import('../modules/theme-drawer'));
 
 const LAYOUT_MODE_VERTICAL: LayoutMode = 'vertical';
 const LAYOUT_MODE_HORIZONTAL: LayoutMode = 'horizontal';
@@ -65,9 +67,13 @@ const BaseLayout = () => {
     : LAYOUT_MODE_HORIZONTAL;
 
   const headerProps = HEADER_PROPS_CONFIG[themeSettings.layout.mode];
+
   const isMobile = !responsive.sm;
+
   const siderVisible = themeSettings.layout.mode !== LAYOUT_MODE_HORIZONTAL;
+
   const isVerticalMix = themeSettings.layout.mode === LAYOUT_MODE_VERTICAL_MIX;
+
   const isHorizontalMix = themeSettings.layout.mode === LAYOUT_MODE_HORIZONTAL_MIX;
 
   function getSiderWidth() {
@@ -109,6 +115,9 @@ const BaseLayout = () => {
 
   useUpdateEffect(() => {
     dispatch(setIsMobile(isMobile));
+    if (isMobile) {
+      dispatch(setLayoutMode('vertical'));
+    }
   }, [isMobile]);
 
   return (
@@ -157,8 +166,9 @@ const BaseLayout = () => {
         reverse={themeSettings.layout.reverseHorizontalMix}
         mode={themeSettings.layout.mode}
       />
-
-      <ThemeDrawer />
+      <Suspense fallback={null}>
+        <ThemeDrawer />
+      </Suspense>
     </AdminLayout>
   );
 };
