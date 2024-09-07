@@ -266,6 +266,7 @@ class CreateRouter {
   #afterRouteChange = (state: RouterState, afterEach: RouterOptions['afterEach']) => {
     if (state.navigation.state === 'idle') {
       const from = this.currentRoute;
+
       this.currentRoute = this.resolve(state.location);
 
       afterEach(this.currentRoute, from);

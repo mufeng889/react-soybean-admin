@@ -145,6 +145,7 @@ class CreateRouterMatcher {
       fullPath = generatePath(matcher.record.path, params);
       query = location.query || {};
       const queryParams = stringifyQuery(query);
+
       fullPath += queryParams ? `?${queryParams}` : '';
       path = matcher.record.path;
       component = matcher.record.component;
@@ -160,6 +161,7 @@ class CreateRouterMatcher {
 
       // matcher should have a value after the loop
       query = getQueryParams(location.search);
+
       if (matcher) {
         name = matcher.record.name;
         fullPath = location.pathname + location.search;
