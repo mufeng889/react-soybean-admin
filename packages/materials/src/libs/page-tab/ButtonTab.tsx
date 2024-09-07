@@ -1,11 +1,24 @@
 import classNames from 'classnames';
 import type { ButtonTabProps } from '../../types';
 import styles from './index.module.css';
+import { useTap } from './hook';
+const ButtonTab = ({
+  darkMode,
+  active,
+  prefix,
+  suffix,
+  children,
+  className,
+  onClick,
+  style,
+  ...rest
+}: ButtonTabProps) => {
+  const tap = useTap(onClick);
 
-const ButtonTab = ({ darkMode, active, prefix, suffix, children, className, style, ...rest }: ButtonTabProps) => {
   return (
     <div
       {...rest}
+      {...tap}
       className={classNames(
         ':soy: relative inline-flex cursor-pointer items-center justify-center gap-12px whitespace-nowrap border-(1px solid) rounded-4px px-12px py-4px',
         [
@@ -16,6 +29,7 @@ const ButtonTab = ({ darkMode, active, prefix, suffix, children, className, styl
           className
         ]
       )}
+      onClick={onClick}
       style={{ ...style }}
     >
       {prefix}

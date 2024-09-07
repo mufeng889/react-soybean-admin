@@ -1,3 +1,4 @@
+import type { FC } from 'react';
 import React, { memo } from 'react';
 import classNames from 'classnames';
 import type { ButtonTabProps } from '../../types';
@@ -6,8 +7,10 @@ import ChromeTab from './ChromeTab';
 import ButtonTab from './ButtonTab';
 import SvgClose from './SvgClose';
 import styles from './index.module.css';
+
 type PageTabProps = Omit<ButtonTabProps, 'onMouseUp'>;
-const PageTab = memo(function PageTab({
+
+const PageTab: FC<PageTabProps> = ({
   mode = 'chrome',
   activeColor = ACTIVE_COLOR,
   closable = true,
@@ -22,32 +25,33 @@ const PageTab = memo(function PageTab({
   darkMode,
   prefix,
   ...rest
-}: PageTabProps) {
+}) => {
   const cssVars = createTabCssVars(activeColor) as React.CSSProperties;
-  const getActiveTabComponent = () => {
-    const tabComponentMap = {
-      chrome: {
-        component: ChromeTab,
-        class: chromeClass
-      },
-      button: {
-        component: ButtonTab,
-        class: buttonClass
-      }
-    };
 
-    return tabComponentMap[mode];
+  const getActiveTabComponent = {
+    chrome: {
+      component: ChromeTab,
+      class: chromeClass
+    },
+    button: {
+      component: ButtonTab,
+      class: buttonClass
+    }
   };
-  const ActiveTabComponent = getActiveTabComponent().component;
-  const activeClass = getActiveTabComponent().class;
-  function closeTab(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+
+  const ActiveTabComponent = getActiveTabComponent[mode].component;
+
+  const activeClass = getActiveTabComponent[mode].class;
+
+  function closeTab(event: React.MouseEvent | TouchEvent) {
     event.stopPropagation();
-    handleClose?.();
+    handleClose && handleClose();
   }
+
   function handleMouseup(e: React.MouseEvent<HTMLDivElement>) {
     // close tab by mouse wheel button click
     if (e.button === 1) {
-      handleClose?.();
+      handleClose && handleClose();
     }
   }
 
@@ -59,6 +63,7 @@ const PageTab = memo(function PageTab({
         onClick={closeTab}
       />
     ));
+
   return (
     <ActiveTabComponent
       prefix={prefix}
@@ -73,6 +78,6 @@ const PageTab = memo(function PageTab({
       {children}
     </ActiveTabComponent>
   );
-});
+};
 
-export default PageTab;
+export default memo(PageTab);

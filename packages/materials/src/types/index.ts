@@ -263,7 +263,8 @@ export type LayoutCssVars = {
  * @default chrome
  */
 export type PageTabMode = 'button' | 'chrome';
-export type ButtonTabProps = PageTabProps & Omit<React.ComponentProps<'div'>, 'prefix' | 'style' | 'className'>;
+export type ButtonTabProps = PageTabProps &
+  Omit<React.ComponentProps<'div'>, 'prefix' | 'style' | 'className' | 'onClick'>;
 export interface PageTabProps {
   /** Whether is dark mode */
   darkMode?: boolean;
@@ -301,6 +302,7 @@ export interface PageTabProps {
   suffix?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
+  onClick: () => void;
 }
 
 export type PageTabCssVarsProps = {

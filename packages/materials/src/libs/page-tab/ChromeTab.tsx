@@ -1,12 +1,26 @@
 import classNames from 'classnames';
 import type { ButtonTabProps } from '../../types';
+import { useTap } from './hook';
 import styles from './index.module.css';
 import ChromeTabBg from './ChromeTabBg';
 
-const ChromeTab = ({ active, darkMode, prefix, suffix, children, className, style, ...rest }: ButtonTabProps) => {
+const ChromeTab = ({
+  active,
+  darkMode,
+  onClick,
+  prefix,
+  suffix,
+  children,
+  className,
+  style,
+  ...rest
+}: ButtonTabProps) => {
+  const tap = useTap(onClick);
+
   return (
     <div
       {...rest}
+      {...tap}
       className={classNames(
         ':soy: relative inline-flex cursor-pointer items-center justify-center gap-16px whitespace-nowrap px-24px py-6px -mr-18px',
         [
@@ -17,6 +31,7 @@ const ChromeTab = ({ active, darkMode, prefix, suffix, children, className, styl
           className
         ]
       )}
+      onClick={onClick}
       style={{ ...style }}
     >
       <div
