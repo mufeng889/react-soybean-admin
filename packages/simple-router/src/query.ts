@@ -99,7 +99,7 @@ export function stringifyQuery(query: LocationQueryRaw): string {
 export function decode(text: string | number): string {
   try {
     return decodeURIComponent(`${text}`);
-  } catch (err) {
+  } catch {
     console.warn(`Error decoding "${text}". Using original value`);
   }
   return `${text}`;

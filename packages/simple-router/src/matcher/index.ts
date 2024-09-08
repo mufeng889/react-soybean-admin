@@ -188,6 +188,7 @@ class CreateRouterMatcher {
     }
     return {
       fullPath,
+      state: location.state,
       name,
       path,
       hash: location.hash,

@@ -130,11 +130,13 @@ class CreateRouter {
   }
 
   #onBeforeRouteChange = (
-    { currentLocation, nextLocation }: Parameters<BlockerFunction>[0],
+    { nextLocation }: Parameters<BlockerFunction>[0],
     beforeEach: RouterOptions['beforeEach'],
     firstInit: (allNames: string[]) => void
   ) => {
-    if (nextLocation.pathname === currentLocation.pathname && this.initRoute) {
+    const to = this.resolve(nextLocation);
+
+    if (to.fullPath === this.currentRoute.fullPath && this.initRoute) {
       return true;
     }
 
@@ -146,8 +148,6 @@ class CreateRouter {
       });
       this.initRoute = true;
     }
-
-    const to = this.resolve(nextLocation);
 
     if (to.redirect) {
       if (to.redirect.startsWith('/')) {
@@ -299,10 +299,13 @@ class CreateRouter {
   }
 
   push(to: RouteLocationNamedRaw | string | Location, replace?: true) {
-    const target = typeof to === 'string' ? to : this.resolve(to).fullPath;
+    const resolved = typeof to === 'string' ? { fullPath: to } : this.resolve(to);
+    const target = resolved.fullPath;
+
+    const state = resolved.state || null;
 
     if (target !== this.currentRoute.fullPath) {
-      this.reactRouter.navigate(target, { replace });
+      this.reactRouter.navigate(target, { replace, state });
     }
   }
 
