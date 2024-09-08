@@ -32,7 +32,7 @@ class CreateRouter {
   reactRoutes: RouteObject[] = [];
   initRoute = false;
   reactRouter: RemixRouter;
-  listeners: (() => void)[] = [];
+  private listeners: (() => void)[] = [];
   initReactRoutes: RouteObject[] = [];
   private matcher: CreateRouterMatcher;
   currentRoute = START_LOCATION_NORMALIZED;
@@ -79,24 +79,29 @@ class CreateRouter {
    *
    * @param routes - An array of elegant constant routes.
    */
-  addReactRoutes(routes: ElegantConstRoute[]) {
+  addReactRoutes(parentOrRoute: ElegantConstRoute[] | string, elegantRoutes?: ElegantConstRoute[]) {
     // Flatten nested routes
+    let parent: string | null = null;
+    let routes: ElegantConstRoute;
+    if (typeof parentOrRoute === 'string') {
+      parent = parentOrRoute;
+      routes = elegantRoutes;
+    } else {
+      routes = parentOrRoute;
+    }
+
     const flattenRoutes = routes.flat();
 
-    flattenRoutes.forEach(route => {
-      const matcher = this.matcher.getRecordMatcher(route.name);
-      if (matcher) return;
-
+    const reactRoutes = flattenRoutes.map(route => {
       // Add route
       this.#addRoute(route);
       // Transform to react-router route
       const reactRoute = this.getReactRoutes(route);
-      // Add to react-router's routes
       this.reactRoutes.push(reactRoute);
+      return reactRoute;
     });
-
-    // Update react-router's routes
-    this.#changeRoutes();
+    // Add to react-router's routes
+    this.reactRouter.patchRoutes(parent, reactRoutes);
   }
 
   #changeRoutes() {
@@ -113,6 +118,7 @@ class CreateRouter {
   removeRoute(name: string) {
     const matched = this.matcher.getRecordMatcher(name);
     if (!matched) return;
+
     if (matched.parent) {
       const parentNames = findParentNames(matched.parent);
       let routes = this.reactRoutes;
@@ -286,6 +292,7 @@ class CreateRouter {
     this.reactRoutes.length = 0;
     // Resets the route matcher so it can begin matching new routes again.
     this.matcher.resetMatcher();
+    this.#changeRoutes();
   }
 
   /**
