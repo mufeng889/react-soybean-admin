@@ -28,7 +28,7 @@ const HorizontalMenu: FC<Props> = memo(({ mode }) => {
     if (mode === '3' && isHasChildren(allMenus, menuInfo.key)) {
       setActiveFirstLevelMenuKey(menuInfo.key);
     } else {
-      router.menuPush(menuInfo.key);
+      router.routerPushByKeyWithMetaQuery(menuInfo.key);
     }
   }
 

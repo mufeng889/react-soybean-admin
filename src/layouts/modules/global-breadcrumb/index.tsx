@@ -23,7 +23,7 @@ const GlobalBreadcrumb: FC<Omit<BreadcrumbProps, 'items'>> = props => {
   const breadcrumb = getBreadcrumbsByRoute(route, menus);
 
   function handleClickMenu(menuInfo: MenuInfo) {
-    routerPush.menuPush(menuInfo.key);
+    routerPush.routerPushByKeyWithMetaQuery(menuInfo.key);
   }
 
   const items: BreadcrumbProps['items'] = breadcrumb.map((item, index) => {

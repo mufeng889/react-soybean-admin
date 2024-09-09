@@ -2,6 +2,7 @@ import { createSelector, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { LastLevelRouteKey, RouteKey } from '@elegant-router/types';
 import type { RouteRecordNormalized } from '@sa/simple-router';
+import { router } from '@/router';
 import { localStg } from '@/utils/storage';
 import { getThemeSettings } from '../theme';
 import type { AppThunk } from '../../index';
@@ -90,9 +91,12 @@ export const tabSlice = createSlice({
     selectActiveFirstLevelMenuKey: tab => tab.activeFirstLevelMenuKey
   }
 });
+
 export const { addTab, initHomeTab, setTabs, setActiveTabId, setActiveFirstLevelMenuKey, changeTabLabel } =
   tabSlice.actions;
+
 export const { getTabs, getHomeTab, getActiveTabId, selectActiveFirstLevelMenuKey } = tabSlice.selectors;
+
 export const selectAllTabs = createSelector([getTabs, getHomeTab], (tabs, homeTab) => {
   const allTabs = getAllTabs(tabs, homeTab);
   return allTabs;
@@ -120,8 +124,8 @@ export const initTabStore =
  * @param tabId Tab id
  */
 export const removeTab =
-  (tabId: string): AppThunk<string | undefined> =>
-  (dispatch, getState) => {
+  (tabId: string): AppThunk<Promise<void>> =>
+  async (dispatch, getState) => {
     const activeTabId = getActiveTabId(getState());
     const tabs = getTabs(getState());
     const isRemoveActiveTab = activeTabId === tabId;
@@ -139,18 +143,17 @@ export const removeTab =
 
     const activeTab = updatedTabs.at(-1) || homeTab;
     if (activeTab) {
-      Promise.resolve().then(() => {
-        update();
-      });
-      // eslint-disable-next-line consistent-return
-      return activeTab.fullPath;
+      await switchRouteByTab(activeTab);
+      update();
     }
   };
+
 /** remove active tab */
 export const removeActiveTab = (): AppThunk => (dispatch, getState) => {
   const activeTabId = getActiveTabId(getState());
   dispatch(removeTab(activeTabId));
 };
+
 /**
  * Add tab
  *
@@ -202,13 +205,25 @@ export const cacheTabs = (): AppThunk => (_, getState) => {
 };
 
 /**
+ * Switch route by tab
+ *
+ * @param tab
+ */
+async function switchRouteByTab(tab: App.Global.Tab) {
+  const fail = await router.push(tab.fullPath);
+  if (!fail) {
+    setActiveTabId(tab.id);
+  }
+}
+
+/**
  * Clear tabs
  *
  * @param excludes Exclude tab ids
  */
 export const clearTabs =
-  (excludes: string[] = []): AppThunk<string | undefined> =>
-  (dispatch, getState) => {
+  (excludes: string[] = []): AppThunk<Promise<void>> =>
+  async (dispatch, getState) => {
     const tabs = getTabs(getState());
     const remainTabIds = [...getFixedTabIds(tabs), ...excludes];
     const removedTabsIds = tabs.map(tab => tab.id).filter(id => !remainTabIds.includes(id));
@@ -228,12 +243,9 @@ export const clearTabs =
     const homeTab = getHomeTab(getState());
 
     const activeTab = updatedTabs[updatedTabs.length - 1] || homeTab;
+    await switchRouteByTab(activeTab);
 
-    Promise.resolve().then(() => {
-      update();
-    });
-    // eslint-disable-next-line consistent-return
-    return activeTab.fullPath;
+    update();
   };
 
 /**
@@ -279,10 +291,12 @@ export const clearRightTabs =
   (dispatch, getState) => {
     const homeTab = getHomeTab(getState());
     const isHomeTab = tabId === homeTab?.id;
+
     if (isHomeTab) {
       dispatch(clearTabs());
       return;
     }
+
     const tabs = getTabs(getState());
     const tabIds = tabs.map(tab => tab.id);
     const index = tabIds.indexOf(tabId);
@@ -311,6 +325,7 @@ export const setTabLabel =
 
     dispatch(changeTabLabel({ label, index: tab }));
   };
+
 /**
  * Reset tab label
  *

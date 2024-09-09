@@ -13,6 +13,7 @@ export const createRouteGuard: BeforeEach = (to, _, next) => {
 
     return next(true);
   }
+
   return next();
 };
 

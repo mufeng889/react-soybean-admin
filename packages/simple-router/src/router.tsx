@@ -305,8 +305,10 @@ class CreateRouter {
     return this.matcher.getRecordMatcher(name)?.record;
   }
 
-  push(to: RouteLocationNamedRaw | string | Location, replace?: true) {
+  // eslint-disable-next-line consistent-return
+  async push(to: RouteLocationNamedRaw | string | Location, replace?: true): Promise<boolean> {
     const resolved = typeof to === 'string' ? { fullPath: to } : this.resolve(to);
+
     const target = resolved.fullPath;
 
     const state = resolved.state || null;
@@ -314,6 +316,8 @@ class CreateRouter {
     if (target !== this.currentRoute.fullPath) {
       this.reactRouter.navigate(target, { replace, state });
     }
+
+    if (!resolved.fullPath === '*') return false;
   }
 
   back() {

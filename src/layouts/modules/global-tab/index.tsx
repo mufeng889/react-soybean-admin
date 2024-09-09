@@ -80,19 +80,19 @@ const GlobalTab = memo(() => {
       }
     }
   }
+
   function handleCloseTab(tab: App.Global.Tab) {
-    const toFullPath = dispatch(removeTab(tab.id));
-    if (toFullPath)
-      startTransition(() => {
-        navigate(toFullPath as string);
-      });
+     dispatch(removeTab(tab.id));
   }
+
 
   function handleClickTab(tab: App.Global.Tab) {
     startTransition(() => {
       navigate(tab.fullPath);
     });
   }
+
+
   function getContextMenuDisabledKeys(tabId: string, index: number) {
     const disabledKeys: App.Global.DropdownKey[] = [];
     const isRetain = dispatch(isTabRetain(tabId));

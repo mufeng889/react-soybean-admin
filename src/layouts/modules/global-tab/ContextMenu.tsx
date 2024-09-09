@@ -20,6 +20,7 @@ interface DropdownOption {
   icon: string;
   disabled?: boolean;
 }
+
 function getMenu(options: DropdownOption[]) {
   const items: MenuProps['items'] = options.map(opt => ({
     key: opt.key,
@@ -52,7 +53,7 @@ function arePropsEqual(oldProps: Readonly<ContextMenuProps>, newProps: Readonly<
 
 const ContextMenu: FC<ContextMenuProps> = memo(({ tabId, excludeKeys = [], disabledKeys = [], children }) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
 
   const options = () => {
@@ -95,10 +96,10 @@ const ContextMenu: FC<ContextMenuProps> = memo(({ tabId, excludeKeys = [], disab
   };
 
   const menu = getMenu(options());
+
   const dropdownAction: Record<App.Global.DropdownKey, () => void> = {
     closeCurrent() {
-      const fullPath = dispatch(removeTab(tabId));
-      toFullPath(fullPath);
+      dispatch(removeTab(tabId));
     },
     closeOther() {
       dispatch(clearTabs([tabId]));
@@ -110,17 +111,9 @@ const ContextMenu: FC<ContextMenuProps> = memo(({ tabId, excludeKeys = [], disab
       dispatch(clearRightTabs(tabId));
     },
     closeAll() {
-      const fullPath = dispatch(clearTabs());
-      toFullPath(fullPath);
+      dispatch(clearTabs());
     }
   };
-
-  function toFullPath(fullPath: string | undefined) {
-    if (fullPath)
-      startTransition(() => {
-        navigate(fullPath);
-      });
-  }
 
   const handleClick: MenuProps['onClick'] = e => {
     dropdownAction[e.key as App.Global.DropdownKey]();

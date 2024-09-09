@@ -1,4 +1,3 @@
-import { startTransition } from 'react';
 import { useRouter } from '@sa/simple-router';
 import type { RouteKey } from '@elegant-router/types';
 import type { RouteLocationNamedRaw } from '@sa/simple-router';
@@ -57,10 +56,10 @@ export function useRouterPush() {
     return query;
   };
 
-  function routerPushByKeyWithMetaQuery(key: RouteKey) {
+  function routerPushByKeyWithMetaQuery(key: string) {
     const query = getRouteQueryOfMetaByKey(key);
 
-    return routerPushByKey(key, { query });
+    return routerPushByKey(key as RouteKey, { query });
   }
 
   async function toHome() {
@@ -102,12 +101,6 @@ export function useRouterPush() {
     return routerPushByKey(`login_${module}`, { query });
   }
 
-  function menuPush(key: string) {
-    startTransition(() => {
-      routerPushByKeyWithMetaQuery(key as RouteKey);
-    });
-  }
-
   /**
    * Redirect from login
    *
@@ -128,7 +121,6 @@ export function useRouterPush() {
     routerBack,
     toLogin,
     routerPushByKeyWithMetaQuery,
-    menuPush,
     redirectFromLogin,
     toggleLoginModule
   };

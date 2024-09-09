@@ -46,16 +46,14 @@ const VerticalMenu = memo(() => {
 
   const router = useRouterPush();
 
-  const openKeys = getSelectedMenuKeyPath(route.matched);
-
   const isMix = themeSettings.layout.mode.includes('mix');
 
   const inlineCollapsed = useAppSelector(getSiderCollapse);
 
-  const [stateOpenKeys, setStateOpenKeys] = useState<string[]>(openKeys);
+  const [stateOpenKeys, setStateOpenKeys] = useState<string[]>(getSelectedMenuKeyPath(route.matched));
 
   function handleClickMenu(menuInfo: MenuInfo) {
-    router.menuPush(menuInfo.key);
+    router.routerPushByKeyWithMetaQuery(menuInfo.key);
   }
 
   const onOpenChange: MenuProps['onOpenChange'] = keys => {
@@ -84,6 +82,10 @@ const VerticalMenu = memo(() => {
       setStateOpenKeys(keys);
     }
   };
+
+  useEffect(() => {
+    setStateOpenKeys(getSelectedMenuKeyPath(route.matched));
+  }, [route]);
 
   return (
     <SimpleScrollbar>

@@ -98,7 +98,7 @@ const SearchModal: FC<Props> = memo(({ show, onClose }) => {
   function handleEnter() {
     if (resultOptions.length === 0 || activeRouteName === '') return;
     handleClose();
-    router.menuPush(activeRouteName);
+    router.routerPushByKeyWithMetaQuery(activeRouteName);
   }
 
   useKeyPress('Escape', handleClose);
