@@ -1,6 +1,7 @@
 import ElegantReactRouter from '@ohh-889/react-auto-route/vite';
 import type { RouteKey } from '@elegant-router/types';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface RouteMeta extends Record<string | number, unknown> {}
 
 export function setupElegantRouter() {

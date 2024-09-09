@@ -7,6 +7,7 @@ export function Component() {
   const { t } = useTranslation();
 
   const dispatch = useAppDispatch();
+
   function changeTabLabel(value: string) {
     dispatch(setTabLabel(value));
   }

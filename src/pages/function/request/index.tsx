@@ -1,5 +1,6 @@
 import { Button, Card, Space } from 'antd';
 import { fetchCustomBackendError } from '@/service/api';
+
 export function Component() {
   const { t } = useTranslation();
   async function logout() {

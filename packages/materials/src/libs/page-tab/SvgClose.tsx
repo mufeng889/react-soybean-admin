@@ -2,9 +2,7 @@ import type { FC, TouchEvent } from 'react';
 import React, { useState } from 'react';
 import classNames from 'classnames';
 
-interface SvgCloseProps extends React.ComponentProps<'div'> {}
-
-const SvgClose: FC<SvgCloseProps> = ({ className, onClick, ...props }) => {
+const SvgClose: FC<React.ComponentProps<'div'>> = ({ className, onClick, ...props }) => {
   const [touchStart, setTouchStart] = useState(false);
 
   // 处理触摸开始事件
@@ -15,7 +13,7 @@ const SvgClose: FC<SvgCloseProps> = ({ className, onClick, ...props }) => {
   // 处理触摸结束事件
   const handleTouchEnd = (event: TouchEvent) => {
     if (touchStart) {
-      onClick && onClick(event as any);
+      if (onClick) onClick(event as any);
     }
 
     // 重置触摸状态

@@ -45,13 +45,13 @@ const PageTab: FC<PageTabProps> = ({
 
   function closeTab(event: React.MouseEvent | TouchEvent) {
     event.stopPropagation();
-    handleClose && handleClose();
+    if (handleClose) handleClose();
   }
 
   function handleMouseup(e: React.MouseEvent<HTMLDivElement>) {
     // close tab by mouse wheel button click
     if (e.button === 1) {
-      handleClose && handleClose();
+      if (handleClose) handleClose();
     }
   }
 

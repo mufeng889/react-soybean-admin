@@ -39,7 +39,7 @@ function MixMenuItem(Props: MixMenuItemProps) {
     setActiveFirstLevelMenuKey(key);
 
     if (children?.length) {
-      onClick && onClick();
+      if (onClick) onClick();
     } else {
       router.routerPushByKeyWithMetaQuery(key as RouteKey);
     }

@@ -15,7 +15,7 @@ function BreadcrumbContent({ label, icon }: { label: JSX.Element; icon: JSX.Elem
   );
 }
 
-const GlobalBreadcrumb: FC<Omit<BreadcrumbProps, 'items'>> = memo(props => {
+const GlobalBreadcrumb: FC<Omit<BreadcrumbProps, 'items'>> = props => {
   const { allMenus: menus, route } = useMixMenuContext();
 
   const routerPush = useRouterPush();
@@ -52,8 +52,8 @@ const GlobalBreadcrumb: FC<Omit<BreadcrumbProps, 'items'>> = memo(props => {
     <Breadcrumb
       {...props}
       items={items}
-    ></Breadcrumb>
+    />
   );
-});
+};
 
-export default GlobalBreadcrumb;
+export default memo(GlobalBreadcrumb);
