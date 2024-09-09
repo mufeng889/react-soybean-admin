@@ -50,9 +50,7 @@ class CreateRouter {
   }: RouterOptions) {
     this.matcher = new CreateRouterMatcher(initRoutes);
 
-    const initReactRoutes = initRoutes.map(route => {
-      return getReactRoutes(route);
-    });
+    const initReactRoutes = initRoutes.map(route => getReactRoutes(route));
     this.reactRouter = historyCreatorMap[history](initReactRoutes, {
       basename
     });
@@ -92,14 +90,20 @@ class CreateRouter {
 
     const flattenRoutes = routes.flat();
 
-    const reactRoutes = flattenRoutes.map(route => {
-      // Add route
-      this.#addRoute(route);
-      // Transform to react-router route
-      const reactRoute = this.getReactRoutes(route);
-      this.reactRoutes.push(reactRoute);
-      return reactRoute;
-    });
+    const reactRoutes = flattenRoutes
+      .map(route => {
+        const matcher = this.matcher.getRecordMatcher(route.name);
+        if (matcher) return null;
+        // Add route
+        this.#addRoute(route);
+        // Transform to react-router route
+        const reactRoute = this.getReactRoutes(route);
+        this.reactRoutes.push(reactRoute);
+        return reactRoute;
+      })
+      .filter(Boolean);
+    console.log(this.reactRouter);
+
     // Add to react-router's routes
     this.reactRouter.patchRoutes(parent, reactRoutes);
   }

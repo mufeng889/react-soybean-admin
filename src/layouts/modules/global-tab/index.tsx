@@ -1,13 +1,11 @@
-/* eslint-disable */
 import ClassNames from 'classnames';
 import type BScroll from '@better-scroll/core';
 import { PageTab } from '@sa/materials';
-import {useUpdateEffect} from 'ahooks'
-import { startTransition } from 'react';
+import { useUpdateEffect } from 'ahooks';
 import DarkModeContainer from '@/components/stateless/common/DarkModeContainer';
 import BetterScroll from '@/components/stateless/custom/BetterScroll';
 import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
-import { getActiveTabId, isTabRetain, removeTab, selectAllTabs,addTabByRoute } from '@/store/slice/tab';
+import { addTabByRoute, getActiveTabId, isTabRetain, removeTab, selectAllTabs } from '@/store/slice/tab';
 import {
   getFullContent,
   getIsMobile,
@@ -41,6 +39,7 @@ const GlobalTab = memo(() => {
   const setBsScroll = (bscroll: BScroll) => {
     bsScrollRef.current = bscroll;
   };
+
   function scrollByClientX(clientX: number) {
     const { left, width } = bsWrapperSizeBounding.current;
     const currentX = clientX - left;
@@ -82,16 +81,12 @@ const GlobalTab = memo(() => {
   }
 
   function handleCloseTab(tab: App.Global.Tab) {
-     dispatch(removeTab(tab.id));
+    dispatch(removeTab(tab.id));
   }
-
 
   function handleClickTab(tab: App.Global.Tab) {
-    startTransition(() => {
-      navigate(tab.fullPath);
-    });
+    navigate(tab.fullPath);
   }
-
 
   function getContextMenuDisabledKeys(tabId: string, index: number) {
     const disabledKeys: App.Global.DropdownKey[] = [];
@@ -117,10 +112,9 @@ const GlobalTab = memo(() => {
     scrollToActiveTab();
   }, [activeTabId]);
 
-
   useEffect(() => {
-    dispatch(addTabByRoute(route))
-  },[route,dispatch])
+    dispatch(addTabByRoute(route));
+  }, [route, dispatch]);
 
   useMount(() => {
     if (bsWrapper.current) {

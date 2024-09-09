@@ -97,8 +97,8 @@ importers:
         specifier: 2.0.0
         version: 2.0.0
       '@ohh-889/react-auto-route':
-        specifier: 0.3.2
-        version: 0.3.2
+        specifier: 0.3.4
+        version: 0.3.4
       '@sa/scripts':
         specifier: workspace:*
         version: link:packages/scripts
@@ -872,8 +872,8 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@ohh-889/react-auto-route@0.3.2':
-    resolution: {integrity: sha512-I+AQfBUH+RdmWLHrBDtEbLZN37Lyn1yJ0J5AO6nDR2NOW8+4cBk7r5DiLNElU3PS1U5Qp5Bf6AMf+au2wV7IJg==}
+  '@ohh-889/react-auto-route@0.3.4':
+    resolution: {integrity: sha512-zEIHDrIl/rImO6m/tjUhWsFWxOnYOvUSbWVg7EfTeJAGH1SgS67NPiW1wCXD93bXKrcFEPRGj1q16b9akg0tZg==}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -5287,7 +5287,7 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.17.1
 
-  '@ohh-889/react-auto-route@0.3.2':
+  '@ohh-889/react-auto-route@0.3.4':
     dependencies:
       chokidar: 3.6.0
       consola: 3.2.3

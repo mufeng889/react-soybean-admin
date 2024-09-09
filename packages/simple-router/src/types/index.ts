@@ -1,8 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
+
 import type { ElegantConstRoute, RouteMeta } from '@ohh-889/react-auto-route';
-import type { Router as RemixRouter } from '@remix-run/router';
 import type { RouteObject } from 'react-router-dom';
+import type { Router as RemixRouter } from '@remix-run/router';
 import type { RouteRecordNormalized } from '../matcher/types';
 
 /** Internal type for common properties among all kind of {@link RouteRecordRaw}. */
@@ -162,3 +162,7 @@ export interface RouteQueryAndHash {
  * @internal
  */
 export interface RouteLocationNamedRaw extends RouteQueryAndHash, LocationAsRelativeRaw, RouteLocationOptions {}
+
+export interface Route extends RouteLocationNormalizedLoaded {
+  params: Record<string, string>;
+}

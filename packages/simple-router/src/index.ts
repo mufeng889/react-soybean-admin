@@ -16,5 +16,6 @@ export type {
   RouteLocationNamedRaw,
   AfterEach,
   BeforeEach,
-  RouteLocationNormalizedLoaded as Route
+  RouteLocationNormalizedLoaded,
+  Route
 } from './types';
