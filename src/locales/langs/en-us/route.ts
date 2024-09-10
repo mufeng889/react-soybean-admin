@@ -6,6 +6,7 @@ const route: App.I18n.Schema['translation']['route'] = {
   'iframe-page': 'Iframe',
   home: 'Home',
   document: 'Document',
+  logout: 'Logout',
   document_project: 'Project Document',
   'document_project-link': 'Project Document(External Link)',
   document_react: 'React Document',

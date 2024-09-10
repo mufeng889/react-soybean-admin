@@ -6,6 +6,7 @@ const route: App.I18n.Schema['translation']['route'] = {
   'iframe-page': '外链页面',
   home: '首页',
   document: '文档',
+  logout: '退出登录',
   document_project: '项目文档',
   'document_project-link': '项目文档(外链)',
   document_react: 'React文档',

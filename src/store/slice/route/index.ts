@@ -94,21 +94,6 @@ export const { getAuthRoutes, getSortRoutes, getIsInitConstantRoute, getConstant
 
 const authRouteMode = import.meta.env.VITE_AUTH_ROUTE_MODE;
 
-/**
- * Navigate to login page
- *
- * @param loginModule The login module
- * @param redirectUrl The redirect url, if not specified, it will be the current route fullPath
- */
-export const toLogin =
-  (redirectUrl?: string): AppThunk =>
-  () => {
-    const nowRouteFullPath = router.currentRoute.fullPath;
-
-    const redirect = redirectUrl || nowRouteFullPath;
-
-    router.push({ name: 'login_pwd-login', query: { redirect } });
-  };
 const handleConstantOrAuthRoutes =
   (mode: 'constant' | 'auth'): AppThunk =>
   (dispatch, getState) => {
@@ -127,6 +112,7 @@ const handleConstantOrAuthRoutes =
 
     dispatch(addSortRoutes(sortRoutes));
   };
+
 export const initConstantRoute = (): AppThunk => async dispatch => {
   const staticRoute = createStaticRoutes();
 
@@ -140,10 +126,12 @@ export const initConstantRoute = (): AppThunk => async dispatch => {
       dispatch(setConstantRoutes(staticRoute.constantRoutes));
     }
   }
+
   dispatch(handleConstantOrAuthRoutes('constant'));
 
   dispatch(setIsInitConstantRoute(true));
 };
+
 const initStaticAuthRoute = (): AppThunk => (dispatch, getState) => {
   const { authRoutes: staticAuthRoutes } = createStaticRoutes();
 
@@ -159,23 +147,20 @@ const initStaticAuthRoute = (): AppThunk => (dispatch, getState) => {
   dispatch(handleConstantOrAuthRoutes('auth'));
   dispatch(setIsInitAuthRoute(true));
 };
+
 export const initAuthRoute = (): AppThunk => (dispatch, getState) => {
   if (authRouteMode === 'static') {
     dispatch(initStaticAuthRoute());
   }
   const routeHomeName = getRouteHome(getState());
+
   const homeRoute = router.getRouteByName(routeHomeName);
+
   if (homeRoute) dispatch(initHomeTab({ route: homeRoute, homeRouteName: routeHomeName as LastLevelRouteKey }));
 };
 
 export const resetRouteStore = (): AppThunk => dispatch => {
-  const currentRoute = router.currentRoute;
-  if (!currentRoute.meta?.constant) {
-    dispatch(toLogin());
-  }
-  setTimeout(() => {
-    dispatch(resetRoute());
-    router.resetRoute();
-    dispatch(initConstantRoute());
-  }, 100);
+  router.resetRoute();
+  dispatch(resetRoute());
+  dispatch(initConstantRoute());
 };

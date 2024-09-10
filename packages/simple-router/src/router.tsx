@@ -10,7 +10,6 @@ import CreateRouterMatcher from './matcher';
 import type { RouteRecordNormalized, RouteRecordRaw } from './matcher/types';
 import { START_LOCATION_NORMALIZED } from './types';
 import { RouterContext } from './hooks/useRouter';
-
 import { warn } from './warning';
 
 const historyCreatorMap: Record<
@@ -102,7 +101,6 @@ class CreateRouter {
         return reactRoute;
       })
       .filter(Boolean);
-    console.log(this.reactRouter);
 
     // Add to react-router's routes
     this.reactRouter.patchRoutes(parent, reactRoutes);

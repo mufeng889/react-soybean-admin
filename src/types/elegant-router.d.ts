@@ -31,6 +31,7 @@ declare module "@elegant-router/types" {
     "document_unocss": "unocss";
     "document_procomponents": "procomponents";
     "document_antd": "antd";
+    "logout": "/logout";
     "403": "/403";
     "404": "/404";
     "500": "/500";
@@ -95,6 +96,7 @@ declare module "@elegant-router/types" {
     | "document_unocss"
     | "document_procomponents"
     | "document_antd"
+    | "logout"
   >;
 
   /**
@@ -129,6 +131,7 @@ declare module "@elegant-router/types" {
     | "not-found"
     | "exception"
     | "document"
+    | "logout"
   >;
 
   /**
@@ -181,6 +184,7 @@ declare module "@elegant-router/types" {
     | "document_unocss"
     | "document_procomponents"
     | "document_antd"
+    | "logout"
   >;
 
   /**

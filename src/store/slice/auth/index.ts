@@ -79,6 +79,7 @@ export const resetStore = (): AppThunk => dispatch => {
   clearAuthStorage();
 
   dispatch(resetAuth());
+
   dispatch(resetRouteStore());
 
   dispatch(cacheTabs());

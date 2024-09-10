@@ -5,22 +5,17 @@ import { themeSlice } from './slice/theme/index';
 import { authSlice } from './slice/auth/index';
 import { routeSlice } from './slice/route';
 import { tabSlice } from './slice/tab';
+
 // `combineSlices` automatically combines the reducers using
 // their `reducerPath`s, therefore we no longer need to call `combineReducers`.
 const rootReducer = combineSlices(routeSlice, appSlice, authSlice, themeSlice, tabSlice);
+
 // Infer the `RootState` type from the root reducer
 export type RootState = ReturnType<typeof rootReducer>;
-export const makeStore = (preloadedState?: Partial<RootState>) => {
-  const store = configureStore({
-    reducer: rootReducer,
-    preloadedState
-  });
-  // configure listeners using the provided defaults
-  // optional, but required for `refetchOnFocus`/`refetchOnReconnect` behaviors
 
-  return store;
-};
-export const store = makeStore();
+export const store = configureStore({
+  reducer: rootReducer
+});
 
 // Infer the type of `store`
 export type AppStore = typeof store;

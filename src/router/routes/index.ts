@@ -6,11 +6,6 @@ import { generatedRoutes } from '../elegant/routes';
  *
  * @link https://github.com/soybeanjs/elegant-router?tab=readme-ov-file#custom-route
  */
-/**
- * custom routes
- *
- * @link https://github.com/soybeanjs/elegant-router?tab=readme-ov-file#custom-route
- */
 const customRoutes: CustomRoute[] = [
   {
     name: 'exception',

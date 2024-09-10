@@ -1,14 +1,16 @@
 import { Button, Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import { resetStore, selectToken, selectUserInfo } from '@/store/slice/auth';
+import { useSubmit } from 'react-router-dom';
+import { selectToken, selectUserInfo } from '@/store/slice/auth';
 
 const UserAvatar = memo(() => {
   const token = useAppSelector(selectToken);
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const userInfo = useAppSelector(selectUserInfo);
-  const navigate = useNavigate();
+  const submit = useSubmit();
+  const route = useRoute();
+  const router = useRouterPush();
+
   function logout() {
     window?.$modal?.confirm({
       title: t('common.tip'),
@@ -16,7 +18,9 @@ const UserAvatar = memo(() => {
       okText: t('common.confirm'),
       cancelText: t('common.cancel'),
       onOk: () => {
-        loginOrRegister();
+        let needRedirect = false;
+        if (!route.meta?.constant) needRedirect = true;
+        submit({ redirectFullPath: route.fullPath, needRedirect }, { method: 'post', action: '/logout' });
       }
     });
   }
@@ -25,11 +29,11 @@ const UserAvatar = memo(() => {
     if (key === '1') {
       logout();
     } else {
-      navigate('/user-center');
+      router.routerPushByKey('user-center');
     }
   }
   function loginOrRegister() {
-    dispatch(resetStore());
+    router.routerPushByKey('login');
   }
 
   const items: MenuProps['items'] = [

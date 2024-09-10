@@ -1,5 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-
+/* eslint-disable */
+/* prettier-ignore */
+// @ts-nocheck
 import type { ElegantConstRoute, RouteMeta } from '@ohh-889/react-auto-route';
 import type { RouteObject } from 'react-router-dom';
 import type { Router as RemixRouter } from '@remix-run/router';
