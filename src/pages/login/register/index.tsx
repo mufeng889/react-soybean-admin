@@ -1,16 +1,19 @@
 import { Button, Form, Input, Space } from 'antd';
+
 interface FormModel {
   phone: string;
   code: string;
   password: string;
   confirmPassword: string;
 }
+
 export const Component = () => {
   const { t } = useTranslation();
   const { label, isCounting, loading, getCaptcha } = useCaptcha();
   const { toggleLoginModule } = useRouterPush();
   const [form] = Form.useForm<FormModel>();
   const { formRules, createConfirmPwdRule } = useFormRules();
+
   async function handleSubmit() {
     const params = await form.validateFields();
     console.log(params);
@@ -18,6 +21,7 @@ export const Component = () => {
     // request to reset password
     window.$message?.success(t('page.login.common.validateSuccess'));
   }
+
   return (
     <>
       <h3 className="text-18px text-primary font-medium">{t('page.login.register.title')}</h3>

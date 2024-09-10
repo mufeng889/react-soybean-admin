@@ -28,29 +28,6 @@ const LAYOUT_MODE_HORIZONTAL_MIX = 'horizontal-mix';
 
 configResponsive({ sm: 640 });
 
-const HEADER_PROPS_CONFIG: Record<UnionKey.ThemeLayoutMode, App.Global.HeaderProps> = {
-  vertical: {
-    showLogo: false,
-    showMenu: false,
-    showMenuToggler: true
-  },
-  'vertical-mix': {
-    showLogo: false,
-    showMenu: false,
-    showMenuToggler: false
-  },
-  horizontal: {
-    showLogo: true,
-    showMenu: true,
-    showMenuToggler: false
-  },
-  'horizontal-mix': {
-    showLogo: true,
-    showMenu: true,
-    showMenuToggler: false
-  }
-};
-
 const BaseLayout = () => {
   const siderCollapse = useAppSelector(getSiderCollapse);
   const themeSettings = useAppSelector(getThemeSettings);
@@ -65,8 +42,6 @@ const BaseLayout = () => {
   const layoutMode = themeSettings.layout.mode.includes(LAYOUT_MODE_VERTICAL)
     ? LAYOUT_MODE_VERTICAL
     : LAYOUT_MODE_HORIZONTAL;
-
-  const headerProps = HEADER_PROPS_CONFIG[themeSettings.layout.mode];
 
   const isMobile = !responsive.sm;
 
@@ -143,8 +118,9 @@ const BaseLayout = () => {
       rightFooter={themeSettings.footer.right}
       Header={
         <GlobalHeader
-          {...headerProps}
-          settings={themeSettings}
+          mode={themeSettings.layout.mode}
+          siderWidth={themeSettings.sider.width}
+          reverse={themeSettings.layout.reverseHorizontalMix}
           isMobile={isMobile}
         />
       }

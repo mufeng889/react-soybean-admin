@@ -120,10 +120,9 @@ class CreateRouter {
   removeRoute(name: string) {
     const matched = this.matcher.getRecordMatcher(name);
     if (!matched) return;
-
+    let routes = this.reactRoutes.concat(this.initReactRoutes);
     if (matched.parent) {
       const parentNames = findParentNames(matched.parent);
-      let routes = this.reactRoutes;
 
       parentNames.forEach(parentName => {
         const finalRoute = routes.find(route => route.id === parentName);
@@ -131,9 +130,9 @@ class CreateRouter {
       });
       removeElement(routes, matched.name);
     } else {
-      this.reactRoutes = this.reactRoutes.filter(route => route.id !== matched.record.name);
+      routes = routes.filter(route => route.id !== matched.record.name);
     }
-    this.#changeRoutes();
+    this.reactRouter._internalSetRoutes(routes);
     this.matcher.removeRoute(name);
   }
 

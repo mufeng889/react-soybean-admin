@@ -32,6 +32,7 @@ const UserOperateDrawer: FC<Props> = ({ open, closeDrawer, submitted, operateTyp
 
   const onClose = () => {
     closeDrawer();
+    form.resetFields();
   };
 
   async function getRoleOptions() {
@@ -60,7 +61,6 @@ const UserOperateDrawer: FC<Props> = ({ open, closeDrawer, submitted, operateTyp
 
   useUpdateEffect(() => {
     if (open) {
-      form.resetFields();
       getRoleOptions();
     }
   }, [open]);

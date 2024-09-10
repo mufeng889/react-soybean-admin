@@ -18,7 +18,7 @@ export function useLogin() {
     const userName = dispatch(getUerName());
 
     if (userName) {
-      dispatch(initAuthRoute());
+      await dispatch(initAuthRoute());
       await redirectFromLogin(redirect);
       window.$notification?.success({
         message: t('page.login.common.loginSuccess'),

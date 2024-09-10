@@ -1,10 +1,12 @@
-import type { ElegantConstRoute, LastLevelRouteKey } from '@elegant-router/types';
+import type { CustomRoute, ElegantConstRoute, LastLevelRouteKey } from '@elegant-router/types';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createStaticRoutes } from '@/router/routes';
-import { fetchGetConstantRoutes } from '@/service/api';
+import { fetchGetConstantRoutes, fetchGetUserRoutes } from '@/service/api';
 import { router } from '@/router';
 import { isStaticSuper, selectUserInfo } from '@/store/slice/auth';
 import { initHomeTab } from '@/store/slice/tab';
+import { getRoutePath } from '@/router/elegant/transform';
+import { ROOT_ROUTE } from '@/router/routes/builtin';
 import type { AppThunk } from '../../index';
 import { createAppSlice } from '../../createAppSlice';
 import { filterAuthRoutesByRoles, sortRoutesByOrder } from './shared';
@@ -86,13 +88,15 @@ export const {
   setConstantRoutes,
   setIsInitAuthRoute,
   resetRoute,
-  setSortRoutes
+  setSortRoutes,
+  setRouteHome
 } = routeSlice.actions;
 
 export const { getAuthRoutes, getSortRoutes, getIsInitConstantRoute, getConstantRoutes, getAllRoutes, getRouteHome } =
   routeSlice.selectors;
 
 const authRouteMode = import.meta.env.VITE_AUTH_ROUTE_MODE;
+const constantRouteMode = import.meta.env.VITE_CONSTANT_ROUTE_MODE;
 
 const handleConstantOrAuthRoutes =
   (mode: 'constant' | 'auth'): AppThunk =>
@@ -116,7 +120,7 @@ const handleConstantOrAuthRoutes =
 export const initConstantRoute = (): AppThunk => async dispatch => {
   const staticRoute = createStaticRoutes();
 
-  if (authRouteMode === 'static') {
+  if (constantRouteMode === 'static') {
     dispatch(setConstantRoutes(staticRoute.constantRoutes));
   } else {
     const { data, error } = await fetchGetConstantRoutes();
@@ -139,7 +143,6 @@ const initStaticAuthRoute = (): AppThunk => (dispatch, getState) => {
     dispatch(setAuthRoutes(staticAuthRoutes));
   } else {
     const userInfo = selectUserInfo(getState());
-
     const filteredAuthRoutes = filterAuthRoutesByRoles(staticAuthRoutes, userInfo.roles);
     dispatch(setAuthRoutes(filteredAuthRoutes));
   }
@@ -148,9 +151,39 @@ const initStaticAuthRoute = (): AppThunk => (dispatch, getState) => {
   dispatch(setIsInitAuthRoute(true));
 };
 
-export const initAuthRoute = (): AppThunk => (dispatch, getState) => {
+export const resetRouteStore = (): AppThunk => dispatch => {
+  router.resetRoute();
+  dispatch(resetRoute());
+  dispatch(initConstantRoute());
+};
+
+/** Init dynamic auth route */
+const initDynamicAuthRoute = (): AppThunk => async dispatch => {
+  const { data, error } = await fetchGetUserRoutes();
+
+  if (!error) {
+    const { routes, home } = data;
+
+    dispatch(setAuthRoutes(routes));
+
+    dispatch(handleConstantOrAuthRoutes('auth'));
+
+    dispatch(setRouteHome(home));
+
+    handleUpdateRootRouteRedirect(home);
+
+    setIsInitAuthRoute(true);
+  } else {
+    // if fetch user routes failed, reset store
+    // authStore.resetStore();
+  }
+};
+
+export const initAuthRoute = (): AppThunk => async (dispatch, getState) => {
   if (authRouteMode === 'static') {
     dispatch(initStaticAuthRoute());
+  } else {
+    await dispatch(initDynamicAuthRoute());
   }
   const routeHomeName = getRouteHome(getState());
 
@@ -159,8 +192,19 @@ export const initAuthRoute = (): AppThunk => (dispatch, getState) => {
   if (homeRoute) dispatch(initHomeTab({ route: homeRoute, homeRouteName: routeHomeName as LastLevelRouteKey }));
 };
 
-export const resetRouteStore = (): AppThunk => dispatch => {
-  router.resetRoute();
-  dispatch(resetRoute());
-  dispatch(initConstantRoute());
-};
+/**
+ * Update root route redirect when auth route mode is dynamic
+ *
+ * @param redirectKey Redirect route key
+ */
+function handleUpdateRootRouteRedirect(redirectKey: LastLevelRouteKey) {
+  const redirect = getRoutePath(redirectKey);
+
+  if (redirect) {
+    const rootRoute: CustomRoute = { ...ROOT_ROUTE, redirect };
+
+    router.removeRoute(rootRoute.name);
+
+    router.addReactRoutes([rootRoute]);
+  }
+}

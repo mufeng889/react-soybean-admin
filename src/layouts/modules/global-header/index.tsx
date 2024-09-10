@@ -10,29 +10,53 @@ import ThemeButton from './components/ThemeButton';
 import UserAvatar from './components/UserAvatar';
 
 interface Props {
-  /** Whether to show the logo */
-  showLogo?: App.Global.HeaderProps['showLogo'];
-  /** Whether to show the menu toggler */
-  showMenuToggler?: App.Global.HeaderProps['showMenuToggler'];
-  /** Whether to show the menu */
-  showMenu?: App.Global.HeaderProps['showMenu'];
   isMobile: boolean;
-  settings: App.Theme.ThemeSetting;
+  mode: UnionKey.ThemeLayoutMode;
+  siderWidth: number;
+  reverse?: boolean;
 }
 
-const GlobalHeader: FC<Props> = memo(({ showLogo, showMenuToggler, showMenu, isMobile, settings }) => {
+const HEADER_PROPS_CONFIG: Record<UnionKey.ThemeLayoutMode, App.Global.HeaderProps> = {
+  vertical: {
+    showLogo: false,
+    showMenu: false,
+    showMenuToggler: true
+  },
+  'vertical-mix': {
+    showLogo: false,
+    showMenu: false,
+    showMenuToggler: false
+  },
+  horizontal: {
+    showLogo: true,
+    showMenu: true,
+    showMenuToggler: false
+  },
+  'horizontal-mix': {
+    showLogo: true,
+    showMenu: true,
+    showMenuToggler: false
+  }
+};
+
+const GlobalHeader: FC<Props> = memo(({ mode, isMobile, siderWidth, reverse }) => {
   const [isFullscreen, { toggleFullscreen }] = useFullscreen(document.body);
+
+  const { showLogo, showMenu, showMenuToggler } = HEADER_PROPS_CONFIG[mode];
+
+  const showToggler = reverse ? true : showMenuToggler;
 
   return (
     <DarkModeContainer className="h-full flex-y-center px-12px shadow-header">
       {showLogo && (
         <GlobalLogo
           className="h-full"
-          style={{ width: `${settings.sider.width}px` }}
+          style={{ width: `${siderWidth}px` }}
         />
       )}
+      <div>{reverse ? true : showMenuToggler}</div>
 
-      {showMenuToggler && <MenuToggler />}
+      {showToggler && <MenuToggler />}
 
       <div
         id={GLOBAL_HEADER_MENU_ID}
