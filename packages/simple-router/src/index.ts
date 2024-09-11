@@ -1,15 +1,11 @@
-import CreateRouter from './router';
-
+import { createRouter } from './router';
 import { useRouter } from './hooks/useRouter';
+import RouterProvider from './Component';
 import type { RouteRecordNormalized } from './matcher/types';
 
-export default CreateRouter;
-
-export { useRouter };
+export { useRouter, createRouter, RouterProvider };
 
 export type { RouteRecordNormalized };
-
-export type { CreateRouter as Router };
 
 export type {
   LocationQueryValueRaw,

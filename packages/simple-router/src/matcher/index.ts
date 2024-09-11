@@ -27,6 +27,7 @@ class CreateRouterMatcher {
     this.initializeRoutes();
     this.removeRoute = this.removeRoute.bind(this);
   }
+
   /** - Initializes the routes by adding each route from the initial routes array. */
   initializeRoutes() {
     this.initRoutes.forEach(route => this.addRoute(route));
@@ -87,7 +88,7 @@ class CreateRouterMatcher {
       // Avoid adding a record that doesn't display anything. This allows passing through records without a component to
       // not be reached and pass through the catch all route
 
-      if ((matcher.record.component && Object.keys(matcher.record.component).length) || matcher.record.name) {
+      if (matcher.record.name) {
         this.insertMatcher(matcher);
       }
     }
@@ -125,13 +126,13 @@ class CreateRouterMatcher {
   getRecordMatcher(name: string) {
     return this.matcherMap.get(name);
   }
+
   resolve(location: RouteLocationNamedRaw | Location, currentLocation: RouteLocationNamedRaw) {
     let matcher: RouteRecordRaw | undefined;
     let query: Record<string, any> = {};
     let path: string = '';
     let name: string | undefined;
     let fullPath: string = '';
-    let component: string | undefined;
 
     if ('name' in location) {
       matcher = this.matcherMap.get(location.name);
@@ -148,7 +149,6 @@ class CreateRouterMatcher {
 
       fullPath += queryParams ? `?${queryParams}` : '';
       path = matcher.record.path;
-      component = matcher.record.component;
     } else if (location.pathname) {
       // no need to resolve the path with the matcher as it was provided
       // this also allows the user to control the encoding
@@ -165,7 +165,6 @@ class CreateRouterMatcher {
       if (matcher) {
         name = matcher.record.name;
         fullPath = location.pathname + location.search;
-        component = matcher.record.component;
       }
       // location is a relative path
     } else {
@@ -186,13 +185,13 @@ class CreateRouterMatcher {
       matched.unshift(parentMatcher.record);
       parentMatcher = parentMatcher.parent;
     }
+
     return {
       fullPath,
-      state: location.state,
+      state: location?.state || null,
       name,
       path,
       hash: location.hash,
-      component,
       redirect: matcher.record.redirect,
       matched,
       query,

@@ -1,5 +1,6 @@
 import { useUpdateEffect } from 'ahooks';
 import type { WatermarkProps } from 'antd';
+import { RouterProvider } from '@sa/simple-router';
 import { localStg } from '@/utils/storage';
 import { getLocale } from '@/store/slice/app';
 import { getAntdTheme, setupThemeVarsToHtml, toggleCssDarkMode } from '@/store/slice/theme/shared';
@@ -58,7 +59,10 @@ const App = () => {
           className="h-full"
           {...watermarkProps}
         >
-          {router.CustomRouterProvider(<GlobalLoading />)}
+          <RouterProvider
+            fallback={<GlobalLoading />}
+            router={router}
+          />
         </AWatermark>
       </AppProvider>
     </AConfigProvider>

@@ -41,14 +41,12 @@ export function normalizeRouteRecord(record: ElegantConstRoute): RouteRecordNorm
     redirect: record.redirect || (record.children && record.children[0].path),
     path: record.path || '',
     name: record.name,
-
     meta: record.meta || {},
     children:
       record.children?.map(child => {
         child.redirect ||= child.children && child.children[0].path;
         return child;
-      }) || [],
-    component: record.component
+      }) || []
   };
 }
 
@@ -67,6 +65,7 @@ export function checkChildMissingNameWithEmptyPath(mainNormalizedRecord: RouteRe
     );
   }
 }
+
 export function getQueryParams(search: string): LocationQuery {
   const params: LocationQuery = {};
   const queryParams = new URLSearchParams(search);

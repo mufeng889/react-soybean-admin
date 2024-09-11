@@ -49,7 +49,7 @@ export function useRouterPush() {
 
     const query: Record<string, any> = {};
 
-    meta?.query?.forEach(item => {
+    meta?.query?.forEach((item: { key: string | number; value: any }) => {
       query[item.key] = item.value;
     });
 

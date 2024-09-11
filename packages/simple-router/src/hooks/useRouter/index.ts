@@ -1,8 +1,6 @@
 import { createContext, useContext } from 'react';
 
-import type Router from '../../router';
-
-export const RouterContext = createContext<Router>({} as Router);
+export const RouterContext = createContext<any>({});
 export function useRouter() {
   const router = useContext(RouterContext);
   if (!router) {
