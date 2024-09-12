@@ -3,12 +3,10 @@ import type { SegmentedOptions } from 'antd/es/segmented';
 import { CSSTransition } from 'react-transition-group';
 import { themeSchemaRecord } from '@/constants/app';
 import {
-  getDarkMode,
   getThemeSettings,
   setColourWeakness,
   setGrayscale,
   setIsOnlyExpandCurrentParentMenu,
-  setSiderInverted,
   setThemeScheme
 } from '@/store/slice/theme';
 import SettingItem from '../components/SettingItem';
@@ -38,22 +36,17 @@ const OPTIONS: SegmentedOptions = Object.keys(themeSchemaRecord).map(item => {
 const DarkMode = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const nodeRef = useRef(null);
+
   const twoNodeRef = useRef(null);
-  const darkMode = useAppSelector(getDarkMode);
+
   const themeSettings = useAppSelector(getThemeSettings);
 
   const isVertical = themeSettings.layout.mode.includes('vertical');
-
-  const showSiderInverted = !darkMode && isVertical;
 
   function handleSegmentChange(value: string | number) {
     dispatch(setThemeScheme(value as UnionKey.ThemeScheme));
   }
 
-  function toggleSiderInverted(checked: boolean) {
-    dispatch(setSiderInverted(checked));
-  }
   function handleGrayscaleChange(value: boolean) {
     dispatch(setGrayscale(value));
   }
@@ -75,21 +68,7 @@ const DarkMode = () => {
           onChange={handleSegmentChange}
         ></Segmented>
       </div>
-      <CSSTransition
-        timeout={300}
-        in={showSiderInverted}
-        classNames="sider-inverted"
-        nodeRef={nodeRef}
-      >
-        <div ref={nodeRef}>
-          <SettingItem label={t('theme.sider.inverted')}>
-            <Switch
-              defaultChecked={themeSettings.sider.inverted}
-              onChange={toggleSiderInverted}
-            />
-          </SettingItem>
-        </div>
-      </CSSTransition>
+
       <SettingItem label={t('theme.grayscale')}>
         <Switch
           defaultChecked={themeSettings.grayscale}
