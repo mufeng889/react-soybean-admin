@@ -2,7 +2,7 @@ import { createBrowserRouter, createHashRouter, createMemoryRouter } from 'react
 import type { Location, RouteObject } from 'react-router-dom';
 import type { ElegantConstRoute } from '@ohh-889/react-auto-route';
 import type { BlockerFunction, RouterState } from '@remix-run/router';
-import type { RouteLocationNamedRaw, RouteLocationNormalizedLoaded } from './types';
+import type { AfterEach, BeforeEach, Init, RouteLocationNamedRaw, RouteLocationNormalizedLoaded } from './types';
 import CreateRouterMatcher from './matcher';
 import { cleanParams, findParentNames, getFullPath, removeElement } from './utils/auxi';
 import { START_LOCATION_NORMALIZED } from './location';
@@ -18,18 +18,18 @@ const historyCreatorMap = {
 
 type HistoryCreator = typeof historyCreatorMap;
 
-type Mode = keyof HistoryCreator;
+export type Mode = keyof HistoryCreator;
 
-type Options = Parameters<HistoryCreator[Mode]>[1];
+export type Options = Parameters<HistoryCreator[Mode]>[1];
 
 export interface RouterOptions {
   mode: Mode;
   initRoutes: ElegantConstRoute[];
   opt: Options;
   getReactRoutes: (route: ElegantConstRoute) => RouteObject;
-  init: () => Promise<void>;
-  afterEach: any;
-  beforeEach: any;
+  init: Init;
+  afterEach: AfterEach;
+  beforeEach: BeforeEach;
 }
 
 export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes, init, afterEach }: RouterOptions) {
@@ -43,12 +43,11 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
 
   let currentRoute = START_LOCATION_NORMALIZED;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let listeners: any;
-
-  reactRouter.subscribe(afterRouteChange);
+  let listeners: (() => void)[] = [];
 
   reactRouter.getBlocker('beforeGuard', onBeforeRouteChange);
+
+  reactRouter.subscribe(afterRouteChange);
 
   /**
    * Adds React routes to the router.
@@ -91,8 +90,6 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
       return true;
     }
 
-    if (nextLocation.state === 'reload') return false;
-
     if (to.redirect) {
       if (to.redirect.startsWith('/')) {
         if (to.redirect === currentRoute.fullPath) {
@@ -107,10 +104,10 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
       }
     }
 
-    return beforeEach(to, currentRoute, next);
+    return beforeEach(to, currentRoute, blockerOrJump);
   }
 
-  function next(param?: boolean | string | Location | RouteLocationNamedRaw) {
+  function blockerOrJump(param?: undefined | null | boolean | string | Location | RouteLocationNamedRaw) {
     if (!param) return false;
     if (typeof param === 'string') {
       reactRouter.navigate(param);
@@ -207,10 +204,14 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
 
   async function initReady(): Promise<boolean> {
     return new Promise((resolved, reject) => {
-      init()
-        .then(() => {
-          reactRouter.initialize();
-          resolved(true);
+      init(resolve(reactRouter.state.location), blockerOrJump)
+        .then(res => {
+          if (!res) {
+            reactRouter.initialize();
+            resolved(true);
+          } else {
+            reject(new Error('init failed'));
+          }
         })
         .catch(e => {
           reject(e);
@@ -279,12 +280,13 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
   function resetRoute() {
     // Resets the route matcher so it can begin matching new routes again.
     matcher.resetMatcher();
+    reactRouter._internalSetRoutes(initReactRoutes);
   }
 
   function subscribe(listener: () => void) {
-    listeners = [listener];
+    listeners = [...listeners, listener];
     return () => {
-      listeners = [];
+      listeners = listeners.filter(l => l !== listener);
     };
   }
 
@@ -328,3 +330,5 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
 
   return router;
 }
+
+export type Router = ReturnType<typeof createRouter>;

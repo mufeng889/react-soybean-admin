@@ -1,9 +1,8 @@
 import type { ElegantConstRoute } from '@ohh-889/react-auto-route';
-import type { RouteObject } from 'react-router-dom';
+import type { Location, RouteObject } from 'react-router-dom';
 import type { Router as RemixRouter } from '@remix-run/router';
 import type { RouteRecordNormalized } from '../matcher/types';
 import type { RouteLocationNormalizedLoaded } from './route';
-
 export interface RouterOptions {
   initRoutes: ElegantConstRoute[];
   history: 'hash' | 'history' | 'memory';
@@ -36,8 +35,13 @@ export interface Router {
 export type BeforeEach = (
   to: RouteLocationNormalizedLoaded,
   from: RouteLocationNormalizedLoaded,
-  next: (param?: boolean | undefined | string) => boolean
+  next: (param?: boolean | undefined | null | string | Location | RouteLocationNamedRaw) => boolean
 ) => boolean;
+
+export type Init = (
+  current: RouteLocationNormalizedLoaded,
+  next: (param?: boolean | undefined | null | string | Location | RouteLocationNamedRaw) => boolean
+) => Promise<boolean>;
 
 export type AfterEach = (to: RouteLocationNormalizedLoaded, from: RouteLocationNormalizedLoaded) => void;
 
