@@ -1,7 +1,13 @@
 import { RouterProvider as Provider } from 'react-router-dom';
 import { RouterContext } from './hooks/useRouter';
+import type { Router } from './router';
 
-const RouterProvider = ({ router, fallback }: { router: any; fallback?: React.ReactNode }) => {
+export type RouterProviderProps = {
+  router: Router;
+  fallback?: React.ReactNode;
+};
+
+const RouterProvider = ({ router, fallback }: RouterProviderProps) => {
   return (
     <RouterContext.Provider value={router}>
       <Provider
