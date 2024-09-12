@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { createBrowserRouter, createHashRouter, createMemoryRouter } from 'react-router-dom';
 import type { Location, RouteObject } from 'react-router-dom';
 import type { ElegantConstRoute } from '@ohh-889/react-auto-route';

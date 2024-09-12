@@ -107,16 +107,15 @@ export const selectAllTabs = createSelector([getTabs, getHomeTab], (tabs, homeTa
  *
  * @param currentRoute Current route
  */
-export const initTabStore =
-  (routeNames: string[]): AppThunk =>
-  (dispatch, getState) => {
-    const storageTabs = localStg.get('globalTabs');
-    const themeSettings = getThemeSettings(getState());
-    if (themeSettings.tab.cache && storageTabs) {
-      const tabs = extractTabsByAllRoutes(routeNames, storageTabs);
-      dispatch(setTabs(tabs));
-    }
-  };
+export const initTabStore = (): AppThunk => (dispatch, getState) => {
+  const storageTabs = localStg.get('globalTabs');
+  const themeSettings = getThemeSettings(getState());
+
+  if (themeSettings.tab.cache && storageTabs) {
+    const tabs = extractTabsByAllRoutes(router.getAllRouteNames(), storageTabs);
+    dispatch(setTabs(tabs));
+  }
+};
 
 /**
  * Remove tab
@@ -201,6 +200,7 @@ export const cacheTabs = (): AppThunk => (_, getState) => {
   const themeSettings = getThemeSettings(getState());
   if (!themeSettings.tab.cache) return;
   const tabs = getTabs(getState());
+
   localStg.set('globalTabs', tabs);
 };
 

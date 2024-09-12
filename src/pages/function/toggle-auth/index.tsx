@@ -92,9 +92,7 @@ export function Component() {
 
     await toLogin({ userName: account.userName, password: account.password }, false);
 
-    const routeNames = router.getAllRouteNames();
-
-    dispatch(initTabStore(routeNames));
+    dispatch(initTabStore());
 
     endLoading();
 

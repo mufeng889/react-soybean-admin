@@ -15,6 +15,8 @@ interface RouterPushOptions {
 export function useRouterPush() {
   const router = useRouter();
 
+  const route = useRoute();
+
   const [searchParams] = useSearchParams();
 
   const routerPush = router.push;
@@ -77,7 +79,7 @@ export function useRouterPush() {
 
     const options: RouterPushOptions = {};
 
-    const redirect = redirectUrl || router.currentRoute.fullPath;
+    const redirect = redirectUrl || route.fullPath;
 
     options.query = {
       redirect
@@ -92,7 +94,7 @@ export function useRouterPush() {
    * @param module
    */
   async function toggleLoginModule(module: UnionKey.LoginModule) {
-    const query = router.currentRoute.query as Record<string, string>;
+    const query = route.query as Record<string, string>;
 
     return routerPushByKey(`login_${module}`, { query });
   }

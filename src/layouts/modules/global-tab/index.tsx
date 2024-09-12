@@ -5,7 +5,7 @@ import { useUpdateEffect } from 'ahooks';
 import DarkModeContainer from '@/components/stateless/common/DarkModeContainer';
 import BetterScroll from '@/components/stateless/custom/BetterScroll';
 import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
-import { addTabByRoute, getActiveTabId, isTabRetain, removeTab, selectAllTabs } from '@/store/slice/tab';
+import { addTabByRoute, getActiveTabId, initTabStore, isTabRetain, removeTab, selectAllTabs } from '@/store/slice/tab';
 import {
   getFullContent,
   getIsMobile,
@@ -125,6 +125,10 @@ const GlobalTab = memo(() => {
       });
     }
   });
+
+  useLayoutEffect(() => {
+    dispatch(initTabStore());
+  }, [dispatch]);
 
   return (
     <DarkModeContainer className="size-full flex-y-center px-16px shadow-tab">
