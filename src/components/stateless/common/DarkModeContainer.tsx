@@ -8,7 +8,7 @@ const DarkModeContainer: FC<Props> = memo(({ children, inverted, className, ...r
   return (
     <div
       className={ClassNames(
-        'bg-container text-base_text transition-300',
+        'bg-container text-base-text transition-300',
         { 'bg-inverted text-#1f1f1f': inverted },
         className
       )}

@@ -9,7 +9,7 @@ const SettingItem: FC<Props> = memo(({ label, children, suffix }) => {
   return (
     <div className="w-full flex-y-center justify-between">
       <div>
-        <span className="pr-8px text-base_text">{label}</span>
+        <span className="pr-8px text-base-text">{label}</span>
         {suffix}
       </div>
       {children}

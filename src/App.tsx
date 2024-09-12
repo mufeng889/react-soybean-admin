@@ -26,10 +26,12 @@ function useTheme() {
   const darkMode = useAppSelector(getDarkMode);
   const antdTheme = getAntdTheme(colors, darkMode);
 
+  const themeSettings = useAppSelector(getThemeSettings);
+
   useEffect(() => {
-    setupThemeVarsToHtml(colors);
+    setupThemeVarsToHtml(colors, themeSettings.tokens, themeSettings.recommendColor);
     localStg.set('themeColor', colors.primary);
-  }, [colors]);
+  }, [colors, themeSettings]);
 
   useUpdateEffect(() => {
     toggleCssDarkMode(darkMode);
@@ -37,15 +39,13 @@ function useTheme() {
 
   console.info(`%c${info}`, `color: ${colors.primary}`);
 
-  return antdTheme;
+  return { antdTheme, themeSettings };
 }
 
 const App = () => {
   const locale = useAppSelector(getLocale);
 
-  const themeSettings = useAppSelector(getThemeSettings);
-
-  const antdTheme = useTheme();
+  const { antdTheme, themeSettings } = useTheme();
 
   return (
     <AConfigProvider
