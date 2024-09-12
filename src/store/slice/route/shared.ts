@@ -1,4 +1,4 @@
-import type { ElegantConstRoute } from '@elegant-router/types';
+import type { ElegantConstRoute, RouteKey } from '@elegant-router/types';
 
 /**
  * Filter auth routes by roles
@@ -57,4 +57,34 @@ function sortRouteByOrder(route: ElegantConstRoute) {
  */
 export function sortRoutesByOrder(routes: ElegantConstRoute[]) {
   return routes.map(sortRouteByOrder).sort((a, b) => (Number(a.meta?.order) || 0) - (Number(b.meta?.order) || 0));
+}
+
+/**
+ * Is route exist by route name
+ *
+ * @param routeName
+ * @param routes
+ */
+export function isRouteExistByRouteName(routeName: RouteKey, routes: ElegantConstRoute[]) {
+  return routes.some(route => recursiveGetIsRouteExistByRouteName(route, routeName));
+}
+
+/**
+ * Recursive get is route exist by route name
+ *
+ * @param route
+ * @param routeName
+ */
+function recursiveGetIsRouteExistByRouteName(route: ElegantConstRoute, routeName: RouteKey) {
+  let isExist = route.name === routeName;
+
+  if (isExist) {
+    return true;
+  }
+
+  if (route.children && route.children.length) {
+    isExist = route.children.some(item => recursiveGetIsRouteExistByRouteName(item, routeName));
+  }
+
+  return isExist;
 }

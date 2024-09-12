@@ -5,7 +5,7 @@ declare namespace CommonType {
     /** The condition */
     condition: boolean;
     /** If the condition is true, then call the action function */
-    callback: () => void;
+    callback: () => boolean;
   }
 
   /**

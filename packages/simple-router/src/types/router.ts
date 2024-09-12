@@ -32,16 +32,17 @@ export interface Router {
   removeRoute: (name: string) => void;
 }
 
+export type NavigationGuardNext = (
+  param?: boolean | undefined | null | string | Location | RouteLocationNamedRaw
+) => boolean;
+
 export type BeforeEach = (
   to: RouteLocationNormalizedLoaded,
   from: RouteLocationNormalizedLoaded,
-  next: (param?: boolean | undefined | null | string | Location | RouteLocationNamedRaw) => boolean
+  blockerOrJump: NavigationGuardNext
 ) => boolean;
 
-export type Init = (
-  current: RouteLocationNormalizedLoaded,
-  next: (param?: boolean | undefined | null | string | Location | RouteLocationNamedRaw) => boolean
-) => Promise<boolean>;
+export type Init = (current: RouteLocationNormalizedLoaded, blockerOrJump: NavigationGuardNext) => Promise<boolean>;
 
 export type AfterEach = (to: RouteLocationNormalizedLoaded, from: RouteLocationNormalizedLoaded) => void;
 

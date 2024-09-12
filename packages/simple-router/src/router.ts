@@ -70,16 +70,18 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
 
     const flattenRoutes = routes.flat();
 
-    const reactRoutes = flattenRoutes.map(route => {
-      const match = matcher.getRecordMatcher(route.name);
-      if (match) return null;
-      // Add route
-      addRoute(route);
-      // Transform to react-router route
-      const reactRoute = getReactRoutes(route);
+    const reactRoutes = flattenRoutes
+      .map(route => {
+        const match = matcher.getRecordMatcher(route.name);
+        if (match) return null;
+        // Add route
+        addRoute(route);
+        // Transform to react-router route
+        const reactRoute = getReactRoutes(route);
 
-      return reactRoute;
-    });
+        return reactRoute;
+      })
+      .filter(Boolean);
     if (reactRoutes.length < 1) return;
     // Add to react-router's routes
     reactRouter.patchRoutes(parent, reactRoutes as RouteObject[]);
@@ -117,7 +119,8 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
 
     if (typeof param === 'object') {
       const finalRedirectPath = resolve(param);
-      reactRouter.navigate(finalRedirectPath.fullPath);
+
+      reactRouter.navigate(finalRedirectPath.fullPath || finalRedirectPath.path);
     }
 
     return true;
