@@ -17,6 +17,7 @@ declare global {
   const AInput: typeof import('antd')['Input']
   const AMenu: typeof import('antd')['Menu']
   const AModal: typeof import('antd')['Modal']
+  const APopover: typeof import('antd')['Popover']
   const ARow: typeof import('antd')['Row']
   const ASpace: typeof import('antd')['Space']
   const AStatistic: typeof import('antd')['Statistic']

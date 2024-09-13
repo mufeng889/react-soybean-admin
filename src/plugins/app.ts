@@ -16,9 +16,7 @@ export function setupAppVersionNotification() {
 
     const buildTime = await getHtmlBuildTime();
 
-    if (buildTime === BUILD_TIME) {
-      return;
-    }
+    if (buildTime === BUILD_TIME) return;
 
     isShow = true;
 

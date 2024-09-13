@@ -3,7 +3,6 @@ import { Button, Popconfirm, Space } from 'antd';
 import type { SpaceProps } from 'antd';
 import React from 'react';
 import classNames from 'classnames';
-import TableColumnSetting from './TableColumnSetting';
 import DragContent from './DragContent';
 
 interface Props {
@@ -35,17 +34,6 @@ const TableHeaderOperation: FC<Props> = ({
 }) => {
   const { t } = useTranslation();
 
-  function handleAdd() {
-    add();
-  }
-
-  function batchDelete() {
-    onDelete();
-  }
-
-  function handleRefresh() {
-    refresh();
-  }
   return (
     <Space
       align={itemAlign}
@@ -60,13 +48,13 @@ const TableHeaderOperation: FC<Props> = ({
             size="small"
             ghost
             type="primary"
-            onClick={handleAdd}
+            onClick={add}
           >
             {t('common.add')}
           </Button>
           <Popconfirm
             title={t('common.confirmDelete')}
-            onConfirm={batchDelete}
+            onConfirm={onDelete}
           >
             <Button
               icon={<IconIcRoundDelete className="text-icon" />}
@@ -83,18 +71,29 @@ const TableHeaderOperation: FC<Props> = ({
       <Button
         icon={<IconMdiRefresh className={classNames('text-icon', { 'animate-spin': loading })} />}
         size="small"
-        onClick={handleRefresh}
+        onClick={refresh}
       >
         {t('common.refresh')}
       </Button>
-      <TableColumnSetting
+
+      <APopover
+        placement="bottomRight"
+        trigger="click"
         content={
           <DragContent
             setColumnChecks={setColumnChecks}
             columns={columns}
           />
         }
-      />
+      >
+        <Button
+          icon={<IconAntDesignSettingOutlined />}
+          size="small"
+        >
+          {t('common.columnSetting')}
+        </Button>
+      </APopover>
+
       {suffix}
     </Space>
   );
