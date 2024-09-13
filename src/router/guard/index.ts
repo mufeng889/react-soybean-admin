@@ -46,24 +46,18 @@ export const createRouteGuard: BeforeEach = (to, _, blockerOrJump) => {
 
   const isNotFoundRoute = to.name === notFoundRoute;
 
+  const checkRouteExistence = (routeName: RouteKey) => {
+    return routeName && getIsAuthRouteExist(routeName);
+  };
+
   // it is captured by the "not-found" route, then check whether the route exists
   if (isNotFoundRoute) {
-    if (!to.name) {
+    if (!to.name || !checkRouteExistence(to.name as RouteKey)) {
       return blockerOrJump();
     }
-
-    const exist = getIsAuthRouteExist(to.name as RouteKey);
     const noPermissionRoute: RouteKey = '403';
-
-    if (exist) {
-      const location: RouteLocationNamedRaw = {
-        name: noPermissionRoute
-      };
-
-      return blockerOrJump(location);
-    }
-
-    return blockerOrJump();
+    // If the route exists but no permission, redirect to 403
+    return blockerOrJump({ name: noPermissionRoute });
   }
 
   const rootRoute: RouteKey = 'root';
@@ -116,9 +110,10 @@ export const createRouteGuard: BeforeEach = (to, _, blockerOrJump) => {
     }
   ];
 
-  const res = routeSwitches.find(({ condition }) => condition)?.callback || blockerOrJump;
+  // Find the first matching condition and execute its action
+  const executeRouteSwitch = routeSwitches.find(({ condition }) => condition)?.callback || blockerOrJump;
 
-  return res();
+  return executeRouteSwitch();
 };
 
 function handleRouteSwitch(to: RouteLocationNormalizedLoaded, NavigationGuardNext: NavigationGuardNext) {

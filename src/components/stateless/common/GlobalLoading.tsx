@@ -21,7 +21,7 @@ const GlobalLoading = memo(() => {
               <div
                 key={item}
                 className={ClassNames('absolute w-16px h-16px bg-primary rounded-8px animate-pulse ', item)}
-              ></div>
+              />
             );
           })}
         </div>

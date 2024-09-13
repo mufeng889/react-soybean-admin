@@ -25,7 +25,10 @@ export const Component = () => {
   return (
     <>
       <h3 className="text-18px text-primary font-medium">{t('page.login.register.title')}</h3>
-      <Form className="pt-24px">
+      <Form
+        form={form}
+        className="pt-24px"
+      >
         <Form.Item
           name="phone"
           rules={formRules.phone}
