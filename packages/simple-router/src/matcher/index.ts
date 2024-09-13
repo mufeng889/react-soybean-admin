@@ -132,6 +132,7 @@ class CreateRouterMatcher {
     let query: Record<string, any> = {};
     let path: string = '';
     let name: string | undefined;
+    let params: Record<string, any> = {};
     let fullPath: string = '';
 
     if ('name' in location) {
@@ -142,7 +143,7 @@ class CreateRouterMatcher {
       }
 
       name = matcher.record.name;
-      const params = cleanParams(location.params || {});
+      params = cleanParams(location.params || {});
       fullPath = generatePath(matcher.record.path, params);
       query = location.query || {};
       const queryParams = stringifyQuery(query);
@@ -191,6 +192,7 @@ class CreateRouterMatcher {
       state: location?.state || null,
       name,
       path,
+      params,
       hash: location.hash,
       redirect: matcher.record.redirect,
       matched,

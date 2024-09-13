@@ -42,7 +42,7 @@ export type BeforeEach = (
   blockerOrJump: NavigationGuardNext
 ) => boolean;
 
-export type Init = (current: RouteLocationNormalizedLoaded, blockerOrJump: NavigationGuardNext) => Promise<boolean>;
+export type Init = (currentFullPath: string, blockerOrJump: NavigationGuardNext) => Promise<boolean>;
 
 export type AfterEach = (to: RouteLocationNormalizedLoaded, from: RouteLocationNormalizedLoaded) => void;
 

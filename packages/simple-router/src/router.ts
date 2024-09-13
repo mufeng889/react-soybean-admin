@@ -6,8 +6,7 @@ import type { ElegantConstRoute } from '@ohh-889/react-auto-route';
 import type { BlockerFunction, RouterState } from '@remix-run/router';
 import type { AfterEach, BeforeEach, Init, RouteLocationNamedRaw, RouteLocationNormalizedLoaded } from './types';
 import CreateRouterMatcher from './matcher';
-import { cleanParams, findParentNames, getFullPath, removeElement } from './utils/auxi';
-import { START_LOCATION_NORMALIZED } from './location';
+import { cleanParams, findParentNames, getFullPath, removeElement, transformLocationToRoute } from './utils/auxi';
 import type { NavigationFailure } from './error';
 import { ErrorTypes, createRouterError } from './error';
 import { warn } from './warning';
@@ -43,7 +42,7 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
 
   reactRouter.dispose();
 
-  let currentRoute = START_LOCATION_NORMALIZED;
+  let currentRoute = transformLocationToRoute(reactRouter.state.location, reactRouter.state.matches);
 
   let listeners: (() => void)[] = [];
 
@@ -88,7 +87,7 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
   }
 
   function onBeforeRouteChange({ nextLocation }: Parameters<BlockerFunction>[0]) {
-    const to = resolve(nextLocation);
+    const to = resolve(nextLocation, undefined, reactRouter.state.matches.at(-1)?.params);
 
     if (to.fullPath === currentRoute.fullPath) {
       return true;
@@ -153,7 +152,7 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
     if (state.navigation.state === 'idle') {
       const from = currentRoute;
 
-      currentRoute = resolve(state.location);
+      currentRoute = resolve(state.location, undefined, state.matches.at(-1)?.params);
 
       afterEach(currentRoute, from);
     }
@@ -168,9 +167,10 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
    */
   function resolve(
     rawLocation: Location | RouteLocationNamedRaw,
-    currentLocation?: RouteLocationNamedRaw
+    currentLocation?: RouteLocationNamedRaw,
+    params?: Record<string, any> | undefined
   ): RouteLocationNormalizedLoaded {
-    const current = { ...(currentLocation || (currentRoute as RouteLocationNamedRaw)) };
+    const current = { ...(currentLocation as RouteLocationNamedRaw) };
 
     let matcherLocation: Location | RouteLocationNamedRaw;
 
@@ -188,7 +188,9 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
     }
 
     const matchedRoute = matcher.resolve(matcherLocation, current);
-
+    if (params) {
+      matchedRoute.params = params;
+    }
     return {
       ...matchedRoute,
       redirectedFrom: currentRoute
@@ -209,7 +211,7 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
 
   async function initReady(): Promise<boolean> {
     return new Promise((resolved, reject) => {
-      init(resolve(reactRouter.state.location), blockerOrJump)
+      init(currentRoute.fullPath, blockerOrJump)
         .then(res => {
           if (!res) {
             reactRouter.initialize();

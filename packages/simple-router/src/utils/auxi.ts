@@ -1,6 +1,9 @@
 import type { ElegantConstRoute } from '@ohh-889/react-auto-route';
-import type { RouteObject } from 'react-router-dom';
+import type { Location, RouteObject } from 'react-router-dom';
+import type { AgnosticDataRouteMatch } from '@remix-run/router';
 import type { RouteRecordNormalized, RouteRecordRaw } from '../matcher/types';
+import type { RouteLocationNormalizedLoaded } from '../types';
+import { parseQuery } from '../query';
 
 export function cleanParams(params: Record<string, any> | undefined): Record<string, any> {
   if (!params) return {};
@@ -40,4 +43,25 @@ export function removeElement(arr: RouteObject[], name: string | undefined) {
     arr.splice(index, 1);
   }
   return arr;
+}
+
+export function transformLocationToRoute(
+  location: Location,
+  match: AgnosticDataRouteMatch[]
+): RouteLocationNormalizedLoaded {
+  const { hash, pathname, search, state } = location;
+  const lastMatch = match.at(-1);
+
+  return {
+    path: pathname,
+    fullPath: pathname + search + hash,
+    query: parseQuery(search),
+    hash,
+    meta: lastMatch?.route.handle,
+    name: lastMatch?.route.id,
+    params: Object.keys(lastMatch?.params || {}).filter(key => key !== '*'),
+    state,
+    matched: [],
+    redirectedFrom: undefined
+  };
 }

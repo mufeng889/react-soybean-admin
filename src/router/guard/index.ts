@@ -15,13 +15,13 @@ import { getRouteHome, initAuthRoute, initConstantRoute } from '@/store/slice/ro
 import { getRouteName, getRoutePath } from '@/router/elegant/transform';
 import { isStaticSuper, selectUserInfo } from '@/store/slice/auth';
 
-export const init: Init = async (current, blockerOrJump) => {
+export const init: Init = async (currentFullPath, blockerOrJump) => {
   await store.dispatch(initConstantRoute());
   const isLogin = Boolean(localStg.get('token'));
   if (!isLogin) {
     const loginRoute: RouteKey = 'login';
     const routeHome = getRouteHome(store.getState());
-    const query = getRouteQueryOfLoginRoute(current, routeHome as RouteKey);
+    const query = getRouteQueryOfLoginRoute(currentFullPath, routeHome as RouteKey);
 
     const location: RouteLocationNamedRaw = {
       name: loginRoute,
@@ -135,15 +135,13 @@ export const afterEach: AfterEach = to => {
   window.NProgress?.done?.();
 };
 
-function getRouteQueryOfLoginRoute(to: RouteLocationNormalizedLoaded, routeHome: RouteKey) {
-  const loginRoute: RouteKey = 'login';
-  const redirect = to.fullPath;
-  const [redirectPath, redirectQuery] = redirect.split('?');
+function getRouteQueryOfLoginRoute(fullPath: string, routeHome: RouteKey) {
+  const [redirectPath, redirectQuery] = fullPath.split('?');
   const redirectName = getRouteName(redirectPath as RoutePath);
 
   const isRedirectHome = routeHome === redirectName;
 
-  const query: LocationQuery = to.name !== loginRoute && !isRedirectHome ? { redirect } : {};
+  const query: LocationQuery = !isRedirectHome ? { redirect: fullPath } : {};
 
   if (isRedirectHome && redirectQuery) {
     query.redirect = `/?${redirectQuery}`;

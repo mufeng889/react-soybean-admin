@@ -10,6 +10,7 @@ export interface _RouteLocationBase extends Omit<RouteRecordNormalized, 'childre
   hash: string | undefined;
   /** Contains the location we were initially trying to access before ending up on the current location. */
   redirectedFrom: _RouteLocationBase | undefined;
+  params: Record<string, any>;
 }
 
 export interface RouteLocationNormalizedLoaded extends _RouteLocationBase {
