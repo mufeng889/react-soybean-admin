@@ -1,13 +1,19 @@
 import { useCreation, useLatest, useMemoizedFn, useMount, useUnmount, useUpdate } from 'ahooks';
+import type { FlatResponseData } from '@sa/axios';
 import { isDev } from './utils';
 import Fetch from './Fetch';
 import type { Options, Plugin, Result, Service } from './type';
 
-function useRequestImplement<TData, TParams extends any[]>(
+function useRequestImplement<
+  TData extends FlatResponseData<T, ResponseData>,
+  TParams extends any[],
+  T = any,
+  ResponseData = any
+>(
   service: Service<TData, TParams>,
   options: Options<TData, TParams> = {},
   plugins: Plugin<TData, TParams>[] = []
-) {
+): Result<TData, TParams> {
   const { manual = false, ready = true, ...rest } = options;
 
   if (isDev) {

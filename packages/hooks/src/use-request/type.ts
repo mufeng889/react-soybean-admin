@@ -1,4 +1,6 @@
 import type { DependencyList } from 'react';
+import type { FlatResponseData } from '@sa/axios';
+import type { AxiosError } from 'axios';
 import type Fetch from './Fetch';
 import type { CachedData } from './utils/cache';
 
@@ -7,11 +9,12 @@ export type Subscribe = () => void;
 
 // for Fetch
 
-export interface FetchState<TData, TParams extends any[]> {
+export interface FetchState<TData extends FlatResponseData, TParams extends any[]> {
   loading: boolean;
   params?: TParams;
-  data?: TData;
-  error?: Error;
+  response: TData['response'];
+  data: null | TData['data'];
+  error: AxiosError | null;
 }
 
 export interface PluginReturn<TData, TParams extends any[]> {
@@ -19,7 +22,7 @@ export interface PluginReturn<TData, TParams extends any[]> {
     | ({
         stopNow?: boolean;
         returnNow?: boolean;
-      } & Partial<FetchState<TData, TParams>>)
+      } & Partial<FetchState<FlatResponseData, TParams>>)
     | null;
 
   onRequest?: (
@@ -30,25 +33,21 @@ export interface PluginReturn<TData, TParams extends any[]> {
   };
 
   onSuccess?: (data: TData, params: TParams) => void;
-  onError?: (e: Error, params: TParams) => void;
-  onFinally?: (params: TParams, data?: TData, e?: Error) => void;
+  onError?: (e: AxiosError, params: TParams) => void;
+  onFinally?: (params: TParams, data?: TData, e?: AxiosError) => void;
   onCancel?: () => void;
   onMutate?: (data: TData) => void;
 }
 
 // for useRequestImplement
 
-export interface Options<TData, TParams extends any[]> {
+export interface Options<TData extends FlatResponseData, TParams extends any[]> {
   manual?: boolean;
-
   onBefore?: (params: TParams) => void;
-  onSuccess?: (data: TData, params: TParams) => void;
+  onSuccess?: (data: TData['data'], params: TParams) => void;
   onError?: (e: Error, params: TParams) => void;
-  // formatResult?: (res: any) => TData;
-  onFinally?: (params: TParams, data?: TData, e?: Error) => void;
-
+  onFinally?: (params: TParams, data: TData['data'] | null, e: Error | null) => void;
   defaultParams?: TParams;
-
   // refreshDeps
   refreshDeps?: DependencyList;
   refreshDepsAction?: () => void;
@@ -93,23 +92,12 @@ export interface Options<TData, TParams extends any[]> {
   // [key: string]: any;
 }
 
-export type Plugin<TData, TParams extends any[]> = {
+export type Plugin<TData extends FlatResponseData, TParams extends any[]> = {
   (fetchInstance: Fetch<TData, TParams>, options: Options<TData, TParams>): PluginReturn<TData, TParams>;
   onInit?: (options: Options<TData, TParams>) => Partial<FetchState<TData, TParams>>;
 };
 
-// for index
-// export type OptionsWithoutFormat<TData, TParams extends any[]> = Omit<Options<TData, TParams>, 'formatResult'>;
-
-// export interface OptionsWithFormat<TData, TParams extends any[], TFormated, TTFormated extends TFormated = any> extends Omit<Options<TTFormated, TParams>, 'formatResult'> {
-//   formatResult: (res: TData) => TFormated;
-// };
-
-export interface Result<TData, TParams extends any[]> {
-  loading: boolean;
-  data?: TData;
-  error?: Error;
-  params: TParams | [];
+export interface Result<TData extends FlatResponseData, TParams extends any[]> extends FetchState<TData, TParams> {
   cancel: Fetch<TData, TParams>['cancel'];
   refresh: Fetch<TData, TParams>['refresh'];
   refreshAsync: Fetch<TData, TParams>['refreshAsync'];
