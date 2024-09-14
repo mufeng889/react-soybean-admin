@@ -10,6 +10,11 @@ html {
   overflow-x: hidden;
 }
 
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
+}
+
 html.grayscale {
   filter: grayscale(100%);
 }

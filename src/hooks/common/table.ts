@@ -216,7 +216,7 @@ export function useTableScroll(scrollX: number = 702) {
 
   const height = size?.height;
 
-  const result = height && height < 600 ? height - 184 : undefined;
+  const result = height && height < 600 ? height - 160 : undefined;
 
   const scrollConfig = {
     y: result,

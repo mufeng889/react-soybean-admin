@@ -21,6 +21,8 @@ export function Component() {
 
   const { tableWrapperRef, scrollConfig } = useTableScroll();
 
+  const nav = useNavigate();
+
   const { columnChecks, data, reset, form, setColumnChecks, tableProps, run } = useTable(
     {
       apiFn: fetchGetUserList,
@@ -106,7 +108,7 @@ export function Component() {
           key: 'operate',
           title: t('common.operate'),
           align: 'center',
-          width: 130,
+          width: 195,
           render: (_, record) => (
             <div className="flex-center gap-8px">
               <AButton
@@ -116,6 +118,12 @@ export function Component() {
                 onClick={() => edit(record.id)}
               >
                 {t('common.edit')}
+              </AButton>
+              <AButton
+                size="small"
+                onClick={() => nav(`/manage/user-detail/${record.id}`)}
+              >
+                详情
               </AButton>
               <APopconfirm
                 title={t('common.confirmDelete')}
@@ -167,13 +175,25 @@ export function Component() {
   }
   return (
     <div className="h-full min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
-      <UserSearch
-        search={run}
-        reset={reset}
-        form={form}
+      <ACollapse
+        bordered={false}
+        className="card-wrapper"
+        items={[
+          {
+            key: '1',
+            label: t('common.search'),
+            children: (
+              <UserSearch
+                search={run}
+                reset={reset}
+                form={form}
+              />
+            )
+          }
+        ]}
       />
+
       <ACard
-        styles={{ body: { flex: 1, overflow: 'hidden' } }}
         ref={tableWrapperRef}
         bordered={false}
         extra={

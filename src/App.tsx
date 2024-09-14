@@ -51,6 +51,7 @@ const App = () => {
     <AConfigProvider
       theme={antdTheme}
       locale={antdLocales[locale]}
+      card={{ styles: { body: { padding: '12px 16px ', flex: 1, overflow: 'hidden' } } }}
       button={{ classNames: { icon: 'align-1px  text-icon' } }}
     >
       <AppProvider>

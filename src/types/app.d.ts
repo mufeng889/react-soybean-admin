@@ -653,6 +653,10 @@ declare namespace App {
                 local: string;
               };
             };
+            userDetail: {
+              explain: string;
+              content: string;
+            };
           };
         };
         form: {

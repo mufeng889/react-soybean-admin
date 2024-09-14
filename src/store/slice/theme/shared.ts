@@ -190,6 +190,10 @@ export function getAntdTheme(colors: App.Theme.ThemeColor, darkMode: boolean) {
       Button: {
         controlHeightSM: 28
       },
+      Collapse: {
+        headerBg: '#fff',
+        contentPadding: '16px 16px 24px 16px'
+      },
       Menu: {
         subMenuItemBg: 'transparent',
         darkSubMenuItemBg: 'transparent',
