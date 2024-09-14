@@ -12,11 +12,13 @@ export function useTable<A extends AntDesign.TableApiFn>(
   paginationConfig?: Omit<TablePaginationConfig, 'total' | 'current' | 'pageSize' | 'onChange'>
 ) {
   const isMobile = useAppSelector(getIsMobile);
+
   const [total, setTotal] = useState<TablePaginationConfig['total']>(0);
 
-  const { apiFn, apiParams, immediate } = config;
+  const { apiFn, apiParams, immediate, rowKey = 'id' } = config;
 
-  const [form] = Form.useForm();
+  const [form] = Form.useForm<AntDesign.AntDesignTableConfig<A>['apiParams']>();
+
   const {
     loading,
     empty,
@@ -111,7 +113,8 @@ export function useTable<A extends AntDesign.TableApiFn>(
 
     if (res) {
       if (isResetCurrent) {
-        updateSearchParams({ current: 1, ...res });
+        const { current = 1, ...rest } = res;
+        updateSearchParams({ current, ...rest });
       } else {
         updateSearchParams(res);
       }
@@ -119,12 +122,16 @@ export function useTable<A extends AntDesign.TableApiFn>(
   }
 
   return {
-    loading,
+    tableProps: {
+      loading,
+      dataSource: data,
+      columns,
+      rowKey,
+      pagination
+    },
     empty,
     data,
-    columns,
     columnChecks,
-    pagination,
     run,
     setColumnChecks,
     searchParams,
@@ -208,7 +215,8 @@ export function useTableScroll(scrollX: number = 702) {
   const size = useSize(tableWrapperRef);
 
   const height = size?.height;
-  const result = height && height < 435 ? height - 184 : undefined;
+
+  const result = height && height < 600 ? height - 184 : undefined;
 
   const scrollConfig = {
     y: result,

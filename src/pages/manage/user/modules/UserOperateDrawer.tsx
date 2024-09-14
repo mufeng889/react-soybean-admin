@@ -1,5 +1,6 @@
 import { Button, Drawer, Flex, Form, Input, Radio, Select } from 'antd';
 import type { FC } from 'react';
+import { useRequest } from '@sa/hooks';
 import { enableStatusOptions, userGenderOptions } from '@/constants/business';
 import { fetchGetAllRoles } from '@/service/api';
 
@@ -23,35 +24,32 @@ interface OptionsProps {
   value: string;
 }
 
+function getOptions(item: Api.SystemManage.AllRole) {
+  return {
+    label: item.roleName,
+    value: item.roleCode
+  };
+}
+
 const UserOperateDrawer: FC<Props> = ({ open, closeDrawer, submitted, operateType, rowData }) => {
   const { t } = useTranslation();
 
-  const [roleOptions, setRoleOptions] = useState<OptionsProps[]>([]);
-
   const [form] = Form.useForm<Model>();
+
+  const { data, run } = useRequest(fetchGetAllRoles, {
+    manual: true
+  });
+
+  const roleOptions: OptionsProps[] = data ? data.map(getOptions) : [];
 
   const onClose = () => {
     closeDrawer();
     form.resetFields();
   };
 
-  async function getRoleOptions() {
-    const { error, data } = await fetchGetAllRoles();
-
-    if (!error) {
-      const options = data.map(item => ({
-        label: item.roleName,
-        value: item.roleCode
-      }));
-
-      // end
-      setRoleOptions(options);
-    }
-  }
-
   async function handleSubmit() {
-    const data = await form.validateFields();
-    console.log(data);
+    const res = await form.validateFields();
+    console.log(res);
 
     // request
     window.$message?.success(t('common.updateSuccess'));
@@ -61,7 +59,7 @@ const UserOperateDrawer: FC<Props> = ({ open, closeDrawer, submitted, operateTyp
 
   useUpdateEffect(() => {
     if (open) {
-      getRoleOptions();
+      run();
     }
   }, [open]);
 

@@ -1,4 +1,3 @@
-import { Button, Card, Popconfirm, Table, Tag } from 'antd';
 import { Suspense, lazy } from 'react';
 import { fetchGetUserList } from '@/service/api';
 import { enableStatusRecord, userGenderRecord } from '@/constants/business';
@@ -22,7 +21,7 @@ export function Component() {
 
   const { tableWrapperRef, scrollConfig } = useTableScroll();
 
-  const { columns, columnChecks, data, run, loading, pagination, reset, form, setColumnChecks } = useTable(
+  const { columnChecks, data, reset, form, setColumnChecks, tableProps, run } = useTable(
     {
       apiFn: fetchGetUserList,
       apiParams: {
@@ -65,7 +64,7 @@ export function Component() {
 
             const label = t(userGenderRecord[record.userGender]);
 
-            return <Tag color={tagUserGenderMap[record.userGender]}>{label}</Tag>;
+            return <ATag color={tagUserGenderMap[record.userGender]}>{label}</ATag>;
           }
         },
         {
@@ -99,10 +98,8 @@ export function Component() {
             if (record.status === null) {
               return null;
             }
-
             const label = t(enableStatusRecord[record.status]);
-
-            return <Tag color={tagMap[record.status]}>{label}</Tag>;
+            return <ATag color={tagMap[record.status]}>{label}</ATag>;
           }
         },
         {
@@ -112,25 +109,25 @@ export function Component() {
           width: 130,
           render: (_, record) => (
             <div className="flex-center gap-8px">
-              <Button
+              <AButton
                 type="primary"
                 ghost
                 size="small"
                 onClick={() => edit(record.id)}
               >
                 {t('common.edit')}
-              </Button>
-              <Popconfirm
+              </AButton>
+              <APopconfirm
                 title={t('common.confirmDelete')}
                 onConfirm={() => handleDelete(record.id)}
               >
-                <Button
+                <AButton
                   danger
                   size="small"
                 >
                   {t('common.delete')}
-                </Button>
-              </Popconfirm>
+                </AButton>
+              </APopconfirm>
             </div>
           )
         }
@@ -175,7 +172,7 @@ export function Component() {
         reset={reset}
         form={form}
       />
-      <Card
+      <ACard
         styles={{ body: { flex: 1, overflow: 'hidden' } }}
         ref={tableWrapperRef}
         bordered={false}
@@ -184,7 +181,7 @@ export function Component() {
             onDelete={handleBatchDelete}
             refresh={run}
             add={handleAdd}
-            loading={loading}
+            loading={tableProps.loading}
             setColumnChecks={setColumnChecks}
             disabledDelete={checkedRowKeys.length === 0}
             columns={columnChecks}
@@ -193,15 +190,11 @@ export function Component() {
         title={t('page.manage.user.title')}
         className="flex-col-stretch sm:flex-1-hidden card-wrapper"
       >
-        <Table
-          pagination={pagination}
-          rowKey="id"
+        <ATable
           scroll={scrollConfig}
           rowSelection={rowSelection}
           size="small"
-          loading={loading}
-          dataSource={data}
-          columns={columns}
+          {...tableProps}
         />
         <Suspense>
           <UserOperateDrawer
@@ -212,7 +205,7 @@ export function Component() {
             closeDrawer={closeDrawer}
           />
         </Suspense>
-      </Card>
+      </ACard>
     </div>
   );
 }
