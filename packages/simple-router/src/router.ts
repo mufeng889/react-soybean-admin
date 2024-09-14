@@ -44,6 +44,7 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
 
   let currentRoute = transformLocationToRoute(reactRouter.state.location, reactRouter.state.matches);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let listeners: (() => void)[] = [];
 
   reactRouter.getBlocker('beforeGuard', onBeforeRouteChange);
@@ -99,7 +100,7 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
           return true;
         }
       } else {
-        const finalRoute = to.matched[to.matched.length - 1];
+        const finalRoute = to.matched.at(-1);
 
         const finalPath = getFullPath(finalRoute);
 
@@ -212,13 +213,9 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
   async function initReady(): Promise<boolean> {
     return new Promise((resolved, reject) => {
       init(currentRoute.fullPath, blockerOrJump)
-        .then(res => {
-          if (!res) {
-            reactRouter.initialize();
-            resolved(true);
-          } else {
-            reject(new Error('init failed'));
-          }
+        .then(() => {
+          reactRouter.initialize();
+          resolved(true);
         })
         .catch(e => {
           reject(e);
@@ -291,9 +288,9 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
   }
 
   function subscribe(listener: () => void) {
-    listeners = [...listeners, listener];
+    listeners = [listener];
     return () => {
-      listeners = listeners.filter(l => l !== listener);
+      listeners = [];
     };
   }
 
