@@ -1,6 +1,73 @@
 # Changelog
 
 
+## [v1.0.0-beta.1](https://github.com/mufeng889/react-soybean-admin/compare/v0.3.2...v1.0.0-beta.1) (2024-09-14)
+
+### &nbsp;&nbsp;&nbsp;🚀 Features
+
+- **packages**:
+  - @sa/hooks add useRequest &nbsp;-&nbsp; by **wang** [<samp>(e5cdc)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/e5cdcc9)
+- **projects**:
+  - add menu functions &nbsp;-&nbsp; by **wang** [<samp>(0b14d)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/0b14deb)
+  - support add parent when add route &nbsp;-&nbsp; by **wang** [<samp>(084bf)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/084bf89)
+  - support dynamic add route & optimize code &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(6f3ad)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/6f3adca)
+  - add before guard &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(13b0c)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/13b0cab)
+  - @sa/axios: add response to flatRequest when success &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(92e3c)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/92e3cec)
+  - does the configuration support automatic updates. &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(fb758)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/fb7583a)
+
+### &nbsp;&nbsp;&nbsp;🐞 Bug Fixes
+
+- **packages**:
+  - eix tab  can't click on  mobile side &nbsp;-&nbsp; by **wang** [<samp>(e0141)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/e01410a)
+  - support pass state and fix judgments before jumpe &nbsp;-&nbsp; by **wang** [<samp>(34935)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/3493583)
+  - fix useRouter type &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(32628)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/32628df)
+  - failure to return in some fast new cases results in no initialization . close #8 &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** in https://github.com/mufeng889/react-soybean-admin/issues/8 [<samp>(cfe46)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/cfe46ea)
+- **projects**:
+  - fix top menu abnormal &nbsp;-&nbsp; by **wang** [<samp>(5e1f7)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/5e1f789)
+  - fixed abnormal display of dynamic switching size menu &nbsp;-&nbsp; by **wang** [<samp>(79c1a)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/79c1ae1)
+  - fix eslint errors &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(fec80)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/fec80a1)
+  - click tab left menu openkeys does not change &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(f3f57)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/f3f570b)
+  - fix route type & remove startTransition &nbsp;-&nbsp; by **wang** [<samp>(fac36)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/fac368b)
+  - Fixed redirection when switching roles & init tab no cache &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(58d1f)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/58d1feb)
+  - fix refresh token when meet multi requests &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(fbe7d)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/fbe7ddb)
+  - in big screen has scroll bar &nbsp;-&nbsp; by **wang** [<samp>(cb942)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/cb94245)
+
+### &nbsp;&nbsp;&nbsp;🛠 Optimizations
+
+- **packages**:
+  - optimize code &nbsp;-&nbsp; by **wang** [<samp>(5f78e)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/5f78e52)
+- **projects**:
+  - optimize code &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(85b64)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/85b6483)
+  - optimize code &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(21d28)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/21d28b0)
+  - optimize code &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(b29bc)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/b29bceb)
+
+### &nbsp;&nbsp;&nbsp;💅 Refactors
+
+- **packages**:
+  - update Route &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(8795b)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/8795b2f)
+  - @sa/hooks: use-request fir axios &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(3dbe7)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/3dbe701)
+  - @sa/simple-router: stable useRoute &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(6cf09)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/6cf09f9)
+- **projects**:
+  - add logout route &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(df689)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/df689df)
+  - refactor simple-router &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(d7861)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/d78613c)
+  - combine theme tokens and theme settings &nbsp;-&nbsp; by **wang** [<samp>(8d703)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/8d703d9)
+  - remove dark sidebar configuration &nbsp;-&nbsp; by **wang** [<samp>(f9582)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/f958280)
+
+### &nbsp;&nbsp;&nbsp;📖 Documentation
+
+- **projects**: update CHANGELOG &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(a13a7)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/a13a70d)
+
+### &nbsp;&nbsp;&nbsp;🏡 Chore
+
+- **deps**:
+  - update deps &nbsp;-&nbsp; by **wang** [<samp>(1dad4)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/1dad4f0)
+  - update deps &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(6ff15)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/6ff150b)
+
+### &nbsp;&nbsp;&nbsp;❤️ Contributors
+
+
+[DESKTOP-31IBRMI\Administrator](mailto:1509326266@qq.com)
+
 ## [v0.3.2](https://github.com/mufeng889/react-soybean-admin/compare/v0.3.0...v0.3.2) (2024-09-07)
 
 ### &nbsp;&nbsp;&nbsp;🚀 Features
