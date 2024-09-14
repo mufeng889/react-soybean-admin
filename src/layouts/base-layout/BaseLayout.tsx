@@ -88,12 +88,12 @@ const BaseLayout = () => {
   const siderWidth = getSiderWidth();
   const siderCollapsedWidth = getSiderCollapsedWidth();
 
-  useUpdateEffect(() => {
+  useLayoutEffect(() => {
     dispatch(setIsMobile(isMobile));
     if (isMobile) {
       dispatch(setLayoutMode('vertical'));
     }
-  }, [isMobile]);
+  }, [isMobile, dispatch]);
 
   return (
     <AdminLayout
