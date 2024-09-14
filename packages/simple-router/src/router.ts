@@ -44,9 +44,6 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
 
   let currentRoute = transformLocationToRoute(reactRouter.state.location, reactRouter.state.matches);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let listeners: (() => void)[] = [];
-
   reactRouter.getBlocker('beforeGuard', onBeforeRouteChange);
 
   reactRouter.subscribe(afterRouteChange);
@@ -212,9 +209,13 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
 
   async function initReady(): Promise<boolean> {
     return new Promise((resolved, reject) => {
-      init(currentRoute.fullPath, blockerOrJump)
-        .then(() => {
-          reactRouter.initialize();
+      init(currentRoute.fullPath)
+        .then(res => {
+          if (!res) {
+            reactRouter.initialize();
+          } else {
+            reactRouter.initialize().navigate(resolve(res).fullPath);
+          }
           resolved(true);
         })
         .catch(e => {
@@ -277,21 +278,10 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
     return getRoutes().find(route => route.name === key)?.meta;
   }
 
-  function getSnapshot() {
-    return currentRoute;
-  }
-
   function resetRoute() {
     // Resets the route matcher so it can begin matching new routes again.
     matcher.resetMatcher();
     reactRouter._internalSetRoutes(initReactRoutes);
-  }
-
-  function subscribe(listener: () => void) {
-    listeners = [listener];
-    return () => {
-      listeners = [];
-    };
   }
 
   function removeRoute(name: string) {
@@ -320,10 +310,8 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
     removeRoute,
     getRouteMetaByKey,
     forwardRef,
-    subscribe,
     initReady,
     getRoutes,
-    getSnapshot,
     resetRoute,
     addReactRoutes,
     push,

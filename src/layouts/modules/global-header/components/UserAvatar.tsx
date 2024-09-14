@@ -1,6 +1,7 @@
 import { Button, Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
 import { useSubmit } from 'react-router-dom';
+import { useRoute } from '@sa/simple-router';
 import { selectToken, selectUserInfo } from '@/store/slice/auth';
 
 const UserAvatar = memo(() => {

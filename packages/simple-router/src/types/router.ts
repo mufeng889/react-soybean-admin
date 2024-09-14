@@ -42,8 +42,6 @@ export type BeforeEach = (
   blockerOrJump: NavigationGuardNext
 ) => boolean;
 
-export type Init = (currentFullPath: string, blockerOrJump: NavigationGuardNext) => Promise<boolean>;
-
 export type AfterEach = (to: RouteLocationNormalizedLoaded, from: RouteLocationNormalizedLoaded) => void;
 
 export type HistoryStateArray = Array<HistoryStateValue>;
@@ -121,3 +119,5 @@ export interface RouteQueryAndHash {
  * @internal
  */
 export interface RouteLocationNamedRaw extends RouteQueryAndHash, LocationAsRelativeRaw, RouteLocationOptions {}
+
+export type Init = (currentFullPath: string) => Promise<RouteLocationNamedRaw | null>;

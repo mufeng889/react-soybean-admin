@@ -1,4 +1,4 @@
-import { useRouter } from '@sa/simple-router';
+import { useRoute, useRouter } from '@sa/simple-router';
 import type { RouteKey } from '@elegant-router/types';
 import type { RouteLocationNamedRaw } from '@sa/simple-router';
 

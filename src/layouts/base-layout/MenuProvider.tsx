@@ -1,5 +1,6 @@
 import type { FC, ReactNode } from 'react';
 import { useMemo } from 'react';
+import { useRoute } from '@sa/simple-router';
 import { getSortRoutes } from '@/store/slice/route';
 import { selectActiveFirstLevelMenuKey, setActiveFirstLevelMenuKey } from '@/store/slice/tab';
 import { getActiveFirstLevelMenuKey } from '@/store/slice/tab/shared';

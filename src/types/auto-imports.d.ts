@@ -164,7 +164,6 @@ declare global {
   const useResetState: typeof import('ahooks')['useResetState']
   const useResolvedPath: typeof import('react-router-dom')['useResolvedPath']
   const useResponsive: typeof import('ahooks')['useResponsive']
-  const useRoute: typeof import('../hooks/common/route')['useRoute']
   const useRouterPush: typeof import('../hooks/common/routerPush')['useRouterPush']
   const useRoutes: typeof import('react-router-dom')['useRoutes']
   const useSafeState: typeof import('ahooks')['useSafeState']

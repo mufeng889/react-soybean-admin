@@ -15,12 +15,15 @@ import { getRouteHome, initAuthRoute, initConstantRoute } from '@/store/slice/ro
 import { getRouteName, getRoutePath } from '@/router/elegant/transform';
 import { isStaticSuper, selectUserInfo } from '@/store/slice/auth';
 
-export const init: Init = async (currentFullPath, blockerOrJump) => {
+export const init: Init = async currentFullPath => {
   await store.dispatch(initConstantRoute());
+
   const isLogin = Boolean(localStg.get('token'));
+
   if (!isLogin) {
     const loginRoute: RouteKey = 'login';
     const routeHome = getRouteHome(store.getState());
+
     const query = getRouteQueryOfLoginRoute(currentFullPath, routeHome as RouteKey);
 
     const location: RouteLocationNamedRaw = {
@@ -28,10 +31,11 @@ export const init: Init = async (currentFullPath, blockerOrJump) => {
       query
     };
 
-    return blockerOrJump(location);
+    return location;
   }
   await store.dispatch(initAuthRoute());
-  return blockerOrJump();
+
+  return null;
 };
 
 /**
@@ -111,6 +115,7 @@ export const createRouteGuard: BeforeEach = (to, _, blockerOrJump) => {
   ];
 
   // Find the first matching condition and execute its action
+
   const executeRouteSwitch = routeSwitches.find(({ condition }) => condition)?.callback || blockerOrJump;
 
   return executeRouteSwitch();

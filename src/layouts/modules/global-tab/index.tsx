@@ -2,6 +2,7 @@ import ClassNames from 'classnames';
 import type BScroll from '@better-scroll/core';
 import { PageTab } from '@sa/materials';
 import { useUpdateEffect } from 'ahooks';
+import { useRoute } from '@sa/simple-router';
 import DarkModeContainer from '@/components/stateless/common/DarkModeContainer';
 import BetterScroll from '@/components/stateless/custom/BetterScroll';
 import { getDarkMode, getThemeSettings } from '@/store/slice/theme';

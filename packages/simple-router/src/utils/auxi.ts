@@ -45,6 +45,10 @@ export function removeElement(arr: RouteObject[], name: string | undefined) {
   return arr;
 }
 
+export function transformLocationToFullPath(location: Location) {
+  return location.pathname + location.search + location.hash;
+}
+
 export function transformLocationToRoute(
   location: Location,
   match: AgnosticDataRouteMatch[]

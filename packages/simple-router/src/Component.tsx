@@ -1,5 +1,7 @@
 import { RouterProvider as Provider } from 'react-router-dom';
+import { useLayoutEffect, useState } from 'react';
 import { RouterContext } from './hooks/useRouter';
+import { RouteContext } from './hooks/useRoute';
 import type { Router } from './router';
 
 export type RouterProviderProps = {
@@ -8,12 +10,28 @@ export type RouterProviderProps = {
 };
 
 const RouterProvider = ({ router, fallback }: RouterProviderProps) => {
+  const [route, setRoute] = useState(
+    router.resolve(router.reactRouter.state.location, undefined, router.reactRouter.state.matches.at(-1)?.params)
+  );
+
+  useLayoutEffect(
+    () =>
+      router.reactRouter.subscribe(state => {
+        if (state.navigation.state === 'idle') {
+          setRoute(router.resolve(state.location, undefined, state.matches.at(-1)?.params));
+        }
+      }),
+    [router, setRoute]
+  );
+
   return (
     <RouterContext.Provider value={router}>
-      <Provider
-        fallbackElement={fallback}
-        router={router.reactRouter}
-      />
+      <RouteContext.Provider value={route}>
+        <Provider
+          fallbackElement={fallback}
+          router={router.reactRouter}
+        />
+      </RouteContext.Provider>
     </RouterContext.Provider>
   );
 };
