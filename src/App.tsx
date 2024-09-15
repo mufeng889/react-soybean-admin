@@ -22,11 +22,11 @@ const watermarkProps: WatermarkProps = {
 };
 
 function useTheme() {
-  const colors = useAppSelector(themeColors);
-  const darkMode = useAppSelector(getDarkMode);
-  const antdTheme = getAntdTheme(colors, darkMode);
-
   const themeSettings = useAppSelector(getThemeSettings);
+  const colors = useAppSelector(themeColors);
+
+  const darkMode = useAppSelector(getDarkMode);
+  const antdTheme = getAntdTheme(colors, darkMode, themeSettings.tokens);
 
   useEffect(() => {
     setupThemeVarsToHtml(colors, themeSettings.tokens, themeSettings.recommendColor);

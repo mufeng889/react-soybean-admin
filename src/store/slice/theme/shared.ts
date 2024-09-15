@@ -171,10 +171,17 @@ export function createThemeToken(
  * @param colors Theme colors
  * @param darkMode Is dark mode
  */
-export function getAntdTheme(colors: App.Theme.ThemeColor, darkMode: boolean) {
+export function getAntdTheme(
+  colors: App.Theme.ThemeColor,
+  darkMode: boolean,
+  tokens: App.Theme.ThemeSetting['tokens']
+) {
   const { defaultAlgorithm, darkAlgorithm } = antdTheme;
 
   const { primary, info, success, warning, error } = colors;
+
+  const bgColor = transformColorWithOpacity(primary, darkMode ? 0.3 : 0.1, darkMode ? '#000000' : '#fff');
+  const containerBgColor = darkMode ? tokens.dark?.colors?.container : tokens.light?.colors.container;
 
   const theme: ConfigProviderProps['theme'] = {
     token: {
@@ -182,7 +189,8 @@ export function getAntdTheme(colors: App.Theme.ThemeColor, darkMode: boolean) {
       colorInfo: info,
       colorSuccess: success,
       colorWarning: warning,
-      colorError: error
+      colorError: error,
+      colorBgContainer: containerBgColor
     },
     cssVar: true,
     algorithm: [darkMode ? darkAlgorithm : defaultAlgorithm],
@@ -191,16 +199,14 @@ export function getAntdTheme(colors: App.Theme.ThemeColor, darkMode: boolean) {
         controlHeightSM: 28
       },
       Collapse: {
-        headerBg: '#fff',
+        headerBg: containerBgColor,
         contentPadding: '16px 16px 24px 16px'
       },
       Menu: {
         subMenuItemBg: 'transparent',
         darkSubMenuItemBg: 'transparent',
         darkItemBg: 'transparent',
-        itemSelectedBg: darkMode
-          ? transformColorWithOpacity(colors.primary, 0.3, '#000000')
-          : transformColorWithOpacity(colors.primary, 0.1, '#ffffff'),
+        itemSelectedBg: bgColor,
         itemMarginInline: 8
       }
     }

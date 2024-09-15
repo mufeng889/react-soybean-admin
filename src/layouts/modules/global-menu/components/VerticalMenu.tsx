@@ -111,7 +111,7 @@ const VerticalMenu = memo(() => {
         onOpenChange={onOpenChange}
         selectedKeys={selectKey}
         onSelect={handleClickMenu}
-        className="size-full bg-container transition-300 border-0!"
+        className="size-full transition-300 border-0!"
         inlineIndent={18}
       />
     </SimpleScrollbar>

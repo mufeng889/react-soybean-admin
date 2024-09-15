@@ -39,7 +39,7 @@ const HorizontalMenu: FC<Props> = memo(({ mode }) => {
       inlineIndent={18}
       onSelect={handleClickMenu}
       style={{ lineHeight: `${themeSettings.header.height}px` }}
-      className="size-full bg-container transition-400 border-0!"
+      className="size-full transition-400 border-0!"
       selectedKeys={selectKey}
     />
   );
