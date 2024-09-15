@@ -78,7 +78,8 @@ const VerticalMenu = memo(() => {
           .filter(key => levelKeys[key] <= levelKeys[currentOpenKey])
       );
     } else {
-      // close
+      // console.log(keys);
+      // // close
       setStateOpenKeys(keys);
     }
   };
@@ -86,6 +87,17 @@ const VerticalMenu = memo(() => {
   useEffect(() => {
     setStateOpenKeys(getSelectedMenuKeyPath(route.matched));
   }, [route]);
+
+  useUpdateEffect(() => {
+    if (isMix || inlineCollapsed) return;
+
+    const names = route.matched
+      .slice(0, -1)
+      .map(item => item.name)
+      .filter(Boolean) as string[];
+
+    setStateOpenKeys(names || []);
+  }, [isMix, inlineCollapsed]);
 
   return (
     <SimpleScrollbar>
