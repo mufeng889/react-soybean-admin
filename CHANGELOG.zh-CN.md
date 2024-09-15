@@ -1,3 +1,68 @@
+# Changelog
+
+
+## [v1.0.0-beta.1](https://github.com/mufeng889/react-soybean-admin/compare/v0.3.2...v1.0.0-beta.1) (2024-09-14)
+
+### 🚀 功能
+
+- **packages**：
+  - @sa/hooks 添加 `useRequest` &nbsp;-&nbsp; 作者：**wang** [<samp>(e5cdc)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/e5cdcc9)
+- **projects**：
+  - 添加菜单功能 &nbsp;-&nbsp; 作者：**wang** [<samp>(0b14d)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/0b14deb)
+  - 支持添加路由时添加父级 &nbsp;-&nbsp; 作者：**wang** [<samp>(084bf)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/084bf89)
+  - 支持动态添加路由 & 优化代码 &nbsp;-&nbsp; 作者：**DESKTOP-31IBRMI\Administrator** [<samp>(6f3ad)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/6f3adca)
+  - 添加前置守卫 &nbsp;-&nbsp; 作者：**DESKTOP-31IBRMI\Administrator** [<samp>(13b0c)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/13b0cab)
+  - @sa/axios：成功时为 `flatRequest` 添加响应 &nbsp;-&nbsp; 作者：**DESKTOP-31IBRMI\Administrator** [<samp>(92e3c)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/92e3cec)
+  - 配置是否支持自动更新 &nbsp;-&nbsp; 作者：**DESKTOP-31IBRMI\Administrator** [<samp>(fb758)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/fb7583a)
+
+### 🐞 Bug 修复
+
+- **packages**：
+  - 修复移动端无法点击标签问题 &nbsp;-&nbsp; 作者：**wang** [<samp>(e0141)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/e01410a)
+  - 支持传递状态并修复跳转前的判断问题 &nbsp;-&nbsp; 作者：**wang** [<samp>(34935)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/3493583)
+  - 修复 `useRouter` 类型 &nbsp;-&nbsp; 作者：**DESKTOP-31IBRMI\Administrator** [<samp>(32628)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/32628df)
+  - 某些快速新建场景下未返回导致初始化失败，关闭 #8 &nbsp;-&nbsp; 作者：**DESKTOP-31IBRMI\Administrator** [<samp>(cfe46)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/cfe46ea)
+- **projects**：
+  - 修复顶部菜单异常 &nbsp;-&nbsp; 作者：**wang** [<samp>(5e1f7)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/5e1f789)
+  - 修复动态切换尺寸菜单显示异常 &nbsp;-&nbsp; 作者：**wang** [<samp>(79c1a)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/79c1ae1)
+  - 修复 ESLint 错误 &nbsp;-&nbsp; 作者：**DESKTOP-31IBRMI\Administrator** [<samp>(fec80)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/fec80a1)
+  - 点击标签时左侧菜单 `openKeys` 不变化 &nbsp;-&nbsp; 作者：**DESKTOP-31IBRMI\Administrator** [<samp>(f3f57)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/f3f570b)
+  - 修复路由类型 & 移除 `startTransition` &nbsp;-&nbsp; 作者：**wang** [<samp>(fac36)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/fac368b)
+  - 修复切换角色时的重定向 & 初始化标签不缓存 &nbsp;-&nbsp; 作者：**DESKTOP-31IBRMI\Administrator** [<samp>(58d1f)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/58d1feb)
+  - 修复多请求时刷新 token 问题 &nbsp;-&nbsp; 作者：**DESKTOP-31IBRMI\Administrator** [<samp>(fbe7d)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/fbe7ddb)
+  - 大屏幕时显示滚动条 &nbsp;-&nbsp; 作者：**wang** [<samp>(cb942)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/cb94245)
+
+### 🛠 优化
+
+- **packages**：
+  - 优化代码 &nbsp;-&nbsp; 作者：**wang** [<samp>(5f78e)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/5f78e52)
+- **projects**：
+  - 优化代码 &nbsp;-&nbsp; 作者：**DESKTOP-31IBRMI\Administrator** [<samp>(85b64)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/85b6483)
+  - 优化代码 &nbsp;-&nbsp; 作者：**DESKTOP-31IBRMI\Administrator** [<samp>(21d28)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/21d28b0)
+  - 优化代码 &nbsp;-&nbsp; 作者：**DESKTOP-31IBRMI\Administrator** [<samp>(b29bc)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/b29bceb)
+
+### 💅 重构
+
+- **packages**：
+  - 更新路由 &nbsp;-&nbsp; 作者：**DESKTOP-31IBRMI\Administrator** [<samp>(8795b)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/8795b2f)
+  - @sa/hooks：为 `axios` 使用 `useRequest` &nbsp;-&nbsp; 作者：**DESKTOP-31IBRMI\Administrator** [<samp>(3dbe7)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/3dbe701)
+  - @sa/simple-router：稳定的 `useRoute` &nbsp;-&nbsp; 作者：**DESKTOP-31IBRMI\Administrator** [<samp>(6cf09)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/6cf09f9)
+- **projects**：
+  - 添加注销路由 &nbsp;-&nbsp; 作者：**DESKTOP-31IBRMI\Administrator** [<samp>(df689)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/df689df)
+  - 重构 `simple-router` &nbsp;-&nbsp; 作者：**DESKTOP-31IBRMI\Administrator** [<samp>(d7861)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/d78613c)
+  - 合并主题 Token 和主题设置 &nbsp;-&nbsp; 作者：**wang** [<samp>(8d703)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/8d703d9)
+  - 移除暗黑侧边栏配置 &nbsp;-&nbsp; 作者：**wang** [<samp>(f9582)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/f958280)
+
+### 📖 文档
+
+- **projects**：更新 CHANGELOG &nbsp;-&nbsp; 作者：**DESKTOP-31IBRMI\Administrator** [<samp>(a13a7)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/a13a70d)
+
+### 🏡 杂项
+
+- **依赖**：
+  - 更新依赖 &nbsp;-&nbsp; 作者：**wang** [<samp>(1dad4)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/1dad
+
+
 ## [v0.3.2](https://github.com/mufeng889/react-soybean-admin/compare/v0.3.0...v0.3.2) (2024-09-07)
 
 ### 🚀 新功能
