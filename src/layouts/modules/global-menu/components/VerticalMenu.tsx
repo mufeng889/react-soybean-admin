@@ -48,6 +48,8 @@ const VerticalMenu = memo(() => {
 
   const isMix = themeSettings.layout.mode.includes('mix');
 
+  const isVerticalMix = themeSettings.layout.mode === 'vertical-mix';
+
   const inlineCollapsed = useAppSelector(getSiderCollapse);
 
   const [stateOpenKeys, setStateOpenKeys] = useState<string[]>(getSelectedMenuKeyPath(route.matched));
@@ -89,10 +91,10 @@ const VerticalMenu = memo(() => {
   }, [route]);
 
   useUpdateEffect(() => {
-    if (isMix || inlineCollapsed) return;
+    if (inlineCollapsed || isVerticalMix) return;
 
     const names = route.matched
-      .slice(0, -1)
+      .slice(isMix ? 1 : 0, -1)
       .map(item => item.name)
       .filter(Boolean) as string[];
 
@@ -104,7 +106,7 @@ const VerticalMenu = memo(() => {
       <AMenu
         mode="inline"
         items={isMix ? childLevelMenus : allMenus}
-        inlineCollapsed={isMix ? false : inlineCollapsed}
+        inlineCollapsed={isVerticalMix ? false : inlineCollapsed}
         openKeys={stateOpenKeys}
         onOpenChange={onOpenChange}
         selectedKeys={selectKey}
