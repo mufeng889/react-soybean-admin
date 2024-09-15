@@ -3,6 +3,7 @@ import type { Location } from 'react-router-dom';
 import { matchPath } from 'react-router-dom';
 import type { RouteLocationNamedRaw } from '../types';
 import { stringifyQuery } from '../query';
+import { transformLocationToFullPath } from '../utils/auxi';
 import type { RouteRecordRaw } from './types';
 import { createRouteRecordMatcher } from './pathMatcher';
 import {
@@ -145,27 +146,35 @@ class CreateRouterMatcher {
       name = matcher.record.name;
       params = cleanParams(location.params || {});
       fullPath = generatePath(matcher.record.path, params);
+
       query = location.query || {};
       const queryParams = stringifyQuery(query);
 
       fullPath += queryParams ? `?${queryParams}` : '';
+
       path = matcher.record.path;
+
+      if (location.hash) {
+        fullPath += location.hash;
+      }
     } else if (location.pathname) {
       // no need to resolve the path with the matcher as it was provided
       // this also allows the user to control the encoding
       path = location.pathname;
 
-      matcher = this.matchers.slice(1).find(m => {
-        return Boolean(matchPath(m.record.path, location.pathname));
-      });
+      matcher = this.matchers.slice(1).find(m => matchPath(m.record.path, location.pathname));
       if (!matcher) matcher = this.matchers[0];
 
       // matcher should have a value after the loop
       query = getQueryParams(location.search);
 
       if (matcher) {
+        const match = matchPath(matcher.record.path, location.pathname);
+        if (match?.params) {
+          params = match.params; // 如果有 params 则赋值
+        }
         name = matcher.record.name;
-        fullPath = location.pathname + location.search;
+        fullPath = transformLocationToFullPath(location);
       }
       // location is a relative path
     } else {

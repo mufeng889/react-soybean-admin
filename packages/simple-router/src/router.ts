@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
+
 import { createBrowserRouter, createHashRouter, createMemoryRouter } from 'react-router-dom';
 import type { Location, RouteObject } from 'react-router-dom';
 import type { ElegantConstRoute } from '@ohh-889/react-auto-route';
@@ -85,7 +86,7 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
   }
 
   function onBeforeRouteChange({ nextLocation }: Parameters<BlockerFunction>[0]) {
-    const to = resolve(nextLocation, undefined, reactRouter.state.matches.at(-1)?.params);
+    const to = resolve(nextLocation);
 
     if (to.fullPath === currentRoute.fullPath) {
       return true;
@@ -150,7 +151,7 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
     if (state.navigation.state === 'idle') {
       const from = currentRoute;
 
-      currentRoute = resolve(state.location, undefined, state.matches.at(-1)?.params);
+      currentRoute = resolve(state.location);
 
       afterEach(currentRoute, from);
     }
@@ -165,8 +166,7 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
    */
   function resolve(
     rawLocation: Location | RouteLocationNamedRaw,
-    currentLocation?: RouteLocationNamedRaw,
-    params?: Record<string, any> | undefined
+    currentLocation?: RouteLocationNamedRaw
   ): RouteLocationNormalizedLoaded {
     const current = { ...(currentLocation as RouteLocationNamedRaw) };
 
@@ -186,9 +186,7 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
     }
 
     const matchedRoute = matcher.resolve(matcherLocation, current);
-    if (params) {
-      matchedRoute.params = params;
-    }
+
     return {
       ...matchedRoute,
       redirectedFrom: currentRoute

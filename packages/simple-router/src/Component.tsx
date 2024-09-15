@@ -10,15 +10,13 @@ export type RouterProviderProps = {
 };
 
 const RouterProvider = ({ router, fallback }: RouterProviderProps) => {
-  const [route, setRoute] = useState(
-    router.resolve(router.reactRouter.state.location, undefined, router.reactRouter.state.matches.at(-1)?.params)
-  );
+  const [route, setRoute] = useState(router.resolve(router.reactRouter.state.location));
 
   useLayoutEffect(
     () =>
       router.reactRouter.subscribe(state => {
         if (state.navigation.state === 'idle') {
-          setRoute(router.resolve(state.location, undefined, state.matches.at(-1)?.params));
+          setRoute(router.resolve(state.location));
         }
       }),
     [router, setRoute]
