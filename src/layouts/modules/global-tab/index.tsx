@@ -7,17 +7,13 @@ import DarkModeContainer from '@/components/stateless/common/DarkModeContainer';
 import BetterScroll from '@/components/stateless/custom/BetterScroll';
 import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
 import { addTabByRoute, getActiveTabId, initTabStore, isTabRetain, removeTab, selectAllTabs } from '@/store/slice/tab';
-import {
-  getFullContent,
-  getIsMobile,
-  getLocale,
-  getReloadFlag,
-  reloadPage,
-  toggleFullContent
-} from '@/store/slice/app';
+import { getFullContent, getLocale, getReloadFlag, reloadPage, toggleFullContent } from '@/store/slice/app';
 import ReloadButton from '@/components/stateless/common/ReloadButton';
 import FullScreen from '@/components/stateless/common/FullScreen';
+import { isPC } from '@/utils/agent';
 import ContextMenu from './ContextMenu';
+
+const isPCFlag = isPC();
 
 const GlobalTab = memo(() => {
   const { t } = useTranslation();
@@ -28,7 +24,6 @@ const GlobalTab = memo(() => {
   const tabRef = useRef<HTMLDivElement>(null);
   const route = useRoute();
   const bsScrollRef = useRef<BScroll | null>(null);
-  const isMobile = useAppSelector(getIsMobile);
   const locale = useAppSelector(getLocale);
   const reloadFlag = useAppSelector(getReloadFlag);
   const fullContent = useAppSelector(getFullContent);
@@ -139,7 +134,7 @@ const GlobalTab = memo(() => {
       >
         <BetterScroll
           setBsScroll={setBsScroll}
-          options={{ scrollX: true, scrollY: false, click: isMobile }}
+          options={{ scrollX: true, scrollY: false, click: !isPCFlag }}
           onClick={removeFocus}
         >
           <div
