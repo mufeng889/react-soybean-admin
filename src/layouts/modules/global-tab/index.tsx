@@ -13,8 +13,6 @@ import FullScreen from '@/components/stateless/common/FullScreen';
 import { isPC } from '@/utils/agent';
 import ContextMenu from './ContextMenu';
 
-const isPCFlag = isPC();
-
 const GlobalTab = memo(() => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -23,6 +21,7 @@ const GlobalTab = memo(() => {
   const bsWrapperSizeBounding = useRef<{ width: number; left: number }>({ width: 0, left: 0 });
   const tabRef = useRef<HTMLDivElement>(null);
   const route = useRoute();
+  const isPCFlag = isPC();
   const bsScrollRef = useRef<BScroll | null>(null);
   const locale = useAppSelector(getLocale);
   const reloadFlag = useAppSelector(getReloadFlag);

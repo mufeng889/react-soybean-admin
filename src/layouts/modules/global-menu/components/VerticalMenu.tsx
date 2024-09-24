@@ -87,8 +87,9 @@ const VerticalMenu = memo(() => {
   };
 
   useEffect(() => {
+    if (inlineCollapsed) return;
     setStateOpenKeys(getSelectedMenuKeyPath(route.matched));
-  }, [route]);
+  }, [route, inlineCollapsed]);
 
   useUpdateEffect(() => {
     if (inlineCollapsed || isVerticalMix) return;
