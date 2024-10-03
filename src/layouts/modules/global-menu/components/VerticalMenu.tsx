@@ -52,7 +52,9 @@ const VerticalMenu = memo(() => {
 
   const inlineCollapsed = useAppSelector(getSiderCollapse);
 
-  const [stateOpenKeys, setStateOpenKeys] = useState<string[]>(getSelectedMenuKeyPath(route.matched));
+  const [stateOpenKeys, setStateOpenKeys] = useState<string[]>(
+    inlineCollapsed ? [] : getSelectedMenuKeyPath(route.matched)
+  );
 
   function handleClickMenu(menuInfo: MenuInfo) {
     router.routerPushByKeyWithMetaQuery(menuInfo.key);
@@ -80,16 +82,15 @@ const VerticalMenu = memo(() => {
           .filter(key => levelKeys[key] <= levelKeys[currentOpenKey])
       );
     } else {
-      // console.log(keys);
       // // close
       setStateOpenKeys(keys);
     }
   };
 
   useEffect(() => {
-    if (inlineCollapsed) return;
+    if (inlineCollapsed || isVerticalMix) return;
     setStateOpenKeys(getSelectedMenuKeyPath(route.matched));
-  }, [route, inlineCollapsed]);
+  }, [route, inlineCollapsed, isVerticalMix]);
 
   useUpdateEffect(() => {
     if (inlineCollapsed || isVerticalMix) return;

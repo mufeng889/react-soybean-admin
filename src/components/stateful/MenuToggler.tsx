@@ -7,6 +7,9 @@ interface Props {
   arrowIcon?: boolean;
   className?: string;
 }
+
+type NumberBool = 0 | 1;
+
 const icons: Record<NumberBool, Record<NumberBool, string>> = {
   0: {
     0: 'line-md:menu-fold-left',
@@ -17,7 +20,7 @@ const icons: Record<NumberBool, Record<NumberBool, string>> = {
     1: 'ph-caret-double-right-bold'
   }
 };
-type NumberBool = 0 | 1;
+
 const MenuToggler: FC<Props> = memo(({ arrowIcon, className }) => {
   const { t } = useTranslation();
 
