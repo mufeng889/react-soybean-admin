@@ -5,6 +5,7 @@ import DarkMode from './modules/DarkMode';
 import ThemeColor from './modules/ThemeColor';
 import LayoutMode from './modules/LayoutMode';
 import PageFun from './modules/PageFun';
+import ConfigOperation from './modules/ConfigOperation';
 
 const ThemeDrawer = memo(() => {
   const { t } = useTranslation();
@@ -29,6 +30,7 @@ const ThemeDrawer = memo(() => {
           onClick={close}
         />
       }
+      footer={<ConfigOperation />}
     >
       <SimpleScrollbar>
         <div className="px-24px pb-24px pt-8px">

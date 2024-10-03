@@ -124,6 +124,9 @@ export const themeSlice = createSlice({
     },
     changeReverseHorizontalMix(state, { payload }: PayloadAction<boolean>) {
       state.settings.layout.reverseHorizontalMix = payload;
+    },
+    resetTheme() {
+      return initialState;
     }
   },
   selectors: {
@@ -148,6 +151,7 @@ export const {
   setFixedHeaderAndTab,
   setHeader,
   setTab,
+  resetTheme,
   setWatermark,
   setSider,
   setFooter,
@@ -164,6 +168,10 @@ export const themeColors = createSelector([getThemeSettings], ({ themeColor, oth
     info: isInfoFollowPrimary ? themeColor : otherColor.info
   };
   return colors;
+});
+
+export const settingsJson = createSelector([getThemeSettings], settings => {
+  return JSON.stringify(settings);
 });
 
 export const toggleThemeScheme = (): AppThunk<boolean> => (dispatch, getState) => {
