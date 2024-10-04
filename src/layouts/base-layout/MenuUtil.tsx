@@ -1,7 +1,5 @@
 import type { ElegantConstRoute } from '@elegant-router/types';
 
-import { $t } from '@/locales';
-
 /**
  * Get global menus by auth routes
  *
@@ -30,11 +28,15 @@ export function getGlobalMenusByAuthRoutes(routes: ElegantConstRoute[]) {
  *
  * @param route
  */
+
 export function getGlobalMenuByBaseRoute(route: ElegantConstRoute): App.Global.Menu {
   const { name } = route;
   const { title, i18nKey, icon = import.meta.env.VITE_MENU_ICON, localIcon } = route.meta ?? {};
 
-  const label = i18nKey ? $t(i18nKey) : title;
+  // eslint-disable-next-line
+  const { t } = useTranslation()
+  // eslint-disable-next-line
+  const label = i18nKey ? t(i18nKey) : title;
   const menu: App.Global.Menu = {
     key: name,
     label: <BeyondHiding title={label} />,
