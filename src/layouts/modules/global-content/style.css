@@ -1,23 +1,102 @@
-.page-enter {
-  opacity: 0;
-  transform: translateX(-30px);
+.cache-component {
+  overflow-x: hidden;
 }
 
-.page-enter-active {
-  opacity: 1;
-  transform: translateX(0);
-  transition:
-    opacity 300ms,
-    transform 300ms;
+@keyframes slide-in {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
 }
-.page-exit {
-  opacity: 1;
-  transform: translateX(0);
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
-.page-exit-active {
-  opacity: 0;
-  transform: translateX(30px);
-  transition:
-    opacity 300ms,
-    transform 300ms;
+
+@keyframes fade-slide {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-scale {
+  from {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes zoom-fade {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes zoom-out {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fade {
+  animation:
+    fade-in 0.3s ease-in-out,
+    slide-in 0.3s ease-in-out;
+}
+
+.fade-slide {
+  animation: fade-slide 0.3s ease-in-out;
+}
+
+.fade-bottom {
+  animation: fade-bottom 0.3s ease-in-out;
+}
+
+.fade-scale {
+  animation: fade-scale 0.28s ease-in-out;
+}
+
+.zoom-fade {
+  animation: zoom-fade 0.3s ease-in-out;
+}
+
+.zoom-out {
+  animation: zoom-out 0.15s ease-in-out;
 }

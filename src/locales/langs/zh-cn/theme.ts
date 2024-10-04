@@ -37,7 +37,7 @@ const theme: App.I18n.Schema['translation']['theme'] = {
     mode: {
       title: '页面切换动画类型',
       'fade-slide': '滑动',
-      fade: '淡入淡出',
+      fade: '弹动',
       'fade-bottom': '底部消退',
       'fade-scale': '缩放消退',
       'zoom-fade': '渐变',

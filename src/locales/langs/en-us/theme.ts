@@ -36,7 +36,7 @@ const theme: App.I18n.Schema['translation']['theme'] = {
     animate: 'Page Animate',
     mode: {
       title: 'Page Animate Mode',
-      fade: 'Fade',
+      fade: 'Springing',
       'fade-slide': 'Slide',
       'fade-bottom': 'Fade Zoom',
       'fade-scale': 'Fade Scale',
