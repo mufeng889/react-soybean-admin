@@ -9,14 +9,6 @@ interface Window {
   $notification?: import('antd/es/notification/interface').NotificationInstance;
 }
 
-interface ViewTransition {
-  ready: Promise<void>;
-}
-
-interface Document {
-  startViewTransition?: (callback: () => Promise<void> | void) => ViewTransition;
-}
-
 interface ImportMeta {
   readonly env: Env.ImportMeta;
 }

@@ -31,14 +31,13 @@ const ThemeSchemaSwitch: FC<Props> = memo(({ tooltipPlacement = 'bottom', showTo
   const tooltipContent = showTooltip ? t('icon.themeSchema') : '';
 
   const toggleDark: ButtonProps['onClick'] = event => {
-    const isAppearanceTransition =
-      document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isAppearanceTransition = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (!isAppearanceTransition) {
       dispatch(toggleThemeScheme());
       return;
     }
-    // @ts-expect-error: Transition API
+
     const transition = document.startViewTransition(async () => {
       dark = dispatch(toggleThemeScheme()) as boolean;
     });
