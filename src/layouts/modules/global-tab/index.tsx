@@ -11,6 +11,7 @@ import { getFullContent, getLocale, getReloadFlag, reloadPage, toggleFullContent
 import ReloadButton from '@/components/stateless/common/ReloadButton';
 import FullScreen from '@/components/stateless/common/FullScreen';
 import { isPC } from '@/utils/agent';
+import { setRemoveCacheKey } from '@/store/slice/route';
 import ContextMenu from './ContextMenu';
 
 const GlobalTab = memo(() => {
@@ -77,6 +78,7 @@ const GlobalTab = memo(() => {
 
   function handleCloseTab(tab: App.Global.Tab) {
     dispatch(removeTab(tab.id));
+    dispatch(setRemoveCacheKey(tab.routeKey));
   }
 
   function handleClickTab(tab: App.Global.Tab) {
@@ -99,6 +101,7 @@ const GlobalTab = memo(() => {
   function refresh() {
     dispatch(reloadPage());
   }
+
   function removeFocus() {
     (document.activeElement as HTMLElement)?.blur();
   }

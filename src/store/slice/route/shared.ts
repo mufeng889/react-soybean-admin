@@ -1,4 +1,4 @@
-import type { ElegantConstRoute, RouteKey } from '@elegant-router/types';
+import type { ElegantConstRoute, LastLevelRouteKey, RouteKey } from '@elegant-router/types';
 
 /**
  * Filter auth routes by roles
@@ -87,4 +87,24 @@ function recursiveGetIsRouteExistByRouteName(route: ElegantConstRoute, routeName
   }
 
   return isExist;
+}
+
+/**
+ * Get cache route names
+ *
+ * @param routes React routes (two levels)
+ */
+export function getCacheRouteNames(routes: ElegantConstRoute[]) {
+  const cacheNames: LastLevelRouteKey[] = [];
+
+  routes.forEach(route => {
+    // only get last two level route, which has component
+    route.children?.forEach(child => {
+      if (child.component && child.meta?.keepAlive) {
+        cacheNames.push(child.name as LastLevelRouteKey);
+      }
+    });
+  });
+
+  return cacheNames;
 }

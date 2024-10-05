@@ -1,4 +1,4 @@
-import type { CustomRoute, ElegantConstRoute, LastLevelRouteKey } from '@elegant-router/types';
+import type { CustomRoute, ElegantConstRoute, LastLevelRouteKey, RouteKey } from '@elegant-router/types';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createStaticRoutes } from '@/router/routes';
 import { fetchGetConstantRoutes, fetchGetUserRoutes } from '@/service/api';
@@ -9,7 +9,7 @@ import { getRoutePath } from '@/router/elegant/transform';
 import { ROOT_ROUTE } from '@/router/routes/builtin';
 import type { AppThunk } from '../../index';
 import { createAppSlice } from '../../createAppSlice';
-import { filterAuthRoutesByRoles, sortRoutesByOrder } from './shared';
+import { filterAuthRoutesByRoles, getCacheRouteNames, sortRoutesByOrder } from './shared';
 
 interface InitialStateType {
   authRoutes: ElegantConstRoute[];
@@ -18,6 +18,8 @@ interface InitialStateType {
   isInitAuthRoute: boolean;
   constantRoutes: ElegantConstRoute[];
   routeHome: string;
+  removeCacheKey: RouteKey | null;
+  cacheRoutes: RouteKey[];
 }
 
 const initialState: InitialStateType = {
@@ -26,6 +28,8 @@ const initialState: InitialStateType = {
   isInitAuthRoute: false,
   sortRoutes: [],
   constantRoutes: [],
+  removeCacheKey: null,
+  cacheRoutes: [],
   isInitConstantRoute: false,
   /** Home route key */
   routeHome: import.meta.env.VITE_ROUTE_HOME
@@ -50,6 +54,22 @@ export const routeSlice = createAppSlice({
     }),
     setSortRoutes: create.reducer((state, { payload }: PayloadAction<ElegantConstRoute[]>) => {
       state.sortRoutes = payload;
+    }),
+
+    setCacheRoutes: create.reducer((state, { payload }: PayloadAction<RouteKey[]>) => {
+      state.cacheRoutes = payload;
+    }),
+
+    addCacheRoutes: create.reducer((state, { payload }: PayloadAction<RouteKey>) => {
+      state.cacheRoutes.push(payload);
+    }),
+
+    setRemoveCacheKey: create.reducer((state, { payload }: PayloadAction<RouteKey | null>) => {
+      state.removeCacheKey = payload;
+    }),
+
+    removeCacheRoutes: create.reducer((state, { payload }: PayloadAction<RouteKey>) => {
+      state.cacheRoutes = state.cacheRoutes.filter(route => route !== payload);
     }),
 
     /** add constant routes */
@@ -77,7 +97,9 @@ export const routeSlice = createAppSlice({
     getIsInitConstantRoute: route => route.isInitConstantRoute,
     getAllRoutes: state => [...state.constantRoutes, ...state.authRoutes],
     getConstantRoutes: route => route.constantRoutes,
-    getRouteHome: route => route.routeHome
+    getRouteHome: route => route.routeHome,
+    selectCacheRoutes: state => state.cacheRoutes,
+    getRemoveCacheKey: state => state.removeCacheKey
   }
 });
 
@@ -89,14 +111,39 @@ export const {
   setIsInitAuthRoute,
   resetRoute,
   setSortRoutes,
-  setRouteHome
+  setCacheRoutes,
+  removeCacheRoutes,
+  addCacheRoutes,
+  setRouteHome,
+  setRemoveCacheKey
 } = routeSlice.actions;
 
-export const { getAuthRoutes, getSortRoutes, getIsInitConstantRoute, getConstantRoutes, getAllRoutes, getRouteHome } =
-  routeSlice.selectors;
+export const {
+  getAuthRoutes,
+  getSortRoutes,
+  getIsInitConstantRoute,
+  getConstantRoutes,
+  getAllRoutes,
+  getRouteHome,
+  getRemoveCacheKey,
+  selectCacheRoutes
+} = routeSlice.selectors;
 
 const authRouteMode = import.meta.env.VITE_AUTH_ROUTE_MODE;
 const constantRouteMode = import.meta.env.VITE_CONSTANT_ROUTE_MODE;
+
+/**
+ * Get cache routes
+ *
+ * @param routes Vue routes
+ */
+export const getCacheRoutes =
+  (routes: ElegantConstRoute[]): AppThunk =>
+  dispatch => {
+    const alls = getCacheRouteNames(routes);
+
+    dispatch(setCacheRoutes(alls));
+  };
 
 const handleConstantOrAuthRoutes =
   (mode: 'constant' | 'auth'): AppThunk =>
@@ -115,6 +162,8 @@ const handleConstantOrAuthRoutes =
     router.addReactRoutes(sortRoutes);
 
     dispatch(addSortRoutes(sortRoutes));
+
+    dispatch(getCacheRoutes(sortRoutes));
   };
 
 export const initConstantRoute = (): AppThunk => async dispatch => {
@@ -175,7 +224,7 @@ const initDynamicAuthRoute = (): AppThunk => async dispatch => {
     setIsInitAuthRoute(true);
   } else {
     // if fetch user routes failed, reset store
-    // authStore.resetStore();
+    dispatch(resetRouteStore());
   }
 };
 
@@ -208,3 +257,14 @@ function handleUpdateRootRouteRedirect(redirectKey: LastLevelRouteKey) {
     router.addReactRoutes([rootRoute]);
   }
 }
+
+/**
+ * Is cached route
+ *
+ * @param routeKey
+ */
+export const isCachedRoute =
+  (routeKey: RouteKey): AppThunk<boolean> =>
+  (_, getState) => {
+    return selectCacheRoutes(getState()).includes(routeKey);
+  };
