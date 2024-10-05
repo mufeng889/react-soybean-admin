@@ -2,6 +2,7 @@ import type { FC, ReactNode } from 'react';
 import { useMemo } from 'react';
 import { useRoute } from '@sa/simple-router';
 import { getSortRoutes } from '@/store/slice/route';
+import { getLocale } from '@/store/slice/app';
 import { selectActiveFirstLevelMenuKey, setActiveFirstLevelMenuKey } from '@/store/slice/tab';
 import { getActiveFirstLevelMenuKey } from '@/store/slice/tab/shared';
 import { MixMenuContext } from '../context';
@@ -15,6 +16,10 @@ const MenuProvider: FC<Props> = ({ children }) => {
   const sortRoutes = useAppSelector(getSortRoutes);
 
   const menus = getGlobalMenusByAuthRoutes(sortRoutes);
+
+  const locale = useAppSelector(getLocale);
+
+  const update = useUpdate();
 
   const activeFirstLevelMenuKey = useAppSelector(selectActiveFirstLevelMenuKey);
 
@@ -56,6 +61,10 @@ const MenuProvider: FC<Props> = ({ children }) => {
     () => menus.find(menu => menu.key === activeFirstLevelMenuKey)?.children as App.Global.Menu[],
     [activeFirstLevelMenuKey, menus]
   );
+
+  useUpdateEffect(() => {
+    update();
+  }, [locale]);
 
   const mixMenuContext = {
     allMenus: menus,

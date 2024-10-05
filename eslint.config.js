@@ -8,7 +8,7 @@ export default defineConfig(
       singleAttributePerLine: true,
       trailingCommas: 'none'
     },
-    ignores: ['ErrorBoundary.tsx', 'src/layouts/base-layout/MenuUtil.tsx']
+    ignores: ['ErrorBoundary.tsx']
   },
   {
     rules: {

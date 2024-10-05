@@ -56,4 +56,4 @@ const GlobalBreadcrumb: FC<Omit<BreadcrumbProps, 'items'>> = props => {
   );
 };
 
-export default memo(GlobalBreadcrumb);
+export default GlobalBreadcrumb;
