@@ -21,11 +21,11 @@ export const router = createRouter({
   mode: VITE_ROUTER_HISTORY_MODE,
   getReactRoutes,
   init,
-  beforeEach: createRouteGuard,
-  afterEach,
   opt: { basename: VITE_BASE_URL }
 });
 
 export async function setupRouter() {
+  router.beforeEach(createRouteGuard);
+  router.afterEach(afterEach);
   await router.initReady();
 }

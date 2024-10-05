@@ -11,6 +11,7 @@ import { cleanParams, findParentNames, getFullPath, removeElement, transformLoca
 import type { NavigationFailure } from './error';
 import { ErrorTypes, createRouterError } from './error';
 import { warn } from './warning';
+import { callbacks } from './/utils/callback';
 
 const historyCreatorMap = {
   hash: createHashRouter,
@@ -30,16 +31,18 @@ export interface RouterOptions {
   opt: Options;
   getReactRoutes: (route: ElegantConstRoute) => RouteObject;
   init: Init;
-  afterEach: AfterEach;
-  beforeEach: BeforeEach;
 }
 
-export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes, init, afterEach }: RouterOptions) {
+export function createRouter({ initRoutes, mode, opt, getReactRoutes, init }: RouterOptions) {
   const matcher = new CreateRouterMatcher(initRoutes);
 
   const initReactRoutes = initRoutes.map(route => getReactRoutes(route));
 
   const reactRouter = historyCreatorMap[mode](initReactRoutes, opt);
+
+  const beforeGuards = callbacks<BeforeEach>();
+
+  const afterGuards = callbacks<AfterEach>();
 
   reactRouter.dispose();
 
@@ -106,7 +109,7 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
       }
     }
 
-    return beforeEach(to, currentRoute, blockerOrJump);
+    return beforeGuards.list()[0]?.(to, currentRoute, blockerOrJump);
   }
 
   function blockerOrJump(param?: undefined | null | boolean | string | Location | RouteLocationNamedRaw) {
@@ -153,7 +156,7 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
 
       currentRoute = resolve(state.location);
 
-      afterEach(currentRoute, from);
+      afterGuards.list()[0]?.(currentRoute, from);
     }
   }
 
@@ -306,6 +309,8 @@ export function createRouter({ beforeEach, initRoutes, mode, opt, getReactRoutes
     go,
     back,
     removeRoute,
+    beforeEach: beforeGuards.add,
+    afterEach: afterGuards.add,
     getRouteMetaByKey,
     forwardRef,
     initReady,

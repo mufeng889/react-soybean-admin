@@ -152,7 +152,7 @@ export const generatedRoutes: GeneratedRoute[] = [
           i18nKey: 'route.function_tab',
           icon: 'ic:round-tab',
           order: 1,
-          keepAlive:true
+          keepAlive: true
         }
       },
       {
@@ -281,7 +281,7 @@ export const generatedRoutes: GeneratedRoute[] = [
           icon: 'ic:round-manage-accounts',
           order: 1,
           roles: ['R_ADMIN'],
-          keepAlive:true
+          keepAlive: true
         }
       },
       {
