@@ -3,8 +3,6 @@ export function callbacks<T>() {
   let handlers: T[] = [];
 
   function add(handler: T): () => void {
-    console.log(222);
-
     handlers.push(handler);
     return () => {
       const i = handlers.indexOf(handler);
