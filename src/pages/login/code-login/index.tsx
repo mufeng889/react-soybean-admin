@@ -15,6 +15,10 @@ export const Component = () => {
     window.$message?.success(t('page.login.common.validateSuccess'));
   }
 
+  useKeyPress('enter', () => {
+    handleSubmit();
+  });
+
   return (
     <>
       <h3 className="text-18px text-primary font-medium">{t('page.login.codeLogin.title')}</h3>

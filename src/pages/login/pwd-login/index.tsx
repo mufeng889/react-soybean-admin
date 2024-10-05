@@ -27,6 +27,10 @@ export function Component() {
     toLogin(params);
   }
 
+  useKeyPress('enter', () => {
+    handleSubmit();
+  });
+
   function handleAccountLogin(account: Account) {
     toLogin(account);
   }
