@@ -1,5 +1,6 @@
 import { App } from 'antd';
 import { cacheTabs } from '@/store/slice/tab';
+import { cacheThemeSettings } from '@/store/slice/theme';
 import { DARK_MODE_MEDIA_QUERY } from '@/constants/common';
 import { setDarkMode } from '@/store/slice/theme/index.ts';
 
@@ -18,6 +19,7 @@ const AppProvider = memo(({ children }: { children: React.ReactNode }) => {
     'beforeunload',
     () => {
       dispatch(cacheTabs());
+      dispatch(cacheThemeSettings());
     },
     { target: window }
   );
