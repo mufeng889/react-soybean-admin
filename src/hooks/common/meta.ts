@@ -1,5 +1,6 @@
 import { useMatches } from 'react-router-dom';
 
+/** - get route meta */
 export function useMeta() {
   const matches = useMatches();
 

@@ -22,7 +22,8 @@ import {
 interface InitialStateType {
   tabs: App.Global.Tab[];
   activeTabId: string;
-  homeTab: App.Global.Tab | undefined;
+  homeTab: App.Global.Tab | null;
+  removeCacheKey: RouteKey | null;
   activeFirstLevelMenuKey: string;
 }
 
@@ -32,7 +33,10 @@ const initialState: InitialStateType = {
   /** Active tab id */
   activeTabId: '',
   /** Get active tab */
-  homeTab: undefined,
+  homeTab: null,
+
+  removeCacheKey: null,
+
   activeFirstLevelMenuKey: ''
 };
 export const tabSlice = createSlice({

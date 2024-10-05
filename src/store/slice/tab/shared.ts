@@ -9,7 +9,7 @@ import { getRoutePath } from '@/router/elegant/transform';
  * @param tabs Tabs
  * @param homeTab Home tab
  */
-export function getAllTabs(tabs: App.Global.Tab[], homeTab?: App.Global.Tab) {
+export function getAllTabs(tabs: App.Global.Tab[], homeTab: App.Global.Tab | null) {
   if (!homeTab) {
     return [];
   }

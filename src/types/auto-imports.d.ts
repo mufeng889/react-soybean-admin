@@ -145,6 +145,7 @@ declare global {
   const useMemo: typeof import('react')['useMemo']
   const useMemoizedFn: typeof import('ahooks')['useMemoizedFn']
   const useMenu: typeof import('../hooks/common/menu')['useMenu']
+  const useMeta: typeof import('../hooks/common/meta')['useMeta']
   const useMixMenuContext: typeof import('../hooks/common/menu')['useMixMenuContext']
   const useMount: typeof import('ahooks')['useMount']
   const useMouse: typeof import('ahooks')['useMouse']
