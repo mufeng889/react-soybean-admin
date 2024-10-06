@@ -1,6 +1,5 @@
 import { Segmented, Switch } from 'antd';
 import type { SegmentedOptions } from 'antd/es/segmented';
-import { CSSTransition } from 'react-transition-group';
 import { themeSchemaRecord } from '@/constants/app';
 import {
   getThemeSettings,
@@ -11,7 +10,6 @@ import {
 } from '@/store/slice/theme';
 import SettingItem from '../components/SettingItem';
 import '@/styles/css/darkMode.css';
-
 const icons: Record<UnionKey.ThemeScheme, string> = {
   light: 'material-symbols:sunny',
   dark: 'material-symbols:nightlight-rounded',
@@ -37,11 +35,7 @@ const DarkMode = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
-  const twoNodeRef = useRef(null);
-
   const themeSettings = useAppSelector(getThemeSettings);
-
-  const isVertical = themeSettings.layout.mode.includes('vertical');
 
   function handleSegmentChange(value: string | number) {
     dispatch(setThemeScheme(value as UnionKey.ThemeScheme));
@@ -69,33 +63,35 @@ const DarkMode = () => {
         ></Segmented>
       </div>
 
-      <SettingItem label={t('theme.grayscale')}>
+      <SettingItem
+        seq={1}
+        label={t('theme.grayscale')}
+      >
         <Switch
           defaultChecked={themeSettings.grayscale}
           onChange={handleGrayscaleChange}
         />
       </SettingItem>
-      <SettingItem label={t('theme.colourWeakness')}>
+
+      <SettingItem
+        seq={2}
+        label={t('theme.colourWeakness')}
+      >
         <Switch
           defaultChecked={themeSettings.colourWeakness}
           onChange={handleAuxiliaryColorChange}
         />
       </SettingItem>
-      <CSSTransition
-        timeout={300}
-        in={isVertical}
-        classNames="sider-inverted"
-        nodeRef={twoNodeRef}
+
+      <SettingItem
+        seq={3}
+        label={t('theme.isOnlyExpandCurrentParentMenu')}
       >
-        <div ref={twoNodeRef}>
-          <SettingItem label={t('theme.isOnlyExpandCurrentParentMenu')}>
-            <Switch
-              defaultChecked={themeSettings.isOnlyExpandCurrentParentMenu}
-              onChange={handleIsOnlyExpandCurrentParentMenuChange}
-            />
-          </SettingItem>
-        </div>
-      </CSSTransition>
+        <Switch
+          defaultChecked={themeSettings.isOnlyExpandCurrentParentMenu}
+          onChange={handleIsOnlyExpandCurrentParentMenuChange}
+        />
+      </SettingItem>
     </div>
   );
 };

@@ -60,16 +60,18 @@ const LayoutMode = memo(() => {
         mode={themeSettings.layout.mode}
         {...LAYOUTS_COMPONENTS}
       />
-      {themeSettings.layout.mode === 'horizontal-mix' && (
-        <div className="mt-16px">
-          <SettingItem label={t('theme.layoutMode.reverseHorizontalMix')}>
-            <ASwitch
-              defaultChecked={themeSettings.layout.reverseHorizontalMix}
-              onChange={toggleReverseHorizontalMix}
-            />
-          </SettingItem>
-        </div>
-      )}
+
+      <SettingItem
+        seq={1}
+        show={themeSettings.layout.mode === 'horizontal-mix'}
+        className="mt-16px"
+        label={t('theme.layoutMode.reverseHorizontalMix')}
+      >
+        <ASwitch
+          defaultChecked={themeSettings.layout.reverseHorizontalMix}
+          onChange={toggleReverseHorizontalMix}
+        />
+      </SettingItem>
     </>
   );
 });

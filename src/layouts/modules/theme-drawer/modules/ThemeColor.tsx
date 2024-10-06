@@ -5,8 +5,11 @@ import CustomPicker from './CustomPicker';
 
 const ThemeColor = memo(() => {
   const { t } = useTranslation();
+
   const themeSettings = useAppSelector(getThemeSettings);
+
   const dispatch = useAppDispatch();
+
   const colors = useAppSelector(themeColors);
 
   function handleRecommendColorChange(value: boolean) {
@@ -34,6 +37,7 @@ const ThemeColor = memo(() => {
         placement="topLeft"
       >
         <SettingItem
+          seq={4}
           key="recommend-color"
           label={t('theme.recommendColor')}
         >
@@ -43,8 +47,9 @@ const ThemeColor = memo(() => {
           />
         </SettingItem>
       </Tooltip>
-      {Object.entries(colors).map(([key, value]) => (
+      {Object.entries(colors).map(([key, value], index) => (
         <CustomPicker
+          index={index}
           theme={themeSettings.themeColor}
           isInfoFollowPrimary={themeSettings.isInfoFollowPrimary}
           value={value}

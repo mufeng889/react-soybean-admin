@@ -24,14 +24,16 @@ const swatches: { name: string; color: string }[] = [
 interface Props {
   label: string;
   value: string;
+  index: number;
   theme: string;
   isInfoFollowPrimary: boolean;
 }
 
-const CustomPicker: FC<Props> = memo(({ label, value, theme, isInfoFollowPrimary }) => {
+const CustomPicker: FC<Props> = memo(({ label, value, theme, isInfoFollowPrimary, index }) => {
   const { t } = useTranslation();
 
   const dispatch = useAppDispatch();
+
   function handleUpdateColor(color: string, name: App.Theme.ThemeColorKey) {
     dispatch(updateThemeColors({ key: name, color }));
   }
@@ -41,6 +43,7 @@ const CustomPicker: FC<Props> = memo(({ label, value, theme, isInfoFollowPrimary
   const onChange: CheckboxProps['onChange'] = e => {
     dispatch(setIsInfoFollowPrimary(e.target.checked));
   };
+
   const customPanelRender: ColorPickerProps['panelRender'] = (_, { components: { Picker } }) => (
     <ASpace
       direction="vertical"
@@ -77,7 +80,7 @@ const CustomPicker: FC<Props> = memo(({ label, value, theme, isInfoFollowPrimary
 
   return (
     <SettingItem
-      key={label}
+      seq={index + 5}
       suffix={
         label === 'info' && (
           <ACheckbox

@@ -9,7 +9,9 @@ import ConfigOperation from './modules/ConfigOperation';
 
 const ThemeDrawer = memo(() => {
   const { t } = useTranslation();
+
   const dispatch = useAppDispatch();
+
   const themeDrawerVisible = useAppSelector(getThemeDrawerVisible);
 
   function close() {
@@ -33,7 +35,7 @@ const ThemeDrawer = memo(() => {
       footer={<ConfigOperation />}
     >
       <SimpleScrollbar>
-        <div className="px-24px pb-24px pt-8px">
+        <div className="overflow-x-hidden px-24px pb-24px pt-8px">
           <ADivider>{t('theme.themeSchema.title')}</ADivider>
           <DarkMode />
           <ADivider>{t('theme.layoutMode.title')}</ADivider>
