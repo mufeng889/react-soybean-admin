@@ -3,6 +3,7 @@
  <h1>React SoybeanAdmin</h1>
   <span><a href="./README.en-US.md">English</a> | 中文</span>
 </div>
+```
 
 ---
 
@@ -13,7 +14,7 @@
 
 ## 简介
 
-[`React Soybean`](https://github.com/mufeng889/react-soybean-admin) 是一个清新优雅、高颜值且功能强大的后台管理模板，基于最新的前端技术栈，包括 React18,ReactRouter V6, Vite5, TypeScript, Redux/toolkit 和 UnoCSS。它内置了丰富的主题配置和组件，代码规范严谨，实现了自动化的文件路由系统。此外，它还采用了基于 ApiFox 的在线Mock数据方案。`SReact Soybean` 为您提供了一站式的后台管理解决方案，无需额外配置，开箱即用。同样是一个快速学习前沿技术的最佳实践。
+[`React Soybean`](https://github.com/mufeng889/react-soybean-admin) 是一个清新优雅、高颜值且功能强大的后台管理模板，基于最新的前端技术栈，包括 React18,ReactRouter V6, Vite5, TypeScript, Redux/toolkit 和 UnoCSS。它内置了丰富的主题配置和组件，代码规范严谨，实现了自动化的文件路由系统。此外，它还采用了基于 ApiFox 的在线Mock数据方案。`React Soybean` 为您提供了一站式的后台管理解决方案，无需额外配置，开箱即用。同样是一个快速学习前沿技术的最佳实践。
 
 ## 版本
 
@@ -45,29 +46,22 @@
   - [预览地址](https://legacy.soybeanjs.cn/)
   - [Github 仓库](https://github.com/soybeanjs/soybean-admin/tree/legacy)
 
-#### 文档
-
-- [地址](https://docs.soybeanjs.cn)
-- [旧版文档](https://legacy-docs.soybeanjs.cn)
 
 ## 特性
 
 - **前沿技术应用**：采用 React18, ReactRouter V6,Vite5, TypeScript, Redux/toolkit 和 UnoCSS 等最新流行的技术栈。
 - **清晰的项目架构**：采用 pnpm monorepo 架构，结构清晰，优雅易懂。
 - **严格的代码规范**：遵循 [SoybeanJS 规范](https://docs.soybeanjs.cn/zh/standard)，集成了eslint, prettier 和 simple-git-hooks，保证代码的规范性。
-- **TypeScript**： 支持严格的类型检查，提高代码的可维护性。
+- **TypeScript**： 通过支持严格的类型检查和内置多个 hook 的类型推导，仅需定义简洁的类型，即可享受便捷的 TypeScript 类型提示，显著提升代码的可维护性。
 - **丰富的主题配置**：内置多样的主题配置，与 UnoCSS 完美结合。
 - **内置国际化方案**：轻松实现多语言支持。
-- **自动化文件路由系统**：自动生成路由导入、声明和类型。更多细节请查看 [Elegant Router](https://github.com/mufeng889/react-auto-route)。
+- **丰富的路由功能**：基于 React-Router V6 扩展了路由 API，提供类似 Vue-Router 的便捷使用体验，让路由管理更加灵活高效。
+- **自动化文件路由系统**：约定式路由,自动生成路由导入、声明和类型。更多细节请查看 [Elegant Router](https://github.com/mufeng889/react-auto-route)。
 - **灵活的权限路由**：同时支持前端静态路由和后端动态路由。
 - **丰富的页面组件**：内置多样页面和组件，包括403、404、500页面，以及布局组件、标签组件、主题配置组件等。
 - **命令行工具**：内置高效的命令行工具，git提交、删除文件、发布等。
 - **移动端适配**：完美支持移动端，实现自适应布局。
-
-## 错误边界
-
 - **良好UI**：在发生错误的时候自动捕获错误，并显示友好界面，帮助用户快速定位和解决问题，还可以再组件内监控埋点上报。
-![](https://ohh-1321526050.cos.ap-nanjing.myqcloud.com/mobile-error-example.jpg)
 
 ## 符合Ant Design风格的保姆级文档
 
@@ -77,8 +71,7 @@
 ## 示例图片
 
 ![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-01.png)
-![](https://ohh-1321526050.cos.ap-nanjing.myqcloud.com/moblie-home-example.jpg)
-![](https://ohh-1321526050.cos.ap-nanjing.myqcloud.com/mobile-manage-example.jpg)
+![](https://ohh-1321526050.cos.ap-nanjing.myqcloud.com/mobile.png)
 ![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-02.png)
 ![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-03.png)
 ![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-04.png)
