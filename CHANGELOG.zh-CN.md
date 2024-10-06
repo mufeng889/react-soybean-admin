@@ -1,5 +1,52 @@
 # Changelog
 
+## [v1.0.0](https://github.com/mufeng889/react-soybean-admin/compare/v0.3.2...v1.0.0) (2024-10-06)
+
+### 🚀 功能特性
+
+- **packages**：
+  - @sa/hooks 添加 `useRequest` &nbsp;-&nbsp; 作者 **wang** [<samp>(e5cdc)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/e5cdcc9)
+  - hooks：添加 `use-array` & 示例 &nbsp;-&nbsp; 作者 **wang** [<samp>(02483)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/02483b5)
+- **projects**：
+  - 添加菜单功能 &nbsp;-&nbsp; 作者 **wang** [<samp>(0b14d)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/0b14deb)
+  - 支持添加路由时动态添加父级 &nbsp;-&nbsp; 作者 **wang** [<samp>(084bf)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/084bf89)
+  - 支持动态添加路由并优化代码 &nbsp;-&nbsp; 作者 **DESKTOP-31IBRMI\Administrator** [<samp>(6f3ad)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/6f3adca)
+  - 添加前置守卫 &nbsp;-&nbsp; 作者 **DESKTOP-31IBRMI\Administrator** [<samp>(13b0c)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/13b0cab)
+  - @sa/axios：成功时将响应添加到 `flatRequest` &nbsp;-&nbsp; 作者 **DESKTOP-31IBRMI\Administrator** [<samp>(92e3c)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/92e3cec)
+  - 配置是否支持自动更新 &nbsp;-&nbsp; 作者 **DESKTOP-31IBRMI\Administrator** [<samp>(fb758)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/fb7583a)
+  - 为数据路由详情页添加加载器展示 &nbsp;-&nbsp; 作者 **wang** [<samp>(7928b)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/7928bd6)
+  - 添加主题配置复制功能 &nbsp;-&nbsp; 作者 **wang** [<samp>(e3d7a)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/e3d7a99)
+  - 添加动画效果 &nbsp;-&nbsp; 作者 **wang** [<samp>(ea5d7)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/ea5d7c6)
+  - 添加 `useMeta` &nbsp;-&nbsp; 作者 **wang** [<samp>(d0c6a)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/d0c6a37)
+  - 添加 `keep-alive` 功能 &nbsp;-&nbsp; 作者 **wang** [<samp>(ed7e7)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/ed7e793)
+  - 登录支持无障碍操作 &nbsp;-&nbsp; 作者 **wang** [<samp>(d2dae)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/d2dae2d)
+
+### 🐞 Bug 修复
+
+- **packages**：
+  - 修复移动端 `eix` 选项卡无法点击 &nbsp;-&nbsp; 作者 **wang** [<samp>(e0141)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/e01410a)
+  - 支持传递状态并修复跳转前的判断问题 &nbsp;-&nbsp; 作者 **wang** [<samp>(34935)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/3493583)
+  - 修复 `useRouter` 类型 &nbsp;-&nbsp; 作者 **DESKTOP-31IBRMI\Administrator** [<samp>(32628)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/32628df)
+  - 快速新增某些情况下不返回结果，导致未初始化问题。修复 #8 &nbsp;-&nbsp; 作者 **DESKTOP-31IBRMI\Administrator** 在 https://github.com/mufeng889/react-soybean-admin/issues/8 [<samp>(cfe46)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/cfe46ea)
+- **projects**：
+  - 修复顶部菜单异常 &nbsp;-&nbsp; 作者 **wang** [<samp>(5e1f7)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/5e1f789)
+  - 修复动态切换大小菜单显示异常 &nbsp;-&nbsp; 作者 **wang** [<samp>(79c1a)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/79c1ae1)
+  - 修复 `eslint` 错误 &nbsp;-&nbsp; 作者 **DESKTOP-31IBRMI\Administrator** [<samp>(fec80)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/fec80a1)
+  - 修复点击标签页左侧菜单 `openKeys` 不变的问题 &nbsp;-&nbsp; 作者 **DESKTOP-31IBRMI\Administrator** [<samp>(f3f57)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/f3f570b)
+  - 修复路由类型并移除 `startTransition` &nbsp;-&nbsp; 作者 **wang** [<samp>(fac36)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/fac368b)
+  - 修复切换角色时的重定向及初始化标签页无缓存问题 &nbsp;-&nbsp; 作者 **DESKTOP-31IBRMI\Administrator** [<samp>(58d1f)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/58d1feb)
+  - 修复多请求时刷新令牌的问题 &nbsp;-&nbsp; 作者 **DESKTOP-31IBRMI\Administrator** [<samp>(fbe7d)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/fbe7ddb)
+  - 大屏幕下显示滚动条 &nbsp;-&nbsp; 作者 **wang** [<samp>(cb942)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/cb94245)
+  - 修复菜单展开后子菜单未打开的问题 &nbsp;-&nbsp; 作者 **wang** [<samp>(c96c9)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/c96c964)
+  - 修复混合模式下的缩小混乱问题 &nbsp;-&nbsp; 作者 **wang** [<samp>(0c6fb)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/0c6fba6)
+  - 修复 `global-tab` 与右键菜单冲突的问题 &nbsp;-&nbsp; 作者 **DESKTOP-31IBRMI\Administrator** [<samp>(a32f5)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/a32f507)
+  - 修复缩小时子菜单的打开问题 &nbsp;-&nbsp; 作者 **DESKTOP-31IBRMI\Administrator** [<samp>(77f2b)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/77f2b6a)
+  - 修复在移动端和 PC 端切换时自动展开侧边栏的问题 &nbsp;-&nbsp; 作者 **wang** [<samp>(0abdd)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/0abdd0c)
+  - 修复切换侧边栏语言失败问题 &nbsp;-&nbsp; 作者 **wang** [<samp>(75307)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/753079f)
+  - 重现环境下可以缓存主题配置 &nbsp;-&nbsp; 作者 **wang** [<samp>(50932)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/50932b7)
+
+### 🛠
+
 
 ## [v1.0.0-beta.1](https://github.com/mufeng889/react-soybean-admin/compare/v0.3.2...v1.0.0-beta.1) (2024-09-14)
 
