@@ -37,7 +37,7 @@ const ProjectNews = () => {
         <AButton
           onClick={sortByTimeDesc}
           type="text"
-          key="reverse"
+          key="sort"
         >
           以时间排序
         </AButton>,
