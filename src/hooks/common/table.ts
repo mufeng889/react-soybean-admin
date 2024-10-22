@@ -142,11 +142,16 @@ export function useTable<A extends AntDesign.TableApiFn>(
 
 export function useTableOperate<T extends TableData = TableData>(
   data: T[],
-  getData: (isResetCurrent: boolean) => Promise<void>
+  getData: (isResetCurrent?: boolean) => Promise<void>,
+  executeResActions: (res: T, operateType: AntDesign.TableOperateType) => void
 ) {
   const { bool: drawerVisible, setTrue: openDrawer, setFalse: closeDrawer } = useBoolean();
+
   const { t } = useTranslation();
+
   const [operateType, setOperateType] = useState<AntDesign.TableOperateType>('add');
+
+  const [form] = Form.useForm<T>();
 
   function handleAdd() {
     setOperateType('add');
@@ -157,8 +162,13 @@ export function useTableOperate<T extends TableData = TableData>(
   const [editingData, setEditingData] = useState<T>();
 
   function handleEdit(id: T['id']) {
-    setOperateType('edit');
     const findItem = data.find(item => item.id === id);
+
+    if (findItem) {
+      form.setFieldsValue(findItem);
+    }
+
+    setOperateType('edit');
     setEditingData(findItem);
     openDrawer();
   }
@@ -178,6 +188,12 @@ export function useTableOperate<T extends TableData = TableData>(
     onChange: onSelectChange
   };
 
+  function onClose() {
+    closeDrawer();
+
+    form.resetFields();
+  }
+
   /** the hook after the batch delete operation is completed */
   async function onBatchDeleted() {
     window.$message?.success(t('common.deleteSuccess'));
@@ -193,6 +209,18 @@ export function useTableOperate<T extends TableData = TableData>(
     await getData(false);
   }
 
+  async function handleSubmit() {
+    const res = await form.validateFields();
+
+    // request
+    await executeResActions(res, operateType);
+
+    window.$message?.success(t('common.updateSuccess'));
+
+    closeDrawer();
+    getData();
+  }
+
   return {
     drawerVisible,
     openDrawer,
@@ -205,7 +233,14 @@ export function useTableOperate<T extends TableData = TableData>(
     onSelectChange,
     rowSelection,
     onBatchDeleted,
-    onDeleted
+    onDeleted,
+    generalPopupOperation: {
+      onClose,
+      handleSubmit,
+      operateType,
+      form,
+      open: drawerVisible
+    }
   };
 }
 

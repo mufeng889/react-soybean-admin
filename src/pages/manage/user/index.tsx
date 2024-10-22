@@ -144,18 +144,16 @@ export function Component() {
     { showQuickJumper: true }
   );
 
-  const {
-    checkedRowKeys,
-    rowSelection,
-    onBatchDeleted,
-    onDeleted,
-    handleEdit,
-    handleAdd,
-    drawerVisible,
-    closeDrawer,
-    operateType,
-    editingData
-  } = useTableOperate(data, run);
+  const { checkedRowKeys, rowSelection, onBatchDeleted, onDeleted, handleEdit, handleAdd, generalPopupOperation } =
+    useTableOperate(data, run, async (res, type) => {
+      if (type === 'add') {
+        // add request 调用新增的接口
+        console.log(res);
+      } else {
+        // edit request 调用编辑的接口
+        console.log(res);
+      }
+    });
 
   async function handleBatchDelete() {
     // request
@@ -217,13 +215,7 @@ export function Component() {
           {...tableProps}
         />
         <Suspense>
-          <UserOperateDrawer
-            open={drawerVisible}
-            rowData={editingData}
-            submitted={run}
-            operateType={operateType}
-            closeDrawer={closeDrawer}
-          />
+          <UserOperateDrawer {...generalPopupOperation} />
         </Suspense>
       </ACard>
     </div>

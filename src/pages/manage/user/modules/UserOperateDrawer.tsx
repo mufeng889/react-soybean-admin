@@ -1,23 +1,17 @@
 import { Button, Drawer, Flex, Form, Input, Radio, Select } from 'antd';
 import type { FC } from 'react';
 import { useRequest } from '@sa/hooks';
+import type { FormInstance } from 'antd';
 import { enableStatusOptions, userGenderOptions } from '@/constants/business';
 import { fetchGetAllRoles } from '@/service/api';
 
 interface Props {
   open: boolean;
-  /** the type of operation */
+  onClose: () => void;
+  handleSubmit: () => void;
+  form: FormInstance;
   operateType: AntDesign.TableOperateType;
-  closeDrawer: () => void;
-  submitted: () => void;
-  /** the edit row data */
-  rowData?: Api.SystemManage.User;
 }
-
-type Model = Pick<
-  Api.SystemManage.User,
-  'userName' | 'userGender' | 'nickName' | 'userPhone' | 'userEmail' | 'userRoles' | 'status'
->;
 
 interface OptionsProps {
   label: string;
@@ -31,31 +25,14 @@ function getOptions(item: Api.SystemManage.AllRole) {
   };
 }
 
-const UserOperateDrawer: FC<Props> = ({ open, closeDrawer, submitted, operateType, rowData }) => {
+const UserOperateDrawer: FC<Props> = ({ open, onClose, form, operateType, handleSubmit }) => {
   const { t } = useTranslation();
-
-  const [form] = Form.useForm<Model>();
 
   const { data, run } = useRequest(fetchGetAllRoles, {
     manual: true
   });
 
   const roleOptions: OptionsProps[] = data ? data.map(getOptions) : [];
-
-  const onClose = () => {
-    closeDrawer();
-    form.resetFields();
-  };
-
-  async function handleSubmit() {
-    const res = await form.validateFields();
-    console.log(res);
-
-    // request
-    window.$message?.success(t('common.updateSuccess'));
-    closeDrawer();
-    submitted();
-  }
 
   useUpdateEffect(() => {
     if (open) {
@@ -82,7 +59,6 @@ const UserOperateDrawer: FC<Props> = ({ open, closeDrawer, submitted, operateTyp
     >
       <Form
         form={form}
-        initialValues={operateType === 'edit' ? rowData : undefined}
         layout="vertical"
       >
         <Form.Item
