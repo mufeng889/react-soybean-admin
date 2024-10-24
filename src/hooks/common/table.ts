@@ -129,14 +129,17 @@ export function useTable<A extends AntDesign.TableApiFn>(
       rowKey,
       pagination
     },
+    searchProps: {
+      form,
+      reset,
+      search: run
+    },
     empty,
     data,
     columnChecks,
     run,
     setColumnChecks,
-    searchParams,
-    form,
-    reset
+    searchParams
   };
 }
 
