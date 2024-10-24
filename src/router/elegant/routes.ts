@@ -259,7 +259,11 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.manage_menu',
         meta: {
           title: 'manage_menu',
-          i18nKey: 'route.manage_menu'
+          i18nKey: 'route.manage_menu',
+          icon: 'material-symbols:route',
+          order: 3,
+          roles: ['R_ADMIN'],
+          keepAlive: true
         }
       },
       {
@@ -268,7 +272,10 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.manage_role',
         meta: {
           title: 'manage_role',
-          i18nKey: 'route.manage_role'
+          i18nKey: 'route.manage_role',
+          icon: 'carbon:user-role',
+          order: 2,
+          roles: ['R_SUPER']
         }
       },
       {
@@ -280,8 +287,7 @@ export const generatedRoutes: GeneratedRoute[] = [
           i18nKey: 'route.manage_user',
           icon: 'ic:round-manage-accounts',
           order: 1,
-          roles: ['R_ADMIN'],
-          keepAlive: true
+          roles: ['R_ADMIN']
         }
       },
       {
