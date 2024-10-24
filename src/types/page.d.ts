@@ -6,4 +6,12 @@ declare namespace Page {
     search: () => void;
     form: FormInstance;
   }
+
+  interface OperateDrawerProps {
+    open: boolean;
+    onClose: () => void;
+    handleSubmit: () => void;
+    form: FormInstance;
+    operateType: AntDesign.TableOperateType;
+  }
 }
