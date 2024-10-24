@@ -1,17 +1,8 @@
 import { Button, Drawer, Flex, Form, Input, Radio, Select } from 'antd';
 import type { FC } from 'react';
 import { useRequest } from '@sa/hooks';
-import type { FormInstance } from 'antd';
 import { enableStatusOptions, userGenderOptions } from '@/constants/business';
 import { fetchGetAllRoles } from '@/service/api';
-
-interface Props {
-  open: boolean;
-  onClose: () => void;
-  handleSubmit: () => void;
-  form: FormInstance;
-  operateType: AntDesign.TableOperateType;
-}
 
 interface OptionsProps {
   label: string;
@@ -25,7 +16,7 @@ function getOptions(item: Api.SystemManage.AllRole) {
   };
 }
 
-const UserOperateDrawer: FC<Props> = ({ open, onClose, form, operateType, handleSubmit }) => {
+const UserOperateDrawer: FC<Page.OperateDrawerProps> = ({ open, onClose, form, operateType, handleSubmit }) => {
   const { t } = useTranslation();
 
   const { data, run } = useRequest(fetchGetAllRoles, {
