@@ -1,15 +1,11 @@
 import { Suspense, lazy } from 'react';
 import { fetchGetUserList } from '@/service/api';
 import { enableStatusRecord, userGenderRecord } from '@/constants/business';
+import { ATG_MAP } from '@/constants/common';
 import TableHeaderOperation from '@/components/advanced/TableHeaderOperation';
 import UserSearch from './modules/UserSearch';
 
 const UserOperateDrawer = lazy(() => import('./modules/UserOperateDrawer'));
-
-const tagMap: Record<Api.Common.EnableStatus, string> = {
-  1: 'success',
-  2: 'warning'
-};
 
 const tagUserGenderMap: Record<Api.SystemManage.UserGender, string> = {
   1: 'processing',
@@ -23,7 +19,9 @@ export function Component() {
 
   const nav = useNavigate();
 
-  const { columnChecks, data, reset, form, setColumnChecks, tableProps, run } = useTable(
+  const isMobile = useMobile();
+
+  const { columnChecks, data, setColumnChecks, tableProps, run, searchProps } = useTable(
     {
       apiFn: fetchGetUserList,
       apiParams: {
@@ -101,7 +99,7 @@ export function Component() {
               return null;
             }
             const label = t(enableStatusRecord[record.status]);
-            return <ATag color={tagMap[record.status]}>{label}</ATag>;
+            return <ATag color={ATG_MAP[record.status]}>{label}</ATag>;
           }
         },
         {
@@ -175,18 +173,13 @@ export function Component() {
     <div className="h-full min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
       <ACollapse
         bordered={false}
+        defaultActiveKey={isMobile ? undefined : '1'}
         className="card-wrapper"
         items={[
           {
             key: '1',
             label: t('common.search'),
-            children: (
-              <UserSearch
-                search={run}
-                reset={reset}
-                form={form}
-              />
-            )
+            children: <UserSearch {...searchProps} />
           }
         ]}
       />

@@ -1,15 +1,8 @@
 import { Button, Col, Flex, Form, Input, Row, Select } from 'antd';
-import type { FormInstance } from 'antd';
 import { enableStatusOptions, userGenderOptions } from '@/constants/business';
 import { translateOptions } from '@/utils/common';
 
-interface Props {
-  reset: () => void;
-  search: () => void;
-  form: FormInstance;
-}
-
-const UserSearch: FC<Props> = memo(({ reset, search, form }) => {
+const UserSearch: FC<Page.SearchProps> = memo(({ reset, search, form }) => {
   const { t } = useTranslation();
   const {
     patternRules: { email, phone }
