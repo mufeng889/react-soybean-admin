@@ -164,15 +164,21 @@ export function useTableOperate<T extends TableData = TableData>(
   /** the editing row data */
   const [editingData, setEditingData] = useState<T>();
 
-  function handleEdit(id: T['id']) {
-    const findItem = data.find(item => item.id === id);
+  function handleEdit(idOrData: T['id'] | T) {
+    if (typeof idOrData === 'object') {
+      form.setFieldsValue(idOrData);
 
-    if (findItem) {
-      form.setFieldsValue(findItem);
+      setEditingData(idOrData);
+    } else {
+      const findItem = data.find(item => item.id === idOrData);
+      if (findItem) {
+        form.setFieldsValue(findItem);
+
+        setEditingData(findItem);
+      }
     }
 
     setOperateType('edit');
-    setEditingData(findItem);
     openDrawer();
   }
 

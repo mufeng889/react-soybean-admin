@@ -64,7 +64,7 @@ export default function useHookTable<A extends ApiFn, T, C>(config: TableConfig<
 
   const { bool: empty, setBool: setEmpty } = useBoolean();
 
-  const searchParams = useRef<Parameters<A>[0]>(apiParams);
+  const searchParams = useRef<Parameters<A>[0]>(apiParams || { current: 1, size: 10 });
 
   const allColumns: C[] = config.columns();
 
