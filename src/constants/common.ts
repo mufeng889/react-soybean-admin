@@ -13,3 +13,8 @@ export const ATG_MAP: Record<Api.Common.EnableStatus, string> = {
   1: 'success',
   2: 'warning'
 };
+
+export const YesOrNo_Map: Record<CommonType.YesOrNo, string> = {
+  Y: 'error',
+  N: 'default'
+};
