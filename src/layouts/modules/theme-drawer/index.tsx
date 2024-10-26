@@ -1,4 +1,3 @@
-import { Drawer } from 'antd';
 import { SimpleScrollbar } from '@sa/materials';
 import { closeThemeDrawer, getThemeDrawerVisible } from '@/store/slice/app';
 import DarkMode from './modules/DarkMode';
@@ -19,7 +18,7 @@ const ThemeDrawer = memo(() => {
   }
 
   return (
-    <Drawer
+    <ADrawer
       open={themeDrawerVisible}
       title={t('theme.themeDrawerTitle')}
       closeIcon={false}
@@ -46,7 +45,7 @@ const ThemeDrawer = memo(() => {
           <PageFun />
         </div>
       </SimpleScrollbar>
-    </Drawer>
+    </ADrawer>
   );
 });
 

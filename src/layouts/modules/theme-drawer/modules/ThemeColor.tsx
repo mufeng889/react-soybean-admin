@@ -36,16 +36,18 @@ const ThemeColor = memo(() => {
         }
         placement="topLeft"
       >
-        <SettingItem
-          seq={4}
-          key="recommend-color"
-          label={t('theme.recommendColor')}
-        >
-          <Switch
-            defaultChecked={themeSettings.recommendColor}
-            onChange={handleRecommendColorChange}
-          />
-        </SettingItem>
+        <div>
+          <SettingItem
+            seq={4}
+            key="recommend-color"
+            label={t('theme.recommendColor')}
+          >
+            <Switch
+              defaultChecked={themeSettings.recommendColor}
+              onChange={handleRecommendColorChange}
+            />
+          </SettingItem>
+        </div>
       </Tooltip>
       {Object.entries(colors).map(([key, value], index) => (
         <CustomPicker
