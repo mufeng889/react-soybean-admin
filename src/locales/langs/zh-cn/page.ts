@@ -193,6 +193,7 @@ const page: App.I18n.Schema['translation']['page'] = {
       pathParam: '路径参数',
       layout: '布局',
       page: '页面组件',
+      parent: '父级菜单',
       i18nKey: '国际化key',
       icon: '图标',
       localIcon: '本地图标',
@@ -213,6 +214,7 @@ const page: App.I18n.Schema['translation']['page'] = {
       form: {
         home: '请选择首页',
         menuType: '请选择菜单类型',
+        parent: '请选择父级菜单',
         menuName: '请输入菜单名称',
         routeName: '请输入路由名称',
         routePath: '请输入路由路径',

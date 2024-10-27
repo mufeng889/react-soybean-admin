@@ -597,6 +597,7 @@ declare namespace App {
               pathParam: string;
               layout: string;
               page: string;
+              parent: string;
               i18nKey: string;
               icon: string;
               localIcon: string;
@@ -624,6 +625,7 @@ declare namespace App {
                 layout: string;
                 page: string;
                 i18nKey: string;
+                parent: string;
                 icon: string;
                 localIcon: string;
                 order: string;
