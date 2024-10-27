@@ -9,6 +9,13 @@ interface OptionsProps {
   value: string;
 }
 
+type Model = Pick<
+  Api.SystemManage.User,
+  'userName' | 'userGender' | 'nickName' | 'userPhone' | 'userEmail' | 'userRoles' | 'status'
+>;
+
+type RuleKey = Extract<keyof Model, 'userName' | 'status'>;
+
 function getOptions(item: Api.SystemManage.AllRole) {
   return {
     label: item.roleName,
@@ -23,7 +30,14 @@ const UserOperateDrawer: FC<Page.OperateDrawerProps> = ({ open, onClose, form, o
     manual: true
   });
 
+  const { defaultRequiredRule } = useFormRules();
+
   const roleOptions: OptionsProps[] = data ? data.map(getOptions) : [];
+
+  const rules: Record<RuleKey, App.Global.FormRule> = {
+    userName: defaultRequiredRule,
+    status: defaultRequiredRule
+  };
 
   useUpdateEffect(() => {
     if (open) {
@@ -55,6 +69,7 @@ const UserOperateDrawer: FC<Page.OperateDrawerProps> = ({ open, onClose, form, o
         <Form.Item
           label={t('page.manage.user.userName')}
           name="userName"
+          rules={[rules.userName]}
         >
           <Input placeholder={t('page.manage.user.form.userName')} />
         </Form.Item>
@@ -99,6 +114,7 @@ const UserOperateDrawer: FC<Page.OperateDrawerProps> = ({ open, onClose, form, o
         <Form.Item
           label={t('page.manage.user.userStatus')}
           name="status"
+          rules={[rules.status]}
         >
           <Radio.Group>
             {enableStatusOptions.map(item => (

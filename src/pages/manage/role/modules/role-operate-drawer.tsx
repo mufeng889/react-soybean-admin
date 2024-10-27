@@ -4,12 +4,24 @@ import MenuAuthModal from './menu-auth-modal';
 
 type Props = Page.OperateDrawerProps & { rowId: number };
 
+type Model = Pick<Api.SystemManage.Role, 'roleName' | 'roleCode' | 'roleDesc' | 'status'>;
+
+type RuleKey = Exclude<keyof Model, 'roleDesc'>;
+
 const RoleOperateDrawer: FC<Props> = memo(({ open, onClose, form, operateType, handleSubmit, rowId }) => {
   const { t } = useTranslation();
+
+  const { defaultRequiredRule } = useFormRules();
 
   const [buttonAuthVisible, { setTrue: openButtonAuthModal, setFalse: closeButtonAuthModal }] = useBoolean();
 
   const [menuAuthVisible, { setTrue: openMenuAuthModal, setFalse: closeMenuAuthModal }] = useBoolean();
+
+  const rules: Record<RuleKey, App.Global.FormRule> = {
+    roleName: defaultRequiredRule,
+    roleCode: defaultRequiredRule,
+    status: defaultRequiredRule
+  };
 
   return (
     <ADrawer
@@ -35,6 +47,7 @@ const RoleOperateDrawer: FC<Props> = memo(({ open, onClose, form, operateType, h
         <AForm.Item
           label={t('page.manage.role.roleName')}
           name="roleName"
+          rules={[rules.roleName]}
         >
           <AInput placeholder={t('page.manage.role.form.roleName')} />
         </AForm.Item>
@@ -42,6 +55,7 @@ const RoleOperateDrawer: FC<Props> = memo(({ open, onClose, form, operateType, h
         <AForm.Item
           label={t('page.manage.role.roleCode')}
           name="roleCode"
+          rules={[rules.roleCode]}
         >
           <AInput placeholder={t('page.manage.role.form.roleCode')} />
         </AForm.Item>
@@ -49,6 +63,7 @@ const RoleOperateDrawer: FC<Props> = memo(({ open, onClose, form, operateType, h
         <AForm.Item
           label={t('page.manage.role.roleStatus')}
           name="status"
+          rules={[rules.status]}
         >
           <ARadio.Group>
             {enableStatusOptions.map(item => (
