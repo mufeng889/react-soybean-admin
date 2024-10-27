@@ -258,12 +258,16 @@ export function useTableScroll(scrollX: number = 702) {
 
   const size = useSize(tableWrapperRef);
 
-  const height = size?.height;
+  function getTableScrollY() {
+    const height = size?.height;
 
-  const result = height && height < 600 ? height - 160 : undefined;
+    if (!height) return undefined;
+
+    return height - 160;
+  }
 
   const scrollConfig = {
-    y: result,
+    y: getTableScrollY(),
     x: scrollX
   };
 
