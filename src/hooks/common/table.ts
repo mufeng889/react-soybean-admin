@@ -226,7 +226,7 @@ export function useTableOperate<T extends TableData = TableData>(
 
     window.$message?.success(t('common.updateSuccess'));
 
-    closeDrawer();
+    onClose();
     getData();
   }
 
