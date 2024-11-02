@@ -1,6 +1,6 @@
 import './style.css';
 import ClassNames from 'classnames';
-import KeepAlive, { useKeepaliveRef } from 'keepalive-for-react';
+import KeepAlive, { useKeepAliveRef } from 'keepalive-for-react';
 import { getThemeSettings } from '@/store/slice/theme';
 import { getReloadFlag } from '@/store/slice/app';
 import { getRemoveCacheKey, selectCacheRoutes } from '@/store/slice/route';
@@ -10,12 +10,18 @@ interface Props {
   closePadding?: boolean;
 }
 
-const GlobalContent: FC<Props> = memo(({ closePadding }) => {
+const useGetCacheKey = () => {
   const location = useLocation();
 
+  const cacheKey = (location.pathname + location.search).slice(1).split('/').join('_');
+
+  return cacheKey;
+};
+
+const GlobalContent: FC<Props> = memo(({ closePadding }) => {
   const currentOutlet = useOutlet();
 
-  const aliveRef = useKeepaliveRef();
+  const aliveRef = useKeepAliveRef();
 
   const removeCacheKey = useAppSelector(getRemoveCacheKey);
 
@@ -23,15 +29,16 @@ const GlobalContent: FC<Props> = memo(({ closePadding }) => {
 
   const reload = useAppSelector(getReloadFlag);
 
+  const cacheKey = useGetCacheKey();
+
   const themeSetting = useAppSelector(getThemeSettings);
 
   const transitionName = themeSetting.page.animate ? themeSetting.page.animateMode : '';
 
-  const cacheKey = (location.pathname + location.search).slice(1).split('/').join('_');
-
   useUpdateEffect(() => {
     if (!aliveRef.current || !removeCacheKey) return;
-    aliveRef.current.removeCache(removeCacheKey);
+
+    aliveRef.current.destroy();
   }, [removeCacheKey]);
 
   useUpdateEffect(() => {
@@ -42,10 +49,9 @@ const GlobalContent: FC<Props> = memo(({ closePadding }) => {
     <div className={ClassNames('h-full flex-grow bg-layout', { 'p-16px': !closePadding })}>
       <KeepAlive
         aliveRef={aliveRef}
-        activeName={cacheKey}
-        cacheDivClassName={reload ? transitionName : ''}
+        activeCacheKey={cacheKey}
+        cacheNodeClassName={reload ? transitionName : ''}
         include={cacheKeys}
-        strategy={'LRU'}
       >
         {currentOutlet}
       </KeepAlive>
