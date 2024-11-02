@@ -1,32 +1,14 @@
-import { Card, Descriptions, Space, Tag } from 'antd';
 import TypeIt from 'typeit';
 import type { Options } from 'typeit';
 import type { El } from 'typeit/dist/types';
 import pkg from '~/package.json';
-
-interface PkgVersionInfo {
-  name: string;
-  version: string;
-}
-
-interface PkgJson {
-  name: string;
-  version: string;
-  dependencies: PkgVersionInfo[];
-  devDependencies: PkgVersionInfo[];
-}
+import type { CardInfo, PkgJson, PkgVersionInfo } from './modules/shared';
+import { transformVersionData } from './modules/shared';
+import HeaderDescription from './modules/header-description';
 
 const latestBuildTime = BUILD_TIME;
 
 const { name, version, dependencies, devDependencies } = pkg;
-
-function transformVersionData(tuple: [string, string]): PkgVersionInfo {
-  const [$name, $version] = tuple;
-  return {
-    name: $name,
-    version: $version
-  };
-}
 
 const pkgJson: PkgJson = {
   name,
@@ -35,10 +17,23 @@ const pkgJson: PkgJson = {
   devDependencies: Object.entries(devDependencies).map(transformVersionData)
 };
 
-export function Component() {
-  const { t } = useTranslation();
+const TagItem = (item: PkgVersionInfo) => <ATag color="blue">{item.nameOrHref}</ATag>;
 
+const Link = (item: PkgVersionInfo) => (
+  <a
+    className="text-primary"
+    href={item.nameOrHref}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    {item.label}
+  </a>
+);
+
+function useGetTypeit() {
   const textRef = useRef<El>(null);
+
+  const { t } = useTranslation();
 
   function init() {
     if (!textRef.current) return;
@@ -58,104 +53,75 @@ export function Component() {
     init();
   });
 
+  return textRef;
+}
+
+function useGetCardInfo(): CardInfo[] {
+  const { t } = useTranslation();
+
+  const packageInfo: PkgVersionInfo[] = [
+    {
+      label: t('page.about.projectInfo.version'),
+      nameOrHref: pkgJson.version,
+      render: TagItem
+    },
+    {
+      label: t('page.about.projectInfo.latestBuildTime'),
+      nameOrHref: latestBuildTime,
+      render: TagItem
+    },
+    {
+      label: t('page.about.projectInfo.githubLink'),
+      nameOrHref: pkg.homepage,
+      render: Link
+    },
+    {
+      label: t('page.about.projectInfo.previewLink'),
+      nameOrHref: pkg.website,
+      render: Link
+    }
+  ];
+
+  const cardInfo: CardInfo[] = [
+    {
+      title: t('page.about.projectInfo.title'),
+      content: packageInfo
+    },
+    {
+      title: t('page.about.prdDep'),
+      content: pkgJson.dependencies
+    },
+    {
+      title: t('page.about.devDep'),
+      content: pkgJson.dependencies
+    }
+  ];
+  return cardInfo;
+}
+
+export function Component() {
+  const { t } = useTranslation();
+
+  const cardInfo = useGetCardInfo();
+
+  const textRef = useGetTypeit();
+
   return (
-    <Space
+    <ASpace
       direction="vertical"
       className="w-full"
       size={16}
     >
-      <Card
+      <ACard
         title={t('page.about.title')}
         bordered={false}
         size="small"
         className="card-wrapper"
       >
         <span ref={textRef} />
-      </Card>
+      </ACard>
 
-      <Card
-        title={t('page.about.projectInfo.title')}
-        bordered={false}
-        size="small"
-        className="card-wrapper"
-      >
-        <Descriptions
-          bordered
-          size="small"
-          column={{ xs: 1, sm: 2, xxl: 2, xl: 2, lg: 2, md: 2 }}
-        >
-          <Descriptions.Item label={t('page.about.projectInfo.version')}>
-            <Tag color="blue">{pkgJson.version}</Tag>
-          </Descriptions.Item>
-          <Descriptions.Item label={t('page.about.projectInfo.latestBuildTime')}>
-            <Tag color="blue">{latestBuildTime}</Tag>
-          </Descriptions.Item>
-          <Descriptions.Item label={t('page.about.projectInfo.githubLink')}>
-            <a
-              className="text-primary"
-              href={pkg.homepage}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {t('page.about.projectInfo.githubLink')}
-            </a>
-          </Descriptions.Item>
-          <Descriptions.Item label={t('page.about.projectInfo.previewLink')}>
-            <a
-              className="text-primary"
-              href={pkg.website}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {t('page.about.projectInfo.previewLink')}
-            </a>
-          </Descriptions.Item>
-        </Descriptions>
-      </Card>
-
-      <Card
-        title={t('page.about.prdDep')}
-        bordered={false}
-        size="small"
-        className="card-wrapper"
-      >
-        <Descriptions
-          bordered
-          size="small"
-          column={{ xs: 1, sm: 2, xxl: 2, xl: 2, lg: 2, md: 2 }}
-        >
-          {pkgJson.dependencies.map(item => (
-            <Descriptions.Item
-              key={item.name}
-              label={item.name}
-            >
-              {item.version}
-            </Descriptions.Item>
-          ))}
-        </Descriptions>
-      </Card>
-
-      <Card
-        title={t('page.about.devDep')}
-        bordered={false}
-        size="small"
-        className="card-wrapper"
-      >
-        <Descriptions
-          bordered
-          size="small"
-          column={{ xs: 1, sm: 2, xxl: 2, xl: 2, lg: 2, md: 2 }}
-        >
-          {pkgJson.devDependencies.map(item => (
-            <Descriptions.Item
-              key={item.name}
-              label={item.name}
-            >
-              {item.version}
-            </Descriptions.Item>
-          ))}
-        </Descriptions>
-      </Card>
-    </Space>
+      {cardInfo.map(HeaderDescription)}
+    </ASpace>
   );
 }
