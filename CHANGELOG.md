@@ -1,6 +1,67 @@
 # Changelog
 
 
+## [v1.1.0](https://github.com/mufeng889/react-soybean-admin/compare/v1.0.0...v1.1.0) (2024-11-09)
+
+### &nbsp;&nbsp;&nbsp;🚀 Features
+
+- **hooks**:
+  - add useMobile hook &nbsp;-&nbsp; by **wang** [<samp>(2b2c7)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/2b2c763)
+- **projects**:
+  - add tag-map contant &nbsp;-&nbsp; by **wang** [<samp>(605ee)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/605ee30)
+  - add route config example &nbsp;-&nbsp; by **wang** [<samp>(1587b)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/1587bcd)
+  - add role-manage &nbsp;-&nbsp; by **wang** [<samp>(c315f)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/c315f10)
+  - add new tag-map & auto-import antd components type &nbsp;-&nbsp; by **wang** [<samp>(57fb4)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/57fb4fb)
+  - add menu-manage &nbsp;-&nbsp; by **wang** [<samp>(b10f5)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/b10f577)
+  - add user-modal & role-modal form rules &nbsp;-&nbsp; by **wang** [<samp>(646a5)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/646a5f0)
+- **types**:
+  - add page types &nbsp;-&nbsp; by **wang** [<samp>(804f3)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/804f34b)
+  - add new auto import antd components &nbsp;-&nbsp; by **wang** [<samp>(45bbc)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/45bbc96)
+  - add new auto-import antd components &nbsp;-&nbsp; by **wang** [<samp>(df1e2)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/df1e272)
+  - add page operateDrawerProps &nbsp;-&nbsp; by **wang** [<samp>(3b822)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/3b822d3)
+
+### &nbsp;&nbsp;&nbsp;🐞 Bug Fixes
+
+- **hooks**:
+  - after the user manages the edit modification submission, when he clicks Add, the data just edited is displayed  .close #18 &nbsp;-&nbsp; by **COBORGA-8FFVDVM\cob** in https://github.com/mufeng889/react-soybean-admin/issues/18 [<samp>(c4f1e)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/c4f1eb3)
+- **projects**:
+  - home: fix the button have  same key &nbsp;-&nbsp; by **DESKTOP-31IBRMI\Administrator** [<samp>(d583c)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/d583cce)
+  - optimize theme-drawer code to remove waring &nbsp;-&nbsp; by **wang** [<samp>(d489c)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/d489c9c)
+  - fix table scroll don't auto scroll &nbsp;-&nbsp; by **wang** [<samp>(2277d)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/2277d19)
+  - login after don't go login page .close #14 &nbsp;-&nbsp; by **COBORGA-8FFVDVM\cob** in https://github.com/mufeng889/react-soybean-admin/issues/14 [<samp>(a4b51)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/a4b514c)
+
+### &nbsp;&nbsp;&nbsp;🛠 Optimizations
+
+- **projects**:
+  - optimize use-manager code &nbsp;-&nbsp; by **wang** [<samp>(effac)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/effacf9)
+  - optimize userOperateDrawer code &nbsp;-&nbsp; by **wang** [<samp>(46bc4)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/46bc404)
+  - optimize code &nbsp;-&nbsp; by **wang** [<samp>(14e87)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/14e8768)
+  - optimize about page code &nbsp;-&nbsp; by **wang** [<samp>(bb862)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/bb86296)
+
+### &nbsp;&nbsp;&nbsp;💅 Refactors
+
+- **hooks**:
+  - usetable return data add searchProps &nbsp;-&nbsp; by **wang** [<samp>(6c0d7)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/6c0d7ce)
+- **projects**:
+  - simplifies and extends useTableOperate &nbsp;-&nbsp; by **wang** [<samp>(283fd)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/283fdde)
+  - use-Table handleEdit support income data &nbsp;-&nbsp; by **wang** [<samp>(56b0d)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/56b0d05)
+  - update keep-alive usage &nbsp;-&nbsp; by **wang** [<samp>(dcebd)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/dcebd86)
+
+### &nbsp;&nbsp;&nbsp;🏡 Chore
+
+- **deps**:
+  - delete immer &nbsp;-&nbsp; by **wang** [<samp>(8ace3)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/8ace3fc)
+- **projects**:
+  - update CHANGELOG.zh-CN &nbsp;-&nbsp; by **wang** [<samp>(6d986)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/6d98622)
+  - update README &nbsp;-&nbsp; by **wang** [<samp>(a3115)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/a31159d)
+  - update deps & sass usage &nbsp;-&nbsp; by **wang** [<samp>(7da52)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/7da5263)
+  - optimize code & update vscode settings &nbsp;-&nbsp; by **wang** [<samp>(2ecb0)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/2ecb099)
+
+### &nbsp;&nbsp;&nbsp;❤️ Contributors
+
+
+[wang](mailto:1509326266@qq.com)
+
 ## [v1.0.0](https://github.com/mufeng889/react-soybean-admin/compare/v0.3.2...v1.0.0) (2024-10-06)
 
 ### &nbsp;&nbsp;&nbsp;🚀 Features
