@@ -30,7 +30,7 @@ export const Component = () => {
           name="phone"
           rules={formRules.phone}
         >
-          <Input placeholder={t('page.login.common.phonePlaceholder')}></Input>
+          <Input placeholder={t('page.login.common.phonePlaceholder')} />
         </Form.Item>
 
         <Form.Item

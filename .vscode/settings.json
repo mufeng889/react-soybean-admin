@@ -7,6 +7,12 @@
   "editor.guides.bracketPairs": "active",
   "editor.formatOnSave": false,
   "eslint.validate": ["html", "css", "scss", "json", "jsonc"],
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "package.json": "package-lock.json, pnpm*, eslint*, .editorconfig,.gitattributes,.gitignore,.npmrc",
+    ".env": ".env*",
+    "README.md": "README*,LICENSE,CHANGELOG*,vercel.json"
+  },
   "i18n-ally.displayLanguage": "zh-cn",
   "i18n-ally.enabledParsers": ["ts"],
   "i18n-ally.enabledFrameworks": ["react-i18next"],

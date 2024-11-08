@@ -124,7 +124,7 @@ const ProjectNews = () => {
                   avatar={<SoybeanAvatar className="size-48px!" />}
                   title={item.content}
                   description={item.time}
-                ></List.Item.Meta>
+                />
               </List.Item>
             </motion.div>
           )}
