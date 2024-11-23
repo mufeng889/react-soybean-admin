@@ -39,7 +39,7 @@ const GlobalContent: FC<Props> = memo(({ closePadding }) => {
   useUpdateEffect(() => {
     if (!aliveRef.current || !removeCacheKey) return;
 
-    aliveRef.current.destroy();
+    aliveRef.current.destroy(removeCacheKey);
   }, [removeCacheKey]);
 
   useUpdateEffect(() => {
