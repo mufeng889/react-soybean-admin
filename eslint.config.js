@@ -23,6 +23,7 @@ export default defineConfig(
           noUselessIndex: true
         }
       ],
+
       'import/order': [
         'error',
         {
@@ -35,6 +36,7 @@ export default defineConfig(
           pathGroupsExcludedImportTypes: ['builtin']
         }
       ],
+
       'no-underscore-dangle': 'off',
 
       'react/hook-use-state': [
@@ -43,9 +45,30 @@ export default defineConfig(
           allowDestructuredState: true
         }
       ],
-      'react/jsx-curly-newline': ['warn', { multiline: 'consistent', singleline: 'consistent' }],
-      'react/jsx-no-undef': ['off'],
 
+      'react/jsx-closing-bracket-location': ['warn', 'tag-aligned'],
+      'react/jsx-closing-tag-location': 'warn',
+      'react/jsx-curly-brace-presence': [
+        'warn',
+        {
+          children: 'never',
+          propElementValues: 'always',
+          props: 'never'
+        }
+      ],
+      'react/jsx-curly-newline': ['warn', { multiline: 'consistent', singleline: 'consistent' }],
+      'react/jsx-equals-spacing': ['warn', 'never'],
+      'react/jsx-fragments': ['warn', 'syntax'],
+      'react/jsx-newline': 'warn',
+      'react/jsx-no-undef': ['off'],
+      'react/jsx-no-useless-fragment': 'warn',
+      'react/jsx-one-expression-per-line': [
+        'warn',
+        {
+          allow: 'single-child'
+        }
+      ],
+      'react/jsx-props-no-multi-spaces': 'warn',
       'react/jsx-sort-props': [
         'warn',
         { callbacksLast: true, ignoreCase: true, multiline: 'last', shorthandFirst: true }
