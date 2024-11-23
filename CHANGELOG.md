@@ -1,6 +1,21 @@
 # Changelog
 
 
+## [v1.1.1](https://github.com/mufeng889/react-soybean-admin/compare/v1.1.0...v1.1.1) (2024-11-24)
+
+### &nbsp;&nbsp;&nbsp;🐞 Bug Fixes
+
+- **projects**: fix when clicking Close tab TAB occasionally white screen &nbsp;-&nbsp; by **wang** [<samp>(ae2c3)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/ae2c385)
+
+### &nbsp;&nbsp;&nbsp;🎨 Styles
+
+- **projects**: add eslint rules &nbsp;-&nbsp; by **wang** [<samp>(d27ac)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/d27ac84)
+
+### &nbsp;&nbsp;&nbsp;❤️ Contributors
+
+
+[wang](mailto:1509326266@qq.com)
+
 ## [v1.1.0](https://github.com/mufeng889/react-soybean-admin/compare/v1.0.0...v1.1.0) (2024-11-09)
 
 ### &nbsp;&nbsp;&nbsp;🚀 Features

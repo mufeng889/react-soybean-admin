@@ -1,7 +1,7 @@
 {
   "name": "react-soy",
   "type": "module",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": false,
   "packageManager": "pnpm@9.12.3",
   "description": "A fresh and elegant admin template, based on React18、Vite5、TypeScript、Ant Design and UnoCSS. 一个基于React18、Vite5、TypeScript、Ant Design and UnoCSS的清新优雅的中后台模版。",
