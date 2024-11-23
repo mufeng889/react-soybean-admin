@@ -1,17 +1,18 @@
 import DarkModeContainer from '@/components/stateless/common/DarkModeContainer.tsx';
-import { getDarkMode } from '@/store/slice/theme';
 import { GLOBAL_SIDER_MENU_ID } from '@/constants/app';
+import { getDarkMode } from '@/store/slice/theme';
+
 import GlobalLogo from '../global-logo';
 
 interface Props {
   headerHeight: number;
-  isVerticalMix: boolean;
-  isHorizontalMix: boolean;
-  siderCollapse: boolean;
   inverted: boolean;
+  isHorizontalMix: boolean;
+  isVerticalMix: boolean;
+  siderCollapse: boolean;
 }
 
-const GlobalSider: FC<Props> = memo(({ headerHeight, isHorizontalMix, isVerticalMix, siderCollapse, inverted }) => {
+const GlobalSider: FC<Props> = memo(({ headerHeight, inverted, isHorizontalMix, isVerticalMix, siderCollapse }) => {
   const darkMode = useAppSelector(getDarkMode);
 
   const showLogo = !isVerticalMix && !isHorizontalMix;
@@ -30,8 +31,8 @@ const GlobalSider: FC<Props> = memo(({ headerHeight, isHorizontalMix, isVertical
         />
       )}
       <div
-        id={GLOBAL_SIDER_MENU_ID}
         className={showLogo ? 'flex-1-hidden' : 'h-full'}
+        id={GLOBAL_SIDER_MENU_ID}
       />
     </DarkModeContainer>
   );

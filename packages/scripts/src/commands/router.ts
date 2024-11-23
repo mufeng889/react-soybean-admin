@@ -1,26 +1,28 @@
-import process from 'node:process';
-import path from 'node:path';
-import { writeFile } from 'node:fs/promises';
 import { existsSync, mkdirSync } from 'node:fs';
+import { writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import process from 'node:process';
+
 import { prompt } from 'enquirer';
 import { green, red } from 'kolorist';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
 interface PromptObject {
-  routeName: string;
-  addRouteParams: boolean;
-  routeParams: string;
   addRouteConfig: boolean;
+  addRouteParams: boolean;
+  routeName: string;
+  routeParams: string;
 }
 
 const argv = yargs(hideBin(process.argv))
   .option('routeConfigFile', {
     alias: 'r',
-    type: 'string',
+    // 该参数为可选
+    default: 'config',
+    demandOption: false,
     description: '配置文件夹名称',
-    demandOption: false, // 该参数为可选
-    default: 'config' // 默认值
+    type: 'string' // 默认值
   })
   .help()
   .parseSync();
@@ -29,31 +31,31 @@ const argv = yargs(hideBin(process.argv))
 export async function generateRoute() {
   const result = await prompt<PromptObject>([
     {
-      name: 'routeName',
-      type: 'text',
+      initial: 'demo-route_child',
       message: 'please enter route name',
-      initial: 'demo-route_child'
+      name: 'routeName',
+      type: 'text'
     },
     {
-      name: 'addRouteParams',
-      type: 'confirm',
+      initial: false,
       message: 'add route params?',
-      initial: false
+      name: 'addRouteParams',
+      type: 'confirm'
     },
     {
-      name: 'addRouteConfig',
-      type: 'confirm',
+      initial: false,
       message: 'add route config?',
-      initial: false
+      name: 'addRouteConfig',
+      type: 'confirm'
     }
   ]);
 
   if (result.addRouteParams) {
     const answers = await prompt<PromptObject>({
-      name: 'routeParams',
-      type: 'text',
+      initial: 'id',
       message: 'please enter route params',
-      initial: 'id'
+      name: 'routeParams',
+      type: 'text'
     });
 
     Object.assign(result, answers);

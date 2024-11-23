@@ -1,14 +1,16 @@
-import path from 'node:path';
 import { readFileSync } from 'node:fs';
+import path from 'node:path';
+
 import { prompt } from 'enquirer';
-import { execCommand } from '../shared';
+
 import { locales } from '../locales';
 import type { Lang } from '../locales';
+import { execCommand } from '../shared';
 
 interface PromptObject {
-  types: string;
-  scopes: string;
   description: string;
+  scopes: string;
+  types: string;
 }
 
 /**
@@ -17,7 +19,7 @@ interface PromptObject {
  * @param lang
  */
 export async function gitCommit(lang: Lang = 'en-us') {
-  const { gitCommitMessages, gitCommitTypes, gitCommitScopes } = locales[lang];
+  const { gitCommitMessages, gitCommitScopes, gitCommitTypes } = locales[lang];
 
   const typesChoices = gitCommitTypes.map(([value, msg]) => {
     const nameWithSuffix = `${value}:`;
@@ -25,33 +27,33 @@ export async function gitCommit(lang: Lang = 'en-us') {
     const message = `${nameWithSuffix.padEnd(12)}${msg}`;
 
     return {
-      name: value,
-      message
+      message,
+      name: value
     };
   });
 
   const scopesChoices = gitCommitScopes.map(([value, msg]) => ({
-    name: value,
-    message: `${value.padEnd(30)} (${msg})`
+    message: `${value.padEnd(30)} (${msg})`,
+    name: value
   }));
 
   const result = await prompt<PromptObject>([
     {
-      name: 'types',
-      type: 'select',
+      choices: typesChoices,
       message: gitCommitMessages.types,
-      choices: typesChoices
+      name: 'types',
+      type: 'select'
     },
     {
-      name: 'scopes',
-      type: 'select',
+      choices: scopesChoices,
       message: gitCommitMessages.scopes,
-      choices: scopesChoices
+      name: 'scopes',
+      type: 'select'
     },
     {
+      message: gitCommitMessages.description,
       name: 'description',
-      type: 'text',
-      message: gitCommitMessages.description
+      type: 'text'
     }
   ]);
 

@@ -1,26 +1,26 @@
-import { createContext } from 'react';
 import type { Route } from '@sa/simple-router';
+import { createContext } from 'react';
 
 export interface MixMenuContextProps {
   activeFirstLevelMenuKey: string;
-  setActiveFirstLevelMenuKey: (key?: string) => void;
-  firstLevelMenu: App.Global.Menu[];
   allMenus: App.Global.Menu[];
   childLevelMenus: App.Global.Menu[];
+  firstLevelMenu: App.Global.Menu[];
   isActiveFirstLevelMenuHasChildren: boolean;
-  selectKey: string[];
   route: Route;
+  selectKey: string[];
+  setActiveFirstLevelMenuKey: (key?: string) => void;
 }
 
 function voidFunc() {}
 
 export const MixMenuContext = createContext<MixMenuContextProps>({
   activeFirstLevelMenuKey: '',
-  setActiveFirstLevelMenuKey: voidFunc,
-  firstLevelMenu: [],
   allMenus: [],
   childLevelMenus: [],
+  firstLevelMenu: [],
   isActiveFirstLevelMenuHasChildren: false,
+  route: {} as Route,
   selectKey: [],
-  route: {} as Route
+  setActiveFirstLevelMenuKey: voidFunc
 });

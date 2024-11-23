@@ -1,6 +1,7 @@
+import { useRequest } from '@sa/hooks';
 import { Button, Drawer, Flex, Form, Input, Radio, Select } from 'antd';
 import type { FC } from 'react';
-import { useRequest } from '@sa/hooks';
+
 import { enableStatusOptions, userGenderOptions } from '@/constants/business';
 import { fetchGetAllRoles } from '@/service/api';
 
@@ -11,10 +12,10 @@ interface OptionsProps {
 
 type Model = Pick<
   Api.SystemManage.User,
-  'userName' | 'userGender' | 'nickName' | 'userPhone' | 'userEmail' | 'userRoles' | 'status'
+  'nickName' | 'status' | 'userEmail' | 'userGender' | 'userName' | 'userPhone' | 'userRoles'
 >;
 
-type RuleKey = Extract<keyof Model, 'userName' | 'status'>;
+type RuleKey = Extract<keyof Model, 'status' | 'userName'>;
 
 function getOptions(item: Api.SystemManage.AllRole) {
   return {
@@ -23,7 +24,7 @@ function getOptions(item: Api.SystemManage.AllRole) {
   };
 }
 
-const UserOperateDrawer: FC<Page.OperateDrawerProps> = ({ open, onClose, form, operateType, handleSubmit }) => {
+const UserOperateDrawer: FC<Page.OperateDrawerProps> = ({ form, handleSubmit, onClose, open, operateType }) => {
   const { t } = useTranslation();
 
   const { data, run } = useRequest(fetchGetAllRoles, {
@@ -35,8 +36,8 @@ const UserOperateDrawer: FC<Page.OperateDrawerProps> = ({ open, onClose, form, o
   const roleOptions: OptionsProps[] = data ? data.map(getOptions) : [];
 
   const rules: Record<RuleKey, App.Global.FormRule> = {
-    userName: defaultRequiredRule,
-    status: defaultRequiredRule
+    status: defaultRequiredRule,
+    userName: defaultRequiredRule
   };
 
   useUpdateEffect(() => {
@@ -47,20 +48,20 @@ const UserOperateDrawer: FC<Page.OperateDrawerProps> = ({ open, onClose, form, o
 
   return (
     <Drawer
-      onClose={onClose}
-      title={operateType === 'add' ? t('page.manage.user.addUser') : t('page.manage.user.editUser')}
       open={open}
+      title={operateType === 'add' ? t('page.manage.user.addUser') : t('page.manage.user.editUser')}
       footer={
         <Flex justify="space-between">
           <Button onClick={onClose}>{t('common.cancel')}</Button>
           <Button
-            onClick={handleSubmit}
             type="primary"
+            onClick={handleSubmit}
           >
             {t('common.confirm')}
           </Button>
         </Flex>
       }
+      onClose={onClose}
     >
       <Form
         form={form}
@@ -81,8 +82,8 @@ const UserOperateDrawer: FC<Page.OperateDrawerProps> = ({ open, onClose, form, o
           <Radio.Group>
             {userGenderOptions.map(item => (
               <Radio
-                value={item.value}
                 key={item.value}
+                value={item.value}
               >
                 {t(item.label)}
               </Radio>
@@ -119,8 +120,8 @@ const UserOperateDrawer: FC<Page.OperateDrawerProps> = ({ open, onClose, form, o
           <Radio.Group>
             {enableStatusOptions.map(item => (
               <Radio
-                value={item.value}
                 key={item.value}
+                value={item.value}
               >
                 {t(item.label)}
               </Radio>

@@ -7,10 +7,10 @@ export function getToken() {
 /** Get user info */
 export function getUserInfo() {
   const emptyInfo: Api.Auth.UserInfo = {
-    userId: '',
-    userName: '',
+    buttons: [],
     roles: [],
-    buttons: []
+    userId: '',
+    userName: ''
   };
   const userInfo = localStg.get('userInfo') || emptyInfo;
 

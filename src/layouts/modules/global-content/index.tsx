@@ -1,9 +1,10 @@
 import './style.css';
 import ClassNames from 'classnames';
 import KeepAlive, { useKeepAliveRef } from 'keepalive-for-react';
-import { getThemeSettings } from '@/store/slice/theme';
+
 import { getReloadFlag } from '@/store/slice/app';
 import { getRemoveCacheKey, selectCacheRoutes } from '@/store/slice/route';
+import { getThemeSettings } from '@/store/slice/theme';
 
 interface Props {
   /** Show padding for content */
@@ -48,8 +49,8 @@ const GlobalContent: FC<Props> = memo(({ closePadding }) => {
   return (
     <div className={ClassNames('h-full flex-grow bg-layout', { 'p-16px': !closePadding })}>
       <KeepAlive
-        aliveRef={aliveRef}
         activeCacheKey={cacheKey}
+        aliveRef={aliveRef}
         cacheNodeClassName={reload ? transitionName : ''}
         include={cacheKeys}
       >

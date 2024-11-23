@@ -1,8 +1,10 @@
 import { useRequest } from '@sa/hooks';
 import { Suspense } from 'react';
-import { fetchGetAllPages, fetchGetMenuList } from '@/service/api';
+
 import { enableStatusRecord, menuTypeRecord } from '@/constants/business';
 import { ATG_MAP, YesOrNo_Map, yesOrNoRecord } from '@/constants/common';
+import { fetchGetAllPages, fetchGetMenuList } from '@/service/api';
+
 import MenuOperateModal from './modules/menu-operate-modal';
 import type { OperateType } from './modules/shared';
 import { createDefaultModel, flattenMenu, getLayoutAndPage, getPathParamFromRoutePath } from './modules/shared';
@@ -10,25 +12,23 @@ import { createDefaultModel, flattenMenu, getLayoutAndPage, getPathParamFromRout
 export function Component() {
   const { t } = useTranslation();
 
-  const { tableWrapperRef, scrollConfig } = useTableScroll();
+  const { scrollConfig, tableWrapperRef } = useTableScroll();
 
   const { data: allPages } = useRequest(fetchGetAllPages);
 
-  const { columnChecks, data, setColumnChecks, tableProps, run } = useTable(
+  const { columnChecks, data, run, setColumnChecks, tableProps } = useTable(
     {
       apiFn: fetchGetMenuList,
       columns: () => [
         {
-          key: 'id',
-          title: t('page.manage.menu.id'),
           align: 'center',
-          dataIndex: 'id'
+          dataIndex: 'id',
+          key: 'id',
+          title: t('page.manage.menu.id')
         },
         {
-          key: 'menuType',
-          title: t('page.manage.menu.menuType'),
           align: 'center',
-          width: 80,
+          key: 'menuType',
           render: (_, record) => {
             if (record.status === null) {
               return null;
@@ -41,12 +41,13 @@ export function Component() {
 
             const label = t(menuTypeRecord[record.menuType]);
             return <ATag color={tagMap[record.menuType]}>{label}</ATag>;
-          }
+          },
+          title: t('page.manage.menu.menuType'),
+          width: 80
         },
         {
-          key: 'menuName',
-          title: t('page.manage.menu.menuName'),
           align: 'center',
+          key: 'menuName',
           minWidth: 120,
           render: (_, record) => {
             const { i18nKey, menuName } = record;
@@ -54,13 +55,12 @@ export function Component() {
             const label = i18nKey ? t(i18nKey) : menuName;
 
             return <span>{label}</span>;
-          }
+          },
+          title: t('page.manage.menu.menuName')
         },
         {
-          key: 'icon',
-          title: t('page.manage.menu.icon'),
           align: 'center',
-          width: 60,
+          key: 'icon',
           render: (_, record) => {
             const icon = record.iconType === '1' ? record.icon : undefined;
 
@@ -69,34 +69,34 @@ export function Component() {
             return (
               <div className="flex-center">
                 <SvgIcon
+                  className="text-icon"
                   icon={icon}
                   localIcon={localIcon}
-                  className="text-icon"
                 />
               </div>
             );
-          }
+          },
+          title: t('page.manage.menu.icon'),
+          width: 60
         },
         {
-          key: 'routeName',
-          title: t('page.manage.menu.routeName'),
           align: 'center',
           dataIndex: 'routeName',
-          minWidth: 120
+          key: 'routeName',
+          minWidth: 120,
+          title: t('page.manage.menu.routeName')
         },
         {
-          key: 'routePath',
-          title: t('page.manage.menu.routePath'),
           align: 'center',
           dataIndex: 'routePath',
-          minWidth: 120
+          key: 'routePath',
+          minWidth: 120,
+          title: t('page.manage.menu.routePath')
         },
         {
-          key: 'status',
-          dataIndex: 'status',
-          title: t('page.manage.menu.menuStatus'),
           align: 'center',
-          width: 80,
+          dataIndex: 'status',
+          key: 'status',
           render: (_, record) => {
             if (record.status === null) {
               return null;
@@ -105,63 +105,63 @@ export function Component() {
             const label = t(enableStatusRecord[record.status]);
 
             return <ATag color={ATG_MAP[record.status]}>{label}</ATag>;
-          }
+          },
+          title: t('page.manage.menu.menuStatus'),
+          width: 80
         },
         {
-          key: 'hideInMenu',
-          title: t('page.manage.menu.hideInMenu'),
-          dataIndex: 'hideInMenu',
           align: 'center',
-          width: 80,
+          dataIndex: 'hideInMenu',
+          key: 'hideInMenu',
           render: (_, record) => {
             const hide: CommonType.YesOrNo = record.hideInMenu ? 'Y' : 'N';
 
             const label = t(yesOrNoRecord[hide]);
 
             return <ATag color={YesOrNo_Map[hide]}>{label}</ATag>;
-          }
+          },
+          title: t('page.manage.menu.hideInMenu'),
+          width: 80
         },
         {
-          key: 'parentId',
-          dataIndex: 'parentId',
-          title: t('page.manage.menu.parentId'),
-          width: 90,
-          align: 'center'
-        },
-        {
-          key: 'order',
-          dataIndex: 'order',
-          title: t('page.manage.menu.order'),
           align: 'center',
+          dataIndex: 'parentId',
+          key: 'parentId',
+          title: t('page.manage.menu.parentId'),
+          width: 90
+        },
+        {
+          align: 'center',
+          dataIndex: 'order',
+          key: 'order',
+          title: t('page.manage.menu.order'),
           width: 60
         },
         {
-          key: 'operate',
-          title: t('common.operate'),
           align: 'center',
-          width: 195,
+          key: 'operate',
           render: (_, record, index) => (
             <div className="flex-center justify-end gap-8px">
               {record.menuType === '1' && (
                 <AButton
-                  type="primary"
                   ghost
-                  onClick={() => handleAddChildMenu(record.id)}
                   size="small"
+                  type="primary"
+                  onClick={() => handleAddChildMenu(record.id)}
                 >
                   {t('page.manage.menu.addChildMenu')}
                 </AButton>
               )}
               <AButton
-                onClick={() => edit(record, index)}
                 size="small"
+                onClick={() => edit(record, index)}
               >
                 {t('common.edit')}
               </AButton>
 
               <APopconfirm
-                onConfirm={() => handleDelete(record.id)}
                 title={t('common.confirmDelete')}
+                onConfirm={() => handleDelete(record.id)}
               >
                 <AButton
                   danger
@@ -171,7 +171,9 @@ export function Component() {
                 </AButton>
               </APopconfirm>
             </div>
-          )
+          ),
+          title: t('common.operate'),
+          width: 195
         }
       ]
     },
@@ -182,13 +184,13 @@ export function Component() {
 
   const {
     checkedRowKeys,
-    rowSelection,
+    generalPopupOperation,
+    handleAdd,
+    handleEdit,
     onBatchDeleted,
     onDeleted,
-    handleAdd,
-    generalPopupOperation,
-    handleEdit,
-    openDrawer
+    openDrawer,
+    rowSelection
   } = useTableOperate(data, run, async (res, type) => {
     if (type === 'add') {
       // add request 调用新增的接口
@@ -224,14 +226,14 @@ export function Component() {
     const { component, ...rest } = item;
 
     const { layout, page } = getLayoutAndPage(component);
-    const { path, param } = getPathParamFromRoutePath(rest.routePath);
+    const { param, path } = getPathParamFromRoutePath(rest.routePath);
 
     const itemData = Object.assign(createDefaultModel(), rest, {
+      index,
       layout,
       page,
-      routePath: path,
       pathParam: param,
-      index
+      routePath: path
     });
 
     handleEdit(itemData);
@@ -249,25 +251,25 @@ export function Component() {
   return (
     <div className="h-full min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
       <ACard
-        ref={tableWrapperRef}
         bordered={false}
+        className="flex-col-stretch sm:flex-1-hidden card-wrapper"
+        ref={tableWrapperRef}
+        title={t('page.manage.role.title')}
         extra={
           <TableHeaderOperation
-            onDelete={handleBatchDelete}
-            refresh={run}
             add={onAdd}
-            loading={tableProps.loading}
-            setColumnChecks={setColumnChecks}
-            disabledDelete={checkedRowKeys.length === 0}
             columns={columnChecks}
+            disabledDelete={checkedRowKeys.length === 0}
+            loading={tableProps.loading}
+            refresh={run}
+            setColumnChecks={setColumnChecks}
+            onDelete={handleBatchDelete}
           />
         }
-        title={t('page.manage.role.title')}
-        className="flex-col-stretch sm:flex-1-hidden card-wrapper"
       >
         <ATable
-          scroll={scrollConfig}
           rowSelection={rowSelection}
+          scroll={scrollConfig}
           size="small"
           {...tableProps}
         />

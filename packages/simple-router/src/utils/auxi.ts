@@ -1,9 +1,10 @@
 import type { ElegantConstRoute } from '@ohh-889/react-auto-route';
-import type { Location, RouteObject } from 'react-router-dom';
 import type { AgnosticDataRouteMatch } from '@remix-run/router';
+import type { Location, RouteObject } from 'react-router-dom';
+
 import type { RouteRecordNormalized, RouteRecordRaw } from '../matcher/types';
-import type { RouteLocationNormalizedLoaded } from '../types';
 import { parseQuery } from '../query';
+import type { RouteLocationNormalizedLoaded } from '../types';
 
 export function cleanParams(params: Record<string, any> | undefined): Record<string, any> {
   if (!params) return {};
@@ -57,15 +58,15 @@ export function transformLocationToRoute(
   const lastMatch = match.at(-1);
 
   return {
-    path: pathname,
     fullPath: pathname + search + hash,
-    query: parseQuery(search),
     hash,
+    matched: [],
     meta: lastMatch?.route.handle,
     name: lastMatch?.route.id,
     params: Object.keys(lastMatch?.params || {}).filter(key => key !== '*'),
-    state,
-    matched: [],
-    redirectedFrom: undefined
+    path: pathname,
+    query: parseQuery(search),
+    redirectedFrom: undefined,
+    state
   };
 }

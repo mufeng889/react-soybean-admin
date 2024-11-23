@@ -3,12 +3,6 @@ import type React from 'react';
 /** Header config */
 interface AdminLayoutHeaderConfig {
   /**
-   * Whether header is visible
-   *
-   * @default true
-   */
-  headerVisible?: boolean;
-  /**
    * Header class
    *
    * @default ''
@@ -20,16 +14,16 @@ interface AdminLayoutHeaderConfig {
    * @default 56px
    */
   headerHeight?: number;
+  /**
+   * Whether header is visible
+   *
+   * @default true
+   */
+  headerVisible?: boolean;
 }
 
 /** Tab config */
 interface AdminLayoutTabConfig {
-  /**
-   * Whether tab is visible
-   *
-   * @default true
-   */
-  tabVisible?: boolean;
   /**
    * Tab class
    *
@@ -42,6 +36,12 @@ interface AdminLayoutTabConfig {
    * @default 48px
    */
   tabHeight?: number;
+  /**
+   * Whether tab is visible
+   *
+   * @default true
+   */
+  tabVisible?: boolean;
   /** Update siderCollapse */
   updateSiderCollapse: () => void;
 }
@@ -49,11 +49,11 @@ interface AdminLayoutTabConfig {
 /** Sider config */
 interface AdminLayoutSiderConfig {
   /**
-   * Whether sider is visible
+   * Mobile sider class
    *
-   * @default true
+   * @default ''
    */
-  siderVisible?: boolean;
+  mobileSiderClass?: string;
   /**
    * Sider class
    *
@@ -61,29 +61,29 @@ interface AdminLayoutSiderConfig {
    */
   siderClass?: string;
   /**
-   * Mobile sider class
-   *
-   * @default ''
-   */
-  mobileSiderClass?: string;
-  /**
    * Sider collapse status
    *
    * @default false
    */
   siderCollapse?: boolean;
   /**
-   * Sider width when collapse is false
-   *
-   * @default '220px'
-   */
-  siderWidth?: number;
-  /**
    * Sider width when collapse is true
    *
    * @default '64px'
    */
   siderCollapsedWidth?: number;
+  /**
+   * Whether sider is visible
+   *
+   * @default true
+   */
+  siderVisible?: boolean;
+  /**
+   * Sider width when collapse is false
+   *
+   * @default '220px'
+   */
+  siderWidth?: number;
 }
 
 /** Content config */
@@ -105,12 +105,6 @@ export interface AdminLayoutContentConfig {
 /** Footer config */
 export interface AdminLayoutFooterConfig {
   /**
-   * Whether footer is visible
-   *
-   * @default true
-   */
-  footerVisible?: boolean;
-  /**
    * Whether footer is fixed
    *
    * @default true
@@ -128,6 +122,12 @@ export interface AdminLayoutFooterConfig {
    * @default 48px
    */
   footerHeight?: number;
+  /**
+   * Whether footer is visible
+   *
+   * @default true
+   */
+  footerVisible?: boolean;
   /**
    * Whether footer is on the right side
    *
@@ -152,18 +152,18 @@ export type LayoutMode = 'horizontal' | 'vertical';
  *
  * @default 'wrapper'
  */
-export type LayoutScrollMode = 'wrapper' | 'content';
+export type LayoutScrollMode = 'content' | 'wrapper';
 export type Slots = {
   /** Main */
   children?: React.ReactNode;
-  /** Header */
-  Header?: React.ReactNode;
-  /** Tab */
-  Tab?: React.ReactNode;
-  /** Sider */
-  Sider?: React.ReactNode;
   /** Footer */
   Footer?: React.ReactNode;
+  /** Header */
+  Header?: React.ReactNode;
+  /** Sider */
+  Sider?: React.ReactNode;
+  /** Tab */
+  Tab?: React.ReactNode;
 };
 
 /** Admin layout props */
@@ -175,19 +175,35 @@ export interface AdminLayoutProps
     AdminLayoutFooterConfig,
     Slots {
   /**
+   * The common class of the layout
+   *
+   * Is can be used to configure the transition animation
+   *
+   * @default 'transition-all-300'
+   */
+  commonClass?: string;
+  /**
+   * Whether fix the header and tab
+   *
+   * @default true
+   */
+  fixedTop?: boolean;
+  /** Is mobile layout */
+  isMobile?: boolean;
+  /**
+   * The max z-index of the layout
+   *
+   * The z-index of Header,Tab,Sider and Footer will not exceed this value
+   */
+  maxZIndex?: number;
+  /**
    * Layout mode
    *
    * - {@link LayoutMode}
    */
   mode?: LayoutMode;
-  /** Is mobile layout */
-  isMobile?: boolean;
-  /**
-   * Scroll mode
-   *
-   * - {@link ScrollMode}
-   */
-  scrollMode?: LayoutScrollMode;
+  /** The class of the scroll element */
+  scrollElClass?: string;
   /**
    * The id of the scroll element of the layout
    *
@@ -205,30 +221,14 @@ export interface AdminLayoutProps
    * ```
    */
   scrollElId?: string;
-  /** The class of the scroll element */
-  scrollElClass?: string;
+  /**
+   * Scroll mode
+   *
+   * - {@link ScrollMode}
+   */
+  scrollMode?: LayoutScrollMode;
   /** The class of the scroll wrapper element */
   scrollWrapperClass?: string;
-  /**
-   * The common class of the layout
-   *
-   * Is can be used to configure the transition animation
-   *
-   * @default 'transition-all-300'
-   */
-  commonClass?: string;
-  /**
-   * Whether fix the header and tab
-   *
-   * @default true
-   */
-  fixedTop?: boolean;
-  /**
-   * The max z-index of the layout
-   *
-   * The z-index of Header,Tab,Sider and Footer will not exceed this value
-   */
-  maxZIndex?: number;
 }
 
 type Kebab<S extends string> = S extends Uncapitalize<S> ? S : `-${Uncapitalize<S>}`;
@@ -241,13 +241,13 @@ type Prefix = '--soy-';
 
 export type LayoutCssVarsProps = Pick<
   AdminLayoutProps,
-  'headerHeight' | 'tabHeight' | 'siderWidth' | 'siderCollapsedWidth' | 'footerHeight'
+  'footerHeight' | 'headerHeight' | 'siderCollapsedWidth' | 'siderWidth' | 'tabHeight'
 > & {
-  headerZIndex?: number;
-  tabZIndex?: number;
-  siderZIndex?: number;
-  mobileSiderZIndex?: number;
   footerZIndex?: number;
+  headerZIndex?: number;
+  mobileSiderZIndex?: number;
+  siderZIndex?: number;
+  tabZIndex?: number;
 };
 
 export type LayoutCssVars = {
@@ -264,17 +264,24 @@ export type LayoutCssVars = {
  */
 export type PageTabMode = 'button' | 'chrome';
 export type ButtonTabProps = PageTabProps &
-  Omit<React.ComponentProps<'div'>, 'prefix' | 'style' | 'className' | 'onClick'>;
+  Omit<React.ComponentProps<'div'>, 'className' | 'onClick' | 'prefix' | 'style'>;
 export interface PageTabProps {
-  /** Whether is dark mode */
-  darkMode?: boolean;
+  /** Whether the tab is active */
+  active?: boolean;
 
+  /** The color of the active tab */
+  activeColor?: string;
+  /** The class of the button tab */
+  buttonClass?: string;
+  /** The class of the chrome tab */
+  chromeClass?: string;
+  className?: string;
   /**
-   * The mode of the tab
+   * Whether the tab is closable
    *
-   * - {@link TabMode}
+   * Show the close icon when true
    */
-  mode?: PageTabMode;
+  closable?: boolean;
   /**
    * The common class of the layout
    *
@@ -283,26 +290,19 @@ export interface PageTabProps {
    * @default 'transition-all-300'
    */
   commonClass?: string;
-  /** The class of the button tab */
-  buttonClass?: string;
-  /** The class of the chrome tab */
-  chromeClass?: string;
-  /** Whether the tab is active */
-  active?: boolean;
-  /** The color of the active tab */
-  activeColor?: string;
-  /**
-   * Whether the tab is closable
-   *
-   * Show the close icon when true
-   */
-  closable?: boolean;
-  prefix: React.ReactNode;
+  /** Whether is dark mode */
+  darkMode?: boolean;
   handleClose?: () => void;
-  suffix?: React.ReactNode;
-  className?: string;
-  style?: React.CSSProperties;
+  /**
+   * The mode of the tab
+   *
+   * - {@link TabMode}
+   */
+  mode?: PageTabMode;
   onClick: () => void;
+  prefix: React.ReactNode;
+  style?: React.CSSProperties;
+  suffix?: React.ReactNode;
 }
 
 export type PageTabCssVarsProps = {

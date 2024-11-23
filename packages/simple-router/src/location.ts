@@ -4,13 +4,13 @@
 import type { RouteLocationNormalizedLoaded } from './types/route';
 
 export const START_LOCATION_NORMALIZED: RouteLocationNormalizedLoaded = {
-  path: '/',
-  name: undefined,
-  query: {},
-  hash: '',
   fullPath: '/',
+  hash: '',
   matched: [],
   meta: {},
-  state: null,
-  redirectedFrom: undefined
+  name: undefined,
+  path: '/',
+  query: {},
+  redirectedFrom: undefined,
+  state: null
 };

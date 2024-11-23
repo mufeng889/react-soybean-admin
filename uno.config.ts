@@ -1,9 +1,10 @@
-import { defineConfig } from '@unocss/vite';
-import transformerDirectives from '@unocss/transformer-directives';
-import transformerVariantGroup from '@unocss/transformer-variant-group';
+import { presetSoybeanAdmin } from '@sa/uno-preset';
 import presetUno from '@unocss/preset-uno';
 import type { Theme } from '@unocss/preset-uno';
-import { presetSoybeanAdmin } from '@sa/uno-preset';
+import transformerDirectives from '@unocss/transformer-directives';
+import transformerVariantGroup from '@unocss/transformer-variant-group';
+import { defineConfig } from '@unocss/vite';
+
 import { themeVars } from './src/theme/vars';
 
 export default defineConfig<Theme>({
@@ -12,16 +13,7 @@ export default defineConfig<Theme>({
       exclude: ['node_modules', 'dist']
     }
   },
-  theme: {
-    ...themeVars,
-    fontSize: {
-      'icon-xs': '0.875rem',
-      'icon-small': '1rem',
-      icon: '1.125rem',
-      'icon-large': '1.5rem',
-      'icon-xl': '2rem'
-    }
-  },
+  presets: [presetUno({ dark: 'class' }), presetSoybeanAdmin()],
   rules: [
     [
       /^h-calc\((.*)\)$/, // 匹配 h-clac(xxx) 的正则表达式
@@ -31,6 +23,15 @@ export default defineConfig<Theme>({
   shortcuts: {
     'card-wrapper': 'rd-8px shadow-sm'
   },
-  transformers: [transformerDirectives(), transformerVariantGroup()],
-  presets: [presetUno({ dark: 'class' }), presetSoybeanAdmin()]
+  theme: {
+    ...themeVars,
+    fontSize: {
+      icon: '1.125rem',
+      'icon-large': '1.5rem',
+      'icon-small': '1rem',
+      'icon-xl': '2rem',
+      'icon-xs': '0.875rem'
+    }
+  },
+  transformers: [transformerDirectives(), transformerVariantGroup()]
 });

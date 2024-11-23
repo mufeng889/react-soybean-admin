@@ -1,5 +1,6 @@
 import type { LastLevelRouteKey, RouteKey, RouteMap } from '@elegant-router/types';
 import type { RouteRecordNormalized } from '@sa/simple-router';
+
 import { $t } from '@/locales';
 import { getRoutePath } from '@/router/elegant/transform';
 
@@ -40,7 +41,7 @@ function isFixedTab(tab: App.Global.Tab) {
  * @param route
  */
 export function getTabIdByRoute(route: App.Global.TabRoute) {
-  const { path, query = {}, meta } = route;
+  const { meta, path, query = {} } = route;
 
   let id = path;
 
@@ -60,24 +61,25 @@ export function getTabIdByRoute(route: App.Global.TabRoute) {
  * @param route
  */
 export function getTabByRoute(route: App.Global.TabRoute) {
-  const { name, path, fullPath = path, meta } = route;
-  const { title, i18nKey, fixedIndexInTab } = meta;
+  // eslint-disable-next-line prettier/prettier, sort/destructuring-properties
+  const { path, fullPath = path, meta, name } = route;
+  const { fixedIndexInTab, i18nKey, title } = meta;
 
   // Get icon and localIcon from getRouteIcons function
   const { icon, localIcon } = getRouteIcons(route);
 
   const tab: App.Global.Tab = {
+    fixedIndex: fixedIndexInTab,
+    fullPath,
+    i18nKey,
+    icon,
     id: getTabIdByRoute(route),
     label: title,
-    routeKey: name as LastLevelRouteKey,
-    routePath: path as RouteMap[LastLevelRouteKey],
-    fullPath,
-    fixedIndex: fixedIndexInTab,
-    icon,
-    oldLabel: i18nKey || title,
-    newLabel: '',
     localIcon,
-    i18nKey
+    newLabel: '',
+    oldLabel: i18nKey || title,
+    routeKey: name as LastLevelRouteKey,
+    routePath: path as RouteMap[LastLevelRouteKey]
   };
 
   return tab;
@@ -113,21 +115,21 @@ export function getRouteIcons(route: App.Global.TabRoute) {
  * @param homeRouteName routeHome in useRouteStore
  */
 export function getDefaultHomeTab({
-  route,
-  homeRouteName
+  homeRouteName,
+  route
 }: {
-  route: RouteRecordNormalized | false;
   homeRouteName: LastLevelRouteKey;
+  route: RouteRecordNormalized | false;
 }) {
   const homeRoutePath = getRoutePath(homeRouteName);
   const i18nLabel = $t(`route.${homeRouteName}`);
 
   let homeTab: App.Global.Tab = {
+    fullPath: homeRoutePath,
     id: getRoutePath(homeRouteName),
     label: i18nLabel || homeRouteName,
     routeKey: homeRouteName,
-    routePath: homeRoutePath,
-    fullPath: homeRoutePath
+    routePath: homeRoutePath
   };
 
   if (route) {
@@ -250,7 +252,7 @@ export function findTabByRouteName(name: RouteKey, tabs: App.Global.Tab[]) {
 }
 
 export function getActiveFirstLevelMenuKey(route: App.Global.TabRoute) {
-  const { hideInMenu, activeMenu } = route.meta;
+  const { activeMenu, hideInMenu } = route.meta;
   const name = route.name as string;
 
   const routeName = (hideInMenu ? activeMenu : name) || name;

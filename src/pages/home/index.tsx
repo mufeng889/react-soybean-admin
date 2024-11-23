@@ -1,30 +1,30 @@
-import HeaderBanner from './modules/HeaderBanner';
 import CardData from './modules/CardData';
+import CreativityBanner from './modules/CreativityBanner';
+import HeaderBanner from './modules/HeaderBanner';
 import LineChart from './modules/LineChart';
 import PieChart from './modules/PieChart';
 import ProjectNews from './modules/ProjectNews';
-import CreativityBanner from './modules/CreativityBanner';
 
 export function Component() {
   return (
     <ASpace
+      className="w-full"
       direction="vertical"
       size={[16, 16]}
-      className="w-full"
     >
       <HeaderBanner />
       <CardData />
 
       <ARow gutter={[16, 16]}>
         <ACol
-          span={24}
           lg={14}
+          span={24}
         >
           <LineChart />
         </ACol>
         <ACol
-          span={24}
           lg={10}
+          span={24}
         >
           <PieChart />
         </ACol>
@@ -32,14 +32,14 @@ export function Component() {
 
       <ARow gutter={[16, 16]}>
         <ACol
-          span={24}
           lg={14}
+          span={24}
         >
           <ProjectNews />
         </ACol>
         <ACol
-          span={24}
           lg={10}
+          span={24}
         >
           <CreativityBanner />
         </ACol>

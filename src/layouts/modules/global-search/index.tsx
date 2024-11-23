@@ -6,7 +6,7 @@ const SearchModal = lazy(() => import('./components/SearchModal'));
 const GlobalSearch = memo(() => {
   const { t } = useTranslation();
 
-  const [show, { toggle, setFalse }] = useBoolean();
+  const [show, { setFalse, toggle }] = useBoolean();
 
   return (
     <>
@@ -19,8 +19,8 @@ const GlobalSearch = memo(() => {
       </ButtonIcon>
       <Suspense fallback={null}>
         <SearchModal
-          onClose={setFalse}
           show={show}
+          onClose={setFalse}
         />
       </Suspense>
     </>

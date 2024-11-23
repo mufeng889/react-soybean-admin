@@ -7,16 +7,8 @@ export function createStorage<T extends object>(type: StorageType, storagePrefix
   const stg = type === 'session' ? window.sessionStorage : window.localStorage;
 
   const storage = {
-    /**
-     * Set session
-     *
-     * @param key Session key
-     * @param value Session value
-     */
-    set<K extends keyof T>(key: K, value: T[K]) {
-      const json = JSON.stringify(value);
-
-      stg.setItem(`${storagePrefix}${key as string}`, json);
+    clear() {
+      stg.clear();
     },
     /**
      * Get session
@@ -44,27 +36,35 @@ export function createStorage<T extends object>(type: StorageType, storagePrefix
     remove(key: keyof T) {
       stg.removeItem(`${storagePrefix}${key as string}`);
     },
-    clear() {
-      stg.clear();
+    /**
+     * Set session
+     *
+     * @param key Session key
+     * @param value Session value
+     */
+    set<K extends keyof T>(key: K, value: T[K]) {
+      const json = JSON.stringify(value);
+
+      stg.setItem(`${storagePrefix}${key as string}`, json);
     }
   };
   return storage;
 }
 
-type LocalForage<T extends object> = Omit<typeof localforage, 'getItem' | 'setItem' | 'removeItem'> & {
+type LocalForage<T extends object> = Omit<typeof localforage, 'getItem' | 'removeItem' | 'setItem'> & {
   getItem<K extends keyof T>(key: K, callback?: (err: any, value: T[K] | null) => void): Promise<T[K] | null>;
 
-  setItem<K extends keyof T>(key: K, value: T[K], callback?: (err: any, value: T[K]) => void): Promise<T[K]>;
-
   removeItem(key: keyof T, callback?: (err: any) => void): Promise<void>;
+
+  setItem<K extends keyof T>(key: K, value: T[K], callback?: (err: any, value: T[K]) => void): Promise<T[K]>;
 };
 
-type LocalforageDriver = 'local' | 'indexedDB' | 'webSQL';
+type LocalforageDriver = 'indexedDB' | 'local' | 'webSQL';
 
 export function createLocalforage<T extends object>(driver: LocalforageDriver) {
   const driverMap: Record<LocalforageDriver, string> = {
-    local: localforage.LOCALSTORAGE,
     indexedDB: localforage.INDEXEDDB,
+    local: localforage.LOCALSTORAGE,
     webSQL: localforage.WEBSQL
   };
 

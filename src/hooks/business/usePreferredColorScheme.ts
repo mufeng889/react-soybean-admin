@@ -1,4 +1,4 @@
-export type ThemeName = 'light' | 'dark';
+export type ThemeName = 'dark' | 'light';
 
 function usePreferredColorScheme() {
   const [themeName, setThemeName] = useState<ThemeName>('light');
@@ -17,9 +17,9 @@ function usePreferredColorScheme() {
   }
 
   return {
-    themeName,
     isDarkMode: themeName === 'dark',
-    isLightMode: themeName === 'light'
+    isLightMode: themeName === 'light',
+    themeName
   };
 }
 

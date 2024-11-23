@@ -1,13 +1,13 @@
 import classNames from 'classnames';
 
 interface Props {
-  menu: App.Global.Menu;
   active: boolean;
-  setActiveRouteName: (name: string) => void;
   enter: () => void;
+  menu: App.Global.Menu;
+  setActiveRouteName: (name: string) => void;
 }
 
-const SearchResult: FC<Props> = memo(({ menu, active, setActiveRouteName, enter }) => {
+const SearchResult: FC<Props> = memo(({ active, enter, menu, setActiveRouteName }) => {
   function handleMouseEnter() {
     setActiveRouteName(menu.key);
   }
@@ -19,8 +19,8 @@ const SearchResult: FC<Props> = memo(({ menu, active, setActiveRouteName, enter 
         { 'bg-primary': active },
         { 'text-#fff': active }
       )}
-      onMouseEnter={handleMouseEnter}
       onClick={enter}
+      onMouseEnter={handleMouseEnter}
     >
       <span className="ml-5px flex-1">
         {menu.icon}

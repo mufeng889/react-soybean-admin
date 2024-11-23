@@ -1,44 +1,45 @@
 import { enableStatusOptions } from '@/constants/business';
+
 import ButtonAuthModal from './button-auth-modal';
 import MenuAuthModal from './menu-auth-modal';
 
 type Props = Page.OperateDrawerProps & { rowId: number };
 
-type Model = Pick<Api.SystemManage.Role, 'roleName' | 'roleCode' | 'roleDesc' | 'status'>;
+type Model = Pick<Api.SystemManage.Role, 'roleCode' | 'roleDesc' | 'roleName' | 'status'>;
 
 type RuleKey = Exclude<keyof Model, 'roleDesc'>;
 
-const RoleOperateDrawer: FC<Props> = memo(({ open, onClose, form, operateType, handleSubmit, rowId }) => {
+const RoleOperateDrawer: FC<Props> = memo(({ form, handleSubmit, onClose, open, operateType, rowId }) => {
   const { t } = useTranslation();
 
   const { defaultRequiredRule } = useFormRules();
 
-  const [buttonAuthVisible, { setTrue: openButtonAuthModal, setFalse: closeButtonAuthModal }] = useBoolean();
+  const [buttonAuthVisible, { setFalse: closeButtonAuthModal, setTrue: openButtonAuthModal }] = useBoolean();
 
-  const [menuAuthVisible, { setTrue: openMenuAuthModal, setFalse: closeMenuAuthModal }] = useBoolean();
+  const [menuAuthVisible, { setFalse: closeMenuAuthModal, setTrue: openMenuAuthModal }] = useBoolean();
 
   const rules: Record<RuleKey, App.Global.FormRule> = {
-    roleName: defaultRequiredRule,
     roleCode: defaultRequiredRule,
+    roleName: defaultRequiredRule,
     status: defaultRequiredRule
   };
 
   return (
     <ADrawer
-      onClose={onClose}
-      title={operateType === 'add' ? t('page.manage.role.addRole') : t('page.manage.role.editRole')}
       open={open}
+      title={operateType === 'add' ? t('page.manage.role.addRole') : t('page.manage.role.editRole')}
       footer={
         <AFlex justify="space-between">
           <AButton onClick={onClose}>{t('common.cancel')}</AButton>
           <AButton
-            onClick={handleSubmit}
             type="primary"
+            onClick={handleSubmit}
           >
             {t('common.confirm')}
           </AButton>
         </AFlex>
       }
+      onClose={onClose}
     >
       <AForm
         form={form}
@@ -68,8 +69,8 @@ const RoleOperateDrawer: FC<Props> = memo(({ open, onClose, form, operateType, h
           <ARadio.Group>
             {enableStatusOptions.map(item => (
               <ARadio
-                value={item.value}
                 key={item.value}
+                value={item.value}
               >
                 {t(item.label)}
               </ARadio>
@@ -89,16 +90,16 @@ const RoleOperateDrawer: FC<Props> = memo(({ open, onClose, form, operateType, h
         <ASpace>
           <AButton onClick={openButtonAuthModal}>{t('page.manage.role.buttonAuth')}</AButton>
           <ButtonAuthModal
-            onClose={closeButtonAuthModal}
             open={buttonAuthVisible}
             roleId={rowId}
+            onClose={closeButtonAuthModal}
           />
 
           <AButton onClick={openMenuAuthModal}>{t('page.manage.role.menuAuth')}</AButton>
           <MenuAuthModal
+            open={menuAuthVisible}
             roleId={rowId}
             onClose={closeMenuAuthModal}
-            open={menuAuthVisible}
           />
         </ASpace>
       )}

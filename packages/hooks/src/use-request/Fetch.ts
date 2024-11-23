@@ -4,8 +4,9 @@
 import type { FlatResponseData } from '@sa/axios';
 import type { AxiosError } from 'axios';
 import type { MutableRefObject } from 'react';
-import { isFunction } from './utils';
+
 import type { FetchState, Options, PluginReturn, Service, Subscribe } from './type';
+import { isFunction } from './utils';
 
 export default class Fetch<TData extends FlatResponseData, TParams extends any[]> {
   pluginImpls: PluginReturn<TData, TParams>[];
@@ -13,11 +14,11 @@ export default class Fetch<TData extends FlatResponseData, TParams extends any[]
   count: number = 0;
 
   state: FetchState<TData, TParams> = {
+    data: undefined,
+    error: null,
     loading: false,
     params: undefined,
-    response: null,
-    data: undefined,
-    error: null
+    response: null
   };
 
   // eslint-disable-next-line max-params
@@ -51,7 +52,7 @@ export default class Fetch<TData extends FlatResponseData, TParams extends any[]
     this.count += 1;
     const currentCount = this.count;
 
-    const { stopNow = false, returnNow = false, ...state } = this.runPluginHandler('onBefore', params);
+    const { returnNow = false, stopNow = false, ...state } = this.runPluginHandler('onBefore', params);
 
     // stop request
     if (stopNow) {
@@ -91,8 +92,8 @@ export default class Fetch<TData extends FlatResponseData, TParams extends any[]
       this.setState({
         data: res.data,
         error: null,
-        response: res.response,
-        loading: false
+        loading: false,
+        response: res.response
       });
 
       this.options.onSuccess?.(res.data, params);
@@ -113,10 +114,10 @@ export default class Fetch<TData extends FlatResponseData, TParams extends any[]
       }
 
       this.setState({
-        error: errorMessage,
         data: null,
-        response: error.response,
-        loading: false
+        error: errorMessage,
+        loading: false,
+        response: error.response
       });
 
       this.options.onError?.(errorMessage, params);

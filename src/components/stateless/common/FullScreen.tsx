@@ -1,20 +1,20 @@
 import ButtonIcon from '../custom/ButtonIcon';
 
 interface Props {
+  className?: string;
   full?: boolean;
   toggleFullscreen: () => void;
-  className?: string;
 }
 
-const FullScreen: FC<Props> = memo(({ full, toggleFullscreen, className }) => {
+const FullScreen: FC<Props> = memo(({ className, full, toggleFullscreen }) => {
   const { t } = useTranslation();
 
   return (
     <ButtonIcon
+      className={className}
       key={String(full)}
       tooltipContent={full ? t('icon.fullscreenExit') : t('icon.fullscreen')}
       onClick={toggleFullscreen}
-      className={className}
     >
       {full ? <IconGridiconsFullscreenExit /> : <IconGridiconsFullscreen />}
     </ButtonIcon>

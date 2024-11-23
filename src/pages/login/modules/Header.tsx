@@ -1,6 +1,6 @@
-import SystemLogo from '@/components/stateless/common/SystemLogo';
-import ThemeSchemaSwitch from '@/components/stateful/ThemeSchemaSwitch';
 import LangSwitch from '@/components/stateful/LangSwitch';
+import ThemeSchemaSwitch from '@/components/stateful/ThemeSchemaSwitch';
+import SystemLogo from '@/components/stateless/common/SystemLogo';
 
 const Header = memo(() => {
   const { t } = useTranslation();
@@ -11,8 +11,8 @@ const Header = memo(() => {
       <h3 className="text-28px text-primary font-500 lt-sm:text-22px">{t('system.title')}</h3>
       <div className="i-flex-col">
         <ThemeSchemaSwitch
-          showTooltip={false}
           className="text-20px lt-sm:text-18px"
+          showTooltip={false}
         />
         <LangSwitch showTooltip={false} />
       </div>

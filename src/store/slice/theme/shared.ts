@@ -1,11 +1,12 @@
 import { getColorPalette, getRgb, transformColorWithOpacity } from '@sa/color';
 import type { ConfigProviderProps } from 'antd';
 import { theme as antdTheme } from 'antd';
+
+import { DARK_MODE_MEDIA_QUERY } from '@/constants/common';
 import { overrideThemeSettings, themeSettings } from '@/theme/settings';
-import { localStg } from '@/utils/storage';
 import { themeVars } from '@/theme/vars';
 import { toggleHtmlClass } from '@/utils/common';
-import { DARK_MODE_MEDIA_QUERY } from '@/constants/common';
+import { localStg } from '@/utils/storage';
 
 const DARK_CLASS = 'dark';
 
@@ -54,7 +55,7 @@ function getCssVarByTokens(tokens: App.Theme.BaseToken) {
 
       if (key === 'colors') {
         cssVarsKey = removeRgbPrefix(cssVarsKey);
-        const { r, g, b } = getRgb(cssValue);
+        const { b, g, r } = getRgb(cssValue);
         cssValue = `${r} ${g} ${b}`;
       }
 
@@ -135,33 +136,33 @@ export function createThemeToken(
 ) {
   const paletteColors = createThemePaletteColors(colors, recommended);
 
-  const { light, dark } = tokens || themeSettings.tokens;
+  const { dark, light } = tokens || themeSettings.tokens;
 
   const themeTokens: App.Theme.ThemeTokenCSSVars = {
+    boxShadow: {
+      ...light.boxShadow
+    },
     colors: {
       ...paletteColors,
       nprogress: paletteColors.primary,
       ...light.colors
-    },
-    boxShadow: {
-      ...light.boxShadow
     }
   };
 
   const darkThemeTokens: App.Theme.ThemeTokenCSSVars = {
-    colors: {
-      ...themeTokens.colors,
-      ...dark?.colors
-    },
     boxShadow: {
       ...themeTokens.boxShadow,
       ...dark?.boxShadow
+    },
+    colors: {
+      ...themeTokens.colors,
+      ...dark?.colors
     }
   };
 
   return {
-    themeTokens,
-    darkThemeTokens
+    darkThemeTokens,
+    themeTokens
   };
 }
 
@@ -176,39 +177,39 @@ export function getAntdTheme(
   darkMode: boolean,
   tokens: App.Theme.ThemeSetting['tokens']
 ) {
-  const { defaultAlgorithm, darkAlgorithm } = antdTheme;
+  const { darkAlgorithm, defaultAlgorithm } = antdTheme;
 
-  const { primary, info, success, warning, error } = colors;
+  const { error, info, primary, success, warning } = colors;
 
   const bgColor = transformColorWithOpacity(primary, darkMode ? 0.3 : 0.1, darkMode ? '#000000' : '#fff');
   const containerBgColor = darkMode ? tokens.dark?.colors?.container : tokens.light?.colors.container;
 
   const theme: ConfigProviderProps['theme'] = {
-    token: {
-      colorPrimary: primary,
-      colorInfo: info,
-      colorSuccess: success,
-      colorWarning: warning,
-      colorError: error,
-      colorBgContainer: containerBgColor
-    },
-    cssVar: true,
     algorithm: [darkMode ? darkAlgorithm : defaultAlgorithm],
     components: {
       Button: {
         controlHeightSM: 28
       },
       Collapse: {
-        headerBg: containerBgColor,
-        contentPadding: '16px 16px 24px 16px'
+        contentPadding: '16px 16px 24px 16px',
+        headerBg: containerBgColor
       },
       Menu: {
-        subMenuItemBg: 'transparent',
-        darkSubMenuItemBg: 'transparent',
         darkItemBg: 'transparent',
+        darkSubMenuItemBg: 'transparent',
+        itemMarginInline: 8,
         itemSelectedBg: bgColor,
-        itemMarginInline: 8
+        subMenuItemBg: 'transparent'
       }
+    },
+    cssVar: true,
+    token: {
+      colorBgContainer: containerBgColor,
+      colorError: error,
+      colorInfo: info,
+      colorPrimary: primary,
+      colorSuccess: success,
+      colorWarning: warning
     }
   };
 
@@ -252,7 +253,7 @@ export function setupThemeVarsToHtml(
   tokens?: App.Theme.ThemeSetting['tokens'],
   recommended = false
 ) {
-  const { themeTokens, darkThemeTokens } = createThemeToken(themeColors, tokens, recommended);
+  const { darkThemeTokens, themeTokens } = createThemeToken(themeColors, tokens, recommended);
   addThemeVarsToGlobal(themeTokens, darkThemeTokens);
 }
 

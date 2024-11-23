@@ -1,6 +1,6 @@
-import ClassNames from 'classnames';
 import type { Options } from '@better-scroll/core';
 import BScroll from '@better-scroll/core';
+import ClassNames from 'classnames';
 import type { FC } from 'react';
 import React from 'react';
 
@@ -14,7 +14,7 @@ interface Props extends React.ComponentProps<'div'> {
   setBsScroll: (bsScroll: BScroll) => void;
 }
 
-const BetterScroll: FC<Props> = memo(({ options, children, className, setBsScroll, ...rest }) => {
+const BetterScroll: FC<Props> = memo(({ children, className, options, setBsScroll, ...rest }) => {
   const bsWrapper = useRef<HTMLDivElement>(null);
   const bsContent = useRef<HTMLDivElement>(null);
   const bsWrapperSize = useSize(bsWrapper);
@@ -45,8 +45,8 @@ const BetterScroll: FC<Props> = memo(({ options, children, className, setBsScrol
       className={ClassNames('h-full text-left', className)}
     >
       <div
-        ref={bsContent}
         className={ClassNames('inline-block', { 'h-full': !isScrollY })}
+        ref={bsContent}
       >
         {children}
       </div>

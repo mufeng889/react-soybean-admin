@@ -1,4 +1,5 @@
 import { getSiderCollapse, toggleSiderCollapse } from '@/store/slice/app';
+
 import ButtonIcon from '../stateless/custom/ButtonIcon';
 import SvgIcon from '../stateless/custom/SvgIcon';
 
@@ -33,10 +34,10 @@ const MenuToggler: FC<Props> = memo(({ arrowIcon, className }) => {
 
   return (
     <ButtonIcon
-      onClick={() => dispatch(toggleSiderCollapse())}
       className={className}
       tooltipContent={siderCollapse ? t('icon.expand') : t('icon.collapse')}
       tooltipPlacement="bottomLeft"
+      onClick={() => dispatch(toggleSiderCollapse())}
     >
       <SvgIcon icon={icon} />
     </ButtonIcon>

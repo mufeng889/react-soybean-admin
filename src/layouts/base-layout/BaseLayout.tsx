@@ -3,6 +3,7 @@ import type { LayoutMode } from '@sa/materials';
 import { configResponsive } from 'ahooks';
 import './index.scss';
 import { Suspense } from 'react';
+
 import {
   getContentXScrollable,
   getFullContent,
@@ -12,12 +13,13 @@ import {
   setSiderCollapse
 } from '@/store/slice/app';
 import { getThemeSettings, setLayoutMode } from '@/store/slice/theme';
+
 import GlobalContent from '../modules/global-content';
 import GlobalFooter from '../modules/global-footer';
 import GlobalHeader from '../modules/global-header';
+import GlobalMenu from '../modules/global-menu';
 import GlobalSider from '../modules/global-sider';
 import GlobalTab from '../modules/global-tab';
-import GlobalMenu from '../modules/global-menu';
 
 const ThemeDrawer = lazy(() => import('../modules/theme-drawer'));
 
@@ -54,7 +56,7 @@ const BaseLayout = () => {
   function getSiderWidth() {
     const { reverseHorizontalMix } = themeSettings.layout;
 
-    const { width, mixWidth, mixChildMenuWidth } = themeSettings.sider;
+    const { mixChildMenuWidth, mixWidth, width } = themeSettings.sider;
 
     if (isHorizontalMix && reverseHorizontalMix) {
       return isActiveFirstLevelMenuHasChildren ? width : 0;
@@ -71,7 +73,7 @@ const BaseLayout = () => {
 
   function getSiderCollapsedWidth() {
     const { reverseHorizontalMix } = themeSettings.layout;
-    const { collapsedWidth, mixCollapsedWidth, mixChildMenuWidth } = themeSettings.sider;
+    const { collapsedWidth, mixChildMenuWidth, mixCollapsedWidth } = themeSettings.sider;
 
     if (isHorizontalMix && reverseHorizontalMix) {
       return isActiveFirstLevelMenuHasChildren ? collapsedWidth : 0;
@@ -97,50 +99,50 @@ const BaseLayout = () => {
 
   return (
     <AdminLayout
-      siderCollapse={siderCollapse}
-      updateSiderCollapse={() => dispatch(setSiderCollapse(true))}
+      contentClass={contentXScrollable ? 'overflow-x-hidden' : ''}
+      fixedFooter={themeSettings.footer.fixed}
+      fixedTop={themeSettings.fixedHeaderAndTab}
+      Footer={<GlobalFooter />}
+      footerHeight={themeSettings.footer.height}
+      footerVisible={themeSettings.footer.visible}
+      fullContent={fullContent}
+      headerHeight={themeSettings.header.height}
+      isMobile={isMobile}
       mode={layoutMode}
+      rightFooter={themeSettings.footer.right}
       scrollElId={LAYOUT_SCROLL_EL_ID}
       scrollMode={themeSettings.layout.scrollMode}
-      isMobile={isMobile}
-      fullContent={fullContent}
-      fixedTop={themeSettings.fixedHeaderAndTab}
-      headerHeight={themeSettings.header.height}
-      tabVisible={themeSettings.tab.visible}
-      tabHeight={themeSettings.tab.height}
-      contentClass={contentXScrollable ? 'overflow-x-hidden' : ''}
+      siderCollapse={siderCollapse}
+      siderCollapsedWidth={siderCollapsedWidth}
       siderVisible={siderVisible}
       siderWidth={siderWidth}
-      siderCollapsedWidth={siderCollapsedWidth}
-      footerVisible={themeSettings.footer.visible}
-      footerHeight={themeSettings.footer.height}
-      fixedFooter={themeSettings.footer.fixed}
-      rightFooter={themeSettings.footer.right}
+      Tab={<GlobalTab />}
+      tabHeight={themeSettings.tab.height}
+      tabVisible={themeSettings.tab.visible}
+      updateSiderCollapse={() => dispatch(setSiderCollapse(true))}
       Header={
         <GlobalHeader
-          mode={themeSettings.layout.mode}
-          siderWidth={themeSettings.sider.width}
-          reverse={themeSettings.layout.reverseHorizontalMix}
           isMobile={isMobile}
+          mode={themeSettings.layout.mode}
+          reverse={themeSettings.layout.reverseHorizontalMix}
+          siderWidth={themeSettings.sider.width}
         />
       }
-      Tab={<GlobalTab />}
       Sider={
         <GlobalSider
-          isVerticalMix={isVerticalMix}
-          siderCollapse={siderCollapse}
+          headerHeight={themeSettings.header.height}
           inverted={themeSettings.sider.inverted}
           isHorizontalMix={isHorizontalMix}
-          headerHeight={themeSettings.header.height}
+          isVerticalMix={isVerticalMix}
+          siderCollapse={siderCollapse}
         />
       }
-      Footer={<GlobalFooter />}
     >
       <GlobalContent />
 
       <GlobalMenu
-        reverse={themeSettings.layout.reverseHorizontalMix}
         mode={themeSettings.layout.mode}
+        reverse={themeSettings.layout.reverseHorizontalMix}
       />
       <Suspense fallback={null}>
         <ThemeDrawer />

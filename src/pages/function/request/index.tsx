@@ -1,4 +1,5 @@
 import { Button, Card, Space } from 'antd';
+
 import { fetchCustomBackendError } from '@/service/api';
 
 export function Component() {
@@ -35,42 +36,42 @@ export function Component() {
 
   return (
     <Space
+      className="w-full"
       direction="vertical"
       size={16}
-      className="w-full"
     >
       <Card
-        title={t('request.logout')}
         bordered={false}
         className="card-wrapper"
         size="small"
+        title={t('request.logout')}
       >
         <Button onClick={logout}>{t('common.trigger')}</Button>
       </Card>
 
       <Card
-        title={t('request.logoutWithModal')}
         bordered={false}
         className="card-wrapper"
         size="small"
+        title={t('request.logoutWithModal')}
       >
         <Button onClick={logoutWithModal}>{t('common.trigger')}</Button>
       </Card>
 
       <Card
-        title={t('request.refreshToken')}
         bordered={false}
         className="card-wrapper"
         size="small"
+        title={t('request.refreshToken')}
       >
         <Button onClick={refreshToken}>{t('common.trigger')}</Button>
       </Card>
 
       <Card
-        title={t('page.function.request.repeatedErrorOccurOnce')}
         bordered={false}
         className="card-wrapper"
         size="small"
+        title={t('page.function.request.repeatedErrorOccurOnce')}
       >
         <Button onClick={handleRepeatedMessageError}>{t('page.function.request.repeatedError')} (Message)</Button>
         <Button

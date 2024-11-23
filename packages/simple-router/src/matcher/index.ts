@@ -1,10 +1,11 @@
 import type { ElegantConstRoute } from '@ohh-889/react-auto-route';
 import type { Location } from 'react-router-dom';
 import { matchPath } from 'react-router-dom';
-import type { RouteLocationNamedRaw } from '../types';
+
 import { stringifyQuery } from '../query';
+import type { RouteLocationNamedRaw } from '../types';
 import { transformLocationToFullPath } from '../utils/auxi';
-import type { RouteRecordRaw } from './types';
+
 import { createRouteRecordMatcher } from './pathMatcher';
 import {
   checkChildMissingNameWithEmptyPath,
@@ -14,6 +15,7 @@ import {
   mergeMetaFields,
   normalizeRouteRecord
 } from './shared';
+import type { RouteRecordRaw } from './types';
 
 class CreateRouterMatcher {
   // Internal routes maintained for react-router
@@ -198,15 +200,15 @@ class CreateRouterMatcher {
 
     return {
       fullPath,
-      state: location?.state || null,
-      name,
-      path,
-      params,
       hash: location.hash,
-      redirect: matcher.record.redirect,
       matched,
+      meta: mergeMetaFields(matched),
+      name,
+      params,
+      path,
       query,
-      meta: mergeMetaFields(matched)
+      redirect: matcher.record.redirect,
+      state: location?.state || null
     };
   }
 

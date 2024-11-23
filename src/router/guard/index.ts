@@ -1,3 +1,4 @@
+import type { RouteKey, RoutePath } from '@elegant-router/types';
 import type {
   AfterEach,
   BeforeEach,
@@ -7,13 +8,13 @@ import type {
   RouteLocationNamedRaw,
   RouteLocationNormalizedLoaded
 } from '@sa/simple-router';
-import type { RouteKey, RoutePath } from '@elegant-router/types';
+
 import { $t } from '@/locales';
-import { localStg } from '@/utils/storage';
-import { store } from '@/store';
-import { getRouteHome, initAuthRoute, initConstantRoute } from '@/store/slice/route';
 import { getRouteName, getRoutePath } from '@/router/elegant/transform';
+import { store } from '@/store';
 import { isStaticSuper, selectUserInfo } from '@/store/slice/auth';
+import { getRouteHome, initAuthRoute, initConstantRoute } from '@/store/slice/route';
+import { localStg } from '@/utils/storage';
 
 export const init: Init = async currentFullPath => {
   await store.dispatch(initConstantRoute());
@@ -84,38 +85,38 @@ export const createRouteGuard: BeforeEach = (to, _, blockerOrJump) => {
   const routeSwitches: CommonType.StrategicPattern[] = [
     // if it is login route when logged in, then switch to the root page
     {
-      condition: isLogin && to.path.includes('login'),
       callback: () => {
         return blockerOrJump({ name: rootRoute });
-      }
+      },
+      condition: isLogin && to.path.includes('login')
     },
     // if it is constant route, then it is allowed to access directly
     {
-      condition: !needLogin,
       callback: () => {
         return handleRouteSwitch(to, blockerOrJump);
-      }
+      },
+      condition: !needLogin
     },
     // if the route need login but the user is not logged in, then switch to the login page
     {
-      condition: !isLogin && needLogin,
       callback: () => {
         return blockerOrJump({ name: loginRoute, query: { redirect: to.fullPath } });
-      }
+      },
+      condition: !isLogin && needLogin
     },
     // if the user is logged in and has authorization, then it is allowed to access
     {
-      condition: isLogin && needLogin && hasAuth,
       callback: () => {
         return handleRouteSwitch(to, blockerOrJump);
-      }
+      },
+      condition: isLogin && needLogin && hasAuth
     },
     // if the user is logged in but does not have authorization, then switch to the 403 page
     {
-      condition: isLogin && needLogin && !hasAuth,
       callback: () => {
         return blockerOrJump({ name: noAuthorizationRoute });
-      }
+      },
+      condition: isLogin && needLogin && !hasAuth
     }
   ];
 

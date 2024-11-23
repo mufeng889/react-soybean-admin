@@ -1,7 +1,8 @@
 import { App } from 'antd';
+
+import { DARK_MODE_MEDIA_QUERY } from '@/constants/common';
 import { cacheTabs } from '@/store/slice/tab';
 import { cacheThemeSettings } from '@/store/slice/theme';
-import { DARK_MODE_MEDIA_QUERY } from '@/constants/common';
 import { setDarkMode } from '@/store/slice/theme/index.ts';
 
 function ContextHolder() {

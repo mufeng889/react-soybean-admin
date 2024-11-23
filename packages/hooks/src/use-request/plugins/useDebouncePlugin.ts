@@ -1,11 +1,12 @@
 import type { DebounceSettings, DebouncedFunc } from 'lodash';
 import debounce from 'lodash/debounce';
 import { useEffect, useMemo, useRef } from 'react';
+
 import type { Plugin } from '../type';
 
 const useDebouncePlugin: Plugin<any, any[]> = (
   fetchInstance,
-  { debounceWait, debounceLeading, debounceTrailing, debounceMaxWait }
+  { debounceLeading, debounceMaxWait, debounceTrailing, debounceWait }
 ) => {
   const debouncedRef = useRef<DebouncedFunc<any>>();
 

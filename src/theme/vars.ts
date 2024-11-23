@@ -19,17 +19,17 @@ const colorPaletteVars = createColorPaletteVars();
 
 /** Theme vars */
 export const themeVars: App.Theme.ThemeTokenCSSVars = {
-  colors: {
-    ...colorPaletteVars,
-    nprogress: 'rgb(var(--nprogress-color))',
-    container: 'rgb(var(--container-bg-color))',
-    layout: 'rgb(var(--layout-bg-color))',
-    inverted: 'rgb(var(--inverted-bg-color))',
-    'base-text': 'rgb(var(--base-text-color))'
-  },
   boxShadow: {
     header: 'var(--header-box-shadow)',
     sider: 'var(--sider-box-shadow)',
     tab: 'var(--tab-box-shadow)'
+  },
+  colors: {
+    ...colorPaletteVars,
+    'base-text': 'rgb(var(--base-text-color))',
+    container: 'rgb(var(--container-bg-color))',
+    inverted: 'rgb(var(--inverted-bg-color))',
+    layout: 'rgb(var(--layout-bg-color))',
+    nprogress: 'rgb(var(--nprogress-color))'
   }
 };

@@ -4,8 +4,8 @@ import React from 'react';
 
 type BeyondHidingProps = Omit<TooltipProps, 'open' | 'trigger'> & {
   className?: string;
-  title: React.ReactNode;
   style?: React.CSSProperties;
+  title: React.ReactNode;
 };
 
 const BeyondHiding: FC<BeyondHidingProps> = memo(({ className, style, title, ...props }) => {
@@ -27,16 +27,16 @@ const BeyondHiding: FC<BeyondHidingProps> = memo(({ className, style, title, ...
   };
   return (
     <Tooltip
-      title={title}
       open={isShow}
+      title={title}
       {...props}
     >
       <span
-        onMouseOver={isShowTooltip}
-        onMouseLeave={() => setIsShow(false)}
-        style={style}
         className={className}
         ref={contentRef}
+        style={style}
+        onMouseLeave={() => setIsShow(false)}
+        onMouseOver={isShowTooltip}
       >
         {title}
       </span>

@@ -30,29 +30,29 @@ export function getPageOptions(routeName: string, allPages: string[]) {
 
 export function createDefaultModel(): Model {
   return {
-    menuType: '1',
-    menuName: '',
-    routeName: '',
-    routePath: '',
-    pathParam: '',
+    activeMenu: null,
+    buttons: [],
     component: '',
-    layout: 'base',
-    page: '',
+    constant: false,
+    fixedIndexInTab: null,
+    hideInMenu: false,
+    href: null,
     i18nKey: null,
     icon: '',
     iconType: '1',
-    parentId: 0,
-    status: '1',
     keepAlive: false,
-    constant: false,
-    order: 0,
-    href: null,
-    hideInMenu: false,
-    activeMenu: null,
+    layout: 'base',
+    menuName: '',
+    menuType: '1',
     multiTab: false,
-    fixedIndexInTab: null,
+    order: 0,
+    page: '',
+    parentId: 0,
+    pathParam: '',
     query: [],
-    buttons: []
+    routeName: '',
+    routePath: '',
+    status: '1'
   };
 }
 
@@ -85,8 +85,8 @@ export function getPathParamFromRoutePath(routePath: string) {
   const [path, param = ''] = routePath.split('/:');
 
   return {
-    path,
-    param
+    param,
+    path
   };
 }
 
@@ -108,38 +108,38 @@ export function flattenMenu(menuList: Api.SystemManage.Menu[], t: TFunction<'tra
 
 export type Model = Pick<
   Api.SystemManage.Menu,
-  | 'menuType'
-  | 'menuName'
-  | 'routeName'
-  | 'routePath'
+  | 'activeMenu'
   | 'component'
-  | 'order'
+  | 'constant'
+  | 'fixedIndexInTab'
+  | 'hideInMenu'
+  | 'href'
   | 'i18nKey'
   | 'icon'
   | 'iconType'
-  | 'status'
-  | 'parentId'
   | 'keepAlive'
-  | 'constant'
-  | 'href'
-  | 'hideInMenu'
-  | 'activeMenu'
+  | 'menuName'
+  | 'menuType'
   | 'multiTab'
-  | 'fixedIndexInTab'
+  | 'order'
+  | 'parentId'
+  | 'routeName'
+  | 'routePath'
+  | 'status'
 > & {
-  query: NonNullable<Api.SystemManage.Menu['query']>;
   buttons: NonNullable<Api.SystemManage.Menu['buttons']>;
   layout: string;
   page: string;
   pathParam: string;
+  query: NonNullable<Api.SystemManage.Menu['query']>;
 };
 
 export type OperateType = AntDesign.TableOperateType | 'addChild';
 
 export type Props = Omit<Page.OperateDrawerProps, ' operateType'> & {
-  operateType: OperateType;
   allPages: string[];
   menuList: CommonType.Option<number>[];
+  operateType: OperateType;
 };
 
-export type RuleKey = Extract<keyof Model, 'menuName' | 'status' | 'routeName' | 'routePath'>;
+export type RuleKey = Extract<keyof Model, 'menuName' | 'routeName' | 'routePath' | 'status'>;

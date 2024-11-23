@@ -5,21 +5,21 @@ export interface PkgVersionInfo {
 }
 
 export interface CardInfo {
-  title: string;
   content: PkgVersionInfo[];
+  title: string;
 }
 
 export interface PkgJson {
-  name: string;
-  version: string;
   dependencies: PkgVersionInfo[];
   devDependencies: PkgVersionInfo[];
+  name: string;
+  version: string;
 }
 
 export interface PackageInfo {
+  isLink: boolean;
   label: string;
   titleOrHref: string;
-  isLink: boolean;
 }
 
 export function transformVersionData(tuple: [string, string]): PkgVersionInfo {

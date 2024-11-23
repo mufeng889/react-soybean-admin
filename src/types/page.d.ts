@@ -2,16 +2,16 @@ declare namespace Page {
   type FormInstance = import('antd').FormInstance;
 
   interface SearchProps {
+    form: FormInstance;
     reset: () => void;
     search: () => void;
-    form: FormInstance;
   }
 
   interface OperateDrawerProps {
-    open: boolean;
-    onClose: () => void;
-    handleSubmit: () => void;
     form: FormInstance;
+    handleSubmit: () => void;
+    onClose: () => void;
+    open: boolean;
     operateType: AntDesign.TableOperateType;
   }
 }

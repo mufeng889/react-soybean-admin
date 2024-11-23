@@ -1,13 +1,14 @@
 // @unocss-include
 import { getRgb } from '@sa/color';
+
+import systemLogo from '@/assets/svg-icon/logo.svg?raw';
 import { $t } from '@/locales';
 import { localStg } from '@/utils/storage';
-import systemLogo from '@/assets/svg-icon/logo.svg?raw';
 
 export function setupLoading() {
   const themeColor = localStg.get('themeColor') || '#646cff';
 
-  const { r, g, b } = getRgb(themeColor);
+  const { b, g, r } = getRgb(themeColor);
 
   const primaryColor = `--primary-color: ${r} ${g} ${b}`;
 

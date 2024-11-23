@@ -5,18 +5,18 @@ const common: App.I18n.Schema['translation']['common'] = {
   backToHome: '返回首页',
   batchDelete: '批量删除',
   cancel: '取消',
-  close: '关闭',
   check: '勾选',
-  expandColumn: '展开列',
+  close: '关闭',
   columnSetting: '列设置',
   config: '配置',
   confirm: '确认',
+  confirmDelete: '确认删除吗？',
   delete: '删除',
   deleteSuccess: '删除成功',
-  confirmDelete: '确认删除吗？',
   edit: '编辑',
-  warning: '警告',
   error: '错误',
+  errorHint: '出错了，请稍后再试',
+  expandColumn: '展开列',
   index: '序号',
   keywordSearch: '请输入关键词搜索',
   logout: '退出登录',
@@ -31,16 +31,16 @@ const common: App.I18n.Schema['translation']['common'] = {
   reset: '重置',
   search: '搜索',
   switch: '切换',
-  errorHint: '出错了，请稍后再试',
-  tryAlign: '刷新重试',
   tip: '提示',
   trigger: '触发',
+  tryAlign: '刷新重试',
   update: '更新',
   updateSuccess: '更新成功',
   userCenter: '个人中心',
+  warning: '警告',
   yesOrNo: {
-    yes: '是',
-    no: '否'
+    no: '否',
+    yes: '是'
   }
 };
 

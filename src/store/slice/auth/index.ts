@@ -1,10 +1,13 @@
 import { createSelector } from '@reduxjs/toolkit';
+
 import { fetchGetUserInfo, fetchLogin } from '@/service/api';
 import { localStg } from '@/utils/storage';
-import type { AppThunk } from '../../index';
+
+import type { AppThunk } from '../..';
 import { createAppSlice } from '../../createAppSlice';
-import { cacheTabs } from '../tab';
 import { resetRouteStore } from '../route';
+import { cacheTabs } from '../tab';
+
 import { clearAuthStorage, getToken, getUserInfo } from './shared';
 
 const initialState = {
@@ -13,11 +16,11 @@ const initialState = {
 };
 
 export const authSlice = createAppSlice({
-  name: 'auth',
   initialState,
+  name: 'auth',
   reducers: create => ({
     login: create.asyncThunk(
-      async ({ userName, password }: { userName: string; password: string }) => {
+      async ({ password, userName }: { password: string; userName: string }) => {
         const { data: loginToken, error } = await fetchLogin(userName, password);
         // 1. stored in the localStorage, the later requests need it in headers
         if (!error) {

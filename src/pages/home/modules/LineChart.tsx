@@ -1,97 +1,99 @@
 import { Card } from 'antd';
+
 import { getLocale } from '@/store/slice/app';
+
 const LineChart = memo(() => {
   const { t } = useTranslation();
   const locale = useAppSelector(getLocale);
   const { domRef, updateOptions } = useEcharts(() => ({
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'cross',
-        label: {
-          backgroundColor: '#6a7985'
-        }
-      }
+    grid: {
+      bottom: '3%',
+      containLabel: true,
+      left: '3%',
+      right: '4%'
     },
     legend: {
       data: [t('page.home.downloadCount'), t('page.home.registerCount')]
     },
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
-      containLabel: true
+    series: [
+      {
+        areaStyle: {
+          color: {
+            colorStops: [
+              {
+                color: '#8e9dff',
+                offset: 0.25
+              },
+              {
+                color: '#fff',
+                offset: 1
+              }
+            ],
+            type: 'linear',
+            x: 0,
+            x2: 0,
+            y: 0,
+            y2: 1
+          }
+        },
+        color: '#8e9dff',
+        data: [] as number[],
+        emphasis: {
+          focus: 'series'
+        },
+        name: t('page.home.downloadCount'),
+        smooth: true,
+        stack: 'Total',
+        type: 'line'
+      },
+      {
+        areaStyle: {
+          color: {
+            colorStops: [
+              {
+                color: '#26deca',
+                offset: 0.25
+              },
+              {
+                color: '#fff',
+                offset: 1
+              }
+            ],
+            type: 'linear',
+            x: 0,
+            x2: 0,
+            y: 0,
+            y2: 1
+          }
+        },
+        color: '#26deca',
+        data: [],
+        emphasis: {
+          focus: 'series'
+        },
+        name: t('page.home.registerCount'),
+        smooth: true,
+        stack: 'Total',
+        type: 'line'
+      }
+    ],
+    tooltip: {
+      axisPointer: {
+        label: {
+          backgroundColor: '#6a7985'
+        },
+        type: 'cross'
+      },
+      trigger: 'axis'
     },
     xAxis: {
-      type: 'category',
       boundaryGap: false,
-      data: [] as string[]
+      data: [] as string[],
+      type: 'category'
     },
     yAxis: {
       type: 'value'
-    },
-    series: [
-      {
-        color: '#8e9dff',
-        name: t('page.home.downloadCount'),
-        type: 'line',
-        smooth: true,
-        stack: 'Total',
-        areaStyle: {
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              {
-                offset: 0.25,
-                color: '#8e9dff'
-              },
-              {
-                offset: 1,
-                color: '#fff'
-              }
-            ]
-          }
-        },
-        emphasis: {
-          focus: 'series'
-        },
-        data: [] as number[]
-      },
-      {
-        color: '#26deca',
-        name: t('page.home.registerCount'),
-        type: 'line',
-        smooth: true,
-        stack: 'Total',
-        areaStyle: {
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              {
-                offset: 0.25,
-                color: '#26deca'
-              },
-              {
-                offset: 1,
-                color: '#fff'
-              }
-            ]
-          }
-        },
-        emphasis: {
-          focus: 'series'
-        },
-        data: []
-      }
-    ]
+    }
   }));
 
   async function mockData() {
@@ -137,9 +139,9 @@ const LineChart = memo(() => {
       className="card-wrapper"
     >
       <div
-        ref={domRef}
         className="h-360px overflow-hidden"
-      ></div>
+        ref={domRef}
+      />
     </Card>
   );
 });

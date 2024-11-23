@@ -1,15 +1,16 @@
-import { RouterProvider as Provider } from 'react-router-dom';
 import { useLayoutEffect, useState } from 'react';
-import { RouterContext } from './hooks/useRouter';
+import { RouterProvider as Provider } from 'react-router-dom';
+
 import { RouteContext } from './hooks/useRoute';
+import { RouterContext } from './hooks/useRouter';
 import type { Router } from './router';
 
 export type RouterProviderProps = {
-  router: Router;
-  fallback?: React.ReactNode;
+  readonly fallback?: React.ReactNode;
+  readonly router: Router;
 };
 
-const RouterProvider = ({ router, fallback }: RouterProviderProps) => {
+const RouterProvider = ({ fallback, router }: RouterProviderProps) => {
   const [route, setRoute] = useState(router.resolve(router.reactRouter.state.location));
 
   useLayoutEffect(

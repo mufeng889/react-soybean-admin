@@ -1,9 +1,11 @@
 import { BACKEND_ERROR_CODE, createFlatRequest, createRequest } from '@sa/axios';
-import { localStg } from '@/utils/storage';
+
 import { getServiceBaseURL } from '@/utils/service';
+import { localStg } from '@/utils/storage';
+
+import { backEndFail, handleError } from './error';
 import { getAuthorization } from './shared';
 import type { RequestInstanceState } from './type';
-import { backEndFail, handleError } from './error';
 
 const isHttpProxy = import.meta.env.DEV && import.meta.env.VITE_HTTP_PROXY === 'Y';
 const { baseURL, otherBaseURL } = getServiceBaseURL(import.meta.env, isHttpProxy);
@@ -16,12 +18,6 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
     }
   },
   {
-    async onRequest(config) {
-      const Authorization = getAuthorization();
-      Object.assign(config.headers, { Authorization });
-
-      return config;
-    },
     isBackendSuccess(response) {
       // when the backend response code is "0000"(default), it means the request is success
       // to change this logic by yourself, you can modify the `VITE_SERVICE_SUCCESS_CODE` in `.env` file
@@ -30,11 +26,17 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
     async onBackendFail(response, instance) {
       await backEndFail(response, instance, request);
     },
-    transformBackendResponse(response) {
-      return response.data.data;
-    },
     onError(error) {
       handleError(error, request);
+    },
+    async onRequest(config) {
+      const Authorization = getAuthorization();
+      Object.assign(config.headers, { Authorization });
+
+      return config;
+    },
+    transformBackendResponse(response) {
+      return response.data.data;
     }
   }
 );
@@ -44,16 +46,6 @@ export const demoRequest = createRequest<App.Service.DemoResponse>(
     baseURL: otherBaseURL.demo
   },
   {
-    async onRequest(config) {
-      const { headers } = config;
-
-      // set token
-      const token = localStg.get('token');
-      const Authorization = token ? `Bearer ${token}` : null;
-      Object.assign(headers, { Authorization });
-
-      return config;
-    },
     isBackendSuccess(response) {
       // when the backend response code is "200", it means the request is success
       // you can change this logic by yourself
@@ -62,9 +54,6 @@ export const demoRequest = createRequest<App.Service.DemoResponse>(
     async onBackendFail(_response) {
       // when the backend response code is not "200", it means the request is fail
       // for example: the token is expired, refresh token and retry request
-    },
-    transformBackendResponse(response) {
-      return response.data.result;
     },
     onError(error) {
       // when the request is fail, you can show error message
@@ -77,6 +66,19 @@ export const demoRequest = createRequest<App.Service.DemoResponse>(
       }
 
       window.$message?.error(message);
+    },
+    async onRequest(config) {
+      const { headers } = config;
+
+      // set token
+      const token = localStg.get('token');
+      const Authorization = token ? `Bearer ${token}` : null;
+      Object.assign(headers, { Authorization });
+
+      return config;
+    },
+    transformBackendResponse(response) {
+      return response.data.result;
     }
   }
 );

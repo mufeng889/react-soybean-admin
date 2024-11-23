@@ -1,10 +1,10 @@
-import { useRoute, useRouter } from '@sa/simple-router';
 import type { RouteKey } from '@elegant-router/types';
+import { useRoute, useRouter } from '@sa/simple-router';
 import type { RouteLocationNamedRaw } from '@sa/simple-router';
 
 interface RouterPushOptions {
-  query?: Record<string, string>;
   params?: Record<string, string>;
+  query?: Record<string, string>;
 }
 
 /**
@@ -24,7 +24,7 @@ export function useRouterPush() {
   const routerBack = router.back;
 
   async function routerPushByKey(key: RouteKey, options?: RouterPushOptions) {
-    const { query, params } = options || {};
+    const { params, query } = options || {};
 
     const routeLocation: RouteLocationNamedRaw = {
       name: key
@@ -115,12 +115,12 @@ export function useRouterPush() {
   }
 
   return {
-    routerPush,
-    routerBack,
-    routerPushByKey,
-    toLogin,
-    routerPushByKeyWithMetaQuery,
     redirectFromLogin,
-    toggleLoginModule
+    routerBack,
+    routerPush,
+    routerPushByKey,
+    routerPushByKeyWithMetaQuery,
+    toggleLoginModule,
+    toLogin
   };
 }

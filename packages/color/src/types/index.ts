@@ -32,8 +32,8 @@ export type ColorPaletteWithDelta = ColorPalette & {
 
 /** the color palette family with nearest palette */
 export type ColorPaletteFamilyWithNearestPalette = ColorPaletteFamily & {
-  nearestPalette: ColorPaletteWithDelta;
   nearestLightnessPalette: ColorPaletteWithDelta;
+  nearestPalette: ColorPaletteWithDelta;
 };
 
 /** the color palette match */

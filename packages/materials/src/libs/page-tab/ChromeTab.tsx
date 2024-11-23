@@ -1,18 +1,20 @@
 import classNames from 'classnames';
+
 import type { ButtonTabProps } from '../../types';
+
+import ChromeTabBg from './ChromeTabBg';
 import { useTap } from './hook';
 import styles from './index.module.css';
-import ChromeTabBg from './ChromeTabBg';
 
 const ChromeTab = ({
   active,
+  children,
+  className,
   darkMode,
   onClick,
   prefix,
-  suffix,
-  children,
-  className,
   style,
+  suffix,
   ...rest
 }: ButtonTabProps) => {
   const tap = useTap(onClick);
@@ -21,6 +23,7 @@ const ChromeTab = ({
     <div
       {...rest}
       {...tap}
+      style={{ ...style }}
       className={classNames(
         ':soy: relative inline-flex cursor-pointer items-center justify-center gap-16px whitespace-nowrap px-24px py-6px -mr-18px',
         [
@@ -32,7 +35,6 @@ const ChromeTab = ({
         ]
       )}
       onClick={onClick}
-      style={{ ...style }}
     >
       <div
         className={classNames(':soy: pointer-events-none absolute left-0 top-0 h-full w-full -z-1', [
@@ -44,9 +46,7 @@ const ChromeTab = ({
       {prefix}
       {children}
       {suffix}
-      <div
-        className={classNames(':soy: absolute right-7px h-16px w-1px bg-#1f2225', [styles['chrome-tab-divider']])}
-      ></div>
+      <div className={classNames(':soy: absolute right-7px h-16px w-1px bg-#1f2225', [styles['chrome-tab-divider']])} />
     </div>
   );
 };

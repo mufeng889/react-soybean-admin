@@ -1,121 +1,124 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+
 import { setLng } from '@/locales';
 import { localStg } from '@/utils/storage';
-import type { AppThunk } from '../../index';
+
+import type { AppThunk } from '../..';
 import { getThemeSettings } from '../theme';
+
 interface InitialStateType {
-  localeOptions: App.I18n.LangOption[];
-  locale: App.I18n.LangType;
-  themeDrawerVisible: boolean;
-  reloadFlag: boolean;
-  fullContent: boolean;
   contentXScrollable: boolean;
-  siderCollapse: boolean;
-  mixSiderFixed: boolean;
+  fullContent: boolean;
   isMobile: boolean;
+  locale: App.I18n.LangType;
+  localeOptions: App.I18n.LangOption[];
+  mixSiderFixed: boolean;
+  reloadFlag: boolean;
+  siderCollapse: boolean;
+  themeDrawerVisible: boolean;
 }
 
 const initialState: InitialStateType = {
+  contentXScrollable: false,
+  fullContent: false,
+  /** Is mobile layout */
+  isMobile: false,
+  locale: localStg.get('lang') || 'zh-CN',
   localeOptions: [
     {
-      label: '中文',
-      key: 'zh-CN'
+      key: 'zh-CN',
+      label: '中文'
     },
     {
-      label: 'English',
-      key: 'en-US'
+      key: 'en-US',
+      label: 'English'
     }
   ],
-  locale: localStg.get('lang') || 'zh-CN',
-  themeDrawerVisible: false,
-  reloadFlag: true,
-  fullContent: false,
-  contentXScrollable: false,
-  siderCollapse: false,
   mixSiderFixed: false,
-  /** Is mobile layout */
-  isMobile: false
+  reloadFlag: true,
+  siderCollapse: false,
+  themeDrawerVisible: false
 };
 
 export const appSlice = createSlice({
-  name: 'app',
   initialState,
+  name: 'app',
   reducers: {
     changeLocale(state, { payload }: PayloadAction<App.I18n.LangType>) {
       state.locale = payload;
       setLng(payload);
       localStg.set('lang', payload);
     },
-    openThemeDrawer: state => {
-      state.themeDrawerVisible = true;
-    },
     closeThemeDrawer: state => {
       state.themeDrawerVisible = false;
     },
-    setReloadFlag: (state, action: PayloadAction<boolean>) => {
-      state.reloadFlag = action.payload;
-    },
-    toggleFullContent: state => {
-      state.fullContent = !state.fullContent;
+    openThemeDrawer: state => {
+      state.themeDrawerVisible = true;
     },
     setContentXScrollable: (state, action: PayloadAction<boolean>) => {
       state.contentXScrollable = action.payload;
     },
-    setSiderCollapse: (state, { payload }: PayloadAction<boolean>) => {
-      state.siderCollapse = payload;
-    },
-    toggleSiderCollapse: state => {
-      state.siderCollapse = !state.siderCollapse;
+    setIsMobile: (state, { payload }: { payload: boolean }) => {
+      state.isMobile = payload;
     },
     setMixSiderFixed: (state, action: PayloadAction<boolean>) => {
       state.mixSiderFixed = action.payload;
     },
+    setReloadFlag: (state, action: PayloadAction<boolean>) => {
+      state.reloadFlag = action.payload;
+    },
+    setSiderCollapse: (state, { payload }: PayloadAction<boolean>) => {
+      state.siderCollapse = payload;
+    },
+    toggleFullContent: state => {
+      state.fullContent = !state.fullContent;
+    },
     toggleMixSiderFixed: state => {
       state.mixSiderFixed = !state.mixSiderFixed;
     },
-    setIsMobile: (state, { payload }: { payload: boolean }) => {
-      state.isMobile = payload;
+    toggleSiderCollapse: state => {
+      state.siderCollapse = !state.siderCollapse;
     }
   },
   selectors: {
+    getContentXScrollable: app => app.contentXScrollable,
+    getFullContent: app => app.fullContent,
+    getIsMobile: app => app.isMobile,
     getLocale: app => app.locale,
     getLocaleOptions: app => app.localeOptions,
-    getThemeDrawerVisible: app => app.themeDrawerVisible,
-    getReloadFlag: app => app.reloadFlag,
-    getFullContent: app => app.fullContent,
-    getContentXScrollable: app => app.contentXScrollable,
-    getSiderCollapse: app => app.siderCollapse,
     getMixSiderFixed: app => app.mixSiderFixed,
-    getIsMobile: app => app.isMobile
+    getReloadFlag: app => app.reloadFlag,
+    getSiderCollapse: app => app.siderCollapse,
+    getThemeDrawerVisible: app => app.themeDrawerVisible
   }
 });
 // Action creators are generated for each case reducer function.
 export const {
   changeLocale,
-  openThemeDrawer,
   closeThemeDrawer,
-  setReloadFlag,
-  toggleFullContent,
+  openThemeDrawer,
   setContentXScrollable,
-  setSiderCollapse,
-  toggleSiderCollapse,
+  setIsMobile,
   setMixSiderFixed,
+  setReloadFlag,
+  setSiderCollapse,
+  toggleFullContent,
   toggleMixSiderFixed,
-  setIsMobile
+  toggleSiderCollapse
 } = appSlice.actions;
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.
 export const {
-  getLocale,
-  getMixSiderFixed,
-  getSiderCollapse,
-  getLocaleOptions,
   getContentXScrollable,
   getFullContent,
-  getThemeDrawerVisible,
+  getIsMobile,
+  getLocale,
+  getLocaleOptions,
+  getMixSiderFixed,
   getReloadFlag,
-  getIsMobile
+  getSiderCollapse,
+  getThemeDrawerVisible
 } = appSlice.selectors;
 
 /**

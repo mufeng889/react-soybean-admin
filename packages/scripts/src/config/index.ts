@@ -1,9 +1,11 @@
 import process from 'node:process';
+
 import { loadConfig } from 'c12';
+
 import type { CliOption } from '../types';
 
 const defaultOptions: CliOption = {
-  cwd: process.cwd(),
+  changelogOptions: {},
   cleanupDirs: [
     '**/dist',
     '**/package-lock.json',
@@ -11,6 +13,19 @@ const defaultOptions: CliOption = {
     '**/pnpm-lock.yaml',
     '**/node_modules',
     '!node_modules/**'
+  ],
+  cwd: process.cwd(),
+  gitCommitScopes: [
+    ['projects', 'project'],
+    ['packages', 'packages'],
+    ['components', 'components'],
+    ['hooks', 'hook functions'],
+    ['utils', 'utils functions'],
+    ['types', 'TS declaration'],
+    ['styles', 'style'],
+    ['deps', 'project dependencies'],
+    ['release', 'release project'],
+    ['other', 'other changes']
   ],
   gitCommitTypes: [
     ['feat', 'A new feature'],
@@ -26,28 +41,15 @@ const defaultOptions: CliOption = {
     ['chore', "Other changes that don't modify src or test files"],
     ['revert', 'Reverts a previous commit']
   ],
-  gitCommitScopes: [
-    ['projects', 'project'],
-    ['packages', 'packages'],
-    ['components', 'components'],
-    ['hooks', 'hook functions'],
-    ['utils', 'utils functions'],
-    ['types', 'TS declaration'],
-    ['styles', 'style'],
-    ['deps', 'project dependencies'],
-    ['release', 'release project'],
-    ['other', 'other changes']
-  ],
-  ncuCommandArgs: ['--deep', '-u'],
-  changelogOptions: {}
+  ncuCommandArgs: ['--deep', '-u']
 };
 
 export async function loadCliOptions(overrides?: Partial<CliOption>, cwd = process.cwd()) {
   const { config } = await loadConfig<Partial<CliOption>>({
-    name: 'soybean',
-    defaults: defaultOptions,
-    overrides,
     cwd,
+    defaults: defaultOptions,
+    name: 'soybean',
+    overrides,
     packageJson: true
   });
 

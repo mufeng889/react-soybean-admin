@@ -1,8 +1,10 @@
 import { Suspense, lazy } from 'react';
-import { fetchGetUserList } from '@/service/api';
+
+import TableHeaderOperation from '@/components/advanced/TableHeaderOperation';
 import { enableStatusRecord, userGenderRecord } from '@/constants/business';
 import { ATG_MAP } from '@/constants/common';
-import TableHeaderOperation from '@/components/advanced/TableHeaderOperation';
+import { fetchGetUserList } from '@/service/api';
+
 import UserSearch from './modules/UserSearch';
 
 const UserOperateDrawer = lazy(() => import('./modules/UserOperateDrawer'));
@@ -15,48 +17,46 @@ const tagUserGenderMap: Record<Api.SystemManage.UserGender, string> = {
 export function Component() {
   const { t } = useTranslation();
 
-  const { tableWrapperRef, scrollConfig } = useTableScroll();
+  const { scrollConfig, tableWrapperRef } = useTableScroll();
 
   const nav = useNavigate();
 
   const isMobile = useMobile();
 
-  const { columnChecks, data, setColumnChecks, tableProps, run, searchProps } = useTable(
+  const { columnChecks, data, run, searchProps, setColumnChecks, tableProps } = useTable(
     {
       apiFn: fetchGetUserList,
       apiParams: {
         current: 1,
+        nickName: null,
         size: 10,
         // if you want to use the searchParams in Form, you need to define the following properties, and the value is null
         // the value can not be undefined, otherwise the property in Form will not be reactive
         status: null,
-        userName: null,
+        userEmail: null,
         userGender: null,
-        nickName: null,
-        userPhone: null,
-        userEmail: null
+        userName: null,
+        userPhone: null
       },
       columns: () => [
         {
+          align: 'center',
+          dataIndex: 'index',
           key: 'index',
           title: t('common.index'),
-          dataIndex: 'index',
-          align: 'center',
           width: 64
         },
         {
-          key: 'userName',
-          dataIndex: 'userName',
-          title: t('page.manage.user.userName'),
           align: 'center',
-          minWidth: 100
+          dataIndex: 'userName',
+          key: 'userName',
+          minWidth: 100,
+          title: t('page.manage.user.userName')
         },
         {
-          key: 'userGender',
-          title: t('page.manage.user.userGender'),
           align: 'center',
           dataIndex: 'userGender',
-          width: 100,
+          key: 'userGender',
           render: (_, record) => {
             if (record?.userGender === null) {
               return null;
@@ -65,54 +65,54 @@ export function Component() {
             const label = t(userGenderRecord[record.userGender]);
 
             return <ATag color={tagUserGenderMap[record.userGender]}>{label}</ATag>;
-          }
+          },
+          title: t('page.manage.user.userGender'),
+          width: 100
         },
         {
-          key: 'nickName',
+          align: 'center',
           dataIndex: 'nickName',
-          title: t('page.manage.user.nickName'),
-          align: 'center',
-          minWidth: 100
+          key: 'nickName',
+          minWidth: 100,
+          title: t('page.manage.user.nickName')
         },
         {
-          key: 'userPhone',
-          dataIndex: 'userPhone',
-          title: t('page.manage.user.userPhone'),
           align: 'center',
+          dataIndex: 'userPhone',
+          key: 'userPhone',
+          title: t('page.manage.user.userPhone'),
           width: 120
         },
         {
-          key: 'userEmail',
-          dataIndex: 'userEmail',
-          title: t('page.manage.user.userEmail'),
           align: 'center',
-          minWidth: 200
+          dataIndex: 'userEmail',
+          key: 'userEmail',
+          minWidth: 200,
+          title: t('page.manage.user.userEmail')
         },
         {
-          key: 'status',
-          dataIndex: 'status',
-          title: t('page.manage.user.userStatus'),
           align: 'center',
-          width: 100,
+          dataIndex: 'status',
+          key: 'status',
           render: (_, record) => {
             if (record.status === null) {
               return null;
             }
             const label = t(enableStatusRecord[record.status]);
             return <ATag color={ATG_MAP[record.status]}>{label}</ATag>;
-          }
+          },
+          title: t('page.manage.user.userStatus'),
+          width: 100
         },
         {
-          key: 'operate',
-          title: t('common.operate'),
           align: 'center',
-          width: 195,
+          key: 'operate',
           render: (_, record) => (
             <div className="flex-center gap-8px">
               <AButton
-                type="primary"
                 ghost
                 size="small"
+                type="primary"
                 onClick={() => edit(record.id)}
               >
                 {t('common.edit')}
@@ -135,14 +135,16 @@ export function Component() {
                 </AButton>
               </APopconfirm>
             </div>
-          )
+          ),
+          title: t('common.operate'),
+          width: 195
         }
       ]
     },
     { showQuickJumper: true }
   );
 
-  const { checkedRowKeys, rowSelection, onBatchDeleted, onDeleted, handleEdit, handleAdd, generalPopupOperation } =
+  const { checkedRowKeys, generalPopupOperation, handleAdd, handleEdit, onBatchDeleted, onDeleted, rowSelection } =
     useTableOperate(data, run, async (res, type) => {
       if (type === 'add') {
         // add request 调用新增的接口
@@ -173,37 +175,37 @@ export function Component() {
     <div className="h-full min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
       <ACollapse
         bordered={false}
-        defaultActiveKey={isMobile ? undefined : '1'}
         className="card-wrapper"
+        defaultActiveKey={isMobile ? undefined : '1'}
         items={[
           {
+            children: <UserSearch {...searchProps} />,
             key: '1',
-            label: t('common.search'),
-            children: <UserSearch {...searchProps} />
+            label: t('common.search')
           }
         ]}
       />
 
       <ACard
-        ref={tableWrapperRef}
         bordered={false}
+        className="flex-col-stretch sm:flex-1-hidden card-wrapper"
+        ref={tableWrapperRef}
+        title={t('page.manage.user.title')}
         extra={
           <TableHeaderOperation
-            onDelete={handleBatchDelete}
-            refresh={run}
             add={handleAdd}
-            loading={tableProps.loading}
-            setColumnChecks={setColumnChecks}
-            disabledDelete={checkedRowKeys.length === 0}
             columns={columnChecks}
+            disabledDelete={checkedRowKeys.length === 0}
+            loading={tableProps.loading}
+            refresh={run}
+            setColumnChecks={setColumnChecks}
+            onDelete={handleBatchDelete}
           />
         }
-        title={t('page.manage.user.title')}
-        className="flex-col-stretch sm:flex-1-hidden card-wrapper"
       >
         <ATable
-          scroll={scrollConfig}
           rowSelection={rowSelection}
+          scroll={scrollConfig}
           size="small"
           {...tableProps}
         />

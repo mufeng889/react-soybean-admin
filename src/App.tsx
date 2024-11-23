@@ -1,23 +1,25 @@
+import { RouterProvider } from '@sa/simple-router';
 import { useUpdateEffect } from 'ahooks';
 import type { WatermarkProps } from 'antd';
-import { RouterProvider } from '@sa/simple-router';
-import { localStg } from '@/utils/storage';
-import { getLocale } from '@/store/slice/app';
-import { getAntdTheme, setupThemeVarsToHtml, toggleCssDarkMode } from '@/store/slice/theme/shared';
-import { getDarkMode, getThemeSettings, themeColors } from '@/store/slice/theme';
-import { router } from '@/router';
+
 import { info } from '@/constants/app';
-import { antdLocales } from './locales/antd';
+import { router } from '@/router';
+import { getLocale } from '@/store/slice/app';
+import { getDarkMode, getThemeSettings, themeColors } from '@/store/slice/theme';
+import { getAntdTheme, setupThemeVarsToHtml, toggleCssDarkMode } from '@/store/slice/theme/shared';
+import { localStg } from '@/utils/storage';
+
 import AppProvider from './components/stateful/AppProvider';
+import { antdLocales } from './locales/antd';
 
 const watermarkProps: WatermarkProps = {
   font: {
     fontSize: 16
   },
-  width: 240,
   height: 128,
   offset: [12, 60],
   rotate: -15,
+  width: 240,
   zIndex: 9999
 };
 
@@ -49,15 +51,15 @@ const App = () => {
 
   return (
     <AConfigProvider
-      theme={antdTheme}
-      locale={antdLocales[locale]}
-      card={{ styles: { body: { padding: '12px 16px ', flex: 1, overflow: 'hidden' } } }}
       button={{ classNames: { icon: 'align-1px  text-icon' } }}
+      card={{ styles: { body: { flex: 1, overflow: 'hidden', padding: '12px 16px ' } } }}
+      locale={antdLocales[locale]}
+      theme={antdTheme}
     >
       <AppProvider>
         <AWatermark
-          content={themeSettings.watermark.visible ? themeSettings.watermark?.text || 'Soybean' : ''}
           className="h-full"
+          content={themeSettings.watermark.visible ? themeSettings.watermark?.text || 'Soybean' : ''}
           {...watermarkProps}
         >
           <RouterProvider

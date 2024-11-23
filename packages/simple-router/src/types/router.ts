@@ -1,35 +1,38 @@
 import type { ElegantConstRoute } from '@ohh-889/react-auto-route';
-import type { Location, RouteObject } from 'react-router-dom';
 import type { Router as RemixRouter } from '@remix-run/router';
+import type { Location, RouteObject } from 'react-router-dom';
+
 import type { RouteRecordNormalized } from '../matcher/types';
+
 import type { RouteLocationNormalizedLoaded } from './route';
+
 export interface RouterOptions {
-  initRoutes: ElegantConstRoute[];
-  history: 'hash' | 'history' | 'memory';
-  basename: string;
-  getReactRoutes(route: ElegantConstRoute): RouteObject;
-  init(reactRouter: RemixRouter): Promise<void>;
-  beforeEach: BeforeEach;
   afterEach: AfterEach;
+  basename: string;
+  beforeEach: BeforeEach;
   firstInit: (allNames: string[]) => void;
+  getReactRoutes(route: ElegantConstRoute): RouteObject;
+  history: 'hash' | 'history' | 'memory';
+  init(reactRouter: RemixRouter): Promise<void>;
+  initRoutes: ElegantConstRoute[];
 }
 
 /** Router instance. */
 export interface Router {
+  addReactRoutes: (routes: ElegantConstRoute[]) => void;
+  back: () => void;
   readonly currentRoute: RouteLocationNormalizedLoaded;
+  CustomRouterProvider: (loading: React.ReactNode) => JSX.Element;
+  forwardRef: () => void;
+  getAllRouteNames: () => string[];
+  getRouteByName: (name: string) => RouteRecordNormalized | undefined;
+  getRoutes: () => RouteRecordNormalized[];
+  go: (delta: number) => void;
   push: (to: RouteLocationNamedRaw) => void;
   readonly reactRouter: RemixRouter;
   readonly reactRoutes: RouteObject[];
-  addReactRoutes: (routes: ElegantConstRoute[]) => void;
-  CustomRouterProvider: (loading: React.ReactNode) => JSX.Element;
-  getRoutes: () => RouteRecordNormalized[];
-  getRouteByName: (name: string) => RouteRecordNormalized | undefined;
-  resetRoute: () => void;
-  getAllRouteNames: () => string[];
-  back: () => void;
-  forwardRef: () => void;
-  go: (delta: number) => void;
   removeRoute: (name: string) => void;
+  resetRoute: () => void;
 }
 
 export type NavigationGuardNext = (
@@ -101,16 +104,16 @@ export type RouteParamsRaw = Record<string, RouteParamValueRaw | Exclude<RoutePa
 
 export interface LocationAsRelativeRaw {
   name: string;
-  path?: string;
   params?: RouteParamsRaw;
+  path?: string;
 }
 
 export type LocationQueryRaw = Record<string | number, LocationQueryValueRaw | LocationQueryValueRaw[]>;
 
 /** @internal */
 export interface RouteQueryAndHash {
-  query?: LocationQueryRaw;
   hash?: string;
+  query?: LocationQueryRaw;
 }
 
 /**

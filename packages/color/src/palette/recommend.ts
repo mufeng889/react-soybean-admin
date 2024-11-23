@@ -1,5 +1,5 @@
-import { getColorName, getDeltaE, getHsl, isValidColor, transformHslToHex } from '../shared';
 import { colorPalettes } from '../constant';
+import { getColorName, getDeltaE, getHsl, isValidColor, transformHslToHex } from '../shared';
 import type {
   ColorPalette,
   ColorPaletteFamily,
@@ -67,7 +67,7 @@ export function getRecommendedColorPaletteFamily(color: string) {
 
   const { nearestLightnessPalette, palettes } = getNearestColorPaletteFamily(color, colorPalettes);
 
-  const { number, hex } = nearestLightnessPalette;
+  const { hex, number } = nearestLightnessPalette;
 
   const { h: h2, s: s2 } = getHsl(hex);
 
@@ -83,15 +83,15 @@ export function getRecommendedColorPaletteFamily(color: string) {
       const isSame = number === palette.number;
 
       if (!isSame) {
-        const { h: h3, s: s3, l } = getHsl(palette.hex);
+        const { h: h3, l, s: s3 } = getHsl(palette.hex);
 
         const newH = deltaH < 0 ? h3 + deltaH : h3 - deltaH;
         const newS = s3 * sRatio;
 
         hexValue = transformHslToHex({
           h: newH,
-          s: newS,
-          l
+          l,
+          s: newS
         });
       }
 
@@ -124,8 +124,8 @@ function getNearestColorPaletteFamily(color: string, families: ColorPaletteFamil
 
     return {
       ...family,
-      palettes,
-      nearestPalette
+      nearestPalette,
+      palettes
     };
   });
 

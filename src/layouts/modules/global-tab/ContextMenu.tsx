@@ -1,37 +1,38 @@
 import { Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
+
 import { clearLeftTabs, clearRightTabs, clearTabs, removeTab } from '@/store/slice/tab';
 
 interface ContextMenuProps {
-  tabId: string;
-  excludeKeys?: App.Global.DropdownKey[];
-  disabledKeys?: App.Global.DropdownKey[];
-  children: React.ReactNode;
   active: boolean;
+  children: React.ReactNode;
+  darkMode: boolean;
+  disabledKeys?: App.Global.DropdownKey[];
+  excludeKeys?: App.Global.DropdownKey[];
+  i18nKey: App.Global.Tab['i18nKey'];
   locale: App.I18n.LangType;
   mode: UnionKey.ThemeTabMode;
-  i18nKey: App.Global.Tab['i18nKey'];
-  darkMode: boolean;
+  tabId: string;
 }
 
 interface DropdownOption {
+  disabled?: boolean;
+  icon: string;
   key: App.Global.DropdownKey;
   label: string;
-  icon: string;
-  disabled?: boolean;
 }
 
 function getMenu(options: DropdownOption[]) {
   const items: MenuProps['items'] = options.map(opt => ({
-    key: opt.key,
-    label: opt.label,
+    disabled: opt.disabled,
     icon: (
       <SvgIcon
-        icon={opt.icon}
         className="text-icon"
+        icon={opt.icon}
       />
     ),
-    disabled: opt.disabled
+    key: opt.key,
+    label: opt.label
   }));
 
   return items;
@@ -51,7 +52,7 @@ function arePropsEqual(oldProps: Readonly<ContextMenuProps>, newProps: Readonly<
   return result || false;
 }
 
-const ContextMenu: FC<ContextMenuProps> = memo(({ tabId, excludeKeys = [], disabledKeys = [], children }) => {
+const ContextMenu: FC<ContextMenuProps> = memo(({ children, disabledKeys = [], excludeKeys = [], tabId }) => {
   const { t } = useTranslation();
 
   const dispatch = useAppDispatch();
@@ -59,29 +60,29 @@ const ContextMenu: FC<ContextMenuProps> = memo(({ tabId, excludeKeys = [], disab
   const options = () => {
     const opts: DropdownOption[] = [
       {
+        icon: 'ant-design:close-outlined',
         key: 'closeCurrent',
-        label: t('dropdown.closeCurrent'),
-        icon: 'ant-design:close-outlined'
+        label: t('dropdown.closeCurrent')
       },
       {
+        icon: 'ant-design:column-width-outlined',
         key: 'closeOther',
-        label: t('dropdown.closeOther'),
-        icon: 'ant-design:column-width-outlined'
+        label: t('dropdown.closeOther')
       },
       {
+        icon: 'mdi:format-horizontal-align-left',
         key: 'closeLeft',
-        label: t('dropdown.closeLeft'),
-        icon: 'mdi:format-horizontal-align-left'
+        label: t('dropdown.closeLeft')
       },
       {
+        icon: 'mdi:format-horizontal-align-right',
         key: 'closeRight',
-        label: t('dropdown.closeRight'),
-        icon: 'mdi:format-horizontal-align-right'
+        label: t('dropdown.closeRight')
       },
       {
+        icon: 'ant-design:line-outlined',
         key: 'closeAll',
-        label: t('dropdown.closeAll'),
-        icon: 'ant-design:line-outlined'
+        label: t('dropdown.closeAll')
       }
     ];
 
@@ -98,20 +99,20 @@ const ContextMenu: FC<ContextMenuProps> = memo(({ tabId, excludeKeys = [], disab
   const menu = getMenu(options());
 
   const dropdownAction: Record<App.Global.DropdownKey, () => void> = {
+    closeAll() {
+      dispatch(clearTabs());
+    },
     closeCurrent() {
       dispatch(removeTab(tabId));
-    },
-    closeOther() {
-      dispatch(clearTabs([tabId]));
     },
     closeLeft() {
       dispatch(clearLeftTabs(tabId));
     },
+    closeOther() {
+      dispatch(clearTabs([tabId]));
+    },
     closeRight() {
       dispatch(clearRightTabs(tabId));
-    },
-    closeAll() {
-      dispatch(clearTabs());
     }
   };
 
@@ -121,8 +122,8 @@ const ContextMenu: FC<ContextMenuProps> = memo(({ tabId, excludeKeys = [], disab
 
   return (
     <Dropdown
-      trigger={['contextMenu']}
       menu={{ items: menu, onClick: handleClick }}
+      trigger={['contextMenu']}
     >
       {children}
     </Dropdown>

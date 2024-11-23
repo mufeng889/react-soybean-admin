@@ -3,11 +3,11 @@ const CreativityBanner = memo(() => {
 
   return (
     <ACard
-      title={t('page.home.creativity')}
       bordered={false}
-      size="small"
       className="h-full flex-col-stretch card-wrapper"
+      size="small"
       styles={{ body: { flex: 1, overflow: 'hidden' } }}
+      title={t('page.home.creativity')}
     >
       <div className="h-full flex-center">
         <IconLocalBanner className="text-400px text-primary sm:text-320px" />

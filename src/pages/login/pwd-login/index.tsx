@@ -1,16 +1,17 @@
 import { Button, Checkbox, Divider, Form, Input, Space } from 'antd';
+
 import { loginModuleRecord } from '@/constants/app';
 import { useLogin } from '@/hooks/common/login';
 
-type AccountKey = 'super' | 'admin' | 'user';
+type AccountKey = 'admin' | 'super' | 'user';
 interface Account {
   key: AccountKey;
   label: string;
-  userName: string;
   password: string;
+  userName: string;
 }
 
-type LoginParams = Pick<Account, 'userName' | 'password'>;
+type LoginParams = Pick<Account, 'password' | 'userName'>;
 
 export function Component() {
   const [form] = Form.useForm<LoginParams>();
@@ -19,7 +20,7 @@ export function Component() {
   const { loading, toLogin } = useLogin();
 
   const {
-    formRules: { userName: userNameRules, pwd }
+    formRules: { pwd, userName: userNameRules }
   } = useFormRules();
 
   async function handleSubmit() {
@@ -39,20 +40,20 @@ export function Component() {
     {
       key: 'super',
       label: t('page.login.pwdLogin.superAdmin'),
-      userName: 'Super',
-      password: '123456'
+      password: '123456',
+      userName: 'Super'
     },
     {
       key: 'admin',
       label: t('page.login.pwdLogin.admin'),
-      userName: 'Admin',
-      password: '123456'
+      password: '123456',
+      userName: 'Admin'
     },
     {
       key: 'user',
       label: t('page.login.pwdLogin.user'),
-      userName: 'User',
-      password: '123456'
+      password: '123456',
+      userName: 'User'
     }
   ];
 
@@ -63,26 +64,26 @@ export function Component() {
         className="pt-24px"
         form={form}
         initialValues={{
-          userName: 'Soybean',
-          password: '123456'
+          password: '123456',
+          userName: 'Soybean'
         }}
       >
         <Form.Item
-          rules={userNameRules}
           name="userName"
+          rules={userNameRules}
         >
           <Input />
         </Form.Item>
 
         <Form.Item
-          rules={pwd}
           name="password"
+          rules={pwd}
         >
           <Input.Password autoComplete="password" />
         </Form.Item>
         <Space
-          direction="vertical"
           className="w-full"
+          direction="vertical"
           size={24}
         >
           <div className="flex-y-center justify-between">
@@ -96,26 +97,26 @@ export function Component() {
             </Button>
           </div>
           <Button
-            type="primary"
-            size="large"
+            block
             loading={loading}
             shape="round"
+            size="large"
+            type="primary"
             onClick={handleSubmit}
-            block
           >
             {t('common.confirm')}
           </Button>
           <div className="flex-y-center justify-between gap-12px">
             <Button
-              className="flex-1"
               block
+              className="flex-1"
               onClick={() => toggleLoginModule('code-login')}
             >
               {t(loginModuleRecord['code-login'])}
             </Button>
             <Button
-              className="flex-1"
               block
+              className="flex-1"
               onClick={() => toggleLoginModule('register')}
             >
               {t(loginModuleRecord.register)}
@@ -127,8 +128,8 @@ export function Component() {
               return (
                 <Button
                   key={item.key}
-                  onClick={() => handleAccountLogin(item)}
                   type="primary"
+                  onClick={() => handleAccountLogin(item)}
                 >
                   {item.label}
                 </Button>

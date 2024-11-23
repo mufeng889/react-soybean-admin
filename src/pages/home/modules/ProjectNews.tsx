@@ -1,23 +1,24 @@
+import { useArray } from '@sa/hooks';
 import { Card, List } from 'antd';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useArray } from '@sa/hooks';
+
 import SoybeanAvatar from '@/components/stateful/SoybeanAvatar';
 
 const variants = {
+  exit: { opacity: 0, transition: { duration: 0.3 }, x: 200 },
   hidden: { opacity: 0, y: -20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-  exit: { opacity: 0, x: 200, transition: { duration: 0.3 } }
+  visible: { opacity: 1, transition: { duration: 0.3 }, y: 0 }
 };
 
 const ProjectNews = () => {
   const { t } = useTranslation();
 
-  const [newses, { push, remove, unshift, up, down, pop, shift, reverse, sort }] = useArray([
-    { id: 1, content: t('page.home.projectNews.desc1'), time: '2021-05-28 22:22:22' },
-    { id: 2, content: t('page.home.projectNews.desc2'), time: '2023-10-27 10:24:54' },
-    { id: 3, content: t('page.home.projectNews.desc3'), time: '2021-10-31 22:43:12' },
-    { id: 4, content: t('page.home.projectNews.desc4'), time: '2022-11-03 20:33:31' },
-    { id: 5, content: t('page.home.projectNews.desc5'), time: '2021-11-07 22:45:32' }
+  const [newses, { down, pop, push, remove, reverse, shift, sort, unshift, up }] = useArray([
+    { content: t('page.home.projectNews.desc1'), id: 1, time: '2021-05-28 22:22:22' },
+    { content: t('page.home.projectNews.desc2'), id: 2, time: '2023-10-27 10:24:54' },
+    { content: t('page.home.projectNews.desc3'), id: 3, time: '2021-10-31 22:43:12' },
+    { content: t('page.home.projectNews.desc4'), id: 4, time: '2022-11-03 20:33:31' },
+    { content: t('page.home.projectNews.desc5'), id: 5, time: '2021-11-07 22:45:32' }
   ]);
 
   const sortByTimeDesc = () => {
@@ -26,95 +27,95 @@ const ProjectNews = () => {
 
   return (
     <Card
+      bordered={false}
+      className="card-wrapper"
+      size="small"
+      title={t('page.home.projectNews.title')}
       extra={[
         <AButton
-          onClick={reverse}
-          type="text"
           key="reverse"
+          type="text"
+          onClick={reverse}
         >
           反转
         </AButton>,
         <AButton
-          onClick={sortByTimeDesc}
-          type="text"
           key="sort"
+          type="text"
+          onClick={sortByTimeDesc}
         >
           以时间排序
         </AButton>,
         <AButton
-          onClick={() => unshift({ id: 1, content: '我是第一个', time: '2021-11-07 22:45:32' })}
-          type="text"
           key="unshift"
+          type="text"
+          onClick={() => unshift({ content: '我是第一个', id: 1, time: '2021-11-07 22:45:32' })}
         >
           从头添加
         </AButton>,
         <AButton
-          onClick={shift}
-          type="text"
           key="shift"
+          type="text"
+          onClick={shift}
         >
           删除头部
         </AButton>,
         <AButton
-          onClick={() => push({ id: 6, content: '我是第六个', time: '2021-11-07 22:45:32' })}
-          type="text"
           key="PUSH"
+          type="text"
+          onClick={() => push({ content: '我是第六个', id: 6, time: '2021-11-07 22:45:32' })}
         >
           尾部添加
         </AButton>,
         <AButton
-          onClick={pop}
-          type="text"
           key="pop"
+          type="text"
+          onClick={pop}
         >
           删除尾部
         </AButton>,
         <a
-          key="a"
           className="ml-8px text-primary"
+          key="a"
         >
           {t('page.home.projectNews.moreNews')}
         </a>
       ]}
-      bordered={false}
-      size="small"
-      className="card-wrapper"
-      title={t('page.home.projectNews.title')}
     >
       <AnimatePresence mode="popLayout">
         <List
           dataSource={newses}
           renderItem={item => (
             <motion.div
-              key={item.id}
-              variants={variants} // 应用定义的动画 variants
-              initial="hidden" // 初始状态
+              layout // 处理上移、下移等排序动画
               animate="visible" // 动画目标状态
               exit="exit" // 退出时动画
-              layout // 处理上移、下移等排序动画
+              initial="hidden" // 初始状态
+              key={item.id}
+              variants={variants} // 应用定义的动画 variants
             >
               <List.Item
                 actions={[
                   <AButton
-                    onClick={() => up(item.id)}
-                    size="small"
                     key="up"
+                    size="small"
+                    onClick={() => up(item.id)}
                   >
                     上移
                   </AButton>,
 
                   <AButton
-                    onClick={() => remove(item.id)}
                     danger
-                    size="small"
                     key="del"
+                    size="small"
+                    onClick={() => remove(item.id)}
                   >
                     删除
                   </AButton>,
                   <AButton
-                    onClick={() => down(item.id)}
-                    size="small"
                     key="down"
+                    size="small"
+                    onClick={() => down(item.id)}
                   >
                     下移
                   </AButton>
@@ -122,13 +123,13 @@ const ProjectNews = () => {
               >
                 <List.Item.Meta
                   avatar={<SoybeanAvatar className="size-48px!" />}
-                  title={item.content}
                   description={item.time}
+                  title={item.content}
                 />
               </List.Item>
             </motion.div>
           )}
-        ></List>
+        />
       </AnimatePresence>
     </Card>
   );

@@ -1,5 +1,5 @@
-import Vertical from './Vertical';
 import Horizontal from './Horizontal';
+import Vertical from './Vertical';
 
 const ReversedHorizontalMix = () => {
   return [

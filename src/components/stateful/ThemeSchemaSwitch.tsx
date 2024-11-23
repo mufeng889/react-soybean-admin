@@ -1,28 +1,30 @@
 import type { ButtonProps, TooltipProps } from 'antd';
 import type { CSSProperties } from 'react';
+
 import { getDarkMode, getThemeSettings, toggleThemeScheme } from '@/store/slice/theme';
+
 import ButtonIcon from '../stateless/custom/ButtonIcon';
 
 interface Props {
+  className?: string;
   /** Show tooltip */
   showTooltip?: boolean;
+  style?: CSSProperties;
   /** Tooltip placement */
   tooltipPlacement?: TooltipProps['placement'];
-  style?: CSSProperties;
-  className?: string;
 }
 
 const icons: Record<UnionKey.ThemeScheme, string> = {
-  light: 'material-symbols:sunny',
+  auto: 'material-symbols:hdr-auto',
   dark: 'material-symbols:nightlight-rounded',
-  auto: 'material-symbols:hdr-auto'
+  light: 'material-symbols:sunny'
 };
 
 let dark: boolean = false;
 const DEFAULT_ANIMATION_DURATION = 400;
 const DEFAULT_ANIMATION_EASING = 'ease-out';
 
-const ThemeSchemaSwitch: FC<Props> = memo(({ tooltipPlacement = 'bottom', showTooltip = true, ...props }) => {
+const ThemeSchemaSwitch: FC<Props> = memo(({ showTooltip = true, tooltipPlacement = 'bottom', ...props }) => {
   const { t } = useTranslation();
   const { themeScheme } = useAppSelector(getThemeSettings);
   const dispatch = useAppDispatch();

@@ -1,41 +1,43 @@
-import type { FC } from 'react';
-import React, { memo } from 'react';
 import classNames from 'classnames';
+import React, { memo } from 'react';
+import type { FC } from 'react';
+
 import type { ButtonTabProps } from '../../types';
-import { ACTIVE_COLOR, createTabCssVars } from './shared';
-import ChromeTab from './ChromeTab';
+
 import ButtonTab from './ButtonTab';
+import ChromeTab from './ChromeTab';
 import SvgClose from './SvgClose';
 import styles from './index.module.css';
+import { ACTIVE_COLOR, createTabCssVars } from './shared';
 
 type PageTabProps = Omit<ButtonTabProps, 'onMouseUp'>;
 
 const PageTab: FC<PageTabProps> = ({
-  mode = 'chrome',
-  activeColor = ACTIVE_COLOR,
-  closable = true,
-  buttonClass,
-  chromeClass,
-  children,
-  style,
-  className,
-  suffix,
-  handleClose,
   active,
+  activeColor = ACTIVE_COLOR,
+  buttonClass,
+  children,
+  chromeClass,
+  className,
+  closable = true,
   darkMode,
+  handleClose,
+  mode = 'chrome',
   prefix,
+  style,
+  suffix,
   ...rest
 }) => {
   const cssVars = createTabCssVars(activeColor) as React.CSSProperties;
 
   const getActiveTabComponent = {
-    chrome: {
-      component: ChromeTab,
-      class: chromeClass
-    },
     button: {
-      component: ButtonTab,
-      class: buttonClass
+      class: buttonClass,
+      component: ButtonTab
+    },
+    chrome: {
+      class: chromeClass,
+      component: ChromeTab
     }
   };
 
@@ -59,12 +61,12 @@ const PageTab: FC<PageTabProps> = ({
 
   return (
     <ActiveTabComponent
-      prefix={prefix}
-      suffix={suffixComponent}
       active={active}
-      darkMode={darkMode}
       className={classNames(activeClass, className)}
+      darkMode={darkMode}
+      prefix={prefix}
       style={{ ...cssVars, ...style }}
+      suffix={suffixComponent}
       {...rest}
     >
       {children}

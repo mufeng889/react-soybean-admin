@@ -17,9 +17,9 @@ export enum ErrorTypes {
 }
 
 export interface MatcherError extends Error {
-  type: ErrorTypes.MATCHER_NOT_FOUND;
-  location: RouteLocationNamedRaw;
   currentLocation?: RouteLocationNormalizedLoaded;
+  location: RouteLocationNamedRaw;
+  type: ErrorTypes.MATCHER_NOT_FOUND;
 }
 
 /**
@@ -28,8 +28,8 @@ export interface MatcherError extends Error {
  * @internal
  */
 export interface NavigationRedirectError extends Omit<NavigationFailure, 'to' | 'type'> {
-  type: ErrorTypes.NAVIGATION_GUARD_REDIRECT;
   to: RouteLocationNormalizedLoaded;
+  type: ErrorTypes.NAVIGATION_GUARD_REDIRECT;
 }
 
 // Possible internal errors
@@ -37,17 +37,17 @@ type RouterError = NavigationFailure | NavigationRedirectError | MatcherError;
 
 /** Extended Error that contains extra information regarding a failed navigation. */
 export interface NavigationFailure extends Error {
-  /** Type of the navigation. One of {@link NavigationFailureType} */
-  type: ErrorTypes.NAVIGATION_CANCELLED | ErrorTypes.NAVIGATION_ABORTED | ErrorTypes.NAVIGATION_DUPLICATED;
   /** Route location we were navigating from */
   from: RouteLocationNormalizedLoaded;
   /** Route location we were navigating to */
   to: RouteLocationNormalizedLoaded;
+  /** Type of the navigation. One of {@link NavigationFailureType} */
+  type: ErrorTypes.NAVIGATION_CANCELLED | ErrorTypes.NAVIGATION_ABORTED | ErrorTypes.NAVIGATION_DUPLICATED;
 }
 
 // DEV only debug messages
 const ErrorTypeMessages = {
-  [ErrorTypes.MATCHER_NOT_FOUND]({ location, currentLocation }: MatcherError) {
+  [ErrorTypes.MATCHER_NOT_FOUND]({ currentLocation, location }: MatcherError) {
     return `No match for\n ${JSON.stringify(location)}${
       currentLocation ? `\nwhile being at\n${JSON.stringify(currentLocation)}` : ''
     }`;
@@ -81,8 +81,8 @@ export function createRouterError<E extends RouterError>(type: E['type'], params
     return Object.assign(
       new Error(ErrorTypeMessages[type](params as any)),
       {
-        type,
-        [NavigationFailureSymbol]: true
+        [NavigationFailureSymbol]: true,
+        type
       } as { type: typeof type },
       params
     ) as E;
@@ -90,8 +90,8 @@ export function createRouterError<E extends RouterError>(type: E['type'], params
   return Object.assign(
     new Error('Route not found'),
     {
-      type,
-      [NavigationFailureSymbol]: true
+      [NavigationFailureSymbol]: true,
+      type
     } as { type: typeof type },
     params
   ) as E;

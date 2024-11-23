@@ -1,5 +1,6 @@
-import { type LoaderFunctionArgs, useLoaderData } from 'react-router-dom';
 import type { DescriptionsProps } from 'antd';
+import { type LoaderFunctionArgs, useLoaderData } from 'react-router-dom';
+
 import LookForward from '@/components/stateless/custom/LookForward';
 import { fetchGetUserList } from '@/service/api';
 
@@ -13,9 +14,9 @@ function transformDataToItem<T extends string, U extends Values>(
   tuple: [T, U]
 ): NonNullable<Item<DescriptionsProps['items']>> {
   return {
+    children: tuple[1],
     key: tuple[0],
-    label: tuple[0],
-    children: tuple[1]
+    label: tuple[0]
   };
 }
 
@@ -33,8 +34,8 @@ export function Component() {
 
   return (
     <ACard
-      title="User Info"
       className="h-full"
+      title="User Info"
     >
       <ADescriptions
         bordered

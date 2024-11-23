@@ -1,7 +1,8 @@
 import { useRef } from 'react';
+
 import type { Plugin, Timeout } from '../type';
 
-const useRetryPlugin: Plugin<any, any[]> = (fetchInstance, { retryInterval, retryCount }) => {
+const useRetryPlugin: Plugin<any, any[]> = (fetchInstance, { retryCount, retryInterval }) => {
   const timerRef = useRef<Timeout>();
   const countRef = useRef(0);
 
@@ -23,8 +24,11 @@ const useRetryPlugin: Plugin<any, any[]> = (fetchInstance, { retryInterval, retr
       }
       return null;
     },
-    onSuccess: () => {
+    onCancel: () => {
       countRef.current = 0;
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
     },
     onError: () => {
       countRef.current += 1;
@@ -39,11 +43,8 @@ const useRetryPlugin: Plugin<any, any[]> = (fetchInstance, { retryInterval, retr
         countRef.current = 0;
       }
     },
-    onCancel: () => {
+    onSuccess: () => {
       countRef.current = 0;
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-      }
     }
   };
 };

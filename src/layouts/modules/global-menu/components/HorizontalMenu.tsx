@@ -1,5 +1,6 @@
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import type { FC } from 'react';
+
 import { useRouterPush } from '@/hooks/common/routerPush';
 import { getThemeSettings } from '@/store/slice/theme';
 
@@ -34,13 +35,13 @@ const HorizontalMenu: FC<Props> = memo(({ mode }) => {
 
   return (
     <AMenu
-      mode="horizontal"
-      items={menus.get(mode)}
-      inlineIndent={18}
-      onSelect={handleClickMenu}
-      style={{ lineHeight: `${themeSettings.header.height}px` }}
       className="size-full transition-400 border-0!"
+      inlineIndent={18}
+      items={menus.get(mode)}
+      mode="horizontal"
       selectedKeys={selectKey}
+      style={{ lineHeight: `${themeSettings.header.height}px` }}
+      onSelect={handleClickMenu}
     />
   );
 });

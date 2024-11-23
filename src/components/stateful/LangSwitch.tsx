@@ -1,14 +1,16 @@
 import { Dropdown } from 'antd';
+
 import { changeLocale, getLocale, getLocaleOptions } from '@/store/slice/app';
+
 import ButtonIcon from '../stateless/custom/ButtonIcon';
 
 interface Props {
+  className?: string;
   /** Show tooltip */
   showTooltip?: boolean;
-  className?: string;
 }
 
-const LangSwitch: FC<Props> = memo(({ showTooltip = true, className }) => {
+const LangSwitch: FC<Props> = memo(({ className, showTooltip = true }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const locale = useAppSelector(getLocale);
@@ -24,10 +26,10 @@ const LangSwitch: FC<Props> = memo(({ showTooltip = true, className }) => {
     <Dropdown menu={{ items: localeOptions, onClick: changeLocales, selectedKeys: [locale] }}>
       <div>
         <ButtonIcon
-          tooltipContent={tooltipContent}
-          tooltipPlacement="left"
           className={className}
           icon="heroicons:language"
+          tooltipContent={tooltipContent}
+          tooltipPlacement="left"
         />
       </div>
     </Dropdown>

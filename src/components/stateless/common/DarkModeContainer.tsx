@@ -4,7 +4,7 @@ interface Props extends React.ComponentProps<'div'> {
   inverted?: boolean;
 }
 
-const DarkModeContainer: FC<Props> = memo(({ children, inverted, className, ...rest }) => {
+const DarkModeContainer: FC<Props> = memo(({ children, className, inverted, ...rest }) => {
   return (
     <div
       className={ClassNames(

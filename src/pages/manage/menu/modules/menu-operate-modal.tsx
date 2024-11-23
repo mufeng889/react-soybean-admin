@@ -1,9 +1,11 @@
 import { SimpleScrollbar } from '@sa/materials';
+
 import { enableStatusOptions, menuIconTypeOptions, menuTypeOptions } from '@/constants/business';
 import { getLocalIcons } from '@/utils/icon';
+
+import { QueryForm } from './query-form';
 import { createDefaultModel, getPageOptions, layoutOptions } from './shared';
 import type { Model, OperateType, Props, RuleKey } from './shared';
-import { QueryForm } from './query-form';
 
 const localIcons = getLocalIcons();
 
@@ -11,8 +13,8 @@ const localIconOptions = localIcons.map(item => ({
   label: (
     <div className="flex-y-center gap-16px">
       <SvgIcon
-        localIcon={item}
         className="text-icon"
+        localIcon={item}
       />
       <span>{item}</span>
     </div>
@@ -20,7 +22,7 @@ const localIconOptions = localIcons.map(item => ({
   value: item
 }));
 
-const MenuOperateModal = ({ operateType, open, onClose, form, allPages, handleSubmit, menuList }: Props) => {
+const MenuOperateModal = ({ allPages, form, handleSubmit, menuList, onClose, open, operateType }: Props) => {
   const { t } = useTranslation();
 
   const titles: Record<OperateType, string> = {
@@ -31,7 +33,7 @@ const MenuOperateModal = ({ operateType, open, onClose, form, allPages, handleSu
 
   const { defaultRequiredRule } = useFormRules();
 
-  const { routeName, iconType, menuType, parentId, icon, hideInMenu } =
+  const { hideInMenu, icon, iconType, menuType, parentId, routeName } =
     (AForm.useWatch<Model>(item => Object.assign(createDefaultModel(), item), { form, preserve: true }) as Model) ||
     form.getFieldsValue();
 
@@ -43,26 +45,26 @@ const MenuOperateModal = ({ operateType, open, onClose, form, allPages, handleSu
 
   const rules: Record<RuleKey, App.Global.FormRule> = {
     menuName: defaultRequiredRule,
-    status: defaultRequiredRule,
     routeName: defaultRequiredRule,
-    routePath: defaultRequiredRule
+    routePath: defaultRequiredRule,
+    status: defaultRequiredRule
   };
 
   return (
     <AModal
-      onCancel={onClose}
       open={open}
-      onOk={handleSubmit}
-      width="800px"
       title={titles[operateType]}
+      width="800px"
+      onCancel={onClose}
+      onOk={handleSubmit}
     >
       <div className="h-480px">
         <SimpleScrollbar>
           <AForm
+            labelWrap
             className="pr-20px"
             form={form}
             initialValues={createDefaultModel()}
-            labelWrap
             labelCol={{ lg: 8, xs: 4 }}
           >
             <ARow>
@@ -71,8 +73,8 @@ const MenuOperateModal = ({ operateType, open, onClose, form, allPages, handleSu
                 xs={24}
               >
                 <AForm.Item
-                  name="menuType"
                   label={t('page.manage.menu.menuType')}
+                  name="menuType"
                 >
                   <ARadio.Group disabled={operateType === 'edit'}>
                     {menuTypeOptions.map(item => (
@@ -221,8 +223,8 @@ const MenuOperateModal = ({ operateType, open, onClose, form, allPages, handleSu
                 xs={24}
               >
                 <AForm.Item
-                  name="iconType"
                   label={t('page.manage.menu.iconTypeTitle')}
+                  name="iconType"
                 >
                   <ARadio.Group>
                     {menuIconTypeOptions.map(item => (
@@ -259,8 +261,8 @@ const MenuOperateModal = ({ operateType, open, onClose, form, allPages, handleSu
                   ) : (
                     <ASelect
                       allowClear
-                      placeholder={t('page.manage.menu.form.localIcon')}
                       options={localIconOptions}
+                      placeholder={t('page.manage.menu.form.localIcon')}
                     />
                   )}
                 </AForm.Item>
@@ -271,8 +273,8 @@ const MenuOperateModal = ({ operateType, open, onClose, form, allPages, handleSu
                 xs={24}
               >
                 <AForm.Item
-                  name="status"
                   label={t('page.manage.menu.menuStatus')}
+                  name="status"
                   rules={[rules.status]}
                 >
                   <ARadio.Group>
@@ -293,8 +295,8 @@ const MenuOperateModal = ({ operateType, open, onClose, form, allPages, handleSu
                 xs={24}
               >
                 <AForm.Item
-                  name="keepAlive"
                   label={t('page.manage.menu.keepAlive')}
+                  name="keepAlive"
                 >
                   <ARadio.Group>
                     <ARadio value={true}>{t('common.yesOrNo.yes')}</ARadio>
@@ -308,8 +310,8 @@ const MenuOperateModal = ({ operateType, open, onClose, form, allPages, handleSu
                 xs={24}
               >
                 <AForm.Item
-                  name="constant"
                   label={t('page.manage.menu.constant')}
+                  name="constant"
                 >
                   <ARadio.Group>
                     <ARadio value={true}>{t('common.yesOrNo.yes')}</ARadio>
@@ -335,8 +337,8 @@ const MenuOperateModal = ({ operateType, open, onClose, form, allPages, handleSu
                 xs={24}
               >
                 <AForm.Item
-                  name="hideInMenu"
                   label={t('page.manage.menu.hideInMenu')}
+                  name="hideInMenu"
                 >
                   <ARadio.Group>
                     <ARadio value={true}>{t('common.yesOrNo.yes')}</ARadio>
@@ -368,8 +370,8 @@ const MenuOperateModal = ({ operateType, open, onClose, form, allPages, handleSu
                 xs={24}
               >
                 <AForm.Item
-                  name="multiTab"
                   label={t('page.manage.menu.multiTab')}
+                  name="multiTab"
                 >
                   <ARadio.Group>
                     <ARadio value={true}>{t('common.yesOrNo.yes')}</ARadio>
@@ -404,20 +406,20 @@ const MenuOperateModal = ({ operateType, open, onClose, form, allPages, handleSu
                         <>
                           {subFields.map(item => (
                             <QueryForm
-                              key={item.key}
-                              item={item}
                               add={add}
                               index={subFields.findIndex(field => field.key === item.key)}
+                              item={item}
+                              key={item.key}
                               remove={remove}
                             />
                           ))}
 
                           {subFields.length === 0 && (
                             <AButton
-                              type="dashed"
                               block
-                              onClick={() => add('', 0)}
                               icon={<IconCarbonAdd className="align-sub text-icon" />}
+                              type="dashed"
+                              onClick={() => add('', 0)}
                             >
                               <span className="ml-8px">{t('common.add')}</span>
                             </AButton>

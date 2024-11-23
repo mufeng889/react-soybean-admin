@@ -1,5 +1,5 @@
 export interface ModulesProps {
-  open: boolean;
   onClose: () => void;
+  open: boolean;
   roleId: number;
 }

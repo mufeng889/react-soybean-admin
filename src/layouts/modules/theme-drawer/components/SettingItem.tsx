@@ -1,50 +1,51 @@
-import { AnimatePresence, motion } from 'framer-motion';
 import classNames from 'classnames';
+import { AnimatePresence, motion } from 'framer-motion';
+
 import { getThemeDrawerVisible } from '@/store/slice/app';
 
 interface Props {
-  /** Label */
-  label: React.ReactNode;
   children: React.ReactNode;
   className?: string;
-  suffix?: React.ReactNode;
+  /** Label */
+  label: React.ReactNode;
   seq: number;
   show?: boolean;
+  suffix?: React.ReactNode;
 }
 
 const variants = {
-  open: (i: number) => ({
-    x: 0,
-    y: 0,
-    opacity: 1,
-    transition: {
-      delay: i * 0.05, // 每个元素的动画延迟 delay for each element's animation
-      duration: 0.5, // 每个动画持续时间  duration of each animation
-      type: 'tween'
-    }
-  }),
   closed: (i: number) => ({
-    x: 500,
-    y: -50,
     opacity: 0,
     transition: {
       delay: i * 0.05, // 每个元素的动画延迟 delay for each element's animation
       duration: 0.5, // 每个动画持续时间 duration of each animation
       type: 'tween'
-    }
+    },
+    x: 500,
+    y: -50
   }),
   exit: {
-    x: 500,
-    y: -20,
     opacity: 0,
     transition: {
       duration: 0.5,
       type: 'tween'
-    }
-  }
+    },
+    x: 500,
+    y: -20
+  },
+  open: (i: number) => ({
+    opacity: 1,
+    transition: {
+      delay: i * 0.05, // 每个元素的动画延迟 delay for each element's animation
+      duration: 0.5, // 每个动画持续时间  duration of each animation
+      type: 'tween'
+    },
+    x: 0,
+    y: 0
+  })
 };
 
-const SettingItem: FC<Props> = memo(({ label, children, suffix, seq, className, show = true }) => {
+const SettingItem: FC<Props> = memo(({ children, className, label, seq, show = true, suffix }) => {
   const themeDrawerVisible = useAppSelector(getThemeDrawerVisible);
 
   const id = useId();
@@ -53,14 +54,14 @@ const SettingItem: FC<Props> = memo(({ label, children, suffix, seq, className, 
     <AnimatePresence>
       {show && (
         <motion.div
-          className={classNames('w-full flex-y-center justify-between', className)}
-          variants={variants}
-          initial="closed"
-          id={id + seq}
-          key={id + seq}
-          exit="exit"
           animate={themeDrawerVisible ? 'open' : 'closed'}
+          className={classNames('w-full flex-y-center justify-between', className)}
           custom={seq}
+          exit="exit"
+          id={id + seq}
+          initial="closed"
+          key={id + seq}
+          variants={variants}
           whileHover={{ scale: 1.1 }}
         >
           <div>

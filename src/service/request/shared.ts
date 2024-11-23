@@ -1,7 +1,9 @@
-import { resetStore } from '@/store/slice/auth';
 import { store } from '@/store';
+import { resetStore } from '@/store/slice/auth';
 import { localStg } from '@/utils/storage';
+
 import { fetchRefreshToken } from '../api';
+
 import type { RequestInstanceState } from './type';
 
 export function getAuthorization() {
@@ -18,7 +20,7 @@ export function getAuthorization() {
  */
 export async function handleRefreshToken() {
   const refreshToken = localStg.get('refreshToken') || '';
-  const { error, data } = await fetchRefreshToken(refreshToken);
+  const { data, error } = await fetchRefreshToken(refreshToken);
   if (!error) {
     localStg.set('token', data.token);
     localStg.set('refreshToken', data.refreshToken);

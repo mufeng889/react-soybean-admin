@@ -1,6 +1,7 @@
 // from swr
 import isDocumentVisible from './isDocumentVisible';
 import isOnline from './isOnline';
+
 import { isBrowser } from '.';
 
 type Listener = () => void;

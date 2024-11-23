@@ -1,4 +1,5 @@
 import type { CustomRoute, ElegantRoute } from '@elegant-router/types';
+
 import { generatedRoutes } from '../elegant/routes';
 
 /**
@@ -8,156 +9,156 @@ import { generatedRoutes } from '../elegant/routes';
  */
 const customRoutes: CustomRoute[] = [
   {
-    name: 'exception',
-    path: '/exception',
-    component: 'layout.base',
-    meta: {
-      title: 'exception',
-      i18nKey: 'route.exception',
-      icon: 'ant-design:exception-outlined',
-      order: 7
-    },
     children: [
       {
-        name: 'exception_403',
-        path: '403',
         component: 'view.403',
         meta: {
-          title: 'exception_403',
           i18nKey: 'route.exception_403',
-          icon: 'ic:baseline-block'
-        }
+          icon: 'ic:baseline-block',
+          title: 'exception_403'
+        },
+        name: 'exception_403',
+        path: '403'
       },
       {
-        name: 'exception_404',
-        path: '404',
         component: 'view.404',
         meta: {
-          title: 'exception_404',
           i18nKey: 'route.exception_404',
-          icon: 'ic:baseline-web-asset-off'
-        }
+          icon: 'ic:baseline-web-asset-off',
+          title: 'exception_404'
+        },
+        name: 'exception_404',
+        path: '404'
       },
       {
-        name: 'exception_500',
-        path: '500',
         component: 'view.500',
         meta: {
-          title: 'exception_500',
           i18nKey: 'route.exception_500',
-          icon: 'ic:baseline-wifi-off'
-        }
+          icon: 'ic:baseline-wifi-off',
+          title: 'exception_500'
+        },
+        name: 'exception_500',
+        path: '500'
       }
-    ]
-  },
-  {
-    name: 'document',
-    path: '/document',
+    ],
     component: 'layout.base',
     meta: {
-      title: 'document',
-      i18nKey: 'route.document',
-      order: 2,
-      icon: 'mdi:file-document-multiple-outline'
+      i18nKey: 'route.exception',
+      icon: 'ant-design:exception-outlined',
+      order: 7,
+      title: 'exception'
     },
+    name: 'exception',
+    path: '/exception'
+  },
+  {
     children: [
       {
+        component: 'view.iframe-page',
+        meta: {
+          i18nKey: 'route.document_antd',
+          icon: 'logos:ant-design',
+          order: 7,
+          title: 'document_antd'
+        },
         name: 'document_antd',
         path: 'antd',
-        component: 'view.iframe-page',
         props: {
           url: 'https://ant.design/index-cn'
-        },
-        meta: {
-          title: 'document_antd',
-          i18nKey: 'route.document_antd',
-          order: 7,
-          icon: 'logos:ant-design'
         }
       },
       {
+        component: 'view.iframe-page',
+        meta: {
+          i18nKey: 'route.document_procomponents',
+          icon: 'logos:ant-design',
+          order: 8,
+          title: 'document_procomponents'
+        },
         name: 'document_procomponents',
         path: 'procomponents',
-        component: 'view.iframe-page',
         props: {
           url: 'https://pro-components.antdigital.dev/'
-        },
-        meta: {
-          title: 'document_procomponents',
-          i18nKey: 'route.document_procomponents',
-          order: 8,
-          icon: 'logos:ant-design'
         }
       },
       {
+        component: 'view.iframe-page',
+        meta: {
+          i18nKey: 'route.document_project',
+          localIcon: 'logo',
+          order: 1,
+          title: 'document_project'
+        },
         name: 'document_project',
         path: 'project',
-        component: 'view.iframe-page',
         props: {
           url: 'https://react-soybean-docs.pages.dev/index-cn?theme=dark'
-        },
-        meta: {
-          title: 'document_project',
-          i18nKey: 'route.document_project',
-          order: 1,
-          localIcon: 'logo'
         }
       },
       {
-        name: 'document_project-link',
-        path: 'project-link',
         component: 'view.iframe-page',
         meta: {
-          title: 'document_project-link',
+          href: 'https://react-soybean-docs.pages.dev/index-cn?theme=dark',
           i18nKey: 'route.document_project-link',
-          order: 2,
           localIcon: 'logo',
-          href: 'https://react-soybean-docs.pages.dev/index-cn?theme=dark'
-        }
+          order: 2,
+          title: 'document_project-link'
+        },
+        name: 'document_project-link',
+        path: 'project-link'
       },
       {
+        component: 'view.iframe-page',
+        meta: {
+          i18nKey: 'route.document_unocss',
+          icon: 'logos:unocss',
+          order: 5,
+          title: 'document_unocss'
+        },
         name: 'document_unocss',
         path: 'unocss',
-        component: 'view.iframe-page',
         props: {
           url: 'https://unocss.dev/'
-        },
-        meta: {
-          title: 'document_unocss',
-          i18nKey: 'route.document_unocss',
-          order: 5,
-          icon: 'logos:unocss'
         }
       },
       {
+        component: 'view.iframe-page',
+        meta: {
+          i18nKey: 'route.document_vite',
+          icon: 'logos:vitejs',
+          order: 4,
+          title: 'document_vite'
+        },
         name: 'document_vite',
         path: 'vite',
-        component: 'view.iframe-page',
         props: {
           url: 'https://cn.vitejs.dev/'
-        },
-        meta: {
-          title: 'document_vite',
-          i18nKey: 'route.document_vite',
-          order: 4,
-          icon: 'logos:vitejs'
         }
       },
       {
+        component: 'view.iframe-page',
+        meta: {
+          i18nKey: 'route.document_react',
+          icon: 'logos:react',
+          order: 3,
+          title: 'document_react'
+        },
         name: 'document_react',
         path: 'react',
-        component: 'view.iframe-page',
         props: {
           url: 'https://react.dev/'
-        },
-        meta: {
-          title: 'document_react',
-          i18nKey: 'route.document_react',
-          order: 3,
-          icon: 'logos:react'
         }
       }
-    ]
+    ],
+    component: 'layout.base',
+    meta: {
+      i18nKey: 'route.document',
+      icon: 'mdi:file-document-multiple-outline',
+      order: 2,
+      title: 'document'
+    },
+    name: 'document',
+    path: '/document'
   }
 ];
 
@@ -176,7 +177,7 @@ export function createStaticRoutes() {
   });
 
   return {
-    constantRoutes,
-    authRoutes
+    authRoutes,
+    constantRoutes
   };
 }

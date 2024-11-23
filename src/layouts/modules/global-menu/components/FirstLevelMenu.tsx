@@ -1,32 +1,33 @@
+import type { RouteKey } from '@elegant-router/types';
+import { transformColorWithOpacity } from '@sa/color';
 import { SimpleScrollbar } from '@sa/materials';
 import ClassNames from 'classnames';
-import { transformColorWithOpacity } from '@sa/color';
 import { cloneElement } from 'react';
-import type { RouteKey } from '@elegant-router/types';
+
 import { getSiderCollapse } from '@/store/slice/app';
 import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
 
 interface Props {
-  inverted?: boolean;
   children?: React.ReactNode;
+  inverted?: boolean;
   onSelect?: () => void;
 }
 
 interface MixMenuItemProps {
-  /** Menu item label */
-  menu: App.Global.Menu;
-  onClick?: () => void;
   /** Active menu item */
   active: boolean;
   inverted?: boolean;
+  /** Menu item label */
+  menu: App.Global.Menu;
+  onClick?: () => void;
   setActiveFirstLevelMenuKey: (key: string) => void;
 }
 
 function MixMenuItem(Props: MixMenuItemProps) {
   const {
-    menu: { icon, label, key, children },
     active,
     inverted,
+    menu: { children, icon, key, label },
     onClick,
     setActiveFirstLevelMenuKey
   } = Props;
@@ -58,6 +59,7 @@ function MixMenuItem(Props: MixMenuItemProps) {
 
   return (
     <div
+      style={{ backgroundColor: active ? selectedBgColor : '' }}
       className={ClassNames(
         'mx-4px mb-6px flex-col-center cursor-pointer rounded-8px bg-transparent px-4px py-8px  transition-300 hover:bg-[rgb(0,0,0,0.08)] ',
         { 'text-primary selected-mix-menu': active },
@@ -65,7 +67,6 @@ function MixMenuItem(Props: MixMenuItemProps) {
         { '!text-white !bg-primary': active && inverted }
       )}
       onClick={handleSelectMixMenu}
-      style={{ backgroundColor: active ? selectedBgColor : '' }}
     >
       {icon && cloneElement(icon, { className: siderCollapse ? 'text-icon-small' : 'text-icon-large' })}
 
@@ -82,7 +83,7 @@ function MixMenuItem(Props: MixMenuItemProps) {
 }
 
 const FirstLevelMenu: FC<Props> = memo(({ children, inverted, onSelect }) => {
-  const { allMenus, activeFirstLevelMenuKey, setActiveFirstLevelMenuKey } = useMixMenuContext();
+  const { activeFirstLevelMenuKey, allMenus, setActiveFirstLevelMenuKey } = useMixMenuContext();
 
   return (
     <div className="h-full flex-col-stretch flex-1-hidden">
@@ -90,12 +91,12 @@ const FirstLevelMenu: FC<Props> = memo(({ children, inverted, onSelect }) => {
       <SimpleScrollbar>
         {allMenus.map(item => (
           <MixMenuItem
-            key={item.key}
-            onClick={onSelect}
-            setActiveFirstLevelMenuKey={setActiveFirstLevelMenuKey}
-            inverted={inverted}
             active={item.key === activeFirstLevelMenuKey}
+            inverted={inverted}
+            key={item.key}
             menu={item}
+            setActiveFirstLevelMenuKey={setActiveFirstLevelMenuKey}
+            onClick={onSelect}
           />
         ))}
       </SimpleScrollbar>

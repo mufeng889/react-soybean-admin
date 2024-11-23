@@ -1,8 +1,10 @@
 import { useCountDownTimer, useLoading } from '@sa/hooks';
+
 import { REG_PHONE } from '@/constants/reg';
+
 export function useCaptcha() {
-  const { loading, startLoading, endLoading } = useLoading();
-  const { count, start, isCounting } = useCountDownTimer(10);
+  const { endLoading, loading, startLoading } = useLoading();
+  const { count, isCounting, start } = useCountDownTimer(10);
   const { t } = useTranslation();
   const label = useMemo(() => {
     let text = t('page.login.codeLogin.getCode');
@@ -51,9 +53,9 @@ export function useCaptcha() {
   }
 
   return {
-    label,
+    getCaptcha,
     isCounting,
-    loading,
-    getCaptcha
+    label,
+    loading
   };
 }

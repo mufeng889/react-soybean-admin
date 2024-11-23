@@ -46,4 +46,4 @@ const clearCache = (key?: string | string[]) => {
   }
 };
 
-export { getCache, setCache, clearCache };
+export { clearCache, getCache, setCache };

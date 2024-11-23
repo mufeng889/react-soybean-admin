@@ -2,7 +2,7 @@ import { Button, Form, Input, Space } from 'antd';
 
 export const Component = () => {
   const [form] = Form.useForm();
-  const { label, isCounting, loading, getCaptcha } = useCaptcha();
+  const { getCaptcha, isCounting, label, loading } = useCaptcha();
   const { t } = useTranslation();
   const { toggleLoginModule } = useRouterPush();
   const { formRules } = useFormRules();
@@ -39,13 +39,13 @@ export const Component = () => {
         >
           <div className="w-full flex-y-center gap-16px">
             <Input
-              v-model:value="model.code"
               placeholder={t('page.login.common.codePlaceholder')}
+              v-model:value="model.code"
             />
             <Button
-              size="large"
               disabled={isCounting}
               loading={loading}
+              size="large"
               onClick={() => getCaptcha('17260760167')}
             >
               {label}
@@ -53,24 +53,24 @@ export const Component = () => {
           </div>
         </Form.Item>
         <Space
-          direction="vertical"
           className="w-full"
+          direction="vertical"
           size={18}
         >
           <Button
-            type="primary"
-            size="large"
-            shape="round"
             block
+            shape="round"
+            size="large"
+            type="primary"
             onClick={handleSubmit}
           >
             {t('common.confirm')}
           </Button>
 
           <Button
-            size="large"
-            shape="round"
             block
+            shape="round"
+            size="large"
             onClick={() => toggleLoginModule('pwd-login')}
           >
             {t('page.login.common.back')}

@@ -1,4 +1,5 @@
 import { Card } from 'antd';
+
 import { getLocale } from '@/store/slice/app';
 
 const PieChart = memo(() => {
@@ -6,44 +7,44 @@ const PieChart = memo(() => {
   const locale = useAppSelector(getLocale);
 
   const { domRef, updateOptions } = useEcharts(() => ({
-    tooltip: {
-      trigger: 'item'
-    },
     legend: {
       bottom: '1%',
-      left: 'center',
       itemStyle: {
         borderWidth: 0
-      }
+      },
+      left: 'center'
     },
     series: [
       {
-        color: ['#5da8ff', '#8e9dff', '#fedc69', '#26deca'],
-        name: t('page.home.schedule'),
-        type: 'pie',
-        radius: ['45%', '75%'],
         avoidLabelOverlap: false,
+        color: ['#5da8ff', '#8e9dff', '#fedc69', '#26deca'],
+        data: [] as { name: string; value: number }[],
+        emphasis: {
+          label: {
+            fontSize: '12',
+            show: true
+          }
+        },
         itemStyle: {
-          borderRadius: 10,
           borderColor: '#fff',
+          borderRadius: 10,
           borderWidth: 1
         },
         label: {
-          show: false,
-          position: 'center'
-        },
-        emphasis: {
-          label: {
-            show: true,
-            fontSize: '12'
-          }
+          position: 'center',
+          show: false
         },
         labelLine: {
           show: false
         },
-        data: [] as { name: string; value: number }[]
+        name: t('page.home.schedule'),
+        radius: ['45%', '75%'],
+        type: 'pie'
       }
-    ]
+    ],
+    tooltip: {
+      trigger: 'item'
+    }
   }));
 
   async function mockData() {
@@ -97,9 +98,9 @@ const PieChart = memo(() => {
       className="card-wrapper"
     >
       <div
-        ref={domRef}
         className="h-360px overflow-hidden"
-      ></div>
+        ref={domRef}
+      />
     </Card>
   );
 });

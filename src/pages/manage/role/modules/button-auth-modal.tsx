@@ -1,7 +1,8 @@
 import type { DataNode } from 'antd/es/tree';
+
 import type { ModulesProps } from './type';
 
-const ButtonAuthModal: FC<ModulesProps> = memo(({ open, onClose, roleId }) => {
+const ButtonAuthModal: FC<ModulesProps> = memo(({ onClose, open, roleId }) => {
   const { t } = useTranslation();
 
   const title = t('common.edit') + t('page.manage.role.buttonAuth');
@@ -52,9 +53,8 @@ const ButtonAuthModal: FC<ModulesProps> = memo(({ open, onClose, roleId }) => {
 
   return (
     <AModal
-      open={open}
       className="w-480px"
-      onCancel={onClose}
+      open={open}
       title={title}
       footer={
         <ASpace className="mt-16px">
@@ -66,21 +66,22 @@ const ButtonAuthModal: FC<ModulesProps> = memo(({ open, onClose, roleId }) => {
           </AButton>
           <AButton
             size="small"
-            onClick={handleSubmit}
             type="primary"
+            onClick={handleSubmit}
           >
             {t('common.confirm')}
           </AButton>
         </ASpace>
       }
+      onCancel={onClose}
     >
       <ATree
-        treeData={tree}
-        checkedKeys={checks}
-        onCheck={value => setChecks(value as number[])}
         checkable
+        checkedKeys={checks}
         className="h-280px"
         height={280}
+        treeData={tree}
+        onCheck={value => setChecks(value as number[])}
       />
     </AModal>
   );

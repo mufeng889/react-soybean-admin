@@ -1,13 +1,16 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { getPaletteColorByNumber } from '@sa/color';
+
 import { localStg } from '@/utils/storage';
-import type { AppThunk } from '../../index';
+
+import type { AppThunk } from '../..';
+
 import { initThemeSettings, toggleAuxiliaryColorModes, toggleGrayscaleMode, updateDarkMode } from './shared';
 
 interface InitialStateType {
-  settings: App.Theme.ThemeSetting;
   darkMode: boolean;
+  settings: App.Theme.ThemeSetting;
 }
 
 type DeepPartial<T> = {
@@ -21,41 +24,20 @@ type DeepPartial<T> = {
 const themeSchemes: UnionKey.ThemeScheme[] = ['light', 'dark', 'auto'];
 
 const initialState: InitialStateType = {
-  settings: initThemeSettings(),
-  darkMode: false
+  darkMode: false,
+  settings: initThemeSettings()
 };
 
 export const themeSlice = createSlice({
-  name: 'theme',
   initialState,
+  name: 'theme',
   reducers: {
-    setDarkMode(state, { payload }: PayloadAction<boolean>) {
-      state.darkMode = payload;
+    changeReverseHorizontalMix(state, { payload }: PayloadAction<boolean>) {
+      state.settings.layout.reverseHorizontalMix = payload;
     },
 
-    /**
-     * Set theme scheme
-     *
-     * @param themeScheme
-     */
-    setThemeScheme(state, { payload }: PayloadAction<UnionKey.ThemeScheme>) {
-      state.darkMode = updateDarkMode(payload);
-      state.settings.themeScheme = payload;
-    },
-    setSiderInverted(state, { payload }: PayloadAction<boolean>) {
-      state.settings.sider.inverted = payload;
-    },
-    /**
-     * Set grayscale value
-     *
-     * @param isGrayscale
-     */
-    setGrayscale(state, { payload }: PayloadAction<boolean>) {
-      toggleGrayscaleMode(payload);
-      state.settings.grayscale = payload;
-    },
-    setRecommendColor(state, { payload }: PayloadAction<boolean>) {
-      state.settings.recommendColor = payload;
+    resetTheme() {
+      return initialState;
     },
     /**
      * Set colourWeakness value
@@ -66,6 +48,66 @@ export const themeSlice = createSlice({
       toggleAuxiliaryColorModes(payload);
       state.settings.colourWeakness = payload;
     },
+    setDarkMode(state, { payload }: PayloadAction<boolean>) {
+      state.darkMode = payload;
+    },
+    setFixedHeaderAndTab(state, { payload }: PayloadAction<boolean>) {
+      state.settings.fixedHeaderAndTab = payload;
+    },
+    setFooter(state, { payload }: PayloadAction<Partial<App.Theme.ThemeSetting['footer']>>) {
+      Object.assign(state.settings.footer, payload);
+    },
+    /**
+     * Set grayscale value
+     *
+     * @param isGrayscale
+     */
+    setGrayscale(state, { payload }: PayloadAction<boolean>) {
+      toggleGrayscaleMode(payload);
+      state.settings.grayscale = payload;
+    },
+    setHeader(state, { payload }: PayloadAction<DeepPartial<App.Theme.ThemeSetting['header']>>) {
+      Object.assign(state.settings.header, payload);
+    },
+    setIsInfoFollowPrimary(state, { payload }: PayloadAction<boolean>) {
+      state.settings.isInfoFollowPrimary = payload;
+    },
+    setIsOnlyExpandCurrentParentMenu(state, { payload }: PayloadAction<boolean>) {
+      state.settings.isOnlyExpandCurrentParentMenu = payload;
+    },
+    setLayoutMode(state, { payload }: PayloadAction<UnionKey.ThemeLayoutMode>) {
+      state.settings.layout.mode = payload;
+    },
+    setLayoutScrollMode(state, { payload }: PayloadAction<UnionKey.ThemeScrollMode>) {
+      state.settings.layout.scrollMode = payload;
+    },
+    setPage(state, { payload }: PayloadAction<Partial<App.Theme.ThemeSetting['page']>>) {
+      Object.assign(state.settings.page, payload);
+    },
+    setRecommendColor(state, { payload }: PayloadAction<boolean>) {
+      state.settings.recommendColor = payload;
+    },
+    setSider(state, { payload }: PayloadAction<Partial<App.Theme.ThemeSetting['sider']>>) {
+      Object.assign(state.settings.sider, payload);
+    },
+    setSiderInverted(state, { payload }: PayloadAction<boolean>) {
+      state.settings.sider.inverted = payload;
+    },
+    setTab(state, { payload }: PayloadAction<Partial<App.Theme.ThemeSetting['tab']>>) {
+      Object.assign(state.settings.tab, payload);
+    },
+    /**
+     * Set theme scheme
+     *
+     * @param themeScheme
+     */
+    setThemeScheme(state, { payload }: PayloadAction<UnionKey.ThemeScheme>) {
+      state.darkMode = updateDarkMode(payload);
+      state.settings.themeScheme = payload;
+    },
+    setWatermark(state, { payload }: PayloadAction<Partial<App.Theme.ThemeSetting['watermark']>>) {
+      Object.assign(state.settings.watermark, payload);
+    },
     /**
      * Update theme colors
      *
@@ -74,7 +116,7 @@ export const themeSlice = createSlice({
      */
     updateThemeColors(
       state,
-      { payload: { key, color } }: PayloadAction<{ key: App.Theme.ThemeColorKey; color: string }>
+      { payload: { color, key } }: PayloadAction<{ color: string; key: App.Theme.ThemeColorKey }>
     ) {
       let colorValue = color;
 
@@ -89,80 +131,41 @@ export const themeSlice = createSlice({
       } else {
         state.settings.otherColor[key] = colorValue;
       }
-    },
-    setIsInfoFollowPrimary(state, { payload }: PayloadAction<boolean>) {
-      state.settings.isInfoFollowPrimary = payload;
-    },
-    setLayoutMode(state, { payload }: PayloadAction<UnionKey.ThemeLayoutMode>) {
-      state.settings.layout.mode = payload;
-    },
-    setLayoutScrollMode(state, { payload }: PayloadAction<UnionKey.ThemeScrollMode>) {
-      state.settings.layout.scrollMode = payload;
-    },
-    setPage(state, { payload }: PayloadAction<Partial<App.Theme.ThemeSetting['page']>>) {
-      Object.assign(state.settings.page, payload);
-    },
-    setFixedHeaderAndTab(state, { payload }: PayloadAction<boolean>) {
-      state.settings.fixedHeaderAndTab = payload;
-    },
-    setHeader(state, { payload }: PayloadAction<DeepPartial<App.Theme.ThemeSetting['header']>>) {
-      Object.assign(state.settings.header, payload);
-    },
-    setTab(state, { payload }: PayloadAction<Partial<App.Theme.ThemeSetting['tab']>>) {
-      Object.assign(state.settings.tab, payload);
-    },
-    setSider(state, { payload }: PayloadAction<Partial<App.Theme.ThemeSetting['sider']>>) {
-      Object.assign(state.settings.sider, payload);
-    },
-    setFooter(state, { payload }: PayloadAction<Partial<App.Theme.ThemeSetting['footer']>>) {
-      Object.assign(state.settings.footer, payload);
-    },
-    setWatermark(state, { payload }: PayloadAction<Partial<App.Theme.ThemeSetting['watermark']>>) {
-      Object.assign(state.settings.watermark, payload);
-    },
-    setIsOnlyExpandCurrentParentMenu(state, { payload }: PayloadAction<boolean>) {
-      state.settings.isOnlyExpandCurrentParentMenu = payload;
-    },
-    changeReverseHorizontalMix(state, { payload }: PayloadAction<boolean>) {
-      state.settings.layout.reverseHorizontalMix = payload;
-    },
-    resetTheme() {
-      return initialState;
     }
   },
   selectors: {
-    getThemeSettings: theme => theme.settings,
-    getDarkMode: theme => theme.darkMode
+    getDarkMode: theme => theme.darkMode,
+    getThemeSettings: theme => theme.settings
   }
 });
 
-export const { getThemeSettings, getDarkMode } = themeSlice.selectors;
+export const { getDarkMode, getThemeSettings } = themeSlice.selectors;
 
 export const {
+  changeReverseHorizontalMix,
+  resetTheme,
+  setColourWeakness,
   setDarkMode,
-  setThemeScheme,
-  setSiderInverted,
+  setFixedHeaderAndTab,
+  setFooter,
   setGrayscale,
-  setRecommendColor,
-  updateThemeColors,
+  setHeader,
   setIsInfoFollowPrimary,
+  setIsOnlyExpandCurrentParentMenu,
   setLayoutMode,
   setLayoutScrollMode,
   setPage,
-  setFixedHeaderAndTab,
-  setHeader,
-  setTab,
-  resetTheme,
-  setWatermark,
+  setRecommendColor,
   setSider,
-  setFooter,
-  setIsOnlyExpandCurrentParentMenu,
-  setColourWeakness,
-  changeReverseHorizontalMix
+  setSiderInverted,
+  setTab,
+  setThemeScheme,
+  setWatermark,
+  updateThemeColors
 } = themeSlice.actions;
 
 // 计算属性选择器
-export const themeColors = createSelector([getThemeSettings], ({ themeColor, otherColor, isInfoFollowPrimary }) => {
+export const themeColors = createSelector([getThemeSettings], ({ isInfoFollowPrimary, otherColor, themeColor }) => {
   const colors: App.Theme.ThemeColor = {
     primary: themeColor,
     ...otherColor,

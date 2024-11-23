@@ -1,5 +1,5 @@
-import type { CSSProperties } from 'react';
 import { Icon } from '@iconify/react';
+import type { CSSProperties } from 'react';
 /**
  * Props
  *
@@ -7,12 +7,12 @@ import { Icon } from '@iconify/react';
  * - If icon and localIcon are passed at the same time, localIcon will be rendered first
  */
 interface Props {
+  readonly className?: string;
   /** Iconify icon name */
-  icon?: string;
+  readonly icon?: string;
   /** Local svg icon name */
-  localIcon?: string;
-  style?: CSSProperties;
-  className?: string;
+  readonly localIcon?: string;
+  readonly style?: CSSProperties;
 }
 
 const defaultLocalIcon = 'no-icon';
@@ -26,14 +26,14 @@ const SvgIcon = ({ icon, localIcon, ...props }: Props) => {
   /** If localIcon is passed, render localIcon first */
   return localIcon || !icon ? (
     <svg
-      width="1em"
       height="1em"
+      width="1em"
       {...props}
       aria-hidden="true"
     >
       <use
-        href={symbolId(localIcon)}
         fill="currentColor"
+        href={symbolId(localIcon)}
       />
     </svg>
   ) : (

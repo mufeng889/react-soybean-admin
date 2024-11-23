@@ -1,4 +1,5 @@
 import ClassNames from 'classnames';
+
 import SystemLogo from './SystemLogo';
 
 const loadingClasses = [
@@ -19,8 +20,8 @@ const GlobalLoading = memo(() => {
           {loadingClasses.map(item => {
             return (
               <div
-                key={item}
                 className={ClassNames('absolute w-16px h-16px bg-primary rounded-8px animate-pulse ', item)}
+                key={item}
               />
             );
           })}

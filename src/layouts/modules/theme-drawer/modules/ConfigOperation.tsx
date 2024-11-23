@@ -1,4 +1,5 @@
 import Clipboard from 'clipboard';
+
 import { resetTheme, settingsJson } from '@/store/slice/theme';
 
 const ConfigOperation = () => {

@@ -1,7 +1,7 @@
-import { Skeleton } from 'antd';
 import { useBoolean } from 'ahooks';
+import { Skeleton } from 'antd';
 
-export function Component({ url }: { url: string }) {
+export function Component({ url }: { readonly url: string }) {
   const [loading, { setFalse: endLoading }] = useBoolean(true);
 
   return (
@@ -9,11 +9,11 @@ export function Component({ url }: { url: string }) {
       {loading && <Skeleton active />}
       <div className={loading ? 'h-0' : 'h-full'}>
         <iframe
-          onLoad={endLoading}
-          id="iframePage"
           className="size-full"
+          id="iframePage"
           src={url}
-        ></iframe>
+          onLoad={endLoading}
+        />
       </div>
     </>
   );

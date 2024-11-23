@@ -1,9 +1,10 @@
 import type { DebouncedFunc, ThrottleSettings } from 'lodash';
 import throttle from 'lodash/throttle';
 import { useEffect, useRef } from 'react';
+
 import type { Plugin } from '../type';
 
-const useThrottlePlugin: Plugin<any, any[]> = (fetchInstance, { throttleWait, throttleLeading, throttleTrailing }) => {
+const useThrottlePlugin: Plugin<any, any[]> = (fetchInstance, { throttleLeading, throttleTrailing, throttleWait }) => {
   const throttledRef = useRef<DebouncedFunc<any>>();
 
   const options: ThrottleSettings = {};

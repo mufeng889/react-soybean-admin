@@ -1,17 +1,18 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import { createBrowserRouter, createHashRouter, createMemoryRouter } from 'react-router-dom';
-import type { Location, RouteObject } from 'react-router-dom';
 import type { ElegantConstRoute } from '@ohh-889/react-auto-route';
 import type { BlockerFunction, RouterState } from '@remix-run/router';
-import type { AfterEach, BeforeEach, Init, RouteLocationNamedRaw, RouteLocationNormalizedLoaded } from './types';
-import CreateRouterMatcher from './matcher';
-import { cleanParams, findParentNames, getFullPath, removeElement, transformLocationToRoute } from './utils/auxi';
+import { createBrowserRouter, createHashRouter, createMemoryRouter } from 'react-router-dom';
+import type { Location, RouteObject } from 'react-router-dom';
+
 import type { NavigationFailure } from './error';
 import { ErrorTypes, createRouterError } from './error';
+import CreateRouterMatcher from './matcher';
+import type { AfterEach, BeforeEach, Init, RouteLocationNamedRaw, RouteLocationNormalizedLoaded } from './types';
+import { cleanParams, findParentNames, getFullPath, removeElement, transformLocationToRoute } from './utils/auxi';
+import { callbacks } from './utils/callback';
 import { warn } from './warning';
-import { callbacks } from './/utils/callback';
 
 const historyCreatorMap = {
   hash: createHashRouter,
@@ -26,14 +27,14 @@ export type Mode = keyof HistoryCreator;
 export type Options = Parameters<HistoryCreator[Mode]>[1];
 
 export interface RouterOptions {
-  mode: Mode;
-  initRoutes: ElegantConstRoute[];
-  opt: Options;
   getReactRoutes: (route: ElegantConstRoute) => RouteObject;
   init: Init;
+  initRoutes: ElegantConstRoute[];
+  mode: Mode;
+  opt: Options;
 }
 
-export function createRouter({ initRoutes, mode, opt, getReactRoutes, init }: RouterOptions) {
+export function createRouter({ getReactRoutes, init, initRoutes, mode, opt }: RouterOptions) {
   const matcher = new CreateRouterMatcher(initRoutes);
 
   const initReactRoutes = initRoutes.map(route => getReactRoutes(route));
@@ -253,8 +254,8 @@ export function createRouter({ initRoutes, mode, opt, getReactRoutes, init }: Ro
 
     if (!resolved && typeof to !== 'string') {
       const failure = createRouterError<NavigationFailure>(ErrorTypes.NAVIGATION_DUPLICATED, {
-        to: resolved,
-        from: currentRoute
+        from: currentRoute,
+        to: resolved
       });
 
       return Promise.reject(failure);
@@ -305,21 +306,21 @@ export function createRouter({ initRoutes, mode, opt, getReactRoutes, init }: Ro
   }
 
   const router = {
-    reactRouter,
-    go,
-    back,
-    removeRoute,
-    beforeEach: beforeGuards.add,
-    afterEach: afterGuards.add,
-    getRouteMetaByKey,
-    forwardRef,
-    initReady,
-    getRoutes,
-    resetRoute,
     addReactRoutes,
-    push,
+    afterEach: afterGuards.add,
+    back,
+    beforeEach: beforeGuards.add,
+    forwardRef,
     getAllRouteNames,
     getRouteByName,
+    getRouteMetaByKey,
+    getRoutes,
+    go,
+    initReady,
+    push,
+    reactRouter,
+    removeRoute,
+    resetRoute,
     resolve
   };
 

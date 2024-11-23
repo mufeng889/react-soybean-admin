@@ -1,13 +1,16 @@
 import classNames from 'classnames';
 import { createPortal } from 'react-dom';
-import { GLOBAL_SIDER_MENU_ID } from '@/constants/app';
-import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
-import { getMixSiderFixed, toggleMixSiderFixed } from '@/store/slice/app';
+
 import DarkModeContainer from '@/components/stateless/common/DarkModeContainer';
 import PinToggler from '@/components/stateless/common/PinToggler';
-import FirstLevelMenu from '../components/FirstLevelMenu';
+import { GLOBAL_SIDER_MENU_ID } from '@/constants/app';
+import { getMixSiderFixed, toggleMixSiderFixed } from '@/store/slice/app';
+import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
+
 import GlobalLogo from '../../global-logo';
+import FirstLevelMenu from '../components/FirstLevelMenu';
 import VerticalMenu from '../components/VerticalMenu';
+
 import { useGetElementById } from './hook';
 
 const VerticalMix = memo(() => {
@@ -65,8 +68,8 @@ const VerticalMix = memo(() => {
             <h2 className="text-16px text-primary font-bold">{t('system.title')}</h2>
             <PinToggler
               className={classNames({ 'text-white:88 !hover:text-white': siderInverted })}
-              onClick={() => dispatch(toggleMixSiderFixed())}
               pin={mixSiderFixed}
+              onClick={() => dispatch(toggleMixSiderFixed())}
             />
           </header>
           <VerticalMenu />

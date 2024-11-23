@@ -1,22 +1,22 @@
 import { createElement } from 'react';
 
 interface IconConfig {
-  /** Iconify icon name */
-  icon?: string;
-  /** Local icon name */
-  localIcon?: string;
   /** Icon color */
   color?: string;
   /** Icon size */
   fontSize?: number;
+  /** Iconify icon name */
+  icon?: string;
+  /** Local icon name */
+  localIcon?: string;
 }
 interface Props {
+  className?: string;
   /** Iconify icon name */
   icon?: string;
   /** Local svg icon name */
   localIcon?: string;
   style?: React.CSSProperties;
-  className?: string;
 }
 
 /**
@@ -24,7 +24,7 @@ interface Props {
  *
  * @param SvgIcon Svg icon component
  */
-export default function useSvgIconRender(SvgIcon: ({ icon, localIcon, style, className }: Props) => JSX.Element) {
+export default function useSvgIconRender(SvgIcon: ({ className, icon, localIcon, style }: Props) => JSX.Element) {
   type IconStyle = Partial<Pick<CSSStyleDeclaration, 'color' | 'fontSize'>>;
 
   /**

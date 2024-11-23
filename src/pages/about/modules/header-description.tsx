@@ -3,16 +3,16 @@ import type { CardInfo } from './shared';
 const HeaderDescription = (item: CardInfo) => {
   return (
     <ACard
-      title={item.title}
-      key={item.title}
       bordered={false}
-      size="small"
       className="card-wrapper"
+      key={item.title}
+      size="small"
+      title={item.title}
     >
       <ADescriptions
         bordered
+        column={{ lg: 2, md: 2, sm: 2, xl: 2, xs: 1, xxl: 2 }}
         size="small"
-        column={{ xs: 1, sm: 2, xxl: 2, xl: 2, lg: 2, md: 2 }}
       >
         {item.content.map(pkgInfo => (
           <ADescriptions.Item

@@ -258,12 +258,12 @@ export const generatedRoutes: GeneratedRoute[] = [
         path: 'menu',
         component: 'view.manage_menu',
         meta: {
-          title: 'manage_menu',
           i18nKey: 'route.manage_menu',
           icon: 'material-symbols:route',
+          keepAlive: true,
           order: 3,
           roles: ['R_ADMIN'],
-          keepAlive: true
+          title: 'manage_menu'
         }
       },
       {
@@ -271,11 +271,11 @@ export const generatedRoutes: GeneratedRoute[] = [
         path: 'role',
         component: 'view.manage_role',
         meta: {
-          title: 'manage_role',
           i18nKey: 'route.manage_role',
           icon: 'carbon:user-role',
           order: 2,
-          roles: ['R_SUPER']
+          roles: ['R_SUPER'],
+          title: 'manage_role'
         }
       },
       {
@@ -283,11 +283,11 @@ export const generatedRoutes: GeneratedRoute[] = [
         path: 'user',
         component: 'view.manage_user',
         meta: {
-          title: 'manage_user',
           i18nKey: 'route.manage_user',
           icon: 'ic:round-manage-accounts',
           order: 1,
-          roles: ['R_ADMIN']
+          roles: ['R_ADMIN'],
+          title: 'manage_user'
         }
       },
       {

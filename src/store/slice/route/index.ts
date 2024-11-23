@@ -1,44 +1,61 @@
 import type { CustomRoute, ElegantConstRoute, LastLevelRouteKey, RouteKey } from '@elegant-router/types';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { createStaticRoutes } from '@/router/routes';
-import { fetchGetConstantRoutes, fetchGetUserRoutes } from '@/service/api';
+
 import { router } from '@/router';
+import { getRoutePath } from '@/router/elegant/transform';
+import { createStaticRoutes } from '@/router/routes';
+import { ROOT_ROUTE } from '@/router/routes/builtin';
+import { fetchGetConstantRoutes, fetchGetUserRoutes } from '@/service/api';
 import { isStaticSuper, selectUserInfo } from '@/store/slice/auth';
 import { initHomeTab } from '@/store/slice/tab';
-import { getRoutePath } from '@/router/elegant/transform';
-import { ROOT_ROUTE } from '@/router/routes/builtin';
-import type { AppThunk } from '../../index';
+
+import type { AppThunk } from '../..';
 import { createAppSlice } from '../../createAppSlice';
+
 import { filterAuthRoutesByRoles, getCacheRouteNames, sortRoutesByOrder } from './shared';
 
 interface InitialStateType {
   authRoutes: ElegantConstRoute[];
-  sortRoutes: ElegantConstRoute[];
-  isInitConstantRoute: boolean;
-  isInitAuthRoute: boolean;
-  constantRoutes: ElegantConstRoute[];
-  routeHome: string;
-  removeCacheKey: RouteKey | null;
   cacheRoutes: RouteKey[];
+  constantRoutes: ElegantConstRoute[];
+  isInitAuthRoute: boolean;
+  isInitConstantRoute: boolean;
+  removeCacheKey: RouteKey | null;
+  routeHome: string;
+  sortRoutes: ElegantConstRoute[];
 }
 
 const initialState: InitialStateType = {
   /** auth routes */
   authRoutes: [],
-  isInitAuthRoute: false,
-  sortRoutes: [],
-  constantRoutes: [],
-  removeCacheKey: null,
   cacheRoutes: [],
+  constantRoutes: [],
+  isInitAuthRoute: false,
   isInitConstantRoute: false,
+  removeCacheKey: null,
   /** Home route key */
-  routeHome: import.meta.env.VITE_ROUTE_HOME
+  routeHome: import.meta.env.VITE_ROUTE_HOME,
+  sortRoutes: []
 };
 
 export const routeSlice = createAppSlice({
-  name: 'route',
   initialState,
+  name: 'route',
   reducers: create => ({
+    addCacheRoutes: create.reducer((state, { payload }: PayloadAction<RouteKey>) => {
+      state.cacheRoutes.push(payload);
+    }),
+
+    /** Get global menus */
+    addSortRoutes: create.reducer((state, { payload }: PayloadAction<ElegantConstRoute[]>) => {
+      state.sortRoutes.push(...payload);
+    }),
+    removeCacheRoutes: create.reducer((state, { payload }: PayloadAction<RouteKey>) => {
+      state.cacheRoutes = state.cacheRoutes.filter(route => route !== payload);
+    }),
+
+    resetRoute: create.reducer(() => initialState),
+
     /** auth routes */
     setAuthRoutes: create.reducer((state, { payload }: PayloadAction<ElegantConstRoute[]>) => {
       const authRoutesMap = new Map<string, ElegantConstRoute>([]);
@@ -48,28 +65,8 @@ export const routeSlice = createAppSlice({
       state.authRoutes = Array.from(authRoutesMap.values());
     }),
 
-    /** Get global menus */
-    addSortRoutes: create.reducer((state, { payload }: PayloadAction<ElegantConstRoute[]>) => {
-      state.sortRoutes.push(...payload);
-    }),
-    setSortRoutes: create.reducer((state, { payload }: PayloadAction<ElegantConstRoute[]>) => {
-      state.sortRoutes = payload;
-    }),
-
     setCacheRoutes: create.reducer((state, { payload }: PayloadAction<RouteKey[]>) => {
       state.cacheRoutes = payload;
-    }),
-
-    addCacheRoutes: create.reducer((state, { payload }: PayloadAction<RouteKey>) => {
-      state.cacheRoutes.push(payload);
-    }),
-
-    setRemoveCacheKey: create.reducer((state, { payload }: PayloadAction<RouteKey | null>) => {
-      state.removeCacheKey = payload;
-    }),
-
-    removeCacheRoutes: create.reducer((state, { payload }: PayloadAction<RouteKey>) => {
-      state.cacheRoutes = state.cacheRoutes.filter(route => route !== payload);
     }),
 
     /** add constant routes */
@@ -77,11 +74,15 @@ export const routeSlice = createAppSlice({
       const constantRoutesSet = new Set<ElegantConstRoute>(payload);
       state.constantRoutes = Array.from(constantRoutesSet);
     }),
+
+    setIsInitAuthRoute: create.reducer((state, { payload }: PayloadAction<boolean>) => {
+      state.isInitAuthRoute = payload;
+    }),
     setIsInitConstantRoute: create.reducer((state, { payload }: PayloadAction<boolean>) => {
       state.isInitConstantRoute = payload;
     }),
-    setIsInitAuthRoute: create.reducer((state, { payload }: PayloadAction<boolean>) => {
-      state.isInitAuthRoute = payload;
+    setRemoveCacheKey: create.reducer((state, { payload }: PayloadAction<RouteKey | null>) => {
+      state.removeCacheKey = payload;
     }),
 
     /** Set route home */
@@ -89,43 +90,45 @@ export const routeSlice = createAppSlice({
       state.routeHome = payload;
     }),
 
-    resetRoute: create.reducer(() => initialState)
+    setSortRoutes: create.reducer((state, { payload }: PayloadAction<ElegantConstRoute[]>) => {
+      state.sortRoutes = payload;
+    })
   }),
   selectors: {
-    getAuthRoutes: route => route.authRoutes,
-    getSortRoutes: route => route.sortRoutes,
-    getIsInitConstantRoute: route => route.isInitConstantRoute,
     getAllRoutes: state => [...state.constantRoutes, ...state.authRoutes],
+    getAuthRoutes: route => route.authRoutes,
     getConstantRoutes: route => route.constantRoutes,
+    getIsInitConstantRoute: route => route.isInitConstantRoute,
+    getRemoveCacheKey: state => state.removeCacheKey,
     getRouteHome: route => route.routeHome,
-    selectCacheRoutes: state => state.cacheRoutes,
-    getRemoveCacheKey: state => state.removeCacheKey
+    getSortRoutes: route => route.sortRoutes,
+    selectCacheRoutes: state => state.cacheRoutes
   }
 });
 
 export const {
-  setAuthRoutes,
+  addCacheRoutes,
   addSortRoutes,
-  setIsInitConstantRoute,
+  removeCacheRoutes,
+  resetRoute,
+  setAuthRoutes,
+  setCacheRoutes,
   setConstantRoutes,
   setIsInitAuthRoute,
-  resetRoute,
-  setSortRoutes,
-  setCacheRoutes,
-  removeCacheRoutes,
-  addCacheRoutes,
+  setIsInitConstantRoute,
+  setRemoveCacheKey,
   setRouteHome,
-  setRemoveCacheKey
+  setSortRoutes
 } = routeSlice.actions;
 
 export const {
-  getAuthRoutes,
-  getSortRoutes,
-  getIsInitConstantRoute,
-  getConstantRoutes,
   getAllRoutes,
-  getRouteHome,
+  getAuthRoutes,
+  getConstantRoutes,
+  getIsInitConstantRoute,
   getRemoveCacheKey,
+  getRouteHome,
+  getSortRoutes,
   selectCacheRoutes
 } = routeSlice.selectors;
 
@@ -146,7 +149,7 @@ export const getCacheRoutes =
   };
 
 const handleConstantOrAuthRoutes =
-  (mode: 'constant' | 'auth'): AppThunk =>
+  (mode: 'auth' | 'constant'): AppThunk =>
   (dispatch, getState) => {
     let routes: ElegantConstRoute[];
     if (mode === 'constant') {
@@ -211,7 +214,7 @@ const initDynamicAuthRoute = (): AppThunk => async dispatch => {
   const { data, error } = await fetchGetUserRoutes();
 
   if (!error) {
-    const { routes, home } = data;
+    const { home, routes } = data;
 
     dispatch(setAuthRoutes(routes));
 
@@ -238,7 +241,7 @@ export const initAuthRoute = (): AppThunk => async (dispatch, getState) => {
 
   const homeRoute = router.getRouteByName(routeHomeName);
 
-  if (homeRoute) dispatch(initHomeTab({ route: homeRoute, homeRouteName: routeHomeName as LastLevelRouteKey }));
+  if (homeRoute) dispatch(initHomeTab({ homeRouteName: routeHomeName as LastLevelRouteKey, route: homeRoute }));
 };
 
 /**

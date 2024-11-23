@@ -1,20 +1,20 @@
+import { useLoading } from '@sa/hooks';
 import { Button, Card, Descriptions, Space, Tag } from 'antd';
 import type { DescriptionsProps } from 'antd';
-import { useLoading } from '@sa/hooks';
-import { selectUserInfo } from '@/store/slice/auth';
-import { reloadPage } from '@/store/slice/app';
 
-import { initTabStore } from '@/store/slice/tab';
-import { router } from '@/router';
 import { useLogin } from '@/hooks/common/login';
+import { router } from '@/router';
+import { reloadPage } from '@/store/slice/app';
+import { selectUserInfo } from '@/store/slice/auth';
+import { initTabStore } from '@/store/slice/tab';
 
-type AccountKey = 'super' | 'admin' | 'user';
+type AccountKey = 'admin' | 'super' | 'user';
 
 interface Account {
   key: AccountKey;
   label: string;
-  userName: string;
   password: string;
+  userName: string;
 }
 
 export function Component() {
@@ -24,7 +24,7 @@ export function Component() {
 
   const { hasAuth } = useAuth();
   const { toLogin } = useLogin();
-  const { loading, startLoading, endLoading } = useLoading();
+  const { endLoading, loading, startLoading } = useLoading();
 
   const dispatch = useAppDispatch();
 
@@ -34,52 +34,52 @@ export function Component() {
     {
       key: 'super',
       label: t('page.login.pwdLogin.superAdmin'),
-      userName: 'Super',
-      password: '123456'
+      password: '123456',
+      userName: 'Super'
     },
     {
       key: 'admin',
       label: t('page.login.pwdLogin.admin'),
-      userName: 'Admin',
-      password: '123456'
+      password: '123456',
+      userName: 'Admin'
     },
     {
       key: 'user',
       label: t('page.login.pwdLogin.user'),
-      userName: 'User',
-      password: '123456'
+      password: '123456',
+      userName: 'User'
     }
   ];
 
   const roles: DescriptionsProps['items'] = [
     {
-      key: '1',
-      label: t('page.manage.user.userRole'),
       children: (
         <Space>
           {userInfo.roles.map(role => (
             <Tag key={role}>{role}</Tag>
           ))}
         </Space>
-      )
+      ),
+      key: '1',
+      label: t('page.manage.user.userRole')
     },
     {
-      key: '2',
-      label: t('page.function.toggleAuth.toggleAccount'),
       children: (
         <Space>
           {accounts.map(account => (
             <Button
               disabled={loading && loginAccount !== account.key}
-              loading={loading && loginAccount === account.key}
               key={account.key}
+              loading={loading && loginAccount === account.key}
               onClick={() => handleToggleAccount(account)}
             >
               {account.label}
             </Button>
           ))}
         </Space>
-      )
+      ),
+      key: '2',
+      label: t('page.function.toggleAuth.toggleAccount')
     }
   ];
 
@@ -90,7 +90,7 @@ export function Component() {
 
     router.resetRoute();
 
-    await toLogin({ userName: account.userName, password: account.password }, false);
+    await toLogin({ password: account.password, userName: account.userName }, false);
 
     dispatch(initTabStore());
 
@@ -100,28 +100,28 @@ export function Component() {
   }
   return (
     <Space
+      className="w-full"
       direction="vertical"
       size={16}
-      className="w-full"
     >
       <Card
-        title={t('request.logout')}
         bordered={false}
         className="card-wrapper"
         size="small"
+        title={t('request.logout')}
       >
         <Descriptions
           bordered
-          layout="vertical"
-          size="small"
           column={1}
           items={roles}
+          layout="vertical"
+          size="small"
         />
         <Card
-          title={t('page.function.toggleAuth.authHook')}
           bordered={false}
           className="card-wrapper"
           size="small"
+          title={t('page.function.toggleAuth.authHook')}
         >
           <Space>
             {hasAuth('B_CODE1') && <Button>{t('page.function.toggleAuth.superAdminVisible')}</Button>}

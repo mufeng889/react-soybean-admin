@@ -1,12 +1,13 @@
-import { useRef } from 'react';
 import { useUpdateEffect } from 'ahooks';
+import { useRef } from 'react';
+
 import type { Plugin, Timeout } from '../type';
 import isDocumentVisible from '../utils/isDocumentVisible';
 import subscribeReVisible from '../utils/subscribeReVisible';
 
 const usePollingPlugin: Plugin<any, any[]> = (
   fetchInstance,
-  { pollingInterval, pollingWhenHidden = true, pollingErrorRetryCount = -1 }
+  { pollingErrorRetryCount = -1, pollingInterval, pollingWhenHidden = true }
 ) => {
   const timerRef = useRef<Timeout>();
   const unsubscribeRef = useRef<() => void>();
@@ -34,11 +35,11 @@ const usePollingPlugin: Plugin<any, any[]> = (
       stopPolling();
       return null;
     },
+    onCancel: () => {
+      stopPolling();
+    },
     onError: () => {
       countRef.current += 1;
-    },
-    onSuccess: () => {
-      countRef.current = 0;
     },
     onFinally: () => {
       if (
@@ -60,8 +61,8 @@ const usePollingPlugin: Plugin<any, any[]> = (
         countRef.current = 0;
       }
     },
-    onCancel: () => {
-      stopPolling();
+    onSuccess: () => {
+      countRef.current = 0;
     }
   };
 };

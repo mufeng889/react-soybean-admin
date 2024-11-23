@@ -2,17 +2,17 @@ import { useState } from 'react';
 
 type ArrayState<T> = T[];
 type ArrayActions<T, K extends keyof T> = {
-  updateState: (newState: T[]) => void;
-  push: (...newItems: T[]) => void;
-  unshift: (...newItems: T[]) => void;
-  remove: (itemKey: T[K]) => void;
-  up: (itemKey: T[K]) => void;
   down: (itemKey: T[K]) => void;
   pop: () => void;
-  shift: () => void;
+  push: (...newItems: T[]) => void;
+  remove: (itemKey: T[K]) => void;
   reverse: () => void;
+  shift: () => void;
   sort: (compareFn?: (a: T, b: T) => number) => void;
   splice: (start: number, deleteCount?: number, ...items: T[]) => void;
+  unshift: (...newItems: T[]) => void;
+  up: (itemKey: T[K]) => void;
+  updateState: (newState: T[]) => void;
 };
 
 export default function useArray<T, K extends keyof T>(initState: T[], key?: K): [ArrayState<T>, ArrayActions<T, K>] {
@@ -120,5 +120,5 @@ export default function useArray<T, K extends keyof T>(initState: T[], key?: K):
     });
   };
 
-  return [state, { updateState, push, unshift, remove, up, down, pop, shift, sort, splice, reverse }];
+  return [state, { down, pop, push, remove, reverse, shift, sort, splice, unshift, up, updateState }];
 }

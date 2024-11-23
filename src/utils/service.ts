@@ -6,7 +6,7 @@ import json5 from 'json5';
  * @param env The current env
  */
 export function createServiceConfig(env: Env.ImportMeta) {
-  const { VITE_SERVICE_BASE_URL, VITE_OTHER_SERVICE_BASE_URL } = env;
+  const { VITE_OTHER_SERVICE_BASE_URL, VITE_SERVICE_BASE_URL } = env;
 
   let other = {} as Record<App.Service.OtherBaseURLKey, string>;
   try {
@@ -25,16 +25,16 @@ export function createServiceConfig(env: Env.ImportMeta) {
 
   const otherConfig: App.Service.OtherServiceConfigItem[] = otherHttpKeys.map(key => {
     return {
-      key,
       baseURL: httpConfig.other[key],
+      key,
       proxyPattern: createProxyPattern(key)
     };
   });
 
   const config: App.Service.ServiceConfig = {
     baseURL: httpConfig.baseURL,
-    proxyPattern: createProxyPattern(),
-    other: otherConfig
+    other: otherConfig,
+    proxyPattern: createProxyPattern()
   };
 
   return config;

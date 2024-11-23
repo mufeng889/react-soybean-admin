@@ -1,22 +1,14 @@
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 export type ContentType =
-  | 'text/html'
-  | 'text/plain'
-  | 'multipart/form-data'
   | 'application/json'
+  | 'application/octet-stream'
   | 'application/x-www-form-urlencoded'
-  | 'application/octet-stream';
+  | 'multipart/form-data'
+  | 'text/html'
+  | 'text/plain';
 
 export interface RequestOption<ResponseData = any> {
-  /**
-   * The hook before request
-   *
-   * For example: You can add header token in this hook
-   *
-   * @param config Axios config
-   */
-  onRequest: (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig>;
   /**
    * The hook to check backend response is success or not
    *
@@ -36,12 +28,6 @@ export interface RequestOption<ResponseData = any> {
     instance: AxiosInstance
   ) => Promise<AxiosResponse | null> | Promise<void>;
   /**
-   * transform backend response when the responseType is json
-   *
-   * @param response Axios response
-   */
-  transformBackendResponse(response: AxiosResponse<ResponseData>): any | Promise<any>;
-  /**
    * The hook to handle error
    *
    * For example: You can show error message in this hook
@@ -49,14 +35,28 @@ export interface RequestOption<ResponseData = any> {
    * @param error
    */
   onError: (error: AxiosError<ResponseData>) => void | Promise<void>;
+  /**
+   * The hook before request
+   *
+   * For example: You can add header token in this hook
+   *
+   * @param config Axios config
+   */
+  onRequest: (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig>;
+  /**
+   * transform backend response when the responseType is json
+   *
+   * @param response Axios response
+   */
+  transformBackendResponse(response: AxiosResponse<ResponseData>): any | Promise<any>;
 }
 
 interface ResponseMap {
-  blob: Blob;
-  text: string;
   arrayBuffer: ArrayBuffer;
-  stream: ReadableStream<Uint8Array>;
+  blob: Blob;
   document: Document;
+  stream: ReadableStream<Uint8Array>;
+  text: string;
 }
 export type ResponseType = keyof ResponseMap | 'json';
 
@@ -70,6 +70,12 @@ export type CustomAxiosRequestConfig<R extends ResponseType = 'json'> = Omit<Axi
 
 export interface RequestInstanceCommon<T> {
   /**
+   * cancel all request
+   *
+   * if the request provide abort controller sign from config, it will not collect in the abort controller map
+   */
+  cancelAllRequest: () => void;
+  /**
    * cancel the request by request id
    *
    * if the request provide abort controller sign from config, it will not collect in the abort controller map
@@ -77,12 +83,6 @@ export interface RequestInstanceCommon<T> {
    * @param requestId
    */
   cancelRequest: (requestId: string) => void;
-  /**
-   * cancel all request
-   *
-   * if the request provide abort controller sign from config, it will not collect in the abort controller map
-   */
-  cancelAllRequest: () => void;
   /** you can set custom state in the request instance */
   state: T;
 }

@@ -1,11 +1,13 @@
 import path from 'node:path';
 import process from 'node:process';
+
 import { FileSystemIconLoader } from 'unplugin-icons/loaders';
-import type { PluginOption } from 'vite';
 import Icons from 'unplugin-icons/vite';
+import type { PluginOption } from 'vite';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
+
 export function setupUnPluginIcon(viteEnv: Env.ImportMeta) {
-  const { VITE_ICON_PREFIX, VITE_ICON_LOCAL_PREFIX } = viteEnv;
+  const { VITE_ICON_LOCAL_PREFIX, VITE_ICON_PREFIX } = viteEnv;
 
   const localIconPath = path.join(process.cwd(), 'src/assets/svg-icon');
   /** The name of the local icon collection */
@@ -13,10 +15,10 @@ export function setupUnPluginIcon(viteEnv: Env.ImportMeta) {
 
   const plugins: PluginOption[] = [
     createSvgIconsPlugin({
+      customDomId: '__SVG_ICON_LOCAL__',
       iconDirs: [localIconPath],
-      symbolId: `${VITE_ICON_LOCAL_PREFIX}-[dir]-[name]`,
       inject: 'body-last',
-      customDomId: '__SVG_ICON_LOCAL__'
+      symbolId: `${VITE_ICON_LOCAL_PREFIX}-[dir]-[name]`
     }),
     Icons({
       compiler: 'jsx',
@@ -25,9 +27,9 @@ export function setupUnPluginIcon(viteEnv: Env.ImportMeta) {
           svg.replace(/^<svg\s/, '<svg width="1em" height="1em" ')
         )
       },
-      scale: 1,
+      defaultClass: 'inline-block',
       jsx: 'react',
-      defaultClass: 'inline-block'
+      scale: 1
     })
   ];
 

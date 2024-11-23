@@ -1,22 +1,23 @@
 import { Button, Tooltip } from 'antd';
 import type { ButtonProps, TooltipProps } from 'antd';
 import { type CSSProperties } from 'react';
+
 import SvgIcon from './SvgIcon';
 
 interface Props extends Omit<ButtonProps, 'icon' | 'iconPosition'> {
+  children?: React.ReactNode;
   /** Button class */
   className?: string;
   /** Iconify icon name */
   icon?: string;
+  style?: CSSProperties;
   /** Tooltip content */
   tooltipContent?: string;
   /** Tooltip placement */
   tooltipPlacement?: TooltipProps['placement'];
-  zIndex?: number;
-  style?: CSSProperties;
   /** Trigger tooltip on parent */
   triggerParent?: boolean;
-  children?: React.ReactNode;
+  zIndex?: number;
 }
 
 /** - 动态计算class */
@@ -38,14 +39,14 @@ const computeClass = (className: string) => {
 
 const ButtonIcon: FC<Props> = memo(
   ({
+    children,
     className = 'h-36px text-icon',
     icon,
+    style,
     tooltipContent,
     tooltipPlacement = 'bottom',
-    zIndex = 98,
-    style,
     triggerParent,
-    children,
+    zIndex = 98,
     ...rest
   }) => {
     const cls = computeClass(className);
@@ -56,21 +57,21 @@ const ButtonIcon: FC<Props> = memo(
 
     return (
       <Tooltip
-        zIndex={zIndex}
-        title={tooltipContent}
-        placement={tooltipPlacement}
         getPopupContainer={getPopupContainer}
+        placement={tooltipPlacement}
+        title={tooltipContent}
+        zIndex={zIndex}
       >
         <Button
-          type="text"
           className={cls}
+          type="text"
           {...rest}
         >
           <div className="flex-center gap-8px">
             {children || (
               <SvgIcon
-                style={style}
                 icon={icon}
+                style={style}
               />
             )}
           </div>

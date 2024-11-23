@@ -1,18 +1,18 @@
 import { Button, Form, Input, Space } from 'antd';
 
 interface FormModel {
-  phone: string;
   code: string;
-  password: string;
   confirmPassword: string;
+  password: string;
+  phone: string;
 }
 
 export const Component = () => {
   const { t } = useTranslation();
-  const { label, isCounting, loading, getCaptcha } = useCaptcha();
+  const { getCaptcha, isCounting, label, loading } = useCaptcha();
   const { toggleLoginModule } = useRouterPush();
   const [form] = Form.useForm<FormModel>();
-  const { formRules, createConfirmPwdRule } = useFormRules();
+  const { createConfirmPwdRule, formRules } = useFormRules();
 
   async function handleSubmit() {
     const params = await form.validateFields();
@@ -30,14 +30,14 @@ export const Component = () => {
     <>
       <h3 className="text-18px text-primary font-medium">{t('page.login.register.title')}</h3>
       <Form
-        form={form}
         className="pt-24px"
+        form={form}
       >
         <Form.Item
           name="phone"
           rules={formRules.phone}
         >
-          <Input placeholder={t('page.login.common.phonePlaceholder')}></Input>
+          <Input placeholder={t('page.login.common.phonePlaceholder')} />
         </Form.Item>
         <Form.Item
           name="code"
@@ -46,9 +46,9 @@ export const Component = () => {
           <div className="w-full flex-y-center gap-16px">
             <Input placeholder={t('page.login.common.codePlaceholder')} />
             <Button
-              size="large"
               disabled={isCounting}
               loading={loading}
+              size="large"
               onClick={() => getCaptcha('17260760167')}
             >
               {label}
@@ -56,36 +56,36 @@ export const Component = () => {
           </div>
         </Form.Item>
         <Form.Item
-          rules={formRules.pwd}
           name="password"
+          rules={formRules.pwd}
         >
-          <Input placeholder={t('page.login.common.passwordPlaceholder')}></Input>
+          <Input placeholder={t('page.login.common.passwordPlaceholder')} />
         </Form.Item>
         <Form.Item
-          rules={createConfirmPwdRule(form)}
           name="confirmPassword"
+          rules={createConfirmPwdRule(form)}
         >
-          <Input placeholder={t('page.login.common.confirmPasswordPlaceholder')}></Input>
+          <Input placeholder={t('page.login.common.confirmPasswordPlaceholder')} />
         </Form.Item>
         <Space
-          direction="vertical"
           className="w-full"
+          direction="vertical"
           size={18}
         >
           <Button
-            type="primary"
-            size="large"
-            shape="round"
             block
+            shape="round"
+            size="large"
+            type="primary"
             onClick={handleSubmit}
           >
             {t('common.confirm')}
           </Button>
 
           <Button
-            size="large"
-            shape="round"
             block
+            shape="round"
+            size="large"
             onClick={() => toggleLoginModule('pwd-login')}
           >
             {t('page.login.common.back')}

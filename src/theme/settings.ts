@@ -1,80 +1,80 @@
 /** Default theme settings */
 export const themeSettings: App.Theme.ThemeSetting = {
-  themeScheme: 'light',
-  grayscale: false,
-  recommendColor: false,
-  isOnlyExpandCurrentParentMenu: true,
   colourWeakness: false,
-  themeColor: '#646cff',
-  otherColor: {
-    info: '#2080f0',
-    success: '#52c41a',
-    warning: '#faad14',
-    error: '#f5222d'
+  fixedHeaderAndTab: true,
+  footer: {
+    fixed: false,
+    height: 48,
+    right: true,
+    visible: true
+  },
+  grayscale: false,
+  header: {
+    breadcrumb: {
+      showIcon: true,
+      visible: true
+    },
+    height: 56
   },
   isInfoFollowPrimary: true,
+  isOnlyExpandCurrentParentMenu: true,
   layout: {
     mode: 'vertical',
-    scrollMode: 'content',
-    reverseHorizontalMix: false
+    reverseHorizontalMix: false,
+    scrollMode: 'content'
+  },
+  otherColor: {
+    error: '#f5222d',
+    info: '#2080f0',
+    success: '#52c41a',
+    warning: '#faad14'
   },
   page: {
     animate: true,
     animateMode: 'fade'
   },
-  header: {
-    height: 56,
-    breadcrumb: {
-      visible: true,
-      showIcon: true
-    }
+  recommendColor: false,
+  sider: {
+    collapsedWidth: 64,
+    inverted: false,
+    mixChildMenuWidth: 200,
+    mixCollapsedWidth: 64,
+    mixWidth: 90,
+    width: 220
   },
   tab: {
-    visible: true,
     cache: true,
     height: 44,
-    mode: 'chrome'
+    mode: 'chrome',
+    visible: true
   },
-  fixedHeaderAndTab: true,
-  sider: {
-    inverted: false,
-    width: 220,
-    collapsedWidth: 64,
-    mixWidth: 90,
-    mixCollapsedWidth: 64,
-    mixChildMenuWidth: 200
-  },
-  footer: {
-    visible: true,
-    fixed: false,
-    height: 48,
-    right: true
-  },
-  watermark: {
-    visible: false,
-    text: 'SoybeanAdmin'
-  },
+  themeColor: '#646cff',
+  themeScheme: 'light',
   tokens: {
-    light: {
+    dark: {
       colors: {
-        container: 'rgb(255, 255, 255)',
-        layout: 'rgb(247, 250, 252)',
-        inverted: 'rgb(0, 20, 40)',
-        'base-text': 'rgb(31, 31, 31)'
-      },
+        'base-text': 'rgb(224, 224, 224)',
+        container: 'rgb(28, 28, 28)',
+        layout: 'rgb(18, 18, 18)'
+      }
+    },
+    light: {
       boxShadow: {
         header: '0 1px 2px rgb(0, 21, 41, 0.08)',
         sider: '2px 0 8px 0 rgb(29, 35, 41, 0.05)',
         tab: '0 1px 2px rgb(0, 21, 41, 0.08)'
-      }
-    },
-    dark: {
+      },
       colors: {
-        container: 'rgb(28, 28, 28)',
-        layout: 'rgb(18, 18, 18)',
-        'base-text': 'rgb(224, 224, 224)'
+        'base-text': 'rgb(31, 31, 31)',
+        container: 'rgb(255, 255, 255)',
+        inverted: 'rgb(0, 20, 40)',
+        layout: 'rgb(247, 250, 252)'
       }
     }
+  },
+  watermark: {
+    text: 'SoybeanAdmin',
+    visible: false
   }
 };
 
@@ -85,7 +85,7 @@ export const themeSettings: App.Theme.ThemeSetting = {
  */
 export const overrideThemeSettings: Partial<App.Theme.ThemeSetting> = {
   watermark: {
-    visible: false,
-    text: 'SoybeanAdmin'
+    text: 'SoybeanAdmin',
+    visible: false
   }
 };

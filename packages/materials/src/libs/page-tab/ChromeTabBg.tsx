@@ -19,35 +19,35 @@ const ChromeTabBg = memo(() => {
         </symbol>
         <clipPath>
           <rect
-            width="100%"
             height="100%"
+            width="100%"
             x="0"
           />
         </clipPath>
       </defs>
       <svg
-        width="51%"
         height="100%"
+        width="51%"
       >
         <use
-          xlinkHref="#geometry-left"
-          width="214"
-          height="36"
           fill="currentColor"
+          height="36"
+          width="214"
+          xlinkHref="#geometry-left"
         />
       </svg>
       <g transform="scale(-1, 1)">
         <svg
-          width="51%"
           height="100%"
+          width="51%"
           x="-100%"
           y="0"
         >
           <use
-            xlinkHref="#geometry-right"
-            width="214"
-            height="36"
             fill="currentColor"
+            height="36"
+            width="214"
+            xlinkHref="#geometry-right"
           />
         </svg>
       </g>

@@ -1,6 +1,8 @@
 import { useRequest } from '@sa/hooks';
 import type { DataNode } from 'antd/es/tree';
+
 import { fetchGetAllPages, fetchGetMenuTree } from '@/service/api';
+
 import type { ModulesProps } from './type';
 
 function getOptions(item: string) {
@@ -17,9 +19,9 @@ function recursiveTransform(data: Api.SystemManage.MenuTree[] | null): DataNode[
 
         if (item.children) {
           return {
+            children: recursiveTransform(item.children),
             key,
-            title: label,
-            children: recursiveTransform(item.children)
+            title: label
           };
         }
 
@@ -31,7 +33,7 @@ function recursiveTransform(data: Api.SystemManage.MenuTree[] | null): DataNode[
     : [];
 }
 
-const MenuAuthModal: FC<ModulesProps> = memo(({ open, onClose, roleId }) => {
+const MenuAuthModal: FC<ModulesProps> = memo(({ onClose, open, roleId }) => {
   const { t } = useTranslation();
 
   const title = t('common.edit') + t('page.manage.role.menuAuth');
@@ -80,9 +82,8 @@ const MenuAuthModal: FC<ModulesProps> = memo(({ open, onClose, roleId }) => {
 
   return (
     <AModal
-      open={open}
       className="w-480px"
-      onCancel={onClose}
+      open={open}
       title={title}
       footer={
         <ASpace className="mt-16px">
@@ -94,31 +95,32 @@ const MenuAuthModal: FC<ModulesProps> = memo(({ open, onClose, roleId }) => {
           </AButton>
           <AButton
             size="small"
-            onClick={handleSubmit}
             type="primary"
+            onClick={handleSubmit}
           >
             {t('common.confirm')}
           </AButton>
         </ASpace>
       }
+      onCancel={onClose}
     >
       <div className="flex-y-center gap-16px pb-12px">
         <div>{t('page.manage.menu.home')}</div>
 
         <ASelect
-          options={pageSelectOptions}
-          onChange={setHome}
-          value={home}
           className="w-240px"
+          options={pageSelectOptions}
+          value={home}
+          onChange={setHome}
         />
       </div>
       <ATree
-        treeData={recursiveTransform(tree)}
-        checkedKeys={checks}
-        onCheck={value => setChecks(value as number[])}
-        className="h-280px"
         checkable
+        checkedKeys={checks}
+        className="h-280px"
         height={280}
+        treeData={recursiveTransform(tree)}
+        onCheck={value => setChecks(value as number[])}
       />
     </AModal>
   );

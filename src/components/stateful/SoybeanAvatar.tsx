@@ -1,4 +1,5 @@
 import ClassNames from 'classnames';
+
 import soybeanAvatar from '@/assets/imgs/soybean.jpg';
 
 const SoybeanAvatar: FC<React.ComponentProps<'div'>> = memo(({ className, ...props }) => {
@@ -8,8 +9,8 @@ const SoybeanAvatar: FC<React.ComponentProps<'div'>> = memo(({ className, ...pro
       className={ClassNames('size-72px  overflow-hidden rd-1/2', className)}
     >
       <img
-        src={soybeanAvatar}
         className="size-full"
+        src={soybeanAvatar}
       />
     </div>
   );

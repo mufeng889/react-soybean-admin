@@ -1,6 +1,9 @@
 import { Button, Switch, Tooltip } from 'antd';
+
 import { getThemeSettings, setRecommendColor, themeColors } from '@/store/slice/theme';
+
 import SettingItem from '../components/SettingItem';
+
 import CustomPicker from './CustomPicker';
 
 const ThemeColor = memo(() => {
@@ -19,28 +22,28 @@ const ThemeColor = memo(() => {
   return (
     <div className="flex-col-stretch gap-12px">
       <Tooltip
+        placement="topLeft"
         title={
           <p>
             <span className="pr-12px">{t('theme.recommendColorDesc')}</span>
             <br />
             <Button
-              type="link"
-              href="https://uicolors.app/create"
-              target="_blank"
-              rel="noopener noreferrer"
               className="text-gray"
+              href="https://uicolors.app/create"
+              rel="noopener noreferrer"
+              target="_blank"
+              type="link"
             >
               https://uicolors.app/create
             </Button>
           </p>
         }
-        placement="topLeft"
       >
         <div>
           <SettingItem
-            seq={4}
             key="recommend-color"
             label={t('theme.recommendColor')}
+            seq={4}
           >
             <Switch
               defaultChecked={themeSettings.recommendColor}
@@ -52,11 +55,11 @@ const ThemeColor = memo(() => {
       {Object.entries(colors).map(([key, value], index) => (
         <CustomPicker
           index={index}
-          theme={themeSettings.themeColor}
           isInfoFollowPrimary={themeSettings.isInfoFollowPrimary}
-          value={value}
-          label={key}
           key={key}
+          label={key}
+          theme={themeSettings.themeColor}
+          value={value}
         />
       ))}
     </div>

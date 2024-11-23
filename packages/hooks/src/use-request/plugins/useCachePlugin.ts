@@ -1,5 +1,6 @@
-import { useRef } from 'react';
 import { useCreation, useUnmount } from 'ahooks';
+import { useRef } from 'react';
+
 import type { Plugin } from '../type';
 import { getCache, setCache } from '../utils/cache';
 import type { CachedData } from '../utils/cache';
@@ -8,7 +9,7 @@ import { subscribe, trigger } from '../utils/cacheSubscribe';
 
 const useCachePlugin: Plugin<any, any[]> = (
   fetchInstance,
-  { cacheKey, cacheTime = 5 * 60 * 1000, staleTime = 0, setCache: customSetCache, getCache: customGetCache }
+  { cacheKey, cacheTime = 5 * 60 * 1000, getCache: customGetCache, setCache: customSetCache, staleTime = 0 }
 ) => {
   const unSubscribeRef = useRef<() => void>();
 
@@ -70,9 +71,9 @@ const useCachePlugin: Plugin<any, any[]> = (
       // If the data is fresh, stop request
       if (staleTime === -1 || new Date().getTime() - cacheData.time <= staleTime) {
         return {
-          loading: false,
           data: cacheData?.data,
           error: undefined,
+          loading: false,
           returnNow: true
         };
       }
@@ -81,6 +82,21 @@ const useCachePlugin: Plugin<any, any[]> = (
         data: cacheData?.data,
         error: undefined
       };
+    },
+    onMutate: data => {
+      if (cacheKey) {
+        // cancel subscribe, avoid trigger self
+        unSubscribeRef.current?.();
+        _setCache(cacheKey, {
+          data,
+          params: fetchInstance.state.params,
+          time: new Date().getTime()
+        });
+        // resubscribe
+        unSubscribeRef.current = subscribe(cacheKey, d => {
+          fetchInstance.setState({ data: d });
+        });
+      }
     },
     onRequest: (service, args) => {
       let servicePromise = getCachePromise(cacheKey);
@@ -102,21 +118,6 @@ const useCachePlugin: Plugin<any, any[]> = (
         _setCache(cacheKey, {
           data,
           params,
-          time: new Date().getTime()
-        });
-        // resubscribe
-        unSubscribeRef.current = subscribe(cacheKey, d => {
-          fetchInstance.setState({ data: d });
-        });
-      }
-    },
-    onMutate: data => {
-      if (cacheKey) {
-        // cancel subscribe, avoid trigger self
-        unSubscribeRef.current?.();
-        _setCache(cacheKey, {
-          data,
-          params: fetchInstance.state.params,
           time: new Date().getTime()
         });
         // resubscribe

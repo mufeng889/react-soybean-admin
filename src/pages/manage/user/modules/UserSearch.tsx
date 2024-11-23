@@ -1,8 +1,9 @@
 import { Button, Col, Flex, Form, Input, Row, Select } from 'antd';
+
 import { enableStatusOptions, userGenderOptions } from '@/constants/business';
 import { translateOptions } from '@/utils/common';
 
-const UserSearch: FC<Page.SearchProps> = memo(({ reset, search, form }) => {
+const UserSearch: FC<Page.SearchProps> = memo(({ form, reset, search }) => {
   const { t } = useTranslation();
   const {
     patternRules: { email, phone }
@@ -10,106 +11,106 @@ const UserSearch: FC<Page.SearchProps> = memo(({ reset, search, form }) => {
 
   return (
     <Form
-      labelCol={{
-        span: 5,
-        md: 7
-      }}
       form={form}
+      labelCol={{
+        md: 7,
+        span: 5
+      }}
     >
       <Row
-        gutter={[16, 16]}
         wrap
+        gutter={[16, 16]}
       >
         <Col
-          span={24}
-          md={12}
           lg={6}
+          md={12}
+          span={24}
         >
           <Form.Item
             className="m-0"
-            name="userName"
             label={t('page.manage.user.userName')}
+            name="userName"
           >
             <Input placeholder={t('page.manage.user.form.userName')} />
           </Form.Item>
         </Col>
 
         <Col
-          span={24}
-          md={12}
           lg={6}
+          md={12}
+          span={24}
         >
           <Form.Item
             className="m-0"
-            name="userGender"
             label={t('page.manage.user.userGender')}
+            name="userGender"
           >
             <Select
-              placeholder={t('page.manage.user.form.userGender')}
               allowClear
               options={translateOptions(userGenderOptions)}
+              placeholder={t('page.manage.user.form.userGender')}
             />
           </Form.Item>
         </Col>
 
         <Col
-          span={24}
-          md={12}
           lg={6}
+          md={12}
+          span={24}
         >
           <Form.Item
             className="m-0"
-            name="nickName"
             label={t('page.manage.user.nickName')}
+            name="nickName"
           >
             <Input placeholder={t('page.manage.user.form.nickName')} />
           </Form.Item>
         </Col>
 
         <Col
-          span={24}
-          md={12}
           lg={6}
+          md={12}
+          span={24}
         >
           <Form.Item
-            rules={[phone]}
             className="m-0"
-            name="userPhone"
             label={t('page.manage.user.userPhone')}
+            name="userPhone"
+            rules={[phone]}
           >
             <Input placeholder={t('page.manage.user.form.userPhone')} />
           </Form.Item>
         </Col>
 
         <Col
-          span={24}
-          md={12}
           lg={6}
+          md={12}
+          span={24}
         >
           <Form.Item
-            rules={[email]}
             className="m-0"
-            name="userEmail"
             label={t('page.manage.user.userEmail')}
+            name="userEmail"
+            rules={[email]}
           >
             <Input placeholder={t('page.manage.user.form.userEmail')} />
           </Form.Item>
         </Col>
 
         <Col
-          span={24}
-          md={12}
           lg={6}
+          md={12}
+          span={24}
         >
           <Form.Item
             className="m-0"
-            name="userStatus"
             label={t('page.manage.user.userStatus')}
+            name="userStatus"
           >
             <Select
-              placeholder={t('page.manage.user.form.userStatus')}
               allowClear
               options={translateOptions(enableStatusOptions)}
+              placeholder={t('page.manage.user.form.userStatus')}
             />
           </Form.Item>
         </Col>
@@ -120,8 +121,8 @@ const UserSearch: FC<Page.SearchProps> = memo(({ reset, search, form }) => {
         >
           <Form.Item className="m-0">
             <Flex
-              gap={12}
               align="center"
+              gap={12}
               justify="end"
             >
               <Button
@@ -131,9 +132,9 @@ const UserSearch: FC<Page.SearchProps> = memo(({ reset, search, form }) => {
                 {t('common.reset')}
               </Button>
               <Button
+                ghost
                 icon={<IconIcRoundSearch />}
                 type="primary"
-                ghost
                 onClick={search}
               >
                 {t('common.search')}

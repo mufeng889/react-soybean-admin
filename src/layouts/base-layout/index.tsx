@@ -1,5 +1,5 @@
-import MenuProvider from './MenuProvider';
 import BaseLayout from './BaseLayout';
+import MenuProvider from './MenuProvider';
 
 export function Component() {
   return (

@@ -1,11 +1,12 @@
-import { useRef } from 'react';
 import { useUpdateEffect } from 'ahooks';
+import { useRef } from 'react';
+
 import type { Plugin } from '../type';
 
 // support refreshDeps & ready
 const useAutoRunPlugin: Plugin<any, any[]> = (
   fetchInstance,
-  { manual, ready = true, defaultParams = [], refreshDeps = [], refreshDepsAction }
+  { defaultParams = [], manual, ready = true, refreshDeps = [], refreshDepsAction }
 ) => {
   const hasAutoRun = useRef(false);
   hasAutoRun.current = false;
@@ -43,7 +44,7 @@ const useAutoRunPlugin: Plugin<any, any[]> = (
   };
 };
 
-useAutoRunPlugin.onInit = ({ ready = true, manual }) => {
+useAutoRunPlugin.onInit = ({ manual, ready = true }) => {
   return {
     loading: !manual && ready
   };

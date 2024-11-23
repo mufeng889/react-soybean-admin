@@ -1,7 +1,8 @@
+import { useRoute } from '@sa/simple-router';
 import { Button, Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
 import { useSubmit } from 'react-router-dom';
-import { useRoute } from '@sa/simple-router';
+
 import { selectToken, selectUserInfo } from '@/store/slice/auth';
 
 const UserAvatar = memo(() => {
@@ -14,15 +15,15 @@ const UserAvatar = memo(() => {
 
   function logout() {
     window?.$modal?.confirm({
-      title: t('common.tip'),
+      cancelText: t('common.cancel'),
       content: t('common.logoutConfirm'),
       okText: t('common.confirm'),
-      cancelText: t('common.cancel'),
       onOk: () => {
         let needRedirect = false;
         if (!route.meta?.constant) needRedirect = true;
-        submit({ redirectFullPath: route.fullPath, needRedirect }, { method: 'post', action: '/logout' });
-      }
+        submit({ needRedirect, redirectFullPath: route.fullPath }, { action: '/logout', method: 'post' });
+      },
+      title: t('common.tip')
     });
   }
 
@@ -39,44 +40,44 @@ const UserAvatar = memo(() => {
 
   const items: MenuProps['items'] = [
     {
+      key: '0',
       label: (
         <div className="flex-center gap-8px">
           <SvgIcon
-            icon="ph:user-circle"
             className="text-icon"
+            icon="ph:user-circle"
           />
           {t('common.userCenter')}
         </div>
-      ),
-      key: '0'
+      )
     },
     {
       type: 'divider'
     },
     {
+      key: '1',
       label: (
         <div className="flex-center gap-8px">
           <SvgIcon
-            icon="ph:sign-out"
             className="text-icon"
+            icon="ph:sign-out"
           />
           {t('common.logout')}
         </div>
-      ),
-      key: '1'
+      )
     }
   ];
   return token ? (
     <Dropdown
+      menu={{ items, onClick }}
       placement="bottomRight"
       trigger={['click']}
-      menu={{ items, onClick }}
     >
       <div>
         <ButtonIcon className="px-12px">
           <SvgIcon
-            icon="ph:user-circle"
             className="text-icon-large"
+            icon="ph:user-circle"
           />
           <span className="text-16px font-medium">{userInfo.userName}</span>
         </ButtonIcon>

@@ -1,32 +1,24 @@
-import DarkModeContainer from '@/components/stateless/common/DarkModeContainer';
-import ThemeSchemaSwitch from '@/components/stateful/ThemeSchemaSwitch';
 import LangSwitch from '@/components/stateful/LangSwitch';
+import ThemeSchemaSwitch from '@/components/stateful/ThemeSchemaSwitch';
+import DarkModeContainer from '@/components/stateless/common/DarkModeContainer';
 import FullScreen from '@/components/stateless/common/FullScreen';
 import { GLOBAL_HEADER_MENU_ID } from '@/constants/app';
+
+import GlobalBreadcrumb from '../global-breadcrumb';
 import GlobalLogo from '../global-logo';
 import GlobalSearch from '../global-search';
-import GlobalBreadcrumb from '../global-breadcrumb';
+
 import ThemeButton from './components/ThemeButton';
 import UserAvatar from './components/UserAvatar';
 
 interface Props {
   isMobile: boolean;
   mode: UnionKey.ThemeLayoutMode;
-  siderWidth: number;
   reverse?: boolean;
+  siderWidth: number;
 }
 
 const HEADER_PROPS_CONFIG: Record<UnionKey.ThemeLayoutMode, App.Global.HeaderProps> = {
-  vertical: {
-    showLogo: false,
-    showMenu: false,
-    showMenuToggler: true
-  },
-  'vertical-mix': {
-    showLogo: false,
-    showMenu: false,
-    showMenuToggler: false
-  },
   horizontal: {
     showLogo: true,
     showMenu: true,
@@ -36,10 +28,20 @@ const HEADER_PROPS_CONFIG: Record<UnionKey.ThemeLayoutMode, App.Global.HeaderPro
     showLogo: true,
     showMenu: true,
     showMenuToggler: false
+  },
+  vertical: {
+    showLogo: false,
+    showMenu: false,
+    showMenuToggler: true
+  },
+  'vertical-mix': {
+    showLogo: false,
+    showMenu: false,
+    showMenuToggler: false
   }
 };
 
-const GlobalHeader: FC<Props> = memo(({ mode, isMobile, siderWidth, reverse }) => {
+const GlobalHeader: FC<Props> = memo(({ isMobile, mode, reverse, siderWidth }) => {
   const [isFullscreen, { toggleFullscreen }] = useFullscreen(document.body);
 
   const { showLogo, showMenu, showMenuToggler } = HEADER_PROPS_CONFIG[mode];
@@ -59,8 +61,8 @@ const GlobalHeader: FC<Props> = memo(({ mode, isMobile, siderWidth, reverse }) =
       {showToggler && <MenuToggler />}
 
       <div
-        id={GLOBAL_HEADER_MENU_ID}
         className="h-full flex-y-center flex-1-hidden"
+        id={GLOBAL_HEADER_MENU_ID}
       >
         {!isMobile && !showMenu && <GlobalBreadcrumb className="ml-12px" />}
       </div>

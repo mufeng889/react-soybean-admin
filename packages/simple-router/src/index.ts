@@ -1,14 +1,14 @@
-import { useRouter } from './hooks/useRouter';
-import { useRoute } from './hooks/useRoute';
 import RouterProvider from './Component';
+import { useRoute } from './hooks/useRoute';
+import { useRouter } from './hooks/useRouter';
 import type { RouteRecordNormalized } from './matcher/types';
-
-export { useRouter, RouterProvider, useRoute };
 
 export { createRouter } from './router';
 
-export type { Mode, Options, RouterOptions, Router } from './router';
-
-export type { RouteRecordNormalized };
+export type { Mode, Options, Router, RouterOptions } from './router';
 
 export * from './types';
+
+export { RouterProvider, useRoute, useRouter };
+
+export type { RouteRecordNormalized };

@@ -1,6 +1,7 @@
-import type { TablePaginationConfig, TableProps } from 'antd';
 import { useBoolean, useHookTable } from '@sa/hooks';
+import type { TablePaginationConfig, TableProps } from 'antd';
 import { Form } from 'antd';
+
 import { getIsMobile } from '@/store/slice/app';
 
 type TableData = AntDesign.TableData;
@@ -9,7 +10,7 @@ type TableColumn<T> = AntDesign.TableColumn<T>;
 
 export function useTable<A extends AntDesign.TableApiFn>(
   config: AntDesign.AntDesignTableConfig<A>,
-  paginationConfig?: Omit<TablePaginationConfig, 'total' | 'current' | 'pageSize' | 'onChange'>
+  paginationConfig?: Omit<TablePaginationConfig, 'current' | 'onChange' | 'pageSize' | 'total'>
 ) {
   const isMobile = useAppSelector(getIsMobile);
 
@@ -20,45 +21,28 @@ export function useTable<A extends AntDesign.TableApiFn>(
   const [form] = Form.useForm<AntDesign.AntDesignTableConfig<A>['apiParams']>();
 
   const {
-    loading,
-    empty,
-    data,
-    columns,
     columnChecks,
-    setColumnChecks,
+    columns,
+    data,
+    empty,
+    loading,
+    resetSearchParams,
     searchParams,
-    updateSearchParams,
-    resetSearchParams
+    setColumnChecks,
+    updateSearchParams
   } = useHookTable<A, GetTableData<A>, TableColumn<AntDesign.TableDataWithIndex<GetTableData<A>>>>({
     apiFn,
     apiParams,
     columns: config.columns,
-    transformer: res => {
-      const { records = [], current = 1, size = 10, total: totalNum = 0 } = res.data || {};
-
-      const recordsWithIndex = records.map((item, index) => {
-        return {
-          ...item,
-          index: (current - 1) * size + index + 1
-        };
-      });
-
-      return {
-        data: recordsWithIndex,
-        pageNum: current,
-        pageSize: size,
-        total: totalNum
-      };
-    },
     getColumnChecks: cols => {
       const checks: AntDesign.TableColumnCheck[] = [];
 
       cols.forEach(column => {
         if (column.key) {
           checks.push({
+            checked: true,
             key: column.key as string,
-            title: column.title as string,
-            checked: true
+            title: column.title as string
           });
         }
       });
@@ -78,28 +62,45 @@ export function useTable<A extends AntDesign.TableApiFn>(
 
       return filteredColumns as TableColumn<AntDesign.TableDataWithIndex<GetTableData<A>>>[];
     },
+    immediate,
     onFetched: async transformed => {
       const { total: totalNum } = transformed;
 
       setTotal(totalNum);
     },
-    immediate
+    transformer: res => {
+      const { current = 1, records = [], size = 10, total: totalNum = 0 } = res.data || {};
+
+      const recordsWithIndex = records.map((item, index) => {
+        return {
+          ...item,
+          index: (current - 1) * size + index + 1
+        };
+      });
+
+      return {
+        data: recordsWithIndex,
+        pageNum: current,
+        pageSize: size,
+        total: totalNum
+      };
+    }
   });
 
   // this is for mobile, if the system does not support mobile, you can use `pagination` directly
   const pagination: TablePaginationConfig = {
-    total,
-    simple: isMobile,
-    pageSizeOptions: ['10', '15', '20', '25', '30'],
-    showSizeChanger: true,
     current: searchParams.current.current,
-    pageSize: searchParams.current.size,
     onChange: async (current: number, size: number) => {
       updateSearchParams({
         current,
         size
       });
     },
+    pageSize: searchParams.current.size,
+    pageSizeOptions: ['10', '15', '20', '25', '30'],
+    showSizeChanger: true,
+    simple: isMobile,
+    total,
     ...paginationConfig
   };
 
@@ -122,24 +123,24 @@ export function useTable<A extends AntDesign.TableApiFn>(
   }
 
   return {
-    tableProps: {
-      loading,
-      dataSource: data,
-      columns,
-      rowKey,
-      pagination
-    },
+    columnChecks,
+    data,
+    empty,
+    run,
+    searchParams,
     searchProps: {
       form,
       reset,
       search: run
     },
-    empty,
-    data,
-    columnChecks,
-    run,
     setColumnChecks,
-    searchParams
+    tableProps: {
+      columns,
+      dataSource: data,
+      loading,
+      pagination,
+      rowKey
+    }
   };
 }
 
@@ -148,7 +149,7 @@ export function useTableOperate<T extends TableData = TableData>(
   getData: (isResetCurrent?: boolean) => Promise<void>,
   executeResActions: (res: T, operateType: AntDesign.TableOperateType) => void
 ) {
-  const { bool: drawerVisible, setTrue: openDrawer, setFalse: closeDrawer } = useBoolean();
+  const { bool: drawerVisible, setFalse: closeDrawer, setTrue: openDrawer } = useBoolean();
 
   const { t } = useTranslation();
 
@@ -191,10 +192,10 @@ export function useTableOperate<T extends TableData = TableData>(
 
   const rowSelection: TableProps<T>['rowSelection'] = {
     columnWidth: 48,
-    type: 'checkbox',
     fixed: true,
+    onChange: onSelectChange,
     selectedRowKeys: checkedRowKeys,
-    onChange: onSelectChange
+    type: 'checkbox'
   };
 
   function onClose() {
@@ -231,25 +232,25 @@ export function useTableOperate<T extends TableData = TableData>(
   }
 
   return {
-    drawerVisible,
-    openDrawer,
-    closeDrawer,
-    operateType,
-    handleAdd,
-    editingData,
-    handleEdit,
     checkedRowKeys,
-    onSelectChange,
-    rowSelection,
+    closeDrawer,
+    drawerVisible,
+    editingData,
+    generalPopupOperation: {
+      form,
+      handleSubmit,
+      onClose,
+      open: drawerVisible,
+      operateType
+    },
+    handleAdd,
+    handleEdit,
     onBatchDeleted,
     onDeleted,
-    generalPopupOperation: {
-      onClose,
-      handleSubmit,
-      operateType,
-      form,
-      open: drawerVisible
-    }
+    onSelectChange,
+    openDrawer,
+    operateType,
+    rowSelection
   };
 }
 
@@ -267,12 +268,12 @@ export function useTableScroll(scrollX: number = 702) {
   }
 
   const scrollConfig = {
-    y: getTableScrollY(),
-    x: scrollX
+    x: scrollX,
+    y: getTableScrollY()
   };
 
   return {
-    tableWrapperRef,
-    scrollConfig
+    scrollConfig,
+    tableWrapperRef
   };
 }

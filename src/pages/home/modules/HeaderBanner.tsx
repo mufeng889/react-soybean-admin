@@ -1,5 +1,5 @@
-import { selectUserInfo } from '@/store/slice/auth';
 import avatar from '@/assets/imgs/soybean.jpg';
+import { selectUserInfo } from '@/store/slice/auth';
 
 interface StatisticData {
   id: number;
@@ -36,14 +36,14 @@ const HeaderBanner = () => {
     >
       <ARow gutter={[16, 16]}>
         <ACol
-          span={24}
           md={18}
+          span={24}
         >
           <div className="flex-y-center">
             <div className="size-72px shrink-0 overflow-hidden rd-1/2">
               <img
-                src={avatar}
                 className="size-full"
+                src={avatar}
               />
             </div>
             <div className="pl-12px">
@@ -54,8 +54,8 @@ const HeaderBanner = () => {
         </ACol>
 
         <ACol
-          span={24}
           md={6}
+          span={24}
         >
           <ASpace
             className="w-full justify-end"
@@ -63,8 +63,8 @@ const HeaderBanner = () => {
           >
             {statisticData.map(item => (
               <AStatistic
-                key={item.id}
                 className="whitespace-nowrap"
+                key={item.id}
                 {...item}
               />
             ))}

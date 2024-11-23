@@ -19,4 +19,4 @@ const subscribe = (key: string, listener: Listener) => {
   };
 };
 
-export { trigger, subscribe };
+export { subscribe, trigger };

@@ -1,5 +1,6 @@
-import classNames from 'classnames';
 import { Divider } from 'antd';
+import classNames from 'classnames';
+
 import style from './footer.module.scss';
 
 const SearchFooter = () => {

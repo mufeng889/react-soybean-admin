@@ -1,4 +1,5 @@
 import { Button } from 'antd';
+
 import SvgIcon from '../custom/SvgIcon';
 
 type ExceptionType = '403' | '404' | '500';
@@ -32,8 +33,8 @@ const ExceptionBase: FC<Props> = memo(({ type }) => {
         <SvgIcon localIcon={iconMap[type]} />
       </div>
       <Button
-        onClick={onClick}
         type="primary"
+        onClick={onClick}
       >
         {t('common.backToHome')}
       </Button>

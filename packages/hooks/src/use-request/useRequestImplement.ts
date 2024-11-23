@@ -1,8 +1,9 @@
-import { useCreation, useLatest, useMemoizedFn, useMount, useUnmount, useUpdate } from 'ahooks';
 import type { FlatResponseData } from '@sa/axios';
-import { isDev } from './utils';
+import { useCreation, useLatest, useMemoizedFn, useMount, useUnmount, useUpdate } from 'ahooks';
+
 import Fetch from './Fetch';
 import type { Options, Plugin, Result, Service } from './type';
+import { isDev } from './utils';
 
 function useRequestImplement<
   TData extends FlatResponseData<T, ResponseData>,
@@ -56,16 +57,16 @@ function useRequestImplement<
   });
 
   return {
-    loading: fetchInstance.state.loading,
+    cancel: useMemoizedFn(fetchInstance.cancel.bind(fetchInstance)),
     data: fetchInstance.state.data,
     error: fetchInstance.state.error,
+    loading: fetchInstance.state.loading,
+    mutate: useMemoizedFn(fetchInstance.mutate.bind(fetchInstance)),
     params: fetchInstance.state.params || [],
-    cancel: useMemoizedFn(fetchInstance.cancel.bind(fetchInstance)),
     refresh: useMemoizedFn(fetchInstance.refresh.bind(fetchInstance)),
     refreshAsync: useMemoizedFn(fetchInstance.refreshAsync.bind(fetchInstance)),
     run: useMemoizedFn(fetchInstance.run.bind(fetchInstance)),
-    runAsync: useMemoizedFn(fetchInstance.runAsync.bind(fetchInstance)),
-    mutate: useMemoizedFn(fetchInstance.mutate.bind(fetchInstance))
+    runAsync: useMemoizedFn(fetchInstance.runAsync.bind(fetchInstance))
   } as Result<TData, TParams>;
 }
 

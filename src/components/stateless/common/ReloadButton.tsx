@@ -1,16 +1,16 @@
 import ButtonIcon from '../custom/ButtonIcon';
 
 interface Props {
-  loading?: boolean;
   handClick?: () => void;
+  loading?: boolean;
 }
-const ReloadButton: FC<Props> = memo(({ loading, handClick }) => {
+const ReloadButton: FC<Props> = memo(({ handClick, loading }) => {
   const { t } = useTranslation();
 
   return (
     <ButtonIcon
-      onClick={handClick}
       tooltipContent={t('icon.reload')}
+      onClick={handClick}
     >
       <IconAntDesignReloadOutlined className={loading ? 'animate-spin animate-duration-750' : ''} />
     </ButtonIcon>

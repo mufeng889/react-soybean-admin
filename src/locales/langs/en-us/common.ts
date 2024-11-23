@@ -5,20 +5,18 @@ const common: App.I18n.Schema['translation']['common'] = {
   backToHome: 'Back to home',
   batchDelete: 'Batch Delete',
   cancel: 'Cancel',
-  close: 'Close',
   check: 'Check',
-  errorHint: 'Please try again later',
-  tryAlign: 'Try Align',
-  expandColumn: 'Expand Column',
+  close: 'Close',
   columnSetting: 'Column Setting',
   config: 'Config',
   confirm: 'Confirm',
+  confirmDelete: 'Are you sure you want to delete?',
   delete: 'Delete',
   deleteSuccess: 'Delete Success',
-  confirmDelete: 'Are you sure you want to delete?',
   edit: 'Edit',
-  warning: 'Warning',
   error: 'Error',
+  errorHint: 'Please try again later',
+  expandColumn: 'Expand Column',
   index: 'Index',
   keywordSearch: 'Please enter keyword',
   logout: 'Logout',
@@ -35,12 +33,14 @@ const common: App.I18n.Schema['translation']['common'] = {
   switch: 'Switch',
   tip: 'Tip',
   trigger: 'Trigger',
+  tryAlign: 'Try Align',
   update: 'Update',
   updateSuccess: 'Update Success',
   userCenter: 'User Center',
+  warning: 'Warning',
   yesOrNo: {
-    yes: 'Yes',
-    no: 'No'
+    no: 'No',
+    yes: 'Yes'
   }
 };
 

@@ -1,11 +1,13 @@
-import type { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import type { FlatRequestInstance } from '@sa/axios';
 import { BACKEND_ERROR_CODE } from '@sa/axios';
-import { resetStore } from '@/store/slice/auth';
-import { store } from '@/store';
+import type { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
+
 import { $t } from '@/locales';
-import type { RequestInstanceState } from './type';
+import { store } from '@/store';
+import { resetStore } from '@/store/slice/auth';
+
 import { getAuthorization, handleExpiredRequest, showErrorMsg } from './shared';
+import type { RequestInstanceState } from './type';
 
 /** - 后端错误处理 */
 export async function backEndFail(
@@ -42,17 +44,17 @@ export async function backEndFail(
     window.addEventListener('beforeunload', handleLogout);
 
     window.$modal?.error({
-      title: $t('common.error'),
       content: response.data.msg,
-      okText: $t('common.confirm'),
-      maskClosable: false,
       keyboard: false,
+      maskClosable: false,
+      okText: $t('common.confirm'),
+      onClose() {
+        logoutAndCleanup();
+      },
       onOk() {
         logoutAndCleanup();
       },
-      onClose() {
-        logoutAndCleanup();
-      }
+      title: $t('common.error')
     });
 
     return null;

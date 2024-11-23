@@ -1,5 +1,6 @@
-import { createElement } from 'react';
 import { Button } from 'antd';
+import { createElement } from 'react';
+
 import { $t } from '../locales';
 
 export function setupAppVersionNotification() {
@@ -21,38 +22,38 @@ export function setupAppVersionNotification() {
     isShow = true;
 
     window.$notification?.open({
-      message: $t('system.updateTitle'),
-      description: $t('system.updateContent'),
       btn: (() => {
         return createElement(
           'div',
-          { style: { display: 'flex', justifyContent: 'end', gap: '12px', width: '325px' } },
+          { style: { display: 'flex', gap: '12px', justifyContent: 'end', width: '325px' } },
           [
             createElement(
               Button,
 
               {
+                key: 'cancel',
                 onClick() {
                   window.$notification?.destroy();
-                },
-                key: 'cancel'
+                }
               },
               $t('system.updateCancel')
             ),
             createElement(
               Button,
               {
-                type: 'primary',
+                key: 'ok',
                 onClick() {
                   location.reload();
                 },
-                key: 'ok'
+                type: 'primary'
               },
               $t('system.updateConfirm')
             )
           ]
         );
       })(),
+      description: $t('system.updateContent'),
+      message: $t('system.updateTitle'),
       onClose() {
         isShow = false;
       }

@@ -1,52 +1,53 @@
-import type { FC } from 'react';
 import { Button, Popconfirm, Space } from 'antd';
 import type { SpaceProps } from 'antd';
-import React from 'react';
 import classNames from 'classnames';
+import React from 'react';
+import type { FC } from 'react';
+
 import DragContent from './DragContent';
 
 interface Props {
-  itemAlign?: SpaceProps['align'];
-  disabledDelete?: boolean;
-  loading?: boolean;
-  prefix?: React.ReactNode;
-  children?: React.ReactNode;
-  suffix?: React.ReactNode;
-  add: () => void;
-  onDelete: () => void;
-  refresh: () => void;
-  setColumnChecks: (checks: AntDesign.TableColumnCheck[]) => void;
-  columns: AntDesign.TableColumnCheck[];
+  readonly add: () => void;
+  readonly children?: React.ReactNode;
+  readonly columns: AntDesign.TableColumnCheck[];
+  readonly disabledDelete?: boolean;
+  readonly itemAlign?: SpaceProps['align'];
+  readonly loading?: boolean;
+  readonly onDelete: () => void;
+  readonly prefix?: React.ReactNode;
+  readonly refresh: () => void;
+  readonly setColumnChecks: (checks: AntDesign.TableColumnCheck[]) => void;
+  readonly suffix?: React.ReactNode;
 }
 
 const TableHeaderOperation: FC<Props> = ({
-  itemAlign,
-  disabledDelete,
-  onDelete,
   add,
-  refresh,
-  prefix,
   children,
-  loading,
   columns,
-  suffix,
-  setColumnChecks
+  disabledDelete,
+  itemAlign,
+  loading,
+  onDelete,
+  prefix,
+  refresh,
+  setColumnChecks,
+  suffix
 }) => {
   const { t } = useTranslation();
 
   return (
     <Space
-      align={itemAlign}
       wrap
+      align={itemAlign}
       className="lt-sm:w-200px"
     >
       {prefix}
       {children || (
         <>
           <Button
+            ghost
             icon={<IconIcRoundPlus className="text-icon" />}
             size="small"
-            ghost
             type="primary"
             onClick={add}
           >
@@ -57,11 +58,11 @@ const TableHeaderOperation: FC<Props> = ({
             onConfirm={onDelete}
           >
             <Button
-              icon={<IconIcRoundDelete className="text-icon" />}
-              size="small"
+              danger
               ghost
               disabled={disabledDelete}
-              danger
+              icon={<IconIcRoundDelete className="text-icon" />}
+              size="small"
             >
               {t('common.batchDelete')}
             </Button>
@@ -81,8 +82,8 @@ const TableHeaderOperation: FC<Props> = ({
         trigger="click"
         content={
           <DragContent
-            setColumnChecks={setColumnChecks}
             columns={columns}
+            setColumnChecks={setColumnChecks}
           />
         }
       >

@@ -1,12 +1,14 @@
-import classNames from 'classnames';
 import { useDebounceFn, useKeyPress } from 'ahooks';
+import classNames from 'classnames';
+
 import { getIsMobile } from '@/store/slice/app';
+
 import SearchFooter from './SearchFooter';
 import SearchResult from './SearchResult';
 
 interface Props {
-  show: boolean;
   onClose: () => void;
+  show: boolean;
 }
 
 /**
@@ -28,7 +30,7 @@ function transformMenuToSearchMenus(menus: App.Global.Menu[], treeMap: App.Globa
   }, treeMap);
 }
 
-const SearchModal: FC<Props> = memo(({ show, onClose }) => {
+const SearchModal: FC<Props> = memo(({ onClose, show }) => {
   const isMobile = useAppSelector(getIsMobile);
 
   const { t } = useTranslation();
@@ -108,30 +110,30 @@ const SearchModal: FC<Props> = memo(({ show, onClose }) => {
 
   return (
     <AModal
+      className={classNames({ 'top-0px rounded-0': isMobile })}
+      closable={false}
       footer={isMobile ? null : <SearchFooter />}
-      styles={{ content: { paddingBottom: 0, height: isMobile ? '100vh' : '100%' } }}
-      style={isMobile ? { margin: 0, padding: 0, maxWidth: '100%' } : undefined}
       height={isMobile ? '100%' : 400}
       open={show}
+      style={isMobile ? { margin: 0, maxWidth: '100%', padding: 0 } : undefined}
+      styles={{ content: { height: isMobile ? '100vh' : '100%', paddingBottom: 0 } }}
       width={isMobile ? '100%' : 630}
-      className={classNames({ 'top-0px rounded-0': isMobile })}
       onCancel={onClose}
-      closable={false}
     >
       <ASpace.Compact className="w-full">
         <AInput
           allowClear
-          onInput={handleSearch.run}
-          prefix={<IconUilSearch className="text-15px text-#c2c2c2" />}
           placeholder={t('common.keywordSearch')}
-          onChange={e => setKeyword(e.target.value)}
+          prefix={<IconUilSearch className="text-15px text-#c2c2c2" />}
           value={keyword}
+          onChange={e => setKeyword(e.target.value)}
+          onInput={handleSearch.run}
         />
         {isMobile && (
           <AButton
-            onClick={handleClose}
-            type="primary"
             ghost
+            type="primary"
+            onClick={handleClose}
           >
             {t('common.cancel')}
           </AButton>
@@ -144,11 +146,11 @@ const SearchModal: FC<Props> = memo(({ show, onClose }) => {
         ) : (
           resultOptions.map(item => (
             <SearchResult
+              active={item.key === activeRouteName}
               enter={handleEnter}
               key={item.key}
-              active={item.key === activeRouteName}
-              setActiveRouteName={setActiveRouteName}
               menu={item}
+              setActiveRouteName={setActiveRouteName}
             />
           ))
         )}

@@ -1,9 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import type { ElegantConstRoute } from '@ohh-889/react-auto-route';
-import { warn } from '../warning';
+
 import type { LocationQuery } from '../types';
+import { warn } from '../warning';
+
 import type { RouteRecordNormalized } from './types';
+
 export function objectToQueryParams(params: { [key: string]: string | number }): string {
   const queryParams = new URLSearchParams();
   for (const key in params) {
@@ -38,15 +41,15 @@ export function generatePath(pathTemplate: string, params: { [key: string]: stri
 
 export function normalizeRouteRecord(record: ElegantConstRoute): RouteRecordNormalized {
   return {
-    redirect: record.redirect || (record.children && record.children[0].path),
-    path: record.path || '',
-    name: record.name,
-    meta: record.meta || {},
     children:
       record.children?.map(child => {
         child.redirect ||= child.children && child.children[0].path;
         return child;
-      }) || []
+      }) || [],
+    meta: record.meta || {},
+    name: record.name,
+    path: record.path || '',
+    redirect: record.redirect || (record.children && record.children[0].path)
   };
 }
 

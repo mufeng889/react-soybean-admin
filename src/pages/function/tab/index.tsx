@@ -1,4 +1,5 @@
 import { Button, Card, Divider, Input, Space } from 'antd';
+
 import { router } from '@/router';
 import { removeActiveTab, removeTabByRouteName, resetTabLabel, setTabLabel } from '@/store/slice/tab';
 
@@ -14,15 +15,15 @@ export function Component() {
 
   return (
     <Space
+      className="w-full"
       direction="vertical"
       size={16}
-      className="w-full"
     >
       <Card
-        title={t('page.function.tab.tabOperate.title')}
-        size="small"
         bordered={false}
         className='"card-wrapper'
+        size="small"
+        title={t('page.function.tab.tabOperate.title')}
       >
         <Divider orientation="left">{t('page.function.tab.tabOperate.addTab')}</Divider>
         <Button
@@ -54,9 +55,9 @@ export function Component() {
 
         <Divider orientation="left">{t('page.function.tab.tabOperate.addMultiTab')}</Divider>
         <Space
-          size={16}
           wrap
           className="m-0!"
+          size={16}
         >
           <Button
             onClick={() => {
@@ -77,18 +78,18 @@ export function Component() {
       </Card>
 
       <Card
-        title={t('page.function.tab.tabTitle.title')}
-        size="small"
         bordered={false}
         className='"card-wrapper'
+        size="small"
+        title={t('page.function.tab.tabTitle.title')}
       >
         <Divider orientation="left">{t('page.function.tab.tabTitle.changeTitle')}</Divider>
 
         <Search
           allowClear
-          onSearch={changeTabLabel}
-          enterButton={t('page.function.tab.tabTitle.change')}
           className="max-w-240px"
+          enterButton={t('page.function.tab.tabTitle.change')}
+          onSearch={changeTabLabel}
         />
 
         <Divider orientation="left">{t('page.function.tab.tabTitle.resetTitle')}</Divider>

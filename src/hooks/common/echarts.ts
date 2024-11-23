@@ -1,4 +1,3 @@
-import * as echarts from 'echarts/core';
 import { BarChart, GaugeChart, LineChart, PictorialBarChart, PieChart, RadarChart, ScatterChart } from 'echarts/charts';
 import type {
   BarSeriesOption,
@@ -26,6 +25,7 @@ import type {
   ToolboxComponentOption,
   TooltipComponentOption
 } from 'echarts/components';
+import * as echarts from 'echarts/core';
 import { LabelLayout, UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
 
@@ -68,9 +68,9 @@ echarts.use([
 ]);
 
 interface ChartHooks {
+  onDestroy?: (chart: echarts.ECharts) => void | Promise<void>;
   onRender?: (chart: echarts.ECharts) => void | Promise<void>;
   onUpdated?: (chart: echarts.ECharts) => void | Promise<void>;
-  onDestroy?: (chart: echarts.ECharts) => void | Promise<void>;
 }
 
 /**
@@ -85,28 +85,28 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
   const themeSettings = useAppSelector(getThemeSettings);
 
   const domRef = useRef<HTMLDivElement | null>(null);
-  const initialSize = { width: 0, height: 0 };
+  const initialSize = { height: 0, width: 0 };
   const size = useSize(domRef);
 
   const chart = useRef<echarts.ECharts | null>(null);
   const chartOptions = useRef<T>(optionsFactory());
 
   const {
+    onDestroy,
     onRender = instance => {
       const textColor = darkMode ? 'rgb(224, 224, 224)' : 'rgb(31, 31, 31)';
       const maskColor = darkMode ? 'rgba(0, 0, 0, 0.4)' : 'rgba(255, 255, 255, 0.8)';
 
       instance.showLoading({
         color: themeSettings.themeColor,
-        textColor,
         fontSize: 14,
-        maskColor
+        maskColor,
+        textColor
       });
     },
     onUpdated = instance => {
       instance.hideLoading();
-    },
-    onDestroy
+    }
   } = hooks;
 
   /**
@@ -221,7 +221,7 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
 
   return {
     domRef,
-    updateOptions,
-    setOptions
+    setOptions,
+    updateOptions
   };
 }

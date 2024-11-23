@@ -1,54 +1,56 @@
-import { type FC } from 'react';
 import classNames from 'classnames';
+import { type FC } from 'react';
+
 import type { AdminLayoutProps } from '../../types';
-import { LAYOUT_MAX_Z_INDEX, LAYOUT_SCROLL_EL_ID, createLayoutCssVars } from './shared';
+
 import style from './index.module.css';
+import { LAYOUT_MAX_Z_INDEX, LAYOUT_SCROLL_EL_ID, createLayoutCssVars } from './shared';
 
 // eslint-disable-next-line complexity
 const AdminLayout: FC<AdminLayoutProps> = ({
-  mode = 'vertical',
-  scrollMode = 'content',
-  isMobile,
-  scrollElId = LAYOUT_SCROLL_EL_ID,
+  children,
   commonClass = 'transition-all-300',
+  contentClass,
+  fixedFooter,
   fixedTop = true,
-  maxZIndex = LAYOUT_MAX_Z_INDEX,
-  headerVisible = true,
-  headerHeight = 56,
-  tabVisible = true,
-  tabHeight = 44,
-  siderVisible = true,
-  siderCollapse = false,
-  siderWidth = 220,
-  siderCollapsedWidth = 64,
-  footerVisible = true,
-  Header,
+  Footer,
+  footerClass,
   footerHeight = 48,
-  headerClass,
-  Sider,
-  scrollWrapperClass,
-  rightFooter = false,
+  footerVisible = true,
   fullContent,
+  Header,
+  headerClass,
+  headerHeight = 56,
+  headerVisible = true,
+  isMobile,
+  maxZIndex = LAYOUT_MAX_Z_INDEX,
+  mobileSiderClass,
+  mode = 'vertical',
+  rightFooter = false,
+  scrollElId = LAYOUT_SCROLL_EL_ID,
+  scrollMode = 'content',
+  scrollWrapperClass,
+  Sider,
+  siderClass,
+  siderCollapse = false,
+  siderCollapsedWidth = 64,
+  siderVisible = true,
+  siderWidth = 220,
   Tab,
   tabClass,
-  siderClass,
-  fixedFooter,
-  Footer,
-  mobileSiderClass,
-  children,
-  updateSiderCollapse,
-  contentClass,
-  footerClass
+  tabHeight = 44,
+  tabVisible = true,
+  updateSiderCollapse
 }) => {
   const cssVar = createLayoutCssVars({
-    mode,
+    footerHeight,
+    headerHeight,
     isMobile,
     maxZIndex,
-    headerHeight,
-    tabHeight,
-    siderWidth,
+    mode,
     siderCollapsedWidth,
-    footerHeight
+    siderWidth,
+    tabHeight
   }) as React.CSSProperties;
   // config visible
   const showHeader = Boolean(Header) && headerVisible;
@@ -118,6 +120,7 @@ const AdminLayout: FC<AdminLayoutProps> = ({
         {showHeader && (
           <>
             <header
+              style={{ display: fullContent ? 'none' : 'block' }}
               className={classNames(
                 'flex-shrink-0',
                 style['layout-header'],
@@ -126,14 +129,13 @@ const AdminLayout: FC<AdminLayoutProps> = ({
                 headerLeftGapClass,
                 { 'absolute top-0 left-0 w-full': fixedHeaderAndTab }
               )}
-              style={{ display: fullContent ? 'none' : 'block' }}
             >
               {Header}
             </header>
             <div
-              style={{ display: headerDisplay }}
               className={classNames('flex-shrink-0 overflow-hidden', style['layout-header-placement'])}
-            ></div>
+              style={{ display: headerDisplay }}
+            />
           </>
         )}
 
@@ -155,9 +157,9 @@ const AdminLayout: FC<AdminLayoutProps> = ({
             </div>
 
             <div
-              style={{ display: fixedHeaderAndTab || fullContent ? 'block' : 'none' }}
               className={classNames('flex-shrink-0 overflow-hidden', [style['layout-tab-placement']])}
-            ></div>
+              style={{ display: fixedHeaderAndTab || fullContent ? 'block' : 'none' }}
+            />
           </>
         )}
 
@@ -197,7 +199,7 @@ const AdminLayout: FC<AdminLayoutProps> = ({
                 style['layout-mobile-sider-mask']
               ])}
               onClick={() => updateSiderCollapse()}
-            ></div>
+            />
           </>
         )}
 
@@ -228,9 +230,9 @@ const AdminLayout: FC<AdminLayoutProps> = ({
               {Footer}
             </footer>
             <div
-              style={{ display: footerDisplay }}
               className={classNames('flex-shrink-0 overflow-hidden', style['layout-footer-placement'])}
-            ></div>
+              style={{ display: footerDisplay }}
+            />
           </>
         )}
       </section>

@@ -1,15 +1,15 @@
 import CountUp from 'react-countup';
 
 interface CardDataProps {
-  key: string;
-  title: string;
-  value: number;
-  unit: string;
   color: {
-    start: string;
     end: string;
+    start: string;
   };
   icon: string;
+  key: string;
+  title: string;
+  unit: string;
+  value: number;
 }
 
 function getGradientColor(color: CardDataProps['color']) {
@@ -21,48 +21,48 @@ function useGetCardData() {
 
   const cardData: CardDataProps[] = [
     {
+      color: {
+        end: '#b955a4',
+        start: '#ec4786'
+      },
+      icon: 'ant-design:bar-chart-outlined',
       key: 'visitCount',
       title: t('page.home.visitCount'),
-      value: 9725,
       unit: '',
-      color: {
-        start: '#ec4786',
-        end: '#b955a4'
-      },
-      icon: 'ant-design:bar-chart-outlined'
+      value: 9725
     },
     {
+      color: {
+        end: '#5144b4',
+        start: '#865ec0'
+      },
+      icon: 'ant-design:money-collect-outlined',
       key: 'turnover',
       title: t('page.home.turnover'),
-      value: 1026,
       unit: '$',
-      color: {
-        start: '#865ec0',
-        end: '#5144b4'
-      },
-      icon: 'ant-design:money-collect-outlined'
+      value: 1026
     },
     {
+      color: {
+        end: '#719de3',
+        start: '#56cdf3'
+      },
+      icon: 'carbon:document-download',
       key: 'downloadCount',
       title: t('page.home.downloadCount'),
-      value: 970925,
       unit: '',
-      color: {
-        start: '#56cdf3',
-        end: '#719de3'
-      },
-      icon: 'carbon:document-download'
+      value: 970925
     },
     {
+      color: {
+        end: '#f68057',
+        start: '#fcbc25'
+      },
+      icon: 'ant-design:trademark-circle-outlined',
       key: 'dealCount',
       title: t('page.home.dealCount'),
-      value: 9527,
       unit: '',
-      color: {
-        start: '#fcbc25',
-        end: '#f68057'
-      },
-      icon: 'ant-design:trademark-circle-outlined'
+      value: 9527
     }
   ];
 
@@ -73,9 +73,9 @@ const CardItem = (data: CardDataProps) => {
   return (
     <ACol
       key={data.key}
-      span={24}
-      md={12}
       lg={6}
+      md={12}
+      span={24}
     >
       <div
         className="flex-1 rd-8px px-16px pb-4px pt-8px text-white"
@@ -84,15 +84,15 @@ const CardItem = (data: CardDataProps) => {
         <h3 className="text-16px">{data.title}</h3>
         <div className="flex justify-between pt-12px">
           <SvgIcon
-            icon={data.icon}
             className="text-32px"
+            icon={data.icon}
           />
           <CountUp
+            className="text-30px text-white dark:text-dark"
+            duration={1.5}
+            end={data.value}
             prefix={data.unit}
             start={1}
-            end={data.value}
-            duration={1.5}
-            className="text-30px text-white dark:text-dark"
           />
         </div>
       </div>
@@ -106,8 +106,8 @@ const CardData = memo(() => {
   return (
     <ACard
       bordered={false}
-      size="small"
       className="card-wrapper"
+      size="small"
     >
       <ARow gutter={[16, 16]}>{data.map(CardItem)}</ARow>
     </ACard>

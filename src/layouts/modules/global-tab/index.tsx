@@ -1,17 +1,19 @@
-import ClassNames from 'classnames';
 import type BScroll from '@better-scroll/core';
 import { PageTab } from '@sa/materials';
-import { useUpdateEffect } from 'ahooks';
 import { useRoute } from '@sa/simple-router';
+import { useUpdateEffect } from 'ahooks';
+import ClassNames from 'classnames';
+
 import DarkModeContainer from '@/components/stateless/common/DarkModeContainer';
-import BetterScroll from '@/components/stateless/custom/BetterScroll';
-import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
-import { addTabByRoute, getActiveTabId, initTabStore, isTabRetain, removeTab, selectAllTabs } from '@/store/slice/tab';
-import { getFullContent, getLocale, getReloadFlag, reloadPage, toggleFullContent } from '@/store/slice/app';
-import ReloadButton from '@/components/stateless/common/ReloadButton';
 import FullScreen from '@/components/stateless/common/FullScreen';
-import { isPC } from '@/utils/agent';
+import ReloadButton from '@/components/stateless/common/ReloadButton';
+import BetterScroll from '@/components/stateless/custom/BetterScroll';
+import { getFullContent, getLocale, getReloadFlag, reloadPage, toggleFullContent } from '@/store/slice/app';
 import { setRemoveCacheKey } from '@/store/slice/route';
+import { addTabByRoute, getActiveTabId, initTabStore, isTabRetain, removeTab, selectAllTabs } from '@/store/slice/tab';
+import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
+import { isPC } from '@/utils/agent';
+
 import ContextMenu from './ContextMenu';
 
 const GlobalTab = memo(() => {
@@ -19,7 +21,7 @@ const GlobalTab = memo(() => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const bsWrapper = useRef<HTMLDivElement>(null);
-  const bsWrapperSizeBounding = useRef<{ width: number; left: number }>({ width: 0, left: 0 });
+  const bsWrapperSizeBounding = useRef<{ left: number; width: number }>({ left: 0, width: 0 });
   const tabRef = useRef<HTMLDivElement>(null);
   const route = useRoute();
   const isPCFlag = isPC();
@@ -43,7 +45,7 @@ const GlobalTab = memo(() => {
     const deltaX = currentX - width / 2;
 
     if (bsScrollRef.current) {
-      const { maxScrollX, x: leftX, scrollBy } = bsScrollRef.current;
+      const { maxScrollX, scrollBy, x: leftX } = bsScrollRef.current;
 
       const rightX = maxScrollX - leftX;
       const update = deltaX > 0 ? Math.max(-deltaX, rightX) : Math.min(-deltaX, -leftX);
@@ -131,12 +133,12 @@ const GlobalTab = memo(() => {
   return (
     <DarkModeContainer className="size-full flex-y-center px-16px shadow-tab">
       <div
-        ref={bsWrapper}
         className="h-full flex-1-hidden"
+        ref={bsWrapper}
       >
         <BetterScroll
+          options={{ click: !isPCFlag, scrollX: true, scrollY: false }}
           setBsScroll={setBsScroll}
-          options={{ scrollX: true, scrollY: false, click: !isPCFlag }}
           onClick={removeFocus}
         >
           <div
@@ -147,33 +149,33 @@ const GlobalTab = memo(() => {
           >
             {tabs.map((item, index) => (
               <ContextMenu
+                active={item.id === activeTabId}
+                darkMode={darkMode}
                 disabledKeys={getContextMenuDisabledKeys(item.id, index)}
-                tabId={item.id}
+                i18nKey={item.i18nKey}
                 key={item.id}
                 locale={locale}
-                i18nKey={item.i18nKey}
-                active={item.id === activeTabId}
                 mode={themeSettings.tab.mode}
-                darkMode={darkMode}
+                tabId={item.id}
               >
                 <div id={item.id}>
                   <PageTab
-                    mode={themeSettings.tab.mode}
-                    darkMode={darkMode}
-                    datatype={item.id}
-                    id={item.id}
                     active={item.id === activeTabId}
                     activeColor={themeSettings.themeColor}
-                    onClick={() => handleClickTab(item)}
-                    handleClose={() => handleCloseTab(item)}
                     closable={!dispatch(isTabRetain(item.id))}
+                    darkMode={darkMode}
+                    datatype={item.id}
+                    handleClose={() => handleCloseTab(item)}
+                    id={item.id}
+                    mode={themeSettings.tab.mode}
                     prefix={
                       <SvgIcon
+                        className="inline-block align-text-bottom text-16px"
                         icon={item.icon}
                         localIcon={item.localIcon}
-                        className="inline-block align-text-bottom text-16px"
                       />
                     }
+                    onClick={() => handleClickTab(item)}
                   >
                     <div className="max-w-240px ellipsis-text">{item.i18nKey ? t(item.i18nKey) : item.label}</div>
                   </PageTab>
@@ -188,8 +190,8 @@ const GlobalTab = memo(() => {
         loading={!reloadFlag}
       />
       <FullScreen
-        toggleFullscreen={() => dispatch(toggleFullContent())}
         full={fullContent}
+        toggleFullscreen={() => dispatch(toggleFullContent())}
       />
     </DarkModeContainer>
   );

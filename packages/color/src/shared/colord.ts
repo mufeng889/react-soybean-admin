@@ -1,8 +1,8 @@
 import { colord, extend } from 'colord';
-import namesPlugin from 'colord/plugins/names';
-import mixPlugin from 'colord/plugins/mix';
-import labPlugin from 'colord/plugins/lab';
 import type { AnyColor, HslColor, RgbColor } from 'colord';
+import labPlugin from 'colord/plugins/lab';
+import mixPlugin from 'colord/plugins/mix';
+import namesPlugin from 'colord/plugins/names';
 
 extend([namesPlugin, mixPlugin, labPlugin]);
 
@@ -64,18 +64,18 @@ export function mixColor(firstColor: AnyColor, secondColor: AnyColor, ratio: num
  */
 export function transformColorWithOpacity(color: string, alpha: number, bgColor = '#ffffff') {
   const originColor = addColorAlpha(color, alpha);
-  const { r: oR, g: oG, b: oB } = colord(originColor).toRgb();
+  const { b: oB, g: oG, r: oR } = colord(originColor).toRgb();
 
-  const { r: bgR, g: bgG, b: bgB } = colord(bgColor).toRgb();
+  const { b: bgB, g: bgG, r: bgR } = colord(bgColor).toRgb();
 
   function calRgb(or: number, bg: number, al: number) {
     return bg + (or - bg) * al;
   }
 
   const resultRgb: RgbColor = {
-    r: calRgb(oR, bgR, alpha),
+    b: calRgb(oB, bgB, alpha),
     g: calRgb(oG, bgG, alpha),
-    b: calRgb(oB, bgB, alpha)
+    r: calRgb(oR, bgR, alpha)
   };
 
   return colord(resultRgb).toHex();

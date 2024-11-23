@@ -1,11 +1,11 @@
 import { Checkbox } from 'antd';
+import type { FC } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import type { OnDragEndResponder } from 'react-beautiful-dnd';
-import type { FC } from 'react';
 
 interface Props {
-  columns: AntDesign.TableColumnCheck[];
-  setColumnChecks: (checks: AntDesign.TableColumnCheck[]) => void;
+  readonly columns: AntDesign.TableColumnCheck[];
+  readonly setColumnChecks: (checks: AntDesign.TableColumnCheck[]) => void;
 }
 
 const reorder = (list: AntDesign.TableColumnCheck[], startIndex: number, endIndex: number) => {
@@ -40,9 +40,9 @@ const DragContent: FC<Props> = ({ columns, setColumnChecks }) => {
           >
             {columns.map((item, index) => (
               <Draggable
-                key={item.key}
                 draggableId={item.key}
                 index={index}
+                key={item.key}
               >
                 {provider => (
                   <div
@@ -54,8 +54,8 @@ const DragContent: FC<Props> = ({ columns, setColumnChecks }) => {
                     <IconMdiDrag className="mr-8px h-full cursor-move text-icon" />
                     <Checkbox
                       checked={item.checked}
-                      onClick={() => handleChange(item.checked, index)}
                       className="none_draggable flex-1"
+                      onClick={() => handleChange(item.checked, index)}
                     >
                       {item.title}
                     </Checkbox>

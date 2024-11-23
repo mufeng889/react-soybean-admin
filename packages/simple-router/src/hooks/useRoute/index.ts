@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react';
+
 import type { Route } from '../../types';
 
 export const RouteContext = createContext<Route>({} as Route);

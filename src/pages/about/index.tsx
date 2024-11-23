@@ -1,20 +1,22 @@
 import TypeIt from 'typeit';
 import type { Options } from 'typeit';
 import type { El } from 'typeit/dist/types';
+
 import pkg from '~/package.json';
+
+import HeaderDescription from './modules/header-description';
 import type { CardInfo, PkgJson, PkgVersionInfo } from './modules/shared';
 import { transformVersionData } from './modules/shared';
-import HeaderDescription from './modules/header-description';
 
 const latestBuildTime = BUILD_TIME;
 
-const { name, version, dependencies, devDependencies } = pkg;
+const { dependencies, devDependencies, name, version } = pkg;
 
 const pkgJson: PkgJson = {
-  name,
-  version,
   dependencies: Object.entries(dependencies).map(transformVersionData),
-  devDependencies: Object.entries(devDependencies).map(transformVersionData)
+  devDependencies: Object.entries(devDependencies).map(transformVersionData),
+  name,
+  version
 };
 
 const TagItem = (item: PkgVersionInfo) => <ATag color="blue">{item.nameOrHref}</ATag>;
@@ -23,8 +25,8 @@ const Link = (item: PkgVersionInfo) => (
   <a
     className="text-primary"
     href={item.nameOrHref}
-    target="_blank"
     rel="noopener noreferrer"
+    target="_blank"
   >
     {item.label}
   </a>
@@ -39,9 +41,9 @@ function useGetTypeit() {
     if (!textRef.current) return;
 
     const options: Options = {
-      strings: t('page.about.introduction'),
       lifeLike: true,
-      speed: 10
+      speed: 10,
+      strings: t('page.about.introduction')
     };
 
     const initTypeIt = new TypeIt(textRef.current, options);
@@ -84,16 +86,16 @@ function useGetCardInfo(): CardInfo[] {
 
   const cardInfo: CardInfo[] = [
     {
-      title: t('page.about.projectInfo.title'),
-      content: packageInfo
+      content: packageInfo,
+      title: t('page.about.projectInfo.title')
     },
     {
-      title: t('page.about.prdDep'),
-      content: pkgJson.dependencies
+      content: pkgJson.dependencies,
+      title: t('page.about.prdDep')
     },
     {
-      title: t('page.about.devDep'),
-      content: pkgJson.dependencies
+      content: pkgJson.dependencies,
+      title: t('page.about.devDep')
     }
   ];
   return cardInfo;
@@ -108,15 +110,15 @@ export function Component() {
 
   return (
     <ASpace
-      direction="vertical"
       className="w-full"
+      direction="vertical"
       size={16}
     >
       <ACard
-        title={t('page.about.title')}
         bordered={false}
-        size="small"
         className="card-wrapper"
+        size="small"
+        title={t('page.about.title')}
       >
         <span ref={textRef} />
       </ACard>

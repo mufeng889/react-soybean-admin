@@ -1,41 +1,43 @@
 import type { FormInstance } from 'antd';
+
 import { REG_CODE_SIX, REG_EMAIL, REG_PHONE, REG_PWD, REG_USER_NAME } from '@/constants/reg';
 import { $t } from '@/locales';
+
 export function useFormRules() {
   const patternRules = {
-    userName: {
-      pattern: REG_USER_NAME,
-      message: $t('form.userName.invalid'),
-      validateTrigger: 'onChange'
-    },
-    phone: {
-      pattern: REG_PHONE,
-      message: $t('form.phone.invalid'),
-      validateTrigger: 'onChange'
-    },
-    pwd: {
-      pattern: REG_PWD,
-      message: $t('form.pwd.invalid'),
-      validateTrigger: 'onChange'
-    },
     code: {
-      pattern: REG_CODE_SIX,
       message: $t('form.code.invalid'),
+      pattern: REG_CODE_SIX,
       validateTrigger: 'onChange'
     },
     email: {
-      pattern: REG_EMAIL,
       message: $t('form.email.invalid'),
+      pattern: REG_EMAIL,
+      validateTrigger: 'onChange'
+    },
+    phone: {
+      message: $t('form.phone.invalid'),
+      pattern: REG_PHONE,
+      validateTrigger: 'onChange'
+    },
+    pwd: {
+      message: $t('form.pwd.invalid'),
+      pattern: REG_PWD,
+      validateTrigger: 'onChange'
+    },
+    userName: {
+      message: $t('form.userName.invalid'),
+      pattern: REG_USER_NAME,
       validateTrigger: 'onChange'
     }
   } satisfies Record<string, App.Global.FormRule>;
 
   const formRules = {
-    userName: [createRequiredRule($t('form.userName.required')), patternRules.userName],
+    code: [createRequiredRule($t('form.code.required')), patternRules.code],
+    email: [createRequiredRule($t('form.email.required')), patternRules.email],
     phone: [createRequiredRule($t('form.phone.required')), patternRules.phone],
     pwd: [createRequiredRule($t('form.pwd.required')), patternRules.pwd],
-    code: [createRequiredRule($t('form.code.required')), patternRules.code],
-    email: [createRequiredRule($t('form.email.required')), patternRules.email]
+    userName: [createRequiredRule($t('form.userName.required')), patternRules.userName]
   } satisfies Record<string, App.Global.FormRule[]>;
 
   /** the default required rule */
@@ -43,16 +45,18 @@ export function useFormRules() {
 
   function createRequiredRule(message: string): App.Global.FormRule {
     return {
-      required: true,
-      message
+      message,
+      required: true
     };
   }
 
   /** create a rule for confirming the password */
   function createConfirmPwdRule(from: FormInstance) {
     const confirmPwdRule: App.Global.FormRule[] = [
-      { required: true, message: $t('form.confirmPwd.required') },
+      { message: $t('form.confirmPwd.required'), required: true },
       {
+        message: $t('form.confirmPwd.invalid'),
+        validateTrigger: 'onChange',
         validator: (rule, value) => {
           const pwd = from.getFieldValue('password');
 
@@ -60,19 +64,17 @@ export function useFormRules() {
             return Promise.reject(rule.message);
           }
           return Promise.resolve();
-        },
-        message: $t('form.confirmPwd.invalid'),
-        validateTrigger: 'onChange'
+        }
       }
     ];
     return confirmPwdRule;
   }
 
   return {
-    patternRules,
-    formRules,
-    defaultRequiredRule,
+    createConfirmPwdRule,
     createRequiredRule,
-    createConfirmPwdRule
+    defaultRequiredRule,
+    formRules,
+    patternRules
   };
 }

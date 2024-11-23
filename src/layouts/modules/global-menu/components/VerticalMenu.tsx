@@ -1,13 +1,14 @@
 import { SimpleScrollbar } from '@sa/materials';
 import type { RouteRecordNormalized } from '@sa/simple-router';
-import type { MenuInfo } from 'rc-menu/lib/interface';
 import type { MenuProps } from 'antd';
+import type { MenuInfo } from 'rc-menu/lib/interface';
+
 import { getSiderCollapse } from '@/store/slice/app';
 import { getThemeSettings } from '@/store/slice/theme';
 
 interface LevelKeysProps {
-  key?: string;
   children?: LevelKeysProps[];
+  key?: string;
 }
 
 const getLevelKeys = (items1: LevelKeysProps[]) => {
@@ -38,7 +39,7 @@ const getSelectedMenuKeyPath = (matches: RouteRecordNormalized[]) => {
 };
 
 const VerticalMenu = memo(() => {
-  const { allMenus, childLevelMenus, selectKey, route } = useMixMenuContext();
+  const { allMenus, childLevelMenus, route, selectKey } = useMixMenuContext();
 
   const levelKeys = useMemo(() => getLevelKeys(allMenus), [allMenus]);
 
@@ -106,15 +107,15 @@ const VerticalMenu = memo(() => {
   return (
     <SimpleScrollbar>
       <AMenu
-        mode="inline"
-        items={isMix ? childLevelMenus : allMenus}
-        inlineCollapsed={isVerticalMix ? false : inlineCollapsed}
-        openKeys={stateOpenKeys}
-        onOpenChange={onOpenChange}
-        selectedKeys={selectKey}
-        onSelect={handleClickMenu}
         className="size-full transition-300 border-0!"
+        inlineCollapsed={isVerticalMix ? false : inlineCollapsed}
         inlineIndent={18}
+        items={isMix ? childLevelMenus : allMenus}
+        mode="inline"
+        openKeys={stateOpenKeys}
+        selectedKeys={selectKey}
+        onOpenChange={onOpenChange}
+        onSelect={handleClickMenu}
       />
     </SimpleScrollbar>
   );

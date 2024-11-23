@@ -1,9 +1,12 @@
 import { createRoot } from 'react-dom/client';
-import { Provider } from 'react-redux';
 import { ErrorBoundary } from 'react-error-boundary';
-import { store } from '@/store';
+import { Provider } from 'react-redux';
+
 import { setupRouter } from '@/router';
+import { store } from '@/store';
+
 import FallbackRender from '../ErrorBoundary.tsx';
+
 import App from './App.tsx';
 import './plugins/assets';
 import { setupI18n } from './locales';

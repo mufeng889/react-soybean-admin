@@ -1,12 +1,13 @@
-import { useEffect, useRef } from 'react';
 import { useUnmount } from 'ahooks';
+import { useEffect, useRef } from 'react';
+
 import type { Plugin } from '../type';
 import limit from '../utils/limit';
 import subscribeFocus from '../utils/subscribeFocus';
 
 const useRefreshOnWindowFocusPlugin: Plugin<any, any[]> = (
   fetchInstance,
-  { refreshOnWindowFocus, focusTimespan = 5000 }
+  { focusTimespan = 5000, refreshOnWindowFocus }
 ) => {
   const unsubscribeRef = useRef<() => void>();
 

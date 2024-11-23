@@ -1,4 +1,5 @@
 import isDocumentVisible from './isDocumentVisible';
+
 import { isBrowser } from '.';
 
 type Listener = () => void;

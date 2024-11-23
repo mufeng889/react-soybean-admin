@@ -1,13 +1,13 @@
 import type { FormListFieldData, FormListOperation } from 'antd';
 
 type Props = {
-  item: FormListFieldData;
-  add: FormListOperation['add'];
-  remove: FormListOperation['remove'];
-  index: number;
+  readonly add: FormListOperation['add'];
+  readonly index: number;
+  readonly item: FormListFieldData;
+  readonly remove: FormListOperation['remove'];
 };
 
-export const QueryForm = ({ item, index, add, remove }: Props) => {
+export const QueryForm = ({ add, index, item, remove }: Props) => {
   const { t } = useTranslation();
 
   function handleRemove() {
@@ -23,8 +23,8 @@ export const QueryForm = ({ item, index, add, remove }: Props) => {
       <ACol span={9}>
         <AForm.Item name={[item.name, 'key']}>
           <AInput
-            placeholder={t('page.manage.menu.form.queryKey')}
             className="flex-1"
+            placeholder={t('page.manage.menu.form.queryKey')}
           />
         </AForm.Item>
       </ACol>
@@ -32,8 +32,8 @@ export const QueryForm = ({ item, index, add, remove }: Props) => {
       <ACol span={9}>
         <AForm.Item name={[item.name, 'value']}>
           <AInput
-            placeholder={t('page.manage.menu.form.queryValue')}
             className="flex-1"
+            placeholder={t('page.manage.menu.form.queryValue')}
           />
         </AForm.Item>
       </ACol>
@@ -41,15 +41,15 @@ export const QueryForm = ({ item, index, add, remove }: Props) => {
       <ACol span={5}>
         <ASpace className="ml-12px">
           <AButton
+            icon={<IconIcRoundPlus className="align-sub text-icon" />}
             size="middle"
             onClick={handleAdd}
-            icon={<IconIcRoundPlus className="align-sub text-icon" />}
-          ></AButton>
+          />
           <AButton
+            icon={<IconIcRoundRemove className="align-sub text-icon" />}
             size="middle"
             onClick={handleRemove}
-            icon={<IconIcRoundRemove className="align-sub text-icon" />}
-          ></AButton>
+          />
         </ASpace>
       </ACol>
     </div>

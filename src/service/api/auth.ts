@@ -8,12 +8,12 @@ import { request } from '../request';
  */
 export function fetchLogin(userName: string, password: string) {
   return request<Api.Auth.LoginToken>({
-    url: '/auth/login',
-    method: 'post',
     data: {
-      userName,
-      password
-    }
+      password,
+      userName
+    },
+    method: 'post',
+    url: '/auth/login'
   });
 }
 
@@ -29,11 +29,11 @@ export function fetchGetUserInfo() {
  */
 export function fetchRefreshToken(refreshToken: string) {
   return request<Api.Auth.LoginToken>({
-    url: '/auth/refreshToken',
-    method: 'post',
     data: {
       refreshToken
-    }
+    },
+    method: 'post',
+    url: '/auth/refreshToken'
   });
 }
 
@@ -44,5 +44,5 @@ export function fetchRefreshToken(refreshToken: string) {
  * @param msg error message
  */
 export function fetchCustomBackendError(code: string, msg: string) {
-  return request({ url: '/auth/error', params: { code, msg } });
+  return request({ params: { code, msg }, url: '/auth/error' });
 }

@@ -6,35 +6,54 @@ declare namespace App {
 
     /** Theme setting */
     interface ThemeSetting {
-      /** Theme scheme */
-      themeScheme: UnionKey.ThemeScheme;
-      /** Whether only expand the current parent menu when the layout is 'vertical-mix' or 'horizontal-mix' */
-      isOnlyExpandCurrentParentMenu: boolean;
-      /** grayscale mode */
-      grayscale: boolean;
-      /** Whether to recommend color */
-      recommendColor: boolean;
       /** colour weakness mode */
       colourWeakness: boolean;
-      /** Theme color */
-      themeColor: string;
-      /** Other color */
-      otherColor: OtherColor;
+      /** Fixed header and tab */
+      fixedHeaderAndTab: boolean;
+      /** Footer */
+      footer: {
+        /** Whether fixed the footer */
+        fixed: boolean;
+        /** Footer height */
+        height: number;
+        /** Whether float the footer to the right when the layout is 'horizontal-mix' */
+        right: boolean;
+        /** Whether to show the footer */
+        visible: boolean;
+      };
+      /** grayscale mode */
+      grayscale: boolean;
+      /** Header */
+      header: {
+        /** Header breadcrumb */
+        breadcrumb: {
+          /** Whether to show the breadcrumb icon */
+          showIcon: boolean;
+          /** Whether to show the breadcrumb */
+          visible: boolean;
+        };
+        /** Header height */
+        height: number;
+      };
       /** Whether info color is followed by the primary color */
       isInfoFollowPrimary: boolean;
+      /** Whether only expand the current parent menu when the layout is 'vertical-mix' or 'horizontal-mix' */
+      isOnlyExpandCurrentParentMenu: boolean;
       /** Layout */
       layout: {
         /** Layout mode */
         mode: UnionKey.ThemeLayoutMode;
-        /** Scroll mode */
-        scrollMode: UnionKey.ThemeScrollMode;
         /**
          * Whether to reverse the horizontal mix
          *
          * if true, the vertical child level menus in left and horizontal first level menus in top
          */
         reverseHorizontalMix: boolean;
+        /** Scroll mode */
+        scrollMode: UnionKey.ThemeScrollMode;
       };
+      /** Other color */
+      otherColor: OtherColor;
       /** Page */
       page: {
         /** Whether to show the page transition */
@@ -42,22 +61,25 @@ declare namespace App {
         /** Page animate mode */
         animateMode: UnionKey.ThemePageAnimateMode;
       };
-      /** Header */
-      header: {
-        /** Header height */
-        height: number;
-        /** Header breadcrumb */
-        breadcrumb: {
-          /** Whether to show the breadcrumb */
-          visible: boolean;
-          /** Whether to show the breadcrumb icon */
-          showIcon: boolean;
-        };
+      /** Whether to recommend color */
+      recommendColor: boolean;
+      /** Sider */
+      sider: {
+        /** Collapsed sider width */
+        collapsedWidth: number;
+        /** Inverted sider */
+        inverted: boolean;
+        /** Child menu width when the layout is 'vertical-mix' or 'horizontal-mix' */
+        mixChildMenuWidth: number;
+        /** Collapsed sider width when the layout is 'vertical-mix' or 'horizontal-mix' */
+        mixCollapsedWidth: number;
+        /** Sider width when the layout is 'vertical-mix' or 'horizontal-mix' */
+        mixWidth: number;
+        /** Sider width */
+        width: number;
       };
       /** Tab */
       tab: {
-        /** Whether to show the tab */
-        visible: boolean;
         /**
          * Whether to cache the tab
          *
@@ -68,56 +90,34 @@ declare namespace App {
         height: number;
         /** Tab mode */
         mode: UnionKey.ThemeTabMode;
-      };
-      /** Fixed header and tab */
-      fixedHeaderAndTab: boolean;
-      /** Sider */
-      sider: {
-        /** Inverted sider */
-        inverted: boolean;
-        /** Sider width */
-        width: number;
-        /** Collapsed sider width */
-        collapsedWidth: number;
-        /** Sider width when the layout is 'vertical-mix' or 'horizontal-mix' */
-        mixWidth: number;
-        /** Collapsed sider width when the layout is 'vertical-mix' or 'horizontal-mix' */
-        mixCollapsedWidth: number;
-        /** Child menu width when the layout is 'vertical-mix' or 'horizontal-mix' */
-        mixChildMenuWidth: number;
-      };
-      /** Footer */
-      footer: {
-        /** Whether to show the footer */
+        /** Whether to show the tab */
         visible: boolean;
-        /** Whether fixed the footer */
-        fixed: boolean;
-        /** Footer height */
-        height: number;
-        /** Whether float the footer to the right when the layout is 'horizontal-mix' */
-        right: boolean;
       };
-      /** Watermark */
-      watermark: {
-        /** Whether to show the watermark */
-        visible: boolean;
-        /** Watermark text */
-        text: string;
-      };
+      /** Theme color */
+      themeColor: string;
+      /** Theme scheme */
+      themeScheme: UnionKey.ThemeScheme;
       /** define some theme settings tokens, will transform to css variables */
       tokens: {
-        light: ThemeSettingToken;
         dark?: {
           [K in keyof ThemeSettingToken]?: Partial<ThemeSettingToken[K]>;
         };
+        light: ThemeSettingToken;
+      };
+      /** Watermark */
+      watermark: {
+        /** Watermark text */
+        text: string;
+        /** Whether to show the watermark */
+        visible: boolean;
       };
     }
 
     interface OtherColor {
+      error: string;
       info: string;
       success: string;
       warning: string;
-      error: string;
     }
 
     interface ThemeColor extends OtherColor {
@@ -133,12 +133,12 @@ declare namespace App {
     type BaseToken = Record<string, Record<string, string>>;
 
     interface ThemeSettingTokenColor {
+      'base-text': string;
+      container: string;
+      inverted: string;
+      layout: string;
       /** the progress bar color, if not set, will use the primary color */
       nprogress?: string;
-      container: string;
-      layout: string;
-      inverted: string;
-      'base-text': string;
     }
 
     interface ThemeSettingTokenBoxShadow {
@@ -148,16 +148,16 @@ declare namespace App {
     }
 
     interface ThemeSettingToken {
-      colors: ThemeSettingTokenColor;
       boxShadow: ThemeSettingTokenBoxShadow;
+      colors: ThemeSettingTokenColor;
     }
 
     type ThemeTokenColor = ThemePaletteColor & ThemeSettingTokenColor;
 
     /** Theme token CSS variables */
     type ThemeTokenCSSVars = {
-      colors: ThemeTokenColor & { [key: string]: string };
       boxShadow: ThemeSettingTokenBoxShadow & { [key: string]: string };
+      colors: ThemeTokenColor & { [key: string]: string };
     };
   }
 
@@ -173,23 +173,29 @@ declare namespace App {
     interface HeaderProps {
       /** Whether to show the logo */
       showLogo?: boolean;
-      /** Whether to show the menu toggler */
-      showMenuToggler?: boolean;
       /** Whether to show the menu */
       showMenu?: boolean;
+      /** Whether to show the menu toggler */
+      showMenuToggler?: boolean;
     }
 
     interface IconProps {
+      className?: string;
       /** Iconify icon name */
       icon?: string;
       /** Local svg icon name */
       localIcon?: string;
       style?: React.CSSProperties;
-      className?: string;
     }
 
     /** The global menu */
     interface Menu {
+      /** The menu children */
+      children?: Menu[];
+      /** The menu i18n key */
+      i18nKey?: I18n.I18nKey | null;
+      /** The menu icon */
+      icon?: React.FunctionComponentElement<IconProps>;
       /**
        * The menu key
        *
@@ -198,14 +204,8 @@ declare namespace App {
       key: string;
       /** The menu label */
       label: React.ReactNode;
-      /** The menu i18n key */
-      i18nKey?: I18n.I18nKey | null;
-      /** The menu icon */
-      icon?: React.FunctionComponentElement<IconProps>;
       /** The tooltip title */
       title?: string;
-      /** The menu children */
-      children?: Menu[];
     }
 
     type Breadcrumb = Omit<Menu, 'children'> & {
@@ -213,15 +213,33 @@ declare namespace App {
     };
 
     /** Tab route */
-    type TabRoute = Pick<RouteLocationNormalizedLoaded, 'name' | 'path' | 'meta'> &
-      Partial<Pick<RouteLocationNormalizedLoaded, 'fullPath' | 'query' | 'matched'>>;
+    type TabRoute = Pick<RouteLocationNormalizedLoaded, 'meta' | 'name' | 'path'> &
+      Partial<Pick<RouteLocationNormalizedLoaded, 'fullPath' | 'matched' | 'query'>>;
 
     /** The global tab */
     type Tab = {
+      /** The tab fixed index */
+      fixedIndex?: number | null;
+      /** The tab route full path */
+      fullPath: string;
+      /** I18n key */
+      i18nKey?: I18n.I18nKey | null | string;
+      /**
+       * Tab icon
+       *
+       * Iconify icon
+       */
+      icon?: string;
       /** The tab id */
       id: string;
       /** The tab label */
       label: string;
+      /**
+       * Tab local icon
+       *
+       * Local icon
+       */
+      localIcon?: string;
       /**
        * The new tab label
        *
@@ -238,31 +256,13 @@ declare namespace App {
       routeKey: LastLevelRouteKey;
       /** The tab route path */
       routePath: RouteMap[LastLevelRouteKey];
-      /** The tab route full path */
-      fullPath: string;
-      /** The tab fixed index */
-      fixedIndex?: number | null;
-      /**
-       * Tab icon
-       *
-       * Iconify icon
-       */
-      icon?: string;
-      /**
-       * Tab local icon
-       *
-       * Local icon
-       */
-      localIcon?: string;
-      /** I18n key */
-      i18nKey?: I18n.I18nKey | null | string;
     };
 
     /** Form rule */
     type FormRule = import('antd').FormRule;
 
     /** The global dropdown key */
-    type DropdownKey = 'closeCurrent' | 'closeOther' | 'closeLeft' | 'closeRight' | 'closeAll';
+    type DropdownKey = 'closeAll' | 'closeCurrent' | 'closeLeft' | 'closeOther' | 'closeRight';
   }
 
   /**
@@ -276,49 +276,38 @@ declare namespace App {
     type LangType = 'en-US' | 'zh-CN';
 
     type LangOption = {
-      label: string;
       key: LangType;
+      label: string;
     };
 
-    type I18nRouteKey = Exclude<RouteKey, 'root' | 'not-found'>;
+    type I18nRouteKey = Exclude<RouteKey, 'not-found' | 'root'>;
 
     type FormMsg = {
-      required: string;
       invalid: string;
+      required: string;
     };
 
     type Schema = {
       translation: {
-        system: {
-          title: string;
-          reload: string;
-          errorReason: string;
-          updateTitle: string;
-          updateContent: string;
-          updateConfirm: string;
-          updateCancel: string;
-        };
         common: {
           action: string;
-          errorHint: string;
-          tryAlign: string;
           add: string;
           addSuccess: string;
           backToHome: string;
           batchDelete: string;
           cancel: string;
-          close: string;
           check: string;
-          expandColumn: string;
+          close: string;
           columnSetting: string;
           config: string;
           confirm: string;
+          confirmDelete: string;
           delete: string;
           deleteSuccess: string;
-          confirmDelete: string;
           edit: string;
-          warning: string;
           error: string;
+          errorHint: string;
+          expandColumn: string;
           index: string;
           keywordSearch: string;
           logout: string;
@@ -335,12 +324,290 @@ declare namespace App {
           switch: string;
           tip: string;
           trigger: string;
+          tryAlign: string;
           update: string;
           updateSuccess: string;
           userCenter: string;
+          warning: string;
           yesOrNo: {
-            yes: string;
             no: string;
+            yes: string;
+          };
+        };
+        datatable: {
+          itemCount: string;
+        };
+        dropdown: Record<Global.DropdownKey, string>;
+        form: {
+          code: FormMsg;
+          confirmPwd: FormMsg;
+          email: FormMsg;
+          phone: FormMsg;
+          pwd: FormMsg;
+          required: string;
+          userName: FormMsg;
+        };
+        icon: {
+          collapse: string;
+          expand: string;
+          fullscreen: string;
+          fullscreenExit: string;
+          lang: string;
+          pin: string;
+          reload: string;
+          themeConfig: string;
+          themeSchema: string;
+          unpin: string;
+        };
+        page: {
+          about: {
+            devDep: string;
+            introduction: string;
+            prdDep: string;
+            projectInfo: {
+              githubLink: string;
+              latestBuildTime: string;
+              previewLink: string;
+              title: string;
+              version: string;
+            };
+            title: string;
+          };
+          function: {
+            multiTab: {
+              backTab: string;
+              routeParam: string;
+            };
+            request: {
+              repeatedError: string;
+              repeatedErrorMsg1: string;
+              repeatedErrorMsg2: string;
+              repeatedErrorOccurOnce: string;
+            };
+            tab: {
+              tabOperate: {
+                addMultiTab: string;
+                addMultiTabDesc1: string;
+                addMultiTabDesc2: string;
+                addTab: string;
+                addTabDesc: string;
+                closeAboutTab: string;
+                closeCurrentTab: string;
+                closeTab: string;
+                title: string;
+              };
+              tabTitle: {
+                change: string;
+                changeTitle: string;
+                reset: string;
+                resetTitle: string;
+                title: string;
+              };
+            };
+            toggleAuth: {
+              adminOrUserVisible: string;
+              adminVisible: string;
+              authHook: string;
+              superAdminVisible: string;
+              toggleAccount: string;
+            };
+          };
+          home: {
+            creativity: string;
+            dealCount: string;
+            downloadCount: string;
+            entertainment: string;
+            greeting: string;
+            message: string;
+            projectCount: string;
+            projectNews: {
+              desc1: string;
+              desc2: string;
+              desc3: string;
+              desc4: string;
+              desc5: string;
+              moreNews: string;
+              title: string;
+            };
+            registerCount: string;
+            rest: string;
+            schedule: string;
+            study: string;
+            todo: string;
+            turnover: string;
+            visitCount: string;
+            weatherDesc: string;
+            work: string;
+          };
+          login: {
+            bindWeChat: {
+              title: string;
+            };
+            codeLogin: {
+              getCode: string;
+              imageCodePlaceholder: string;
+              reGetCode: string;
+              sendCodeSuccess: string;
+              title: string;
+            };
+            common: {
+              back: string;
+              codeLogin: string;
+              codePlaceholder: string;
+              confirm: string;
+              confirmPasswordPlaceholder: string;
+              loginOrRegister: string;
+              loginSuccess: string;
+              passwordPlaceholder: string;
+              phonePlaceholder: string;
+              userNamePlaceholder: string;
+              validateSuccess: string;
+              welcomeBack: string;
+            };
+            pwdLogin: {
+              admin: string;
+              forgetPassword: string;
+              otherAccountLogin: string;
+              otherLoginMode: string;
+              register: string;
+              rememberMe: string;
+              superAdmin: string;
+              title: string;
+              user: string;
+            };
+            register: {
+              agreement: string;
+              policy: string;
+              protocol: string;
+              title: string;
+            };
+            resetPwd: {
+              title: string;
+            };
+          };
+          manage: {
+            common: {
+              status: {
+                disable: string;
+                enable: string;
+              };
+            };
+            menu: {
+              activeMenu: string;
+              addChildMenu: string;
+              addMenu: string;
+              button: string;
+              buttonCode: string;
+              buttonDesc: string;
+              constant: string;
+              editMenu: string;
+              fixedIndexInTab: string;
+              form: {
+                activeMenu: string;
+                button: string;
+                buttonCode: string;
+                buttonDesc: string;
+                fixedIndexInTab: string;
+                fixedInTab: string;
+                hideInMenu: string;
+                home: string;
+                href: string;
+                i18nKey: string;
+                icon: string;
+                keepAlive: string;
+                layout: string;
+                localIcon: string;
+                menuName: string;
+                menuStatus: string;
+                menuType: string;
+                multiTab: string;
+                order: string;
+                page: string;
+                parent: string;
+                pathParam: string;
+                queryKey: string;
+                queryValue: string;
+                routeName: string;
+                routePath: string;
+              };
+              hideInMenu: string;
+              home: string;
+              href: string;
+              i18nKey: string;
+              icon: string;
+              iconType: {
+                iconify: string;
+                local: string;
+              };
+              iconTypeTitle: string;
+              id: string;
+              keepAlive: string;
+              layout: string;
+              localIcon: string;
+              menuName: string;
+              menuStatus: string;
+              menuType: string;
+              multiTab: string;
+              order: string;
+              page: string;
+              parent: string;
+              parentId: string;
+              pathParam: string;
+              query: string;
+              routeName: string;
+              routePath: string;
+              title: string;
+              type: {
+                directory: string;
+                menu: string;
+              };
+            };
+            role: {
+              addRole: string;
+              buttonAuth: string;
+              editRole: string;
+              form: {
+                roleCode: string;
+                roleDesc: string;
+                roleName: string;
+                roleStatus: string;
+              };
+              menuAuth: string;
+              roleCode: string;
+              roleDesc: string;
+              roleName: string;
+              roleStatus: string;
+              title: string;
+            };
+            user: {
+              addUser: string;
+              editUser: string;
+              form: {
+                nickName: string;
+                userEmail: string;
+                userGender: string;
+                userName: string;
+                userPhone: string;
+                userRole: string;
+                userStatus: string;
+              };
+              gender: {
+                female: string;
+                male: string;
+              };
+              nickName: string;
+              title: string;
+              userEmail: string;
+              userGender: string;
+              userName: string;
+              userPhone: string;
+              userRole: string;
+              userStatus: string;
+            };
+            userDetail: {
+              content: string;
+              explain: string;
+            };
           };
         };
         request: {
@@ -351,340 +618,73 @@ declare namespace App {
           refreshToken: string;
           tokenExpired: string;
         };
+        route: Record<I18nRouteKey, string>;
+        system: {
+          errorReason: string;
+          reload: string;
+          title: string;
+          updateCancel: string;
+          updateConfirm: string;
+          updateContent: string;
+          updateTitle: string;
+        };
         theme: {
-          themeSchema: { title: string } & Record<UnionKey.ThemeScheme, string>;
-          grayscale: string;
           colourWeakness: string;
-          isOnlyExpandCurrentParentMenu: string;
-          layoutMode: { title: string; reverseHorizontalMix: string } & Record<UnionKey.ThemeLayoutMode, string>;
-          recommendColor: string;
-          recommendColorDesc: string;
-          themeColor: {
-            title: string;
-            followPrimary: string;
-          } & Theme.ThemeColor;
-          scrollMode: { title: string } & Record<UnionKey.ThemeScrollMode, string>;
-          page: {
-            animate: string;
-            mode: { title: string } & Record<UnionKey.ThemePageAnimateMode, string>;
-          };
-          fixedHeaderAndTab: string;
-          header: {
-            height: string;
-            breadcrumb: {
-              visible: string;
-              showIcon: string;
-            };
-          };
-          tab: {
-            visible: string;
-            cache: string;
-            height: string;
-            mode: { title: string } & Record<UnionKey.ThemeTabMode, string>;
-          };
-          sider: {
-            inverted: string;
-            width: string;
-            collapsedWidth: string;
-            mixWidth: string;
-            mixCollapsedWidth: string;
-            mixChildMenuWidth: string;
-          };
-          footer: {
-            visible: string;
-            fixed: string;
-            height: string;
-            right: string;
-          };
-          themeDrawerTitle: string;
-          pageFunTitle: string;
           configOperation: {
             copyConfig: string;
             copySuccessMsg: string;
             resetConfig: string;
             resetSuccessMsg: string;
           };
-          watermark: {
+          fixedHeaderAndTab: string;
+          footer: {
+            fixed: string;
+            height: string;
+            right: string;
             visible: string;
-            text: string;
           };
-        };
-        route: Record<I18nRouteKey, string>;
-        page: {
-          login: {
-            common: {
-              loginOrRegister: string;
-              userNamePlaceholder: string;
-              phonePlaceholder: string;
-              codePlaceholder: string;
-              passwordPlaceholder: string;
-              confirmPasswordPlaceholder: string;
-              codeLogin: string;
-              confirm: string;
-              back: string;
-              validateSuccess: string;
-              loginSuccess: string;
-              welcomeBack: string;
+          grayscale: string;
+          header: {
+            breadcrumb: {
+              showIcon: string;
+              visible: string;
             };
-            pwdLogin: {
-              title: string;
-              rememberMe: string;
-              forgetPassword: string;
-              register: string;
-              otherAccountLogin: string;
-              otherLoginMode: string;
-              superAdmin: string;
-              admin: string;
-              user: string;
-            };
-            codeLogin: {
-              title: string;
-              getCode: string;
-              reGetCode: string;
-              sendCodeSuccess: string;
-              imageCodePlaceholder: string;
-            };
-            register: {
-              title: string;
-              agreement: string;
-              protocol: string;
-              policy: string;
-            };
-            resetPwd: {
-              title: string;
-            };
-            bindWeChat: {
-              title: string;
-            };
+            height: string;
           };
-          about: {
+          isOnlyExpandCurrentParentMenu: string;
+          layoutMode: { reverseHorizontalMix: string; title: string } & Record<UnionKey.ThemeLayoutMode, string>;
+          page: {
+            animate: string;
+            mode: { title: string } & Record<UnionKey.ThemePageAnimateMode, string>;
+          };
+          pageFunTitle: string;
+          recommendColor: string;
+          recommendColorDesc: string;
+          scrollMode: { title: string } & Record<UnionKey.ThemeScrollMode, string>;
+          sider: {
+            collapsedWidth: string;
+            inverted: string;
+            mixChildMenuWidth: string;
+            mixCollapsedWidth: string;
+            mixWidth: string;
+            width: string;
+          };
+          tab: {
+            cache: string;
+            height: string;
+            mode: { title: string } & Record<UnionKey.ThemeTabMode, string>;
+            visible: string;
+          };
+          themeColor: {
+            followPrimary: string;
             title: string;
-            introduction: string;
-            projectInfo: {
-              title: string;
-              version: string;
-              latestBuildTime: string;
-              githubLink: string;
-              previewLink: string;
-            };
-            prdDep: string;
-            devDep: string;
+          } & Theme.ThemeColor;
+          themeDrawerTitle: string;
+          themeSchema: { title: string } & Record<UnionKey.ThemeScheme, string>;
+          watermark: {
+            text: string;
+            visible: string;
           };
-          home: {
-            greeting: string;
-            weatherDesc: string;
-            projectCount: string;
-            todo: string;
-            message: string;
-            downloadCount: string;
-            registerCount: string;
-            schedule: string;
-            study: string;
-            work: string;
-            rest: string;
-            entertainment: string;
-            visitCount: string;
-            turnover: string;
-            dealCount: string;
-            projectNews: {
-              title: string;
-              moreNews: string;
-              desc1: string;
-              desc2: string;
-              desc3: string;
-              desc4: string;
-              desc5: string;
-            };
-            creativity: string;
-          };
-          function: {
-            tab: {
-              tabOperate: {
-                title: string;
-                addTab: string;
-                addTabDesc: string;
-                closeTab: string;
-                closeCurrentTab: string;
-                closeAboutTab: string;
-                addMultiTab: string;
-                addMultiTabDesc1: string;
-                addMultiTabDesc2: string;
-              };
-              tabTitle: {
-                title: string;
-                changeTitle: string;
-                change: string;
-                resetTitle: string;
-                reset: string;
-              };
-            };
-            multiTab: {
-              routeParam: string;
-              backTab: string;
-            };
-            toggleAuth: {
-              toggleAccount: string;
-              authHook: string;
-              superAdminVisible: string;
-              adminVisible: string;
-              adminOrUserVisible: string;
-            };
-            request: {
-              repeatedErrorOccurOnce: string;
-              repeatedError: string;
-              repeatedErrorMsg1: string;
-              repeatedErrorMsg2: string;
-            };
-          };
-          manage: {
-            common: {
-              status: {
-                enable: string;
-                disable: string;
-              };
-            };
-            role: {
-              title: string;
-              roleName: string;
-              roleCode: string;
-              roleStatus: string;
-              roleDesc: string;
-              form: {
-                roleName: string;
-                roleCode: string;
-                roleStatus: string;
-                roleDesc: string;
-              };
-              addRole: string;
-              editRole: string;
-              menuAuth: string;
-              buttonAuth: string;
-            };
-            user: {
-              title: string;
-              userName: string;
-              userGender: string;
-              nickName: string;
-              userPhone: string;
-              userEmail: string;
-              userStatus: string;
-              userRole: string;
-              form: {
-                userName: string;
-                userGender: string;
-                nickName: string;
-                userPhone: string;
-                userEmail: string;
-                userStatus: string;
-                userRole: string;
-              };
-              addUser: string;
-              editUser: string;
-              gender: {
-                male: string;
-                female: string;
-              };
-            };
-            menu: {
-              home: string;
-              title: string;
-              id: string;
-              parentId: string;
-              menuType: string;
-              menuName: string;
-              routeName: string;
-              routePath: string;
-              pathParam: string;
-              layout: string;
-              page: string;
-              parent: string;
-              i18nKey: string;
-              icon: string;
-              localIcon: string;
-              iconTypeTitle: string;
-              order: string;
-              constant: string;
-              keepAlive: string;
-              href: string;
-              hideInMenu: string;
-              activeMenu: string;
-              multiTab: string;
-              fixedIndexInTab: string;
-              query: string;
-              button: string;
-              buttonCode: string;
-              buttonDesc: string;
-              menuStatus: string;
-              form: {
-                home: string;
-                menuType: string;
-                menuName: string;
-                routeName: string;
-                routePath: string;
-                pathParam: string;
-                layout: string;
-                page: string;
-                i18nKey: string;
-                parent: string;
-                icon: string;
-                localIcon: string;
-                order: string;
-                keepAlive: string;
-                href: string;
-                hideInMenu: string;
-                activeMenu: string;
-                multiTab: string;
-                fixedInTab: string;
-                fixedIndexInTab: string;
-                queryKey: string;
-                queryValue: string;
-                button: string;
-                buttonCode: string;
-                buttonDesc: string;
-                menuStatus: string;
-              };
-              addMenu: string;
-              editMenu: string;
-              addChildMenu: string;
-              type: {
-                directory: string;
-                menu: string;
-              };
-              iconType: {
-                iconify: string;
-                local: string;
-              };
-            };
-            userDetail: {
-              explain: string;
-              content: string;
-            };
-          };
-        };
-        form: {
-          required: string;
-          userName: FormMsg;
-          phone: FormMsg;
-          pwd: FormMsg;
-          confirmPwd: FormMsg;
-          code: FormMsg;
-          email: FormMsg;
-        };
-        dropdown: Record<Global.DropdownKey, string>;
-        icon: {
-          themeConfig: string;
-          themeSchema: string;
-          lang: string;
-          fullscreen: string;
-          fullscreenExit: string;
-          reload: string;
-          collapse: string;
-          expand: string;
-          pin: string;
-          unpin: string;
-        };
-        datatable: {
-          itemCount: string;
         };
       };
     };
@@ -742,20 +742,20 @@ declare namespace App {
     type Response<T = unknown> = {
       /** The backend service response code */
       code: string;
-      /** The backend service response message */
-      msg: string;
       /** The backend service response data */
       data: T;
+      /** The backend service response message */
+      msg: string;
     };
 
     /** The demo backend service response data */
     type DemoResponse<T = unknown> = {
-      /** The backend service response code */
-      status: string;
       /** The backend service response message */
       message: string;
       /** The backend service response data */
       result: T;
+      /** The backend service response code */
+      status: string;
     };
   }
 }

@@ -32,18 +32,18 @@ declare namespace Api {
 
     /** common record */
     type CommonRecord<T = any> = {
-      /** record id */
-      id: number;
       /** record creator */
       createBy: string;
       /** record create time */
       createTime: string;
+      /** record id */
+      id: number;
+      /** record status */
+      status: EnableStatus | null;
       /** record updater */
       updateBy: string;
       /** record update time */
       updateTime: string;
-      /** record status */
-      status: EnableStatus | null;
     } & T;
   }
 
@@ -54,15 +54,15 @@ declare namespace Api {
    */
   namespace Auth {
     interface LoginToken {
-      token: string;
       refreshToken: string;
+      token: string;
     }
 
     interface UserInfo {
+      buttons: string[];
+      roles: string[];
       userId: string;
       userName: string;
-      roles: string[];
-      buttons: string[];
     }
   }
 
@@ -79,8 +79,8 @@ declare namespace Api {
     }
 
     interface UserRoute {
-      routes: MenuRoute[];
       home: import('@elegant-router/types').LastLevelRouteKey;
+      routes: MenuRoute[];
     }
   }
 
@@ -94,24 +94,24 @@ declare namespace Api {
 
     /** role */
     type Role = Common.CommonRecord<{
-      /** role name */
-      roleName: string;
       /** role code */
       roleCode: string;
       /** role description */
       roleDesc: string;
+      /** role name */
+      roleName: string;
     }>;
 
     /** role search params */
     type RoleSearchParams = CommonType.RecordNullable<
-      Pick<Api.SystemManage.Role, 'roleName' | 'roleCode' | 'status'> & CommonSearchParams
+      Pick<Api.SystemManage.Role, 'roleCode' | 'roleName' | 'status'> & CommonSearchParams
     >;
 
     /** role list */
     type RoleList = Common.PaginatingQueryRecord<Role>;
 
     /** all role */
-    type AllRole = Pick<Role, 'id' | 'roleName' | 'roleCode'>;
+    type AllRole = Pick<Role, 'id' | 'roleCode' | 'roleName'>;
 
     /**
      * user gender
@@ -123,23 +123,23 @@ declare namespace Api {
 
     /** user */
     type User = Common.CommonRecord<{
-      /** user name */
-      userName: string;
-      /** user gender */
-      userGender: UserGender | null;
       /** user nick name */
       nickName: string;
-      /** user phone */
-      userPhone: string;
       /** user email */
       userEmail: string;
+      /** user gender */
+      userGender: UserGender | null;
+      /** user name */
+      userName: string;
+      /** user phone */
+      userPhone: string;
       /** user role code collection */
       userRoles: string[];
     }>;
 
     /** user search params */
     type UserSearchParams = CommonType.RecordNullable<
-      Pick<Api.SystemManage.User, 'userName' | 'userGender' | 'nickName' | 'userPhone' | 'userEmail' | 'status'> &
+      Pick<Api.SystemManage.User, 'nickName' | 'status' | 'userEmail' | 'userGender' | 'userName' | 'userPhone'> &
         CommonSearchParams
     >;
 
@@ -175,39 +175,39 @@ declare namespace Api {
 
     type MenuPropsOfRoute = Pick<
       import('@ohh-889/react-auto-route').RouteMeta,
+      | 'activeMenu'
+      | 'constant'
+      | 'fixedIndexInTab'
+      | 'hideInMenu'
+      | 'href'
       | 'i18nKey'
       | 'keepAlive'
-      | 'constant'
-      | 'order'
-      | 'href'
-      | 'hideInMenu'
-      | 'activeMenu'
       | 'multiTab'
-      | 'fixedIndexInTab'
+      | 'order'
       | 'query'
     >;
 
     type Menu = Common.CommonRecord<{
-      /** parent menu id */
-      parentId: number;
-      /** menu type */
-      menuType: MenuType;
-      /** menu name */
-      menuName: string;
-      /** route name */
-      routeName: string;
-      /** route path */
-      routePath: string;
+      /** buttons */
+      buttons?: MenuButton[] | null;
+      /** children menu */
+      children?: Menu[] | null;
       /** component */
       component?: string;
       /** iconify icon name or local icon name */
       icon: string;
       /** icon type */
       iconType: IconType;
-      /** buttons */
-      buttons?: MenuButton[] | null;
-      /** children menu */
-      children?: Menu[] | null;
+      /** menu name */
+      menuName: string;
+      /** menu type */
+      menuType: MenuType;
+      /** parent menu id */
+      parentId: number;
+      /** route name */
+      routeName: string;
+      /** route path */
+      routePath: string;
     }> &
       MenuPropsOfRoute;
 
@@ -215,10 +215,10 @@ declare namespace Api {
     type MenuList = Common.PaginatingQueryRecord<Menu>;
 
     type MenuTree = {
+      children?: MenuTree[];
       id: number;
       label: string;
       pId: number;
-      children?: MenuTree[];
     };
   }
 }

@@ -27,8 +27,8 @@ export function useTap(onClick: OnClick) {
   };
 
   return {
-    onTouchStart: handleTouchStart,
     onTouchEnd: handleTouchEnd,
-    onTouchMove: handleTouchMove
+    onTouchMove: handleTouchMove,
+    onTouchStart: handleTouchStart
   };
 }

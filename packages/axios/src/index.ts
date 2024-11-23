@@ -1,9 +1,10 @@
+import { nanoid } from '@sa/utils';
 import axios, { AxiosError } from 'axios';
 import type { AxiosResponse, CreateAxiosDefaults, InternalAxiosRequestConfig } from 'axios';
 import axiosRetry from 'axios-retry';
-import { nanoid } from '@sa/utils';
-import { createAxiosConfig, createDefaultOptions, createRetryOptions } from './options';
+
 import { BACKEND_ERROR_CODE, REQUEST_ID_KEY } from './constant';
+import { createAxiosConfig, createDefaultOptions, createRetryOptions } from './options';
 import type {
   CustomAxiosRequestConfig,
   FlatRequestInstance,
@@ -96,12 +97,14 @@ function createCommonRequest<ResponseData = any>(
   }
 
   return {
-    instance,
-    opts,
+    cancelAllRequest,
     cancelRequest,
-    cancelAllRequest
+    instance,
+    opts
   };
 }
+
+export type * from './type';
 
 /**
  * create a request instance
@@ -113,7 +116,7 @@ export function createRequest<ResponseData = any, State = Record<string, unknown
   axiosConfig?: CreateAxiosDefaults,
   options?: Partial<RequestOption<ResponseData>>
 ) {
-  const { instance, opts, cancelRequest, cancelAllRequest } = createCommonRequest<ResponseData>(axiosConfig, options);
+  const { cancelAllRequest, cancelRequest, instance, opts } = createCommonRequest<ResponseData>(axiosConfig, options);
 
   const request: RequestInstance<State> = async function request<T = any, R extends ResponseType = 'json'>(
     config: CustomAxiosRequestConfig
@@ -148,7 +151,7 @@ export function createFlatRequest<ResponseData = any, State = Record<string, unk
   axiosConfig?: CreateAxiosDefaults,
   options?: Partial<RequestOption<ResponseData>>
 ) {
-  const { instance, opts, cancelRequest, cancelAllRequest } = createCommonRequest<ResponseData>(axiosConfig, options);
+  const { cancelAllRequest, cancelRequest, instance, opts } = createCommonRequest<ResponseData>(axiosConfig, options);
 
   const flatRequest: FlatRequestInstance<State, ResponseData> = async function flatRequest<
     T = any,
@@ -177,7 +180,5 @@ export function createFlatRequest<ResponseData = any, State = Record<string, unk
 
   return flatRequest;
 }
-
 export { BACKEND_ERROR_CODE, REQUEST_ID_KEY };
-export type * from './type';
-export type { CreateAxiosDefaults, AxiosError };
+export type { AxiosError, CreateAxiosDefaults };

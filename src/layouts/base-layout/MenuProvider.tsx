@@ -1,15 +1,18 @@
+import { useRoute } from '@sa/simple-router';
 import type { FC, ReactNode } from 'react';
 import { useMemo } from 'react';
-import { useRoute } from '@sa/simple-router';
-import { getSortRoutes } from '@/store/slice/route';
+
 import { getLocale } from '@/store/slice/app';
+import { getSortRoutes } from '@/store/slice/route';
 import { selectActiveFirstLevelMenuKey, setActiveFirstLevelMenuKey } from '@/store/slice/tab';
 import { getActiveFirstLevelMenuKey } from '@/store/slice/tab/shared';
+
 import { MixMenuContext } from '../context';
+
 import { getGlobalMenusByAuthRoutes } from './MenuUtil';
 
 interface Props {
-  children: ReactNode;
+  readonly children: ReactNode;
 }
 
 const MenuProvider: FC<Props> = ({ children }) => {
@@ -28,7 +31,7 @@ const MenuProvider: FC<Props> = ({ children }) => {
   const route = useRoute();
 
   const selectKey = useMemo(() => {
-    const { hideInMenu, activeMenu } = route.meta;
+    const { activeMenu, hideInMenu } = route.meta;
 
     const name = route.name as string;
 
@@ -67,14 +70,14 @@ const MenuProvider: FC<Props> = ({ children }) => {
   }, [locale]);
 
   const mixMenuContext = {
-    allMenus: menus,
     activeFirstLevelMenuKey,
-    setActiveFirstLevelMenuKey: changeActiveFirstLevelMenuKey,
-    firstLevelMenu,
-    selectKey,
-    isActiveFirstLevelMenuHasChildren: activeFirstLevelMenuKey ? Boolean(childLevelMenus) : false,
+    allMenus: menus,
     childLevelMenus: childLevelMenus || [],
-    route
+    firstLevelMenu,
+    isActiveFirstLevelMenuHasChildren: activeFirstLevelMenuKey ? Boolean(childLevelMenus) : false,
+    route,
+    selectKey,
+    setActiveFirstLevelMenuKey: changeActiveFirstLevelMenuKey
   };
 
   return <MixMenuContext.Provider value={mixMenuContext}>{children}</MixMenuContext.Provider>;

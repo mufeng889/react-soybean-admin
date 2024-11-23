@@ -1,5 +1,6 @@
 import { Segmented, Switch } from 'antd';
 import type { SegmentedOptions } from 'antd/es/segmented';
+
 import { themeSchemaRecord } from '@/constants/app';
 import {
   getThemeSettings,
@@ -8,26 +9,28 @@ import {
   setIsOnlyExpandCurrentParentMenu,
   setThemeScheme
 } from '@/store/slice/theme';
+
 import SettingItem from '../components/SettingItem';
 import '@/styles/css/darkMode.css';
+
 const icons: Record<UnionKey.ThemeScheme, string> = {
-  light: 'material-symbols:sunny',
+  auto: 'material-symbols:hdr-auto',
   dark: 'material-symbols:nightlight-rounded',
-  auto: 'material-symbols:hdr-auto'
+  light: 'material-symbols:sunny'
 };
 
 const OPTIONS: SegmentedOptions = Object.keys(themeSchemaRecord).map(item => {
   const key = item as UnionKey.ThemeScheme;
   return {
-    value: item,
     label: (
       <div className="w-[70px] flex justify-center">
         <SvgIcon
-          icon={icons[key]}
           className="h-28px text-icon-small"
+          icon={icons[key]}
         />
       </div>
-    )
+    ),
+    value: item
   };
 });
 
@@ -56,16 +59,16 @@ const DarkMode = () => {
     <div className="flex-col-stretch gap-16px">
       <div className="i-flex-center">
         <Segmented
-          value={themeSettings.themeScheme}
-          options={OPTIONS}
           className="bg-layout"
+          options={OPTIONS}
+          value={themeSettings.themeScheme}
           onChange={handleSegmentChange}
-        ></Segmented>
+        />
       </div>
 
       <SettingItem
-        seq={1}
         label={t('theme.grayscale')}
+        seq={1}
       >
         <Switch
           defaultChecked={themeSettings.grayscale}
@@ -74,8 +77,8 @@ const DarkMode = () => {
       </SettingItem>
 
       <SettingItem
-        seq={2}
         label={t('theme.colourWeakness')}
+        seq={2}
       >
         <Switch
           defaultChecked={themeSettings.colourWeakness}
@@ -84,8 +87,8 @@ const DarkMode = () => {
       </SettingItem>
 
       <SettingItem
-        seq={3}
         label={t('theme.isOnlyExpandCurrentParentMenu')}
+        seq={3}
       >
         <Switch
           defaultChecked={themeSettings.isOnlyExpandCurrentParentMenu}

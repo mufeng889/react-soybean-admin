@@ -1,11 +1,14 @@
+import type { LastLevelRouteKey, RouteKey } from '@elegant-router/types';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { LastLevelRouteKey, RouteKey } from '@elegant-router/types';
 import type { RouteRecordNormalized } from '@sa/simple-router';
+
 import { router } from '@/router';
 import { localStg } from '@/utils/storage';
+
+import type { AppThunk } from '../..';
 import { getThemeSettings } from '../theme';
-import type { AppThunk } from '../../index';
+
 import {
   extractTabsByAllRoutes,
   filterTabsById,
@@ -20,16 +23,15 @@ import {
 } from './shared';
 
 interface InitialStateType {
-  tabs: App.Global.Tab[];
+  activeFirstLevelMenuKey: string;
   activeTabId: string;
   homeTab: App.Global.Tab | null;
   removeCacheKey: RouteKey | null;
-  activeFirstLevelMenuKey: string;
+  tabs: App.Global.Tab[];
 }
 
 const initialState: InitialStateType = {
-  /** Tabs */
-  tabs: [],
+  activeFirstLevelMenuKey: '',
   /** Active tab id */
   activeTabId: '',
   /** Get active tab */
@@ -37,20 +39,13 @@ const initialState: InitialStateType = {
 
   removeCacheKey: null,
 
-  activeFirstLevelMenuKey: ''
+  /** Tabs */
+  tabs: []
 };
 export const tabSlice = createSlice({
-  name: 'tab',
   initialState,
+  name: 'tab',
   reducers: {
-    /**
-     * Set active tab id
-     *
-     * @param id Tab id
-     */
-    setActiveTabId(state, { payload }: PayloadAction<string>) {
-      state.activeTabId = payload;
-    },
     /**
      * Add tab
      *
@@ -60,8 +55,8 @@ export const tabSlice = createSlice({
     addTab(state, { payload }: PayloadAction<App.Global.Tab>) {
       state.tabs.push(payload);
     },
-    changeTabLabel(state, { payload }: PayloadAction<{ label?: string; index: number }>) {
-      const { label, index } = payload;
+    changeTabLabel(state, { payload }: PayloadAction<{ index: number; label?: string }>) {
+      const { index, label } = payload;
 
       if (label) {
         state.tabs[index].i18nKey = label;
@@ -69,37 +64,45 @@ export const tabSlice = createSlice({
         state.tabs[index].i18nKey = state.tabs[index].oldLabel;
       }
     },
-    setTabs(state, { payload }: PayloadAction<App.Global.Tab[]>) {
-      state.tabs = payload;
-    },
-    setActiveFirstLevelMenuKey(state, { payload }: PayloadAction<string>) {
-      state.activeFirstLevelMenuKey = payload;
-    },
-
     initHomeTab(
       state,
       {
         payload
       }: PayloadAction<{
-        route: RouteRecordNormalized | false;
         homeRouteName: LastLevelRouteKey;
+        route: RouteRecordNormalized | false;
       }>
     ) {
       state.homeTab = getDefaultHomeTab(payload);
+    },
+    setActiveFirstLevelMenuKey(state, { payload }: PayloadAction<string>) {
+      state.activeFirstLevelMenuKey = payload;
+    },
+    /**
+     * Set active tab id
+     *
+     * @param id Tab id
+     */
+    setActiveTabId(state, { payload }: PayloadAction<string>) {
+      state.activeTabId = payload;
+    },
+
+    setTabs(state, { payload }: PayloadAction<App.Global.Tab[]>) {
+      state.tabs = payload;
     }
   },
   selectors: {
-    getTabs: tab => tab.tabs,
     getActiveTabId: tab => tab.activeTabId,
     getHomeTab: tab => tab.homeTab,
+    getTabs: tab => tab.tabs,
     selectActiveFirstLevelMenuKey: tab => tab.activeFirstLevelMenuKey
   }
 });
 
-export const { addTab, initHomeTab, setTabs, setActiveTabId, setActiveFirstLevelMenuKey, changeTabLabel } =
+export const { addTab, changeTabLabel, initHomeTab, setActiveFirstLevelMenuKey, setActiveTabId, setTabs } =
   tabSlice.actions;
 
-export const { getTabs, getHomeTab, getActiveTabId, selectActiveFirstLevelMenuKey } = tabSlice.selectors;
+export const { getActiveTabId, getHomeTab, getTabs, selectActiveFirstLevelMenuKey } = tabSlice.selectors;
 
 export const selectAllTabs = createSelector([getTabs, getHomeTab], (tabs, homeTab) => {
   const allTabs = getAllTabs(tabs, homeTab);
@@ -327,7 +330,7 @@ export const setTabLabel =
 
     if (tab < 0) return;
 
-    dispatch(changeTabLabel({ label, index: tab }));
+    dispatch(changeTabLabel({ index: tab, label }));
   };
 
 /**
