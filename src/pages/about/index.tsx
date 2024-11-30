@@ -1,5 +1,4 @@
 import TypeIt from 'typeit';
-import type { Options } from 'typeit';
 import type { El } from 'typeit/dist/types';
 
 import pkg from '~/package.json';
@@ -10,8 +9,10 @@ import { transformVersionData } from './modules/shared';
 
 const latestBuildTime = BUILD_TIME;
 
+// 解构 package.json 数据
 const { dependencies, devDependencies, name, version } = pkg;
 
+// 格式化 package.json 数据
 const pkgJson: PkgJson = {
   dependencies: Object.entries(dependencies).map(transformVersionData),
   devDependencies: Object.entries(devDependencies).map(transformVersionData),
@@ -19,48 +20,45 @@ const pkgJson: PkgJson = {
   version
 };
 
-const TagItem = (item: PkgVersionInfo) => <ATag color="blue">{item.nameOrHref}</ATag>;
+// 抽离渲染组件
+const TagItem = ({ nameOrHref }: PkgVersionInfo) => <ATag color="blue">{nameOrHref}</ATag>;
 
-const Link = (item: PkgVersionInfo) => (
+const Link = ({ label, nameOrHref }: PkgVersionInfo) => (
   <a
     className="text-primary"
-    href={item.nameOrHref}
+    href={nameOrHref}
     rel="noopener noreferrer"
     target="_blank"
   >
-    {item.label}
+    {label}
   </a>
 );
 
+// 使用 TypeIt 的自定义 Hook
 function useGetTypeit() {
   const textRef = useRef<El>(null);
-
   const { t } = useTranslation();
 
-  function init() {
+  useMount(() => {
     if (!textRef.current) return;
 
-    const options: Options = {
+    const typeIt = new TypeIt(textRef.current, {
       lifeLike: true,
       speed: 10,
       strings: t('page.about.introduction')
-    };
+    });
 
-    const initTypeIt = new TypeIt(textRef.current, options);
-
-    initTypeIt.go();
-  }
-
-  useMount(() => {
-    init();
+    typeIt.go();
   });
 
   return textRef;
 }
 
+// 获取卡片信息的自定义 Hook
 function useGetCardInfo(): CardInfo[] {
   const { t } = useTranslation();
 
+  // 项目基本信息
   const packageInfo: PkgVersionInfo[] = [
     {
       label: t('page.about.projectInfo.version'),
@@ -84,7 +82,8 @@ function useGetCardInfo(): CardInfo[] {
     }
   ];
 
-  const cardInfo: CardInfo[] = [
+  // 卡片信息配置
+  return [
     {
       content: packageInfo,
       title: t('page.about.projectInfo.title')
@@ -94,13 +93,13 @@ function useGetCardInfo(): CardInfo[] {
       title: t('page.about.prdDep')
     },
     {
-      content: pkgJson.dependencies,
+      content: pkgJson.devDependencies, // 修复之前使用错误的 dependencies
       title: t('page.about.devDep')
     }
   ];
-  return cardInfo;
 }
 
+// 主组件
 export function Component() {
   const { t } = useTranslation();
 
