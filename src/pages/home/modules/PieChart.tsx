@@ -1,5 +1,3 @@
-import { Card } from 'antd';
-
 import { getLocale } from '@/store/slice/app';
 
 const PieChart = memo(() => {
@@ -93,7 +91,7 @@ const PieChart = memo(() => {
     updateLocale();
   }, [locale]);
   return (
-    <Card
+    <ACard
       bordered={false}
       className="card-wrapper"
     >
@@ -101,7 +99,7 @@ const PieChart = memo(() => {
         className="h-360px overflow-hidden"
         ref={domRef}
       />
-    </Card>
+    </ACard>
   );
 });
 

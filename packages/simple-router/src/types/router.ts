@@ -4,7 +4,22 @@ import type { Location, RouteObject } from 'react-router-dom';
 
 import type { RouteRecordNormalized } from '../matcher/types';
 
-import type { RouteLocationNormalizedLoaded } from './route';
+import type { Route, RouteLocationNormalizedLoaded } from './route';
+
+export interface RouterGuard {
+  afterEach?: (to: Route, from: Route | null) => void;
+  beforeEach?: (to: Route, from: Route | null) => boolean | Promise<boolean>;
+}
+
+export interface RouteParams {
+  [key: string]: string;
+}
+
+export interface RouteLocation {
+  params: RouteParams;
+  path: string;
+  query: Record<string, string>;
+}
 
 export interface RouterOptions {
   afterEach: AfterEach;
@@ -123,4 +138,9 @@ export interface RouteQueryAndHash {
  */
 export interface RouteLocationNamedRaw extends RouteQueryAndHash, LocationAsRelativeRaw, RouteLocationOptions {}
 
-export type Init = (currentFullPath: string) => Promise<RouteLocationNamedRaw | null>;
+type PatchRoutesParams = Parameters<RemixRouter['patchRoutes']>;
+
+export type Init = (
+  currentFullPath: string,
+  patchRoutes?: (parentId: PatchRoutesParams[0], routes: PatchRoutesParams[1]) => void
+) => Promise<RouteLocationNamedRaw | null>;

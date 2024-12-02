@@ -1,5 +1,3 @@
-import { Card } from 'antd';
-
 import { getLocale } from '@/store/slice/app';
 
 const LineChart = memo(() => {
@@ -134,7 +132,7 @@ const LineChart = memo(() => {
     updateLocale();
   }, [locale]);
   return (
-    <Card
+    <ACard
       bordered={false}
       className="card-wrapper"
     >
@@ -142,7 +140,7 @@ const LineChart = memo(() => {
         className="h-360px overflow-hidden"
         ref={domRef}
       />
-    </Card>
+    </ACard>
   );
 });
 

@@ -1,5 +1,4 @@
 import { useArray } from '@sa/hooks';
-import { Card, List } from 'antd';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import SoybeanAvatar from '@/components/stateful/SoybeanAvatar';
@@ -26,7 +25,7 @@ const ProjectNews = () => {
   };
 
   return (
-    <Card
+    <ACard
       bordered={false}
       className="card-wrapper"
       size="small"
@@ -83,7 +82,7 @@ const ProjectNews = () => {
       ]}
     >
       <AnimatePresence mode="popLayout">
-        <List
+        <AList
           dataSource={newses}
           renderItem={item => (
             <motion.div
@@ -94,7 +93,7 @@ const ProjectNews = () => {
               key={item.id}
               variants={variants} // 应用定义的动画 variants
             >
-              <List.Item
+              <AList.Item
                 actions={[
                   <AButton
                     key="up"
@@ -121,17 +120,17 @@ const ProjectNews = () => {
                   </AButton>
                 ]}
               >
-                <List.Item.Meta
+                <AList.Item.Meta
                   avatar={<SoybeanAvatar className="size-48px!" />}
                   description={item.time}
                   title={item.content}
                 />
-              </List.Item>
+              </AList.Item>
             </motion.div>
           )}
         />
       </AnimatePresence>
-    </Card>
+    </ACard>
   );
 };
 

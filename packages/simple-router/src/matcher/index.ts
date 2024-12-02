@@ -21,12 +21,15 @@ class CreateRouterMatcher {
   // Internal routes maintained for react-router
   matchers: RouteRecordRaw[] = [];
 
+  basename: string = '';
+
   matcherMap = new Map<string, RouteRecordRaw>();
 
   initRoutes: ElegantConstRoute[] = [];
 
-  constructor(routes: ElegantConstRoute[]) {
+  constructor(routes: ElegantConstRoute[], basename: string) {
     this.initRoutes = routes;
+    this.basename = basename;
     this.initializeRoutes();
     this.removeRoute = this.removeRoute.bind(this);
   }
@@ -162,21 +165,25 @@ class CreateRouterMatcher {
     } else if (location.pathname) {
       // no need to resolve the path with the matcher as it was provided
       // this also allows the user to control the encoding
-      path = location.pathname;
+      path = this.basename === '/' ? location.pathname : location.pathname.replace(this.basename, '');
 
-      matcher = this.matchers.slice(1).find(m => matchPath(m.record.path, location.pathname));
+      matcher = this.matchers.slice(1).find(m => matchPath(m.record.path, path)) || this.matchers[0];
       if (!matcher) matcher = this.matchers[0];
 
       // matcher should have a value after the loop
       query = getQueryParams(location.search);
 
       if (matcher) {
-        const match = matchPath(matcher.record.path, location.pathname);
+        const match = matchPath(matcher.record.path, path);
         if (match?.params) {
           params = match.params; // 如果有 params 则赋值
         }
         name = matcher.record.name;
-        fullPath = transformLocationToFullPath(location);
+
+        fullPath =
+          this.basename === '/'
+            ? transformLocationToFullPath(location)
+            : transformLocationToFullPath(location).replace(this.basename, '');
       }
       // location is a relative path
     } else {

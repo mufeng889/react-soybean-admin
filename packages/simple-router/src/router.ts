@@ -35,7 +35,7 @@ export interface RouterOptions {
 }
 
 export function createRouter({ getReactRoutes, init, initRoutes, mode, opt }: RouterOptions) {
-  const matcher = new CreateRouterMatcher(initRoutes);
+  const matcher = new CreateRouterMatcher(initRoutes, opt?.basename);
 
   const initReactRoutes = initRoutes.map(route => getReactRoutes(route));
 
@@ -211,7 +211,7 @@ export function createRouter({ getReactRoutes, init, initRoutes, mode, opt }: Ro
 
   async function initReady(): Promise<boolean> {
     return new Promise((resolved, reject) => {
-      init(currentRoute.fullPath)
+      init(currentRoute.fullPath, reactRouter.patchRoutes)
         .then(res => {
           if (!res) {
             reactRouter.initialize();

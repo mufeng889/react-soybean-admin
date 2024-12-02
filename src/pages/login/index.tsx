@@ -32,6 +32,7 @@ export function Component() {
       style={{ backgroundColor: bgColor }}
     >
       <WaveBg themeColor={bgThemeColor} />
+
       <Card
         bordered={false}
         className="relative z-4 w-auto rd-12px"

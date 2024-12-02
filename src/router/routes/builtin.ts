@@ -38,7 +38,6 @@ const LOG_OUT_ROUTE: CustomRoute = {
 
     // 如果需要还需要调用登出接口  也是在这里 去做相关的操作
     // If needed, you can also call the logout API and perform related operations here
-
     const needRedirect = formData.get('needRedirect');
 
     if (needRedirect) {
