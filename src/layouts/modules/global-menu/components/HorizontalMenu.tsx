@@ -39,7 +39,7 @@ const HorizontalMenu: FC<Props> = memo(({ mode }) => {
       inlineIndent={18}
       items={menus.get(mode)}
       mode="horizontal"
-      selectedKeys={selectKey}
+      selectedKeys={mode === '3' ? [selectKey[0].split('_')[0]] : selectKey}
       style={{ lineHeight: `${themeSettings.header.height}px` }}
       onSelect={handleClickMenu}
     />
