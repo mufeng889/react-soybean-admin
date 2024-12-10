@@ -143,4 +143,4 @@ type PatchRoutesParams = Parameters<RemixRouter['patchRoutes']>;
 export type Init = (
   currentFullPath: string,
   patchRoutes?: (parentId: PatchRoutesParams[0], routes: PatchRoutesParams[1]) => void
-) => Promise<RouteLocationNamedRaw | null>;
+) => Promise<RouteLocationNamedRaw | null | string>;

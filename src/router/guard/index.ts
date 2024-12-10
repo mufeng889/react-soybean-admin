@@ -22,6 +22,10 @@ export const init: Init = async currentFullPath => {
   const isLogin = Boolean(localStg.get('token'));
 
   if (!isLogin) {
+    if (currentFullPath.includes('login')) {
+      return currentFullPath;
+    }
+
     const loginRoute: RouteKey = 'login';
     const routeHome = getRouteHome(store.getState());
 

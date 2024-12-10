@@ -216,7 +216,8 @@ export function createRouter({ getReactRoutes, init, initRoutes, mode, opt }: Ro
           if (!res) {
             reactRouter.initialize();
           } else {
-            reactRouter.initialize().navigate(resolve(res).fullPath);
+            const targetPath = typeof res === 'string' ? res : resolve(res).fullPath;
+            reactRouter.initialize().navigate(targetPath);
           }
           resolved(true);
         })
