@@ -1,11 +1,15 @@
 import { useState } from 'react';
 
 type ArrayState<T> = T[];
+
 type ArrayActions<T, K extends keyof T> = {
+  clear: () => void;
   down: (itemKey: T[K]) => void;
+  findItem: (elementKey: T[K]) => T | undefined;
   pop: () => void;
   push: (...newItems: T[]) => void;
   remove: (itemKey: T[K]) => void;
+  reset: () => void;
   reverse: () => void;
   shift: () => void;
   sort: (compareFn?: (a: T, b: T) => number) => void;
@@ -83,31 +87,19 @@ export default function useArray<T, K extends keyof T>(initState: T[], key?: K):
   };
 
   const pop = () => {
-    setState(prevState => {
-      // 使用 slice(0, -1) 来移除最后一个元素
-      return prevState.slice(0, -1);
-    });
+    setState(prevState => prevState.slice(0, -1));
   };
 
   const shift = () => {
-    setState(prevState => {
-      // 使用 slice(1) 来移除第一个元素
-      return prevState.slice(1);
-    });
+    setState(prevState => prevState.slice(1));
   };
 
   const reverse = () => {
-    setState(prevState => {
-      // 使用 spread 运算符 ... 和 reverse() 来反转数组
-      return [...prevState].reverse();
-    });
+    setState(prevState => [...prevState].reverse());
   };
 
   const sort = (compareFn?: (a: T, b: T) => number) => {
-    setState(prevState => {
-      // 使用 spread 运算符 ... 和 sort() 方法进行排序
-      return [...prevState].sort(compareFn);
-    });
+    setState(prevState => [...prevState].sort(compareFn));
   };
 
   const splice = (start: number, deleteCount?: number, ...items: T[]) => {
@@ -120,5 +112,35 @@ export default function useArray<T, K extends keyof T>(initState: T[], key?: K):
     });
   };
 
-  return [state, { down, pop, push, remove, reverse, shift, sort, splice, unshift, up, updateState }];
+  const clear = () => {
+    setState([]);
+  };
+
+  const reset = () => {
+    setState(initState);
+  };
+
+  const findItem = (elementKey: T[K]) => {
+    return state.find(item => item[resolvedKey] === elementKey);
+  };
+
+  return [
+    state,
+    {
+      clear,
+      down,
+      findItem,
+      pop,
+      push,
+      remove,
+      reset,
+      reverse,
+      shift,
+      sort,
+      splice,
+      unshift,
+      up,
+      updateState
+    }
+  ];
 }

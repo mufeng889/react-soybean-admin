@@ -12,7 +12,7 @@ const variants = {
 const ProjectNews = () => {
   const { t } = useTranslation();
 
-  const [newses, { down, pop, push, remove, reverse, shift, sort, unshift, up }] = useArray([
+  const [newses, { down, pop, push, remove, reset, reverse, shift, sort, unshift, up }] = useArray([
     { content: t('page.home.projectNews.desc1'), id: 1, time: '2021-05-28 22:22:22' },
     { content: t('page.home.projectNews.desc2'), id: 2, time: '2023-10-27 10:24:54' },
     { content: t('page.home.projectNews.desc3'), id: 3, time: '2021-10-31 22:43:12' },
@@ -31,6 +31,13 @@ const ProjectNews = () => {
       size="small"
       title={t('page.home.projectNews.title')}
       extra={[
+        <AButton
+          key="reset"
+          type="text"
+          onClick={reset}
+        >
+          重置
+        </AButton>,
         <AButton
           key="reverse"
           type="text"
