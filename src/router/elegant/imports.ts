@@ -22,6 +22,7 @@ export const pages: Record<LastLevelRouteKey, LazyRouteFunction<CustomRouteObjec
   500: () => import("@/pages/_builtin/500/index.tsx"),
   "iframe-page": () => import("@/pages/_builtin/iframe-page/[url].tsx"),
   about: () => import("@/pages/about/index.tsx"),
+  "function_event-bus": () => import("@/pages/function/event-bus/index.tsx"),
   "function_hide-child_one": () => import("@/pages/function/hide-child/one/index.tsx"),
   "function_hide-child_three": () => import("@/pages/function/hide-child/three/index.tsx"),
   "function_hide-child_two": () => import("@/pages/function/hide-child/two/index.tsx"),

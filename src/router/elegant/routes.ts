@@ -62,6 +62,16 @@ export const generatedRoutes: GeneratedRoute[] = [
     },
     children: [
       {
+        name: 'function_event-bus',
+        path: 'event-bus',
+        component: 'view.function_event-bus',
+        meta: {
+          i18nKey: 'route.function_event-bus',
+          title: 'function_event-bus',
+          icon: 'ant-design:send-outlined'
+        }
+      },
+      {
         name: 'function_hide-child',
         path: 'hide-child',
         meta: {

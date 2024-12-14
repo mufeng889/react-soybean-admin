@@ -16,6 +16,7 @@ const route: App.I18n.Schema['translation']['route'] = {
   exception_404: '404',
   exception_500: '500',
   function: 'System Function',
+  'function_event-bus': 'Event Bus Demo',
   'function_hide-child': 'Hide Child',
   'function_hide-child_one': 'Hide Child',
   'function_hide-child_three': 'Three',

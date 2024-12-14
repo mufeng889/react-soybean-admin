@@ -218,6 +218,7 @@ const routeMap: RouteMap = {
   "500": "/500",
   "about": "/about",
   "function": "/function",
+  "function_event-bus": "event-bus",
   "function_hide-child": "hide-child",
   "function_hide-child_one": "one",
   "function_hide-child_three": "three",

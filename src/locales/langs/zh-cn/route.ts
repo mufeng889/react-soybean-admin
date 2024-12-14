@@ -16,6 +16,7 @@ const route: App.I18n.Schema['translation']['route'] = {
   exception_404: '404',
   exception_500: '500',
   function: '系统功能',
+  'function_event-bus': '事件总线演示',
   'function_hide-child': '隐藏子菜单',
   'function_hide-child_one': '隐藏子菜单',
   'function_hide-child_three': '菜单三',
