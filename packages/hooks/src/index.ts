@@ -7,6 +7,8 @@ import useHookTable from './use-table';
 
 export { default as useArray } from './use-array';
 
+export * from './use-emitter';
+
 export * from './use-table';
 
 export { useBoolean, useCountDownTimer, useHookTable, useLoading, useRequest, useSvgIconRender };
