@@ -1,6 +1,38 @@
 # Changelog
 
 
+## [v1.2.0](https://github.com/mufeng889/react-soybean-admin/compare/v1.1.1...v1.2.0) (2024-12-15)
+
+### &nbsp;&nbsp;&nbsp;🚀 Features
+
+- **packages**:
+  - use-array add findItem & reset &nbsp;-&nbsp; by **COBORGA-8FFVDVM\cob** [<samp>(64e0b)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/64e0bb3)
+  - add event bus hook &nbsp;-&nbsp; by **wang** [<samp>(9f145)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/9f14555)
+- **projects**:
+  - supplement eslint rules &nbsp;-&nbsp; by **wang** [<samp>(1a631)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/1a6314e)
+  - add event bus hooks demo &nbsp;-&nbsp; by **wang** [<samp>(b7080)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/b7080ed)
+
+### &nbsp;&nbsp;&nbsp;🐞 Bug Fixes
+
+- If the url is /login/register, the system is redirected to /login/pwd-login by default  .close #22 &nbsp;-&nbsp; by **COBORGA-8FFVDVM\cob** in https://github.com/mufeng889/react-soybean-admin/issues/22 [<samp>(9ddae)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/9ddae85)
+- **projects**: fix Reverse the top blending mode. Select Secondary tab. Primary tab is not displayed correctly .close #21 &nbsp;-&nbsp; by **wang** in https://github.com/mufeng889/react-soybean-admin/issues/21 [<samp>(b2f07)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/b2f071c)
+
+### &nbsp;&nbsp;&nbsp;🛠 Optimizations
+
+- **projects**:
+  - optimize code &nbsp;-&nbsp; by **wang** [<samp>(72b38)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/72b3898)
+  - optimize code &nbsp;-&nbsp; by **COBORGA-8FFVDVM\cob** [<samp>(b9f0e)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/b9f0ecf)
+
+### &nbsp;&nbsp;&nbsp;🏡 Chore
+
+- **other**: update vscode settings &nbsp;-&nbsp; by **wang** [<samp>(70d5f)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/70d5fbb)
+- **projects**: update readme &nbsp;-&nbsp; by **wang** [<samp>(82978)</samp>](https://github.com/mufeng889/react-soybean-admin/commit/829780d)
+
+### &nbsp;&nbsp;&nbsp;❤️ Contributors
+
+
+[wang](mailto:1509326266@qq.com)
+
 ## [v1.1.1](https://github.com/mufeng889/react-soybean-admin/compare/v1.1.0...v1.1.1) (2024-11-24)
 
 ### &nbsp;&nbsp;&nbsp;🐞 Bug Fixes
