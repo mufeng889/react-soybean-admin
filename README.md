@@ -3,18 +3,51 @@
  <h1>React SoybeanAdmin</h1>
   <span><a href="./README.en-US.md">English</a> | 中文</span>
 </div>
-```
 
 ---
 
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
 > [!NOTE]
-> 如果您觉得 `React SoybeanAdmin`对您有所帮助，或者您喜欢我们的项目，请在 GitHub 上给我们一个 ⭐️。您的支持是我们持续改进和增加新功能的动力！感谢您的支持！
+> 如果您觉得 `React SoybeanAdmin` 对您有所帮助，或者您喜欢我们的项目，请在 GitHub 上给我们一个 ⭐️。您的支持是我们持续改进和增加新功能的动力！感谢您的支持！
+
+## 特别鸣谢
+
+本项目是基于 [Soybean](https://github.com/honghuangdc) 开发的优秀开源项目 [Soybean Admin](https://github.com/soybeanjs/soybean-admin) 的 React 版本实现。在此特别感谢 Soybean 的开源贡献,为中后台开发提供了优秀的解决方案。如果您喜欢本项目,也请给原作者的 [Soybean Admin](https://github.com/soybeanjs/soybean-admin) 点个 star ⭐️。
 
 ## 简介
 
-[`React Soybean`](https://github.com/mufeng889/react-soybean-admin) 是一个清新优雅、高颜值且功能强大的后台管理模板，基于最新的前端技术栈，包括 React18,ReactRouter V6, Vite5, TypeScript, Redux/toolkit 和 UnoCSS。它内置了丰富的主题配置和组件，代码规范严谨，实现了自动化的文件路由系统。此外，它还采用了基于 ApiFox 的在线Mock数据方案。`React Soybean` 为您提供了一站式的后台管理解决方案，无需额外配置，开箱即用。同样是一个快速学习前沿技术的最佳实践。
+[`React SoybeanAdmin`](https://github.com/mufeng889/react-soybean-admin) 是一个基于 React18 技术栈的清新优雅中后台模版。项目采用了最新的前端技术栈:
+
+- 🚀 React 18 + ReactRouter V6 + Redux/toolkit
+- 🎨 Ant Design + UnoCSS
+- 📦 Vite 5 + TypeScript
+- 🔐 基于角色的权限管理
+- 📱 移动端适配
+- 🌍 国际化支持
+- 🎯 Mock 数据方案
+- 📚 详尽的文档支持
+
+项目特点:
+
+- 💡 代码规范严谨,架构清晰优雅
+- ⚡️ 开箱即用,无需复杂配置
+- 🛠️ 丰富的组件和主题配置
+- 📋 自动化的文件路由系统
+- 🔧 完善的类型支持
+- 📱 响应式设计,完美适配移动端
+- 🎨 乐观`UI` 项目出现错误自动捕获错误,并显示友好界面,帮助用户快速定位和解决问题,还可以再组件内监控埋点上报。
+- 🚀 丰富的路由功能：基于 React-Router V6 扩展了路由 API，提供类似 Vue-Router 的便捷使用体验，让路由管理更加灵活高效。
+- ⚡️ 命令行工具：内置高效的命令行工具，git提交、删除文件、发布等。
+
+无论是学习最新前端技术,还是开发企业级中后台项目,React SoybeanAdmin 都是您的不二之选。
+
+## 分支
+
+- `master` 分支: 最新稳定版本,基于 React19 + ReactRouter V7  版本
+- `v18-router6` 分支: 基于 React18 + ReactRouter V6 版本
+
+有问题都是会进行修复,如果需要使用旧版本,请切换到对应分支。 v18-router6 在未来3-5年依然会是市面上较为先进 功能强大的版本
 
 ## 版本
 
@@ -33,10 +66,14 @@
 ### Vue版本
 
 - **NaiveUI 版本:**
-  - [预览地址](https://naive.soybeanjs.cn/)
-  - [Github 仓库](https://github.com/soybeanjs/soybean-admin)
-  - [Gitee 仓库](https://gitee.com/honghuangdc/soybean-admin)
-
+  - [预览地址](https://naive.soybeanjs.cn/) - 基于 Vue3 + NaiveUI 构建的清新优雅后台管理模板
+  - [Github 仓库](https://github.com/soybeanjs/soybean-admin) - 获取最新源码，参与开源贡献
+  - [Gitee 仓库](https://gitee.com/honghuangdc/soybean-admin) - 国内镜像仓库，访问更快捷
+  - 特点:
+    - 完整的 TypeScript 支持
+    - 丰富的主题配置
+    - 优雅的代码风格
+    - 完善的文档说明
 - **AntDesignVue 版本:**
   - [预览地址](https://antd.soybeanjs.cn/)
   - [Github 仓库](https://github.com/soybeanjs/soybean-admin-antd)
@@ -46,22 +83,6 @@
   - [预览地址](https://legacy.soybeanjs.cn/)
   - [Github 仓库](https://github.com/soybeanjs/soybean-admin/tree/legacy)
 
-
-## 特性
-
-- **前沿技术应用**：采用 React18, ReactRouter V6,Vite5, TypeScript, Redux/toolkit 和 UnoCSS 等最新流行的技术栈。
-- **清晰的项目架构**：采用 pnpm monorepo 架构，结构清晰，优雅易懂。
-- **严格的代码规范**：遵循 [SoybeanJS 规范](https://docs.soybeanjs.cn/zh/standard)，集成了eslint, prettier 和 simple-git-hooks，保证代码的规范性。
-- **TypeScript**： 通过支持严格的类型检查和内置多个 hook 的类型推导，仅需定义简洁的类型，即可享受便捷的 TypeScript 类型提示，显著提升代码的可维护性。
-- **丰富的主题配置**：内置多样的主题配置，与 UnoCSS 完美结合。
-- **内置国际化方案**：轻松实现多语言支持。
-- **丰富的路由功能**：基于 React-Router V6 扩展了路由 API，提供类似 Vue-Router 的便捷使用体验，让路由管理更加灵活高效。
-- **自动化文件路由系统**：约定式路由,自动生成路由导入、声明和类型。更多细节请查看 [Elegant Router](https://github.com/mufeng889/react-auto-route)。
-- **灵活的权限路由**：同时支持前端静态路由和后端动态路由。
-- **丰富的页面组件**：内置多样页面和组件，包括403、404、500页面，以及布局组件、标签组件、主题配置组件等。
-- **命令行工具**：内置高效的命令行工具，git提交、删除文件、发布等。
-- **移动端适配**：完美支持移动端，实现自适应布局。
-- **良好UI**：在发生错误的时候自动捕获错误，并显示友好界面，帮助用户快速定位和解决问题，还可以再组件内监控埋点上报。
 
 ## 符合Ant Design风格的保姆级文档
 
