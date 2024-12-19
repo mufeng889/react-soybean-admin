@@ -8,6 +8,8 @@ import { include } from './build/optimize';
 import { setupVitePlugins } from './build/plugins';
 
 // https://vitejs.dev/config/
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 export default defineConfig(configEnv => {
   const viteEnv = loadEnv(configEnv.mode, process.cwd()) as unknown as Env.ImportMeta;
 

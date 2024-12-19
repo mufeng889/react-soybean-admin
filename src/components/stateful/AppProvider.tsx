@@ -1,9 +1,7 @@
 import { App } from 'antd';
 
-import { DARK_MODE_MEDIA_QUERY } from '@/constants/common';
 import { cacheTabs } from '@/store/slice/tab';
 import { cacheThemeSettings } from '@/store/slice/theme';
-import { setDarkMode } from '@/store/slice/theme/index.ts';
 
 function ContextHolder() {
   const { message, modal, notification } = App.useApp();
@@ -24,12 +22,6 @@ const AppProvider = memo(({ children }: { children: React.ReactNode }) => {
     },
     { target: window }
   );
-
-  useMount(() => {
-    window.matchMedia(DARK_MODE_MEDIA_QUERY).addEventListener('change', event => {
-      dispatch(setDarkMode(event.matches));
-    });
-  });
 
   return (
     <App className="h-full">

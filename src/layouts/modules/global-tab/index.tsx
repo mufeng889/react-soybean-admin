@@ -8,16 +8,18 @@ import DarkModeContainer from '@/components/stateless/common/DarkModeContainer';
 import FullScreen from '@/components/stateless/common/FullScreen';
 import ReloadButton from '@/components/stateless/common/ReloadButton';
 import BetterScroll from '@/components/stateless/custom/BetterScroll';
+import { ThemeContext } from '@/features';
 import { getFullContent, getLocale, getReloadFlag, reloadPage, toggleFullContent } from '@/store/slice/app';
 import { setRemoveCacheKey } from '@/store/slice/route';
 import { addTabByRoute, getActiveTabId, initTabStore, isTabRetain, removeTab, selectAllTabs } from '@/store/slice/tab';
-import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
+import { getThemeSettings } from '@/store/slice/theme';
 import { isPC } from '@/utils/agent';
 
 import ContextMenu from './ContextMenu';
 
 const GlobalTab = memo(() => {
   const { t } = useTranslation();
+  const { darkMode } = useContext(ThemeContext);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const bsWrapper = useRef<HTMLDivElement>(null);
@@ -31,7 +33,7 @@ const GlobalTab = memo(() => {
   const fullContent = useAppSelector(getFullContent);
   const tabs = useAppSelector(selectAllTabs);
   const themeSettings = useAppSelector(getThemeSettings);
-  const darkMode = useAppSelector(getDarkMode);
+
   const activeTabId = useAppSelector(getActiveTabId);
 
   const setBsScroll = (bscroll: BScroll) => {

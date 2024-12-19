@@ -1,26 +1,21 @@
+import { ThemeMode } from 'ahooks/lib/useTheme';
+import type { ThemeModeType } from 'ahooks/lib/useTheme';
 import { Segmented, Switch } from 'antd';
 import type { SegmentedOptions } from 'antd/es/segmented';
 
-import { themeSchemaRecord } from '@/constants/app';
+import { ThemeContext, icons } from '@/features';
 import {
   getThemeSettings,
   setColourWeakness,
   setGrayscale,
-  setIsOnlyExpandCurrentParentMenu,
-  setThemeScheme
+  setIsOnlyExpandCurrentParentMenu
 } from '@/store/slice/theme';
 
 import SettingItem from '../components/SettingItem';
 import '@/styles/css/darkMode.css';
 
-const icons: Record<UnionKey.ThemeScheme, string> = {
-  auto: 'material-symbols:hdr-auto',
-  dark: 'material-symbols:nightlight-rounded',
-  light: 'material-symbols:sunny'
-};
-
-const OPTIONS: SegmentedOptions = Object.keys(themeSchemaRecord).map(item => {
-  const key = item as UnionKey.ThemeScheme;
+const OPTIONS: SegmentedOptions = Object.values(ThemeMode).map(item => {
+  const key = item as ThemeModeType;
   return {
     label: (
       <div className="w-[70px] flex justify-center">
@@ -38,10 +33,12 @@ const DarkMode = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
+  const { setThemeScheme, themeScheme } = useContext(ThemeContext);
+
   const themeSettings = useAppSelector(getThemeSettings);
 
   function handleSegmentChange(value: string | number) {
-    dispatch(setThemeScheme(value as UnionKey.ThemeScheme));
+    setThemeScheme(value as ThemeModeType);
   }
 
   function handleGrayscaleChange(value: boolean) {
@@ -61,7 +58,7 @@ const DarkMode = () => {
         <Segmented
           className="bg-layout"
           options={OPTIONS}
-          value={themeSettings.themeScheme}
+          value={themeScheme}
           onChange={handleSegmentChange}
         />
       </div>

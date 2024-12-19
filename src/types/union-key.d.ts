@@ -11,9 +11,6 @@ declare namespace UnionKey {
    */
   type LoginModule = 'code-login' | 'pwd-login' | 'register' | 'reset-pwd';
 
-  /** Theme scheme */
-  type ThemeScheme = 'auto' | 'dark' | 'light';
-
   /**
    * The layout mode
    *

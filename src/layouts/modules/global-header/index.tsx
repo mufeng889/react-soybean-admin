@@ -1,8 +1,8 @@
 import LangSwitch from '@/components/stateful/LangSwitch';
-import ThemeSchemaSwitch from '@/components/stateful/ThemeSchemaSwitch';
 import DarkModeContainer from '@/components/stateless/common/DarkModeContainer';
 import FullScreen from '@/components/stateless/common/FullScreen';
 import { GLOBAL_HEADER_MENU_ID } from '@/constants/app';
+import { ThemeSchemaSwitch } from '@/features';
 
 import GlobalBreadcrumb from '../global-breadcrumb';
 import GlobalLogo from '../global-logo';

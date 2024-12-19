@@ -95,8 +95,6 @@ declare namespace App {
       };
       /** Theme color */
       themeColor: string;
-      /** Theme scheme */
-      themeScheme: UnionKey.ThemeScheme;
       /** define some theme settings tokens, will transform to css variables */
       tokens: {
         dark?: {
@@ -680,7 +678,7 @@ declare namespace App {
             title: string;
           } & Theme.ThemeColor;
           themeDrawerTitle: string;
-          themeSchema: { title: string } & Record<UnionKey.ThemeScheme, string>;
+          themeSchema: { title: string };
           watermark: {
             text: string;
             visible: string;

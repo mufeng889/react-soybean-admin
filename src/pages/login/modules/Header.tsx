@@ -1,6 +1,6 @@
 import LangSwitch from '@/components/stateful/LangSwitch';
-import ThemeSchemaSwitch from '@/components/stateful/ThemeSchemaSwitch';
 import SystemLogo from '@/components/stateless/common/SystemLogo';
+import { ThemeSchemaSwitch } from '@/features';
 
 const Header = memo(() => {
   const { t } = useTranslation();

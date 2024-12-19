@@ -8,7 +8,7 @@ declare namespace StorageType {
     //  */
     // themeSettings: App.Theme.ThemeSetting;
   }
-
+  type ThemeMode = import('ahooks/lib/useTheme').ThemeModeType;
   interface Local {
     /** The backup theme setting before is mobile */
     backupThemeSettingBeforeIsMobile: {
@@ -31,6 +31,8 @@ declare namespace StorageType {
     refreshToken: string;
     /** The theme color */
     themeColor: string;
+    /** The theme mode */
+    themeMode: ThemeMode;
     /** The theme settings */
     themeSettings: App.Theme.ThemeSetting;
     /** The token */

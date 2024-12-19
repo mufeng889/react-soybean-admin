@@ -1,6 +1,6 @@
 import DarkModeContainer from '@/components/stateless/common/DarkModeContainer.tsx';
 import { GLOBAL_SIDER_MENU_ID } from '@/constants/app';
-import { getDarkMode } from '@/store/slice/theme';
+import { ThemeContext } from '@/features';
 
 import GlobalLogo from '../global-logo';
 
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const GlobalSider: FC<Props> = memo(({ headerHeight, inverted, isHorizontalMix, isVerticalMix, siderCollapse }) => {
-  const darkMode = useAppSelector(getDarkMode);
+  const { darkMode } = useContext(ThemeContext);
 
   const showLogo = !isVerticalMix && !isHorizontalMix;
 

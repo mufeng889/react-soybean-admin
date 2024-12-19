@@ -80,9 +80,6 @@ const theme: App.I18n.Schema['translation']['theme'] = {
   },
   themeDrawerTitle: '主题配置',
   themeSchema: {
-    auto: '跟随系统',
-    dark: '暗黑模式',
-    light: '亮色模式',
     title: '主题模式'
   },
   watermark: {

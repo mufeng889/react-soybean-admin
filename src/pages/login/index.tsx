@@ -3,14 +3,15 @@ import { Card } from 'antd';
 import { Outlet } from 'react-router-dom';
 
 import WaveBg from '@/components/stateless/custom/WaveBg';
-import { getDarkMode, getThemeSettings } from '@/store/slice/theme';
+import { ThemeContext } from '@/features';
+import { getThemeSettings } from '@/store/slice/theme';
 
 import Header from './modules/Header';
 
 const COLOR_WHITE = '#ffffff';
 
 function useBgColor() {
-  const darkMode = useAppSelector(getDarkMode);
+  const { darkMode } = useContext(ThemeContext);
   const { themeColor } = useAppSelector(getThemeSettings);
 
   const bgThemeColor = darkMode ? getPaletteColorByNumber(themeColor, 600) : themeColor;

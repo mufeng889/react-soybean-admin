@@ -88,7 +88,6 @@ declare global {
   const SystemLogo: typeof import('../components/stateless/common/SystemLogo')['default']
   const TableColumnSetting: typeof import('../components/advanced/TableColumnSetting')['default']
   const TableHeaderOperation: typeof import('../components/advanced/TableHeaderOperation')['default']
-  const ThemeSchemaSwitch: typeof import('../components/stateful/ThemeSchemaSwitch')['default']
   const WaveBg: typeof import('../components/stateless/custom/WaveBg')['default']
   const createRef: typeof import('react')['createRef']
   const forwardRef: typeof import('react')['forwardRef']
@@ -199,6 +198,7 @@ declare global {
   const useTableOperate: typeof import('../hooks/common/table')['useTableOperate']
   const useTableScroll: typeof import('../hooks/common/table')['useTableScroll']
   const useTextSelection: typeof import('ahooks')['useTextSelection']
+  const useTheme: typeof import('ahooks')['useTheme']
   const useThrottle: typeof import('ahooks')['useThrottle']
   const useThrottleEffect: typeof import('ahooks')['useThrottleEffect']
   const useThrottleFn: typeof import('ahooks')['useThrottleFn']
@@ -222,4 +222,10 @@ declare global {
   // @ts-ignore
   export type { FC } from 'react'
   import('react')
+  // @ts-ignore
+  export type { ThemeName } from '../hooks/business/usePreferredColorScheme'
+  import('../hooks/business/usePreferredColorScheme')
+  // @ts-ignore
+  export type { ECOption } from '../hooks/common/echarts'
+  import('../hooks/common/echarts')
 }

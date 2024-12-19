@@ -2,13 +2,11 @@ import { getColorPalette, getRgb, transformColorWithOpacity } from '@sa/color';
 import type { ConfigProviderProps } from 'antd';
 import { theme as antdTheme } from 'antd';
 
-import { DARK_MODE_MEDIA_QUERY } from '@/constants/common';
+import { DARK_CLASS } from '@/constants/common';
 import { overrideThemeSettings, themeSettings } from '@/theme/settings';
 import { themeVars } from '@/theme/vars';
 import { toggleHtmlClass } from '@/utils/common';
 import { localStg } from '@/utils/storage';
-
-const DARK_CLASS = 'dark';
 
 /** Init theme settings */
 export function initThemeSettings() {
@@ -215,26 +213,6 @@ export function getAntdTheme(
 
   return theme;
 }
-/**
- * Toggle css dark mode
- *
- * @param darkMode Is dark mode
- */
-export function toggleCssDarkMode(darkMode = false) {
-  function addDarkClass() {
-    document.documentElement.classList.add(DARK_CLASS);
-  }
-
-  function removeDarkClass() {
-    document.documentElement.classList.remove(DARK_CLASS);
-  }
-
-  if (darkMode) {
-    addDarkClass();
-  } else {
-    removeDarkClass();
-  }
-}
 
 /**
  * Toggle auxiliary color modes
@@ -255,15 +233,6 @@ export function setupThemeVarsToHtml(
 ) {
   const { darkThemeTokens, themeTokens } = createThemeToken(themeColors, tokens, recommended);
   addThemeVarsToGlobal(themeTokens, darkThemeTokens);
-}
-
-export function updateDarkMode(themeScheme: UnionKey.ThemeScheme) {
-  if (themeScheme === 'dark') {
-    return true;
-  } else if (themeScheme === 'light') {
-    return false;
-  }
-  return window.matchMedia(DARK_MODE_MEDIA_QUERY).matches;
 }
 
 export function toggleGrayscaleMode(grayscaleMode = false) {

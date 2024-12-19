@@ -80,9 +80,6 @@ const theme: App.I18n.Schema['translation']['theme'] = {
   },
   themeDrawerTitle: 'Theme Configuration',
   themeSchema: {
-    auto: 'Follow System',
-    dark: 'Dark',
-    light: 'Light',
     title: 'Theme Schema'
   },
   watermark: {
