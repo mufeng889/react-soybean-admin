@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@sa/utils": "workspace:*",
-    "simplebar-react": "3.2.6"
+    "simplebar-react": "3.3.0"
   },
   "devDependencies": {
     "typed-css-modules": "0.9.1"
