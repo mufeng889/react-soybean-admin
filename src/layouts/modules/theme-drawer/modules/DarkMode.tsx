@@ -1,9 +1,6 @@
-import { ThemeMode } from 'ahooks/lib/useTheme';
-import type { ThemeModeType } from 'ahooks/lib/useTheme';
-import { Segmented, Switch } from 'antd';
-import type { SegmentedOptions } from 'antd/es/segmented';
+import { Switch } from 'antd';
 
-import { ThemeContext, icons } from '@/features';
+import { ThemeSchemaSegmented } from '@/features';
 import {
   getThemeSettings,
   setColourWeakness,
@@ -14,32 +11,11 @@ import {
 import SettingItem from '../components/SettingItem';
 import '@/styles/css/darkMode.css';
 
-const OPTIONS: SegmentedOptions = Object.values(ThemeMode).map(item => {
-  const key = item as ThemeModeType;
-  return {
-    label: (
-      <div className="w-[70px] flex justify-center">
-        <SvgIcon
-          className="h-28px text-icon-small"
-          icon={icons[key]}
-        />
-      </div>
-    ),
-    value: item
-  };
-});
-
 const DarkMode = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
-  const { setThemeScheme, themeScheme } = useContext(ThemeContext);
-
   const themeSettings = useAppSelector(getThemeSettings);
-
-  function handleSegmentChange(value: string | number) {
-    setThemeScheme(value as ThemeModeType);
-  }
 
   function handleGrayscaleChange(value: boolean) {
     dispatch(setGrayscale(value));
@@ -55,12 +31,7 @@ const DarkMode = () => {
   return (
     <div className="flex-col-stretch gap-16px">
       <div className="i-flex-center">
-        <Segmented
-          className="bg-layout"
-          options={OPTIONS}
-          value={themeScheme}
-          onChange={handleSegmentChange}
-        />
+        <ThemeSchemaSegmented />
       </div>
 
       <SettingItem

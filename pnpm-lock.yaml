@@ -2627,7 +2627,7 @@ packages:
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       '@types/eslint': '>=8.0.0'
-      eslint: ^9.16.0
+      eslint: '>=8.0.0'
       eslint-config-prettier: '*'
       prettier: '>=3.0.0'
     peerDependenciesMeta:

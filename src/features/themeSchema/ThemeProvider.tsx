@@ -10,7 +10,7 @@ const DARK_MODE_MEDIA_QUERY = '(prefers-color-scheme: dark)';
 const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
   const [themeMode, setThemeMode] = useState<ThemeModeType>((localStg.get('themeMode') as ThemeModeType) || 'light');
 
-  const darkMode = useMemo(() => themeMode === 'dark', [themeMode]);
+  const darkMode = themeMode === 'dark';
 
   function changeThemeMode(mode: ThemeModeType) {
     setThemeMode(mode);
